@@ -36,7 +36,7 @@ cbuffer cbPerObject : register (b1)
 	
 	float spotFade = 1;
 	float bumpy = 1;
-	float2 reflective <String uiname="Reflective/Diffuse";float uimin=0.0; float uimax=1;> = 1 ;
+	float2 reflective <String uiname="Reflective/Diffuse";float2 uimin=0.0; float uimax=1;> = 1 ;
 	bool refraction <bool visible=false;> = false;
 	float refractionIndex <bool visible=false;> = 1.2;
 	bool BPCM <bool visible=false;> = false;
