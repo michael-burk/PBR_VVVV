@@ -221,7 +221,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	
 //  BumpMap
 ///////////////////////////////////////
-	float4 bumpMap = normalTex.Sample(g_samLinear, In.TexCd.xy);
+	float4 bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[3%numTexTrans]));;
 	
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
