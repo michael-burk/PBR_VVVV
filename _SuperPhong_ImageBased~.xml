@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta34.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\Projects\mexico-totem\repos\SuperPhongMexico\_SuperPhong_ImageBased.v4p" systemname="_SuperPhong_ImageBased" filename="C:\Users\Michael\Desktop\Projects\superphong\_SuperPhong_ImageBased.v4p" scrollx="3360" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="D:\Dropbox\_JOBS\AKTUELL\TOTEM\VVVV\mexico-totem\repos\SuperPhongMexico\_SuperPhong_ImageBased.v4p" systemname="_SuperPhong_ImageBased" filename="C:\Users\Michael\Desktop\Projects\superphong\_SuperPhong_ImageBased.v4p" scrollx="3495" scrolly="5565" bgcolor="15329769">
    <BOUNDS type="Window" left="8250" top="150" width="18165" height="14760">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.1.0">
@@ -17,11 +17,11 @@
    </BOUNDS>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="369" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="7240" top="14600" width="990" height="720">
+   <BOUNDS type="Box" left="6715" top="14690" width="990" height="720">
    </BOUNDS>
-   <BOUNDS type="Node" left="7240" top="14600" width="0" height="0">
+   <BOUNDS type="Node" left="6715" top="14690" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.11">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.42">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -115,7 +115,7 @@
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="666">
    <BOUNDS type="Node" left="10515" top="15675" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\Black_marble_pxr128_bmp.tif">
+   <PIN pinname="Filename" slicecount="1" values="Assets\Black_marble_pxr128_bmp.tif" visible="1">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -129,7 +129,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7470" top="13350" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.76,0.19">
+   <PIN pinname="Y Input Value" slicecount="12" visible="1" values="0.88689098368166,0.278065479481593,0.184366484882776,0.830028304052539,0.921692161501851,0.872139260657132,0.234283835508395,0.64340220279526,0.877721992663574,0.429213150581345,0.509892190082464,0.08">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -157,7 +157,7 @@
    </PIN>
    <PIN pinname="Data" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Height" slicecount="1" values="3" visible="1">
+   <PIN pinname="Height" slicecount="1" visible="1" values="3">
    </PIN>
    <PIN pinname="Apply" slicecount="1" visible="1" values="1">
    </PIN>
@@ -231,7 +231,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15990" top="12180" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.3">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.09">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -279,23 +279,23 @@
    <LINK srcnodeid="876" srcpinname="Sampler" dstnodeid="877" dstpinname="Sampler">
    </LINK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="881">
-   <BOUNDS type="Node" left="10260" top="15090" width="100" height="100">
+   <BOUNDS type="Node" left="10155" top="14340" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\Flower_pattern_pxr128.tif">
+   <PIN pinname="Filename" slicecount="1" values="Assets\Flower_pattern_pxr128.tif" visible="1">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="10260" top="15090">
+   <BOUNDS type="Box" left="10155" top="14340">
    </BOUNDS>
    </NODE>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="882">
-   <BOUNDS type="Node" left="10740" top="16185" width="100" height="100">
+   <BOUNDS type="Node" left="10740" top="16080" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\Gray_granite_pxr128_normal.tif">
+   <PIN pinname="Filename" slicecount="1" values="..\..\assets\N_rock3.png" visible="1">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="10740" top="16185">
+   <BOUNDS type="Box" left="10740" top="16080">
    </BOUNDS>
    </NODE>
    <NODE id="886" systemname="SuperPhong (DX11.Effect)" filename="dx11\SuperPhong.fx" nodename="SuperPhong (DX11.Effect)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
@@ -513,7 +513,7 @@
    </BOUNDS>
    <PIN pinname="PositionXYZ" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Background Color" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|" visible="1">
+   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Layer" visible="1" slicecount="1" values="||">
    </PIN>
@@ -819,7 +819,7 @@
    <LINK srcnodeid="1021" srcpinname="Texture Out" dstnodeid="904" dstpinname="Texture In">
    </LINK>
    <NODE systemname="DynamicBuffer (DX11.Buffer Transform)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicBuffer (DX11.Buffer Transform)" componentmode="Hidden" id="1022">
-   <BOUNDS type="Node" left="10335" top="14025" width="100" height="100">
+   <BOUNDS type="Node" left="9495" top="11475" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Buffer" visible="1">
    </PIN>
@@ -829,7 +829,7 @@
    <LINK srcnodeid="1022" srcpinname="Buffer" dstnodeid="886" dstpinname="tColor,tSpec,tDiffuse,tNormal">
    </LINK>
    <NODE systemname="UniformScale (Transform)" nodename="UniformScale (Transform)" componentmode="Hidden" id="1023">
-   <BOUNDS type="Node" left="10335" top="13020" width="100" height="100">
+   <BOUNDS type="Node" left="9495" top="10470" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
@@ -919,5 +919,189 @@
    <LINK srcnodeid="1030" srcpinname="Output" dstnodeid="942" dstpinname="Background Color">
    </LINK>
    <LINK srcnodeid="1026" srcpinname="Color Output" dstnodeid="886" dstpinname="Ambient Color">
+   </LINK>
+   <NODE systemname="Dir (File)" nodename="Dir (File)" componentmode="Hidden" id="1036">
+   <BOUNDS type="Node" left="17550" top="9825" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Directory" slicecount="1" visible="1" values="Assets\stone_bump">
+   </PIN>
+   <PIN pinname="Filenames" visible="1">
+   </PIN>
+   <PIN pinname="Update" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="1037" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="17730" top="9180" width="2430" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="17730" top="9180" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="Assets\stone_color">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="Directory">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1037" srcpinname="Output String" dstnodeid="1036" dstpinname="Directory">
+   </LINK>
+   <NODE systemname="Dir (File)" nodename="Dir (File)" componentmode="Hidden" id="1039">
+   <BOUNDS type="Node" left="17850" top="10125" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Directory" slicecount="1" visible="1" values="Assets\stone_bump">
+   </PIN>
+   <PIN pinname="Filenames" visible="1">
+   </PIN>
+   <PIN pinname="Update" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="1038" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="18030" top="9480" width="2430" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="18030" top="9480" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="Assets\stone_bump">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="Directory">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1038" srcpinname="Output String" dstnodeid="1039" dstpinname="Directory">
+   </LINK>
+   <NODE systemname="Dir (File)" nodename="Dir (File)" componentmode="Hidden" id="1041">
+   <BOUNDS type="Node" left="18150" top="10425" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Directory" slicecount="1" visible="1" values="Assets\stone_bump">
+   </PIN>
+   <PIN pinname="Filenames" visible="1">
+   </PIN>
+   <PIN pinname="Update" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="1040" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="18330" top="9780" width="2430" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="18330" top="9780" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="Assets\stone_normal">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="Directory">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1040" srcpinname="Output String" dstnodeid="1041" dstpinname="Directory">
+   </LINK>
+   <LINK srcnodeid="1036" srcpinname="Filenames" dstnodeid="881" dstpinname="Filename">
+   </LINK>
+   <LINK srcnodeid="1041" srcpinname="Filenames" dstnodeid="882" dstpinname="Filename">
+   </LINK>
+   <LINK srcnodeid="1039" srcpinname="Filenames" dstnodeid="666" dstpinname="Filename">
+   </LINK>
+   <LINK srcnodeid="666" srcpinname="Texture Out" dstnodeid="886" dstpinname="SpecularMap">
+   </LINK>
+   <NODE systemname="HSCB (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\HSCB.tfx" nodename="HSCB (DX11.TextureFX)" componentmode="Hidden" id="1044">
+   <BOUNDS type="Node" left="10185" top="14865" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="Contrast" slicecount="1" values="-1.86">
+   </PIN>
+   <PIN pinname="Brightness" slicecount="1" values="1.27">
+   </PIN>
+   <PIN pinname="Saturation" slicecount="1" values="0.59">
+   </PIN>
+   <PIN pinname="Hue" slicecount="1" values="-1.01">
+   </PIN>
+   <PIN pinname="Enabled" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="881" srcpinname="Texture Out" dstnodeid="1044" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="1044" srcpinname="Texture Out" dstnodeid="886" dstpinname="Texture">
+   </LINK>
+   <NODE systemname="RandomSpread (Spreads)" nodename="RandomSpread (Spreads)" componentmode="Hidden" id="1046">
+   <BOUNDS type="Node" left="7110" top="11955" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Spread Count" slicecount="1" values="22">
+   </PIN>
+   <PIN pinname="Input" slicecount="1" values="0.4">
+   </PIN>
+   <PIN pinname="Width" slicecount="1" values="1.82">
+   </PIN>
+   </NODE>
+   <NODE systemname="Zip (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Zip (Value)" componentmode="Hidden" id="1045">
+   <BOUNDS type="Node" left="7350" top="12585" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 1XY" visible="1">
+   </PIN>
+   <PIN pinname="Input 2XY" slicecount="2" values="0.13,0.13">
+   </PIN>
+   <PIN pinname="Input 1" visible="1">
+   </PIN>
+   <PIN pinname="Input 2" slicecount="1" visible="1" values="0.08">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1046" srcpinname="Output" dstnodeid="1045" dstpinname="Input 1">
+   </LINK>
+   <LINK srcnodeid="1045" srcpinname="Output" dstnodeid="806" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1047" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="8775" top="12195" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="8775" top="12195" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.09">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1047" srcpinname="Y Output Value" dstnodeid="1045" dstpinname="Input 2">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1048" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="19545" top="8175" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="19545" top="8175" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Bang">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1048" srcpinname="Y Output Value" dstnodeid="1041" dstpinname="Update">
+   </LINK>
+   <LINK srcnodeid="1048" srcpinname="Y Output Value" dstnodeid="1039" dstpinname="Update">
+   </LINK>
+   <LINK srcnodeid="1048" srcpinname="Y Output Value" dstnodeid="1036" dstpinname="Update">
    </LINK>
    </PATCH>
