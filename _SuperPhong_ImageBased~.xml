@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta34.2.dtd" >
-   <PATCH nodename="D:\Dropbox\_JOBS\AKTUELL\TOTEM\VVVV\mexico-totem\repos\SuperPhongMexico\_SuperPhong_ImageBased.v4p" systemname="_SuperPhong_ImageBased" filename="C:\Users\Michael\Desktop\Projects\superphong\_SuperPhong_ImageBased.v4p" scrollx="3495" scrolly="5565" bgcolor="15329769">
-   <BOUNDS type="Window" left="8250" top="150" width="18165" height="14760">
+   <PATCH nodename="D:\Dropbox\_JOBS\AKTUELL\TOTEM\VVVV\mexico-totem\repos\SuperPhongMexico\_SuperPhong_ImageBased.v4p" systemname="_SuperPhong_ImageBased" filename="C:\Users\Michael\Desktop\Projects\superphong\_SuperPhong_ImageBased.v4p" scrollx="2550" scrolly="4440" bgcolor="15329769">
+   <BOUNDS type="Window" left="0" top="0" width="14610" height="16560">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.1.0">
    </PACK>
@@ -21,7 +21,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6715" top="14690" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.42">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.75">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -59,7 +59,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6030" top="10125" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,0.96">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -79,7 +79,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6435" top="10395" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,1">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,0.99">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -115,7 +115,7 @@
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="666">
    <BOUNDS type="Node" left="10515" top="15675" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\Black_marble_pxr128_bmp.tif" visible="1">
+   <PIN pinname="Filename" slicecount="1" visible="1" values="Assets\Black_marble_pxr128_bmp.tif">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -147,7 +147,7 @@
    </PIN>
    </NODE>
    <NODE systemname="DynamicTexture (DX11.Texture 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicTexture (DX11.Texture 2d)" componentmode="Hidden" id="847">
-   <BOUNDS type="Node" left="13680" top="13560" width="100" height="100">
+   <BOUNDS type="Node" left="14820" top="14565" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -163,7 +163,7 @@
    </PIN>
    </NODE>
    <NODE systemname="LinearSpread (Spreads)" nodename="LinearSpread (Spreads)" componentmode="Hidden" id="849">
-   <BOUNDS type="Node" left="14490" top="11850" width="100" height="100">
+   <BOUNDS type="Node" left="15630" top="12855" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -177,9 +177,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="850" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="13680" top="10845" width="795" height="240">
+   <BOUNDS type="Box" left="14820" top="11850" width="795" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="13680" top="10845" width="0" height="0">
+   <BOUNDS type="Node" left="14820" top="11850" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="30">
    </PIN>
@@ -193,7 +193,7 @@
    </PIN>
    </NODE>
    <NODE systemname="HSL (Color Join)" nodename="HSL (Color Join)" componentmode="Hidden" id="851">
-   <BOUNDS type="Node" left="14490" top="12345" width="100" height="100">
+   <BOUNDS type="Node" left="15630" top="13350" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -207,13 +207,13 @@
    </PIN>
    </NODE>
    <NODE systemname="RGB (Color Split Vector)" filename="%VVVV%\addonpack\lib\nodes\plugins\VVVV.Nodes.RGBVector.dll" nodename="RGB (Color Split Vector)" componentmode="Hidden" id="853">
-   <BOUNDS type="Node" left="14490" top="12885" width="100" height="100">
+   <BOUNDS type="Node" left="15630" top="13890" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input" visible="1">
    </PIN>
    <PIN pinname=" RGBA" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="14490" top="12885">
+   <BOUNDS type="Box" left="15630" top="13890">
    </BOUNDS>
    </NODE>
    <LINK srcnodeid="851" srcpinname="Output" dstnodeid="853" dstpinname="Input">
@@ -231,7 +231,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15990" top="12180" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.09">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.21">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -281,7 +281,7 @@
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="881">
    <BOUNDS type="Node" left="10155" top="14340" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\Flower_pattern_pxr128.tif" visible="1">
+   <PIN pinname="Filename" slicecount="21" visible="1" values="..\..\assets\tex\RGB\Tomate.jpg,..\..\assets\tex\RGB\Eggplant.png,..\..\assets\tex\RGB\Eggplant.png,..\..\assets\tex\RGB\Karotte.jpg,..\..\assets\tex\RGB\Radieschen.jpg,..\..\assets\tex\RGB\Tomate.jpg,..\..\assets\tex\RGB\Champignon.png,..\..\assets\tex\RGB\Zucchini.jpg,..\..\assets\tex\RGB\Zucchini.jpg,..\..\assets\tex\RGB\Zucchini.jpg,..\..\assets\tex\RGB\Tomate.jpg,..\..\assets\tex\RGB\Champignon.png,..\..\assets\tex\RGB\Zucchini.jpg,..\..\assets\tex\RGB\Radieschen.jpg,..\..\assets\tex\RGB\Paprika.jpg,..\..\assets\tex\RGB\Paprika.jpg,..\..\assets\tex\RGB\Kartoffel.jpg,..\..\assets\tex\RGB\Karotte.jpg,..\..\assets\tex\RGB\Eggplant.png,..\..\assets\tex\RGB\Champignon.png,..\..\assets\tex\RGB\Tomate.jpg">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -291,7 +291,7 @@
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="882">
    <BOUNDS type="Node" left="10740" top="16080" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="..\..\assets\N_rock3.png" visible="1">
+   <PIN pinname="Filename" slicecount="1" visible="1" values="..\..\assets\N_rock3.png">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -682,8 +682,6 @@
    </LINK>
    <LINK srcnodeid="997" srcpinname="Y Output Value" dstnodeid="942" dstpinname="Enabled">
    </LINK>
-   <LINK srcnodeid="882" srcpinname="Texture Out" dstnodeid="886" dstpinname="NormalMap">
-   </LINK>
    <NODE nodename="IOBox (Node)" componentmode="InABox" id="999" systemname="IOBox (Node)">
    <BOUNDS type="Box" left="3585" top="13035" width="795" height="240">
    </BOUNDS>
@@ -840,10 +838,6 @@
    </LINK>
    <LINK srcnodeid="989" srcpinname="Bang" dstnodeid="997" dstpinname="Y Input Value">
    </LINK>
-   <NODE systemname="Cons (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Cons (DX11.Geometry)" componentmode="Hidden" id="1025">
-   <BOUNDS type="Node" left="2865" top="9090" width="100" height="100">
-   </BOUNDS>
-   </NODE>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="1026" systemname="IOBox (Color)">
    <BOUNDS type="Box" left="8190" top="15660" width="1560" height="645">
    </BOUNDS>
@@ -878,14 +872,6 @@
    </NODE>
    <LINK srcnodeid="1027" srcpinname="Y Output Value" dstnodeid="886" dstpinname="refraction">
    </LINK>
-   <NODE systemname="Sphere (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sphere (DX11.Geometry)" componentmode="Hidden" id="1028">
-   <BOUNDS type="Node" left="3780" top="12075" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Geometry Out" visible="1">
-   </PIN>
-   <PIN pinname="Radius" slicecount="1" values="1.93">
-   </PIN>
-   </NODE>
    <LINK srcnodeid="999" srcpinname="Output Node" dstnodeid="886" dstpinname="Geometry">
    </LINK>
    <NODE systemname="HSL (Color Split)" nodename="HSL (Color Split)" componentmode="Hidden" id="1029">
@@ -905,7 +891,7 @@
    </PIN>
    <PIN pinname="Saturation" visible="1">
    </PIN>
-   <PIN pinname="Lightness" slicecount="1" values="0.1">
+   <PIN pinname="Lightness" slicecount="1" values="0.25" visible="1">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -1004,16 +990,12 @@
    </NODE>
    <LINK srcnodeid="1040" srcpinname="Output String" dstnodeid="1041" dstpinname="Directory">
    </LINK>
-   <LINK srcnodeid="1036" srcpinname="Filenames" dstnodeid="881" dstpinname="Filename">
-   </LINK>
    <LINK srcnodeid="1041" srcpinname="Filenames" dstnodeid="882" dstpinname="Filename">
    </LINK>
    <LINK srcnodeid="1039" srcpinname="Filenames" dstnodeid="666" dstpinname="Filename">
    </LINK>
-   <LINK srcnodeid="666" srcpinname="Texture Out" dstnodeid="886" dstpinname="SpecularMap">
-   </LINK>
    <NODE systemname="HSCB (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\HSCB.tfx" nodename="HSCB (DX11.TextureFX)" componentmode="Hidden" id="1044">
-   <BOUNDS type="Node" left="10185" top="14865" width="100" height="100">
+   <BOUNDS type="Node" left="10440" top="14925" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Texture In" visible="1">
    </PIN>
@@ -1021,7 +1003,7 @@
    </PIN>
    <PIN pinname="Contrast" slicecount="1" values="-1.86">
    </PIN>
-   <PIN pinname="Brightness" slicecount="1" values="1.27">
+   <PIN pinname="Brightness" slicecount="1" values="0.74">
    </PIN>
    <PIN pinname="Saturation" slicecount="1" values="0.59">
    </PIN>
@@ -1032,18 +1014,16 @@
    </NODE>
    <LINK srcnodeid="881" srcpinname="Texture Out" dstnodeid="1044" dstpinname="Texture In">
    </LINK>
-   <LINK srcnodeid="1044" srcpinname="Texture Out" dstnodeid="886" dstpinname="Texture">
-   </LINK>
    <NODE systemname="RandomSpread (Spreads)" nodename="RandomSpread (Spreads)" componentmode="Hidden" id="1046">
    <BOUNDS type="Node" left="7110" top="11955" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Spread Count" slicecount="1" values="22">
+   <PIN pinname="Spread Count" slicecount="1" values="22" visible="1">
    </PIN>
-   <PIN pinname="Input" slicecount="1" values="0.4">
+   <PIN pinname="Input" slicecount="1" values="0.18">
    </PIN>
-   <PIN pinname="Width" slicecount="1" values="1.82">
+   <PIN pinname="Width" slicecount="1" values="1.36">
    </PIN>
    </NODE>
    <NODE systemname="Zip (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Zip (Value)" componentmode="Hidden" id="1045">
@@ -1069,7 +1049,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8775" top="12195" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.09">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.16">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1103,5 +1083,55 @@
    <LINK srcnodeid="1048" srcpinname="Y Output Value" dstnodeid="1039" dstpinname="Update">
    </LINK>
    <LINK srcnodeid="1048" srcpinname="Y Output Value" dstnodeid="1036" dstpinname="Update">
+   </LINK>
+   <LINK srcnodeid="1036" srcpinname="Filenames" dstnodeid="881" dstpinname="Filename">
+   </LINK>
+   <LINK srcnodeid="1044" srcpinname="Texture Out" dstnodeid="886" dstpinname="Texture">
+   </LINK>
+   <LINK srcnodeid="666" srcpinname="Texture Out" dstnodeid="886" dstpinname="SpecularMap">
+   </LINK>
+   <LINK srcnodeid="882" srcpinname="Texture Out" dstnodeid="886" dstpinname="NormalMap">
+   </LINK>
+   <NODE systemname="Count (String)" nodename="Count (String)" componentmode="Hidden" id="1056">
+   <BOUNDS type="Node" left="13740" top="10560" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Count" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1036" srcpinname="Filenames" dstnodeid="1056" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="1056" srcpinname="Count" dstnodeid="1046" dstpinname="Spread Count">
+   </LINK>
+   <NODE systemname="RandomSpread (Spreads)" nodename="RandomSpread (Spreads)" componentmode="Hidden" id="1057">
+   <BOUNDS type="Node" left="8520" top="9780" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Spread Count" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Random Seed" slicecount="1" values="165">
+   </PIN>
+   <PIN pinname="Input" slicecount="1" values="0.5">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1056" srcpinname="Count" dstnodeid="1057" dstpinname="Spread Count">
+   </LINK>
+   <LINK srcnodeid="1057" srcpinname="Output" dstnodeid="1027" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1058" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="9165" top="5130" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="9165" top="5130" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.25">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1058" srcpinname="Y Output Value" dstnodeid="1030" dstpinname="Lightness">
    </LINK>
    </PATCH>
