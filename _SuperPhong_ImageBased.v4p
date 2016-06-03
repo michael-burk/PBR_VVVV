@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.103.dtd" >
-   <PATCH nodename="D:\Dropbox\_JOBS\AKTUELL\TOTEM\VVVV\mexico-totem\repos\SuperPhongMexico\_SuperPhong_ImageBased.v4p" systemname="_SuperPhong_ImageBased" filename="C:\Users\Michael\Desktop\Projects\superphong\_SuperPhong_ImageBased.v4p" scrollx="3810" scrolly="60" bgcolor="15329769">
-   <BOUNDS type="Window" left="0" top="0" width="16440" height="16560">
+   <PATCH nodename="D:\Dropbox\_JOBS\AKTUELL\TOTEM\VVVV\mexico-totem\repos\SuperPhongMexico\_SuperPhong_ImageBased.v4p" systemname="_SuperPhong_ImageBased" filename="C:\Users\Michael\Desktop\Projects\superphong\_SuperPhong_ImageBased.v4p" scrollx="1545" scrolly="3750" bgcolor="15329769">
+   <BOUNDS type="Window" left="0" top="0" width="16050" height="16380">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -105,7 +105,7 @@
    </PIN>
    </NODE>
    <NODE systemname="Rasterizer (DX11.RenderState)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Rasterizer (DX11.RenderState)" componentmode="Hidden" id="546">
-   <BOUNDS type="Node" left="3465" top="15990" width="100" height="100">
+   <BOUNDS type="Node" left="2700" top="15735" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Render State" visible="1" slicecount="1" values="||">
    </PIN>
@@ -1027,7 +1027,7 @@
    </PIN>
    </NODE>
    <NODE systemname="Zip (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Zip (Value)" componentmode="Hidden" id="1045">
-   <BOUNDS type="Node" left="7350" top="12585" width="100" height="100">
+   <BOUNDS type="Node" left="7155" top="12690" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input 1XY" visible="1">
    </PIN>
