@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta34.2.dtd" >
-   <PATCH nodename="C:\Users\user\Desktop\Projects\Superphong\_SuperPhong_Single.v4p" systemname="_SuperPhong_Single" filename="C:\Users\user\Desktop\Projects\Superphong\_SuperPhong_Single.v4p" scrollx="0" scrolly="5670" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\_SuperPhong_Single.v4p" systemname="_SuperPhong_Single" filename="C:\Users\user\Desktop\Projects\Superphong\_SuperPhong_Single.v4p" scrollx="0" scrolly="7395" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="2270" top="20005" width="100" height="100">
    </BOUNDS>
@@ -309,7 +309,7 @@
    </BOUNDS>
    <PIN pinname="Reload" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Filename" slicecount="1" values="Assets\punk.fbx">
+   <PIN pinname="Filename" slicecount="1" values="Assets\bubble.fbx" visible="1">
    </PIN>
    <PIN pinname="Mesh" visible="1">
    </PIN>
@@ -459,7 +459,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="11425" top="16250" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.11">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="-0.08">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -507,7 +507,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6830" top="15365" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,1">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -527,7 +527,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7435" top="15860" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,1">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -809,7 +809,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="5">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Transform In" visible="1">
    </PIN>
@@ -1109,7 +1109,7 @@
    </BOUNDS>
    <PIN pinname="Render State" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Mode" slicecount="1" values="NoCullSimple">
+   <PIN pinname="Mode" slicecount="1" values="BackCullSimple">
    </PIN>
    </NODE>
    <NODE systemname="Camera (Transform Orbit)" filename="%VVVV%\addonpack\lib\nodes\modules\Transform\Camera (Transform Orbit).v4p" nodename="Camera (Transform Orbit)" componentmode="Hidden" id="1">
@@ -1149,7 +1149,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5200" top="13875" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="-1.68,-0.25,0">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1227,7 +1227,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="5">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="406" dstpinname="Data">
@@ -1375,7 +1375,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="11895" top="12135" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.6,1">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.71,0.1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1605,11 +1605,11 @@
    </BOUNDS>
    <PIN pinname="Sampler" visible="1">
    </PIN>
-   <PIN pinname="Address U" slicecount="1" values="Wrap" visible="1">
+   <PIN pinname="Address U" slicecount="1" visible="1" values="Wrap">
    </PIN>
-   <PIN pinname="Address V" slicecount="1" values="Clamp" visible="1">
+   <PIN pinname="Address V" slicecount="1" visible="1" values="Clamp">
    </PIN>
-   <PIN pinname="Address W" slicecount="1" values="Clamp" visible="1">
+   <PIN pinname="Address W" slicecount="1" visible="1" values="Clamp">
    </PIN>
    <PIN pinname="Comparison" slicecount="1" values="Greater">
    </PIN>
@@ -1667,9 +1667,9 @@
    </PIN>
    <PIN pinname="CubeMap Refl" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Ambient Color" slicecount="1" values="|0.36197,0.00059,0.12833,1.00000|" visible="1">
+   <PIN pinname="Ambient Color" slicecount="1" visible="1" values="|0.36197,0.00059,0.12833,1.00000|">
    </PIN>
-   <PIN pinname="Rim Color" slicecount="1" values="|0.00000,0.00000,0.00000,0.00000|">
+   <PIN pinname="Rim Color" slicecount="1" values="|0.14164,0.30048,0.69787,0.00000|">
    </PIN>
    <PIN pinname="Iridescence" visible="1" slicecount="1" values="||">
    </PIN>
@@ -1677,10 +1677,10 @@
    </PIN>
    <PIN pinname="ReflectionMode: Mul/Add" slicecount="1" values="1">
    </PIN>
+   <PIN pinname="Render State" visible="1" slicecount="1" values="||">
+   </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="886" dstpinname="NormalRotation">
-   </LINK>
-   <LINK srcnodeid="546" srcpinname="Render State" dstnodeid="886" dstpinname="Render State">
    </LINK>
    <LINK srcnodeid="242" srcpinname="Sampler" dstnodeid="886" dstpinname="g_samLinear">
    </LINK>
@@ -1821,7 +1821,7 @@
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="891">
    <BOUNDS type="Node" left="22530" top="15720" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\Black_marble_pxr128_normal.tif">
+   <PIN pinname="Filename" slicecount="1" values="Assets\stone_normal\Black_marble_pxr128_normal.tif">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -1963,7 +1963,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="2110" top="20860" width="4000" height="3000">
    </BOUNDS>
-   <BOUNDS type="Window" left="150" top="0" width="12600" height="9825">
+   <BOUNDS type="Window" left="-28920" top="-1980" width="29040" height="18240">
    </BOUNDS>
    <PIN pinname="Depth Buffer Mode" slicecount="1" values="Standard">
    </PIN>
@@ -2188,28 +2188,6 @@
    </LINK>
    <LINK srcnodeid="877" srcpinname="Texture Out" dstnodeid="878" dstpinname="Texture In">
    </LINK>
-   <NODE id="872" systemname="Torus (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Torus (DX11.Geometry)" componentmode="Hidden">
-   <BOUNDS type="Node" left="2955" top="12270" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Geometry Out" visible="1">
-   </PIN>
-   <PIN pinname="Resolution X" slicecount="1" visible="1" values="34">
-   </PIN>
-   <PIN pinname="Resolution Y" slicecount="1" visible="1" values="35">
-   </PIN>
-   <BOUNDS type="Box" left="2955" top="12270">
-   </BOUNDS>
-   <PIN pinname="Thickness" slicecount="1" visible="1" values="0.56">
-   </PIN>
-   <PIN pinname="Phase Rotation" slicecount="1" values="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="872" srcpinname="Geometry Out" dstnodeid="886" dstpinname="Geometry">
-   </LINK>
-   <LINK srcnodeid="926" srcpinname="Y Output Value" dstnodeid="872" dstpinname="Resolution Y">
-   </LINK>
-   <LINK srcnodeid="926" srcpinname="Y Output Value" dstnodeid="872" dstpinname="Resolution X">
-   </LINK>
    <LINK srcnodeid="942" srcpinname="Texture Out" dstnodeid="786" dstpinname="Texture Cube">
    </LINK>
    <NODE systemname="OnOpen (VVVV)" nodename="OnOpen (VVVV)" componentmode="Hidden" id="989">
@@ -2217,7 +2195,7 @@
    </BOUNDS>
    <PIN pinname="Bang" visible="1">
    </PIN>
-   <PIN pinname="Simulate" slicecount="1" values="0" visible="1">
+   <PIN pinname="Simulate" slicecount="1" visible="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="934" srcpinname="Texture Out" dstnodeid="904" dstpinname="Texture In">
@@ -2245,15 +2223,65 @@
    <LINK srcnodeid="786" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 6">
    </LINK>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="994" systemname="IOBox (Color)">
-   <BOUNDS type="Box" left="12525" top="17235" width="2460" height="1170">
+   <BOUNDS type="Box" left="12435" top="15000" width="1185" height="870">
    </BOUNDS>
-   <BOUNDS type="Node" left="12525" top="17235" width="0" height="0">
+   <BOUNDS type="Node" left="12435" top="15000" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.20686,0.00000,0.00018,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="994" srcpinname="Color Output" dstnodeid="886" dstpinname="Ambient Color">
    </LINK>
    <LINK srcnodeid="989" srcpinname="Bang" dstnodeid="871" dstpinname="Y Input Value">
+   </LINK>
+   <NODE id="872" systemname="Sphere (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sphere (DX11.Geometry)" componentmode="Hidden">
+   <BOUNDS type="Node" left="2955" top="12270" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Geometry Out" visible="1">
+   </PIN>
+   <PIN pinname="Resolution X" slicecount="1" visible="1" values="34">
+   </PIN>
+   <PIN pinname="Resolution Y" slicecount="1" visible="1" values="35">
+   </PIN>
+   <BOUNDS type="Box" left="2955" top="12270">
+   </BOUNDS>
+   <PIN pinname="Thickness" slicecount="1" visible="1" values="0.56">
+   </PIN>
+   <PIN pinname="Phase Rotation" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="926" srcpinname="Y Output Value" dstnodeid="872" dstpinname="Resolution Y">
+   </LINK>
+   <LINK srcnodeid="926" srcpinname="Y Output Value" dstnodeid="872" dstpinname="Resolution X">
+   </LINK>
+   <LINK srcnodeid="891" srcpinname="Texture Out" dstnodeid="886" dstpinname="NormalMap">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="995" systemname="IOBox (String)">
+   <BOUNDS type="Box" left="3090" top="13440" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3090" top="13440" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="1" values="..\..\..\..\..\vvvv\vvvv_45beta34.2_x64\lib\assets\geometries\astroBoy_walk.dae">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="File Mask" slicecount="1" values="|All Files (*.*)||*.*|">
+   </PIN>
+   <PIN pinname="Maximum Characters" slicecount="1" values="-1">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="Filename">
+   </PIN>
+   <PIN pinname="Output String" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="995" srcpinname="Output String" dstnodeid="66" dstpinname="Filename" linkstyle="VHV">
+   <LINKPOINT x="3105" y="14483">
+   </LINKPOINT>
+   <LINKPOINT x="2790" y="14483">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="546" srcpinname="Render State" dstnodeid="886" dstpinname="Render State">
+   </LINK>
+   <LINK srcnodeid="67" srcpinname="Output" dstnodeid="886" dstpinname="Geometry">
    </LINK>
    </PATCH>

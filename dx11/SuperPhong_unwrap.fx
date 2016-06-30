@@ -104,6 +104,10 @@ struct vs2ps
 
 };
 
+
+
+
+
 // -----------------------------------------------------------------------------
 // VERTEXSHADERS
 // -----------------------------------------------------------------------------
@@ -144,7 +148,6 @@ vs2ps VS_Bump(
 //	position (projected)
     Out.PosWVP  = mul(PosO, tWVP);
 
-	
 	Out.TexCd = TexCd;
     Out.ViewDirV = -normalize(mul(PosO, tWV).xyz);
 	
@@ -152,49 +155,6 @@ vs2ps VS_Bump(
     return Out;
 }
 
-vs2ps VS_BumpUnwrap(
-    float4 PosO: POSITION,
-    float3 NormO: NORMAL,
-    float4 TexCd : TEXCOORD0,
-//  BumpMap (Remove last Comma if commented)
-///////////////////////////////////////
-	float3 tangent : TANGENT,
-    float3 binormal : BINORMAL
-///////////////////////////////////////
-)
-{
-    //inititalize all fields of output struct with 0
-    vs2ps Out = (vs2ps)0;
-
-    Out.PosW = mul(PosO, tW).xyz;
-	Out.PosO = PosO;
-	
-	Out.NormW = mul(NormO, NormalTransform);
-	
-    //normal in view space
-    Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
-
-//  BumpMap
-///////////////////////////////////////
-	// Calculate the tangent vector against the world matrix only and then normalize the final value.
-    Out.tangent = mul(tangent, tW);
-    Out.tangent = normalize(Out.tangent);
-
-    // Calculate the binormal vector against the world matrix only and then normalize the final value.
-    Out.binormal = mul(binormal, tW);
-    Out.binormal = normalize(Out.binormal);
-///////////////////////////////////////
-
-//	position (UV Projected)
-   // Out.PosWVP  = mul(PosO, tWVP);
-	Out.PosWVP = float4((float2(TexCd.x,TexCd.y)-0.5)*2*float2(1,-1),0,1);
-	
-	Out.TexCd = TexCd;
-    Out.ViewDirV = -normalize(mul(PosO, tWV).xyz);
-	
-	
-    return Out;
-}
 
 
 
@@ -245,14 +205,16 @@ vs2ps VSUnwrap(
     //normal in view space
     Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
 
-//	position (UV Projected)
+//	position (projected)
    // Out.PosWVP  = mul(PosO, tWVP);
+	
 	Out.PosWVP = float4((float2(TexCd.x,TexCd.y)-0.5)*2*float2(1,-1),0,1);
 	
 	Out.TexCd = TexCd;
     Out.ViewDirV = -normalize(mul(PosO, tWV).xyz);	
     return Out;
 }
+
 // -----------------------------------------------------------------------------
 // PIXELSHADERS:
 // -----------------------------------------------------------------------------
@@ -293,12 +255,12 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	float4 bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[3%numTexTrans]));;
 	
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
-	
-    float3 bumpNormal = (bumpMap.x * In.tangent) + (bumpMap.y * In.binormal) + (bumpMap.z * In.NormW);
+	// Used NormW here before bump fix: why?
+    float3 bumpNormal = (bumpMap.x * In.tangent) + (bumpMap.y * In.binormal) + (bumpMap.z * (In.NormV));
 
-    bumpNormal = normalize(bumpNormal);
 	
-	In.NormV += bumpNormal*bumpy;
+	In.NormV += (bumpNormal*bumpy);
+	In.NormV = normalize(In.NormV);
 	
     float3 Tn = normalize(In.tangent);
     float3 Bn = normalize(In.binormal);
@@ -694,14 +656,7 @@ technique10 Superphong
 		SetPixelShader( CompileShader( ps_5_0, PS_Superphong() ) );
 	}
 }
-technique10 Superphong_Unwrap
-{
-	pass P0
-	{
-		SetVertexShader( CompileShader( vs_4_0, VSUnwrap() ) );
-		SetPixelShader( CompileShader( ps_5_0, PS_Superphong() ) );
-	}
-}
+
 technique10 Superphong_Bump
 {
 	pass P0
@@ -711,11 +666,11 @@ technique10 Superphong_Bump
 	}
 }
 
-technique10 Superphong_BumpUnwrap
+technique10 SuperphongUnwrap
 {
 	pass P0
 	{
-		SetVertexShader( CompileShader( vs_4_0, VS_BumpUnwrap() ) );
-		SetPixelShader( CompileShader( ps_5_0, PS_SuperphongBump() ) );
+		SetVertexShader( CompileShader( vs_4_0, VSUnwrap() ) );
+		SetPixelShader( CompileShader( ps_5_0, PS_Superphong() ) );
 	}
 }
