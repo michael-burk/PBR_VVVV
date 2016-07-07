@@ -38,7 +38,7 @@ cbuffer cbPerObject : register (b1)
 	float bumpy = 1;
 	float2 reflective <String uiname="Reflective/Diffuse";float2 uimin=0.0; float uimax=1;> = 1 ;
 	bool refraction <bool visible=false;> = false;
-	float refractionIndex <bool visible=false;> = 1.2;
+	StructuredBuffer <float> refractionIndex <bool visible=false;>; //= float3(1.2,1.2,1.2);
 	bool BPCM <bool visible=false;> = false;
 	float3 cubeMapPos  <bool visible=false;string uiname="CubeMapPos"; > = float3(0,0,0);
 	StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="CubeMapBounds";>;
@@ -69,6 +69,8 @@ cbuffer cbPerObject : register (b1)
 	TextureCube cubeTexRefl <string uiname="CubeMap Refl"; >;
 	TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
 	Texture2DArray lightMap <string uiname="SpotTex"; >;
+
+	
 
 
 #include "PhongPoint.fxh"
@@ -260,6 +262,13 @@ vs2ps VSUnwrap(
 
 float4 PS_SuperphongBump(vs2ps In): SV_Target
 {	
+	// wavelength colors
+	const half4 colors[3] =
+        {
+    	{ 1, 0, 0, 1 },
+    	{ 0, 1, 0, 1 },
+    	{ 0, 0, 1, 1 },
+	};
 	
 	float3 LightDirW;
 	float3 LightDirV;
@@ -312,7 +321,8 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 ///////////////////////////////////////
 	float3 reflVect = -reflect(Vn,Nb);
 	float3 reflVecNorm = Nn-reflect(Nn,Nb);
-	float3 refrVect = refract(-Vn, Nb , refractionIndex);
+	float3 refrVect = refract(-Vn, Nb , refractionIndex[0]);
+	
 ///////////////////////////////////////
 	
 
@@ -353,6 +363,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 			rbmax = (cubeMapBoxBounds[0] - (In.PosW))/refrVect;
 			rbmin = (cubeMapBoxBounds[1] - (In.PosW))/refrVect;
 			
+
 			rbminmax = (refrVect>0.0f)?rbmax:rbmin;
 			
 			fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);
@@ -375,7 +386,17 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	
 		reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
 		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
-		if(refraction) refrColor = cubeTexRefl.Sample(g_samLinear,float3(refrVect.x, refrVect.y, refrVect.z));
+		
+		if(refraction){
+			//refrColor = cubeTexRefl.Sample(g_samLinear,float3(refrVectR.x, refrVectR.x, refrVectR.x));
+			    for(int r=0; r<3; r++) {
+			    	float3 refrVect = refract(-Vn, Nb , refractionIndex[r]);
+			    	//half3 T = refract2(-V, N, etas[i], fail);
+			    	refrColor += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
+				}
+		}
+		
+	
 		reflColor = lerp(refrColor,reflColor,fresRefl);
 
 		float inverseDotView = 1.0 - max(dot(Nb,Vn),0.0);
@@ -476,6 +497,13 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 
 float4 PS_Superphong(vs2ps In): SV_Target
 {	
+		// wavelength colors
+	const half4 colors[3] =
+        {
+    	{ 1, 0, 0, 1 },
+    	{ 0, 1, 0, 1 },
+    	{ 0, 0, 1, 1 },
+	};
 	
 	float3 LightDirW;
 	float3 LightDirV;
@@ -517,7 +545,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	float3 reflVect = -reflect(Vn,Nn);
 	float3 reflVecNorm = Nn;
-	float3 refrVect = refract(-Vn, Nn , refractionIndex);
+	float3 refrVect = refract(-Vn, Nn , refractionIndex[0]);
 	
 	
 // Box Projected CubeMap
@@ -575,7 +603,15 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 		reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
 		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
-		if(refraction) refrColor = cubeTexRefl.Sample(g_samLinear,float3(refrVect.x, refrVect.y, refrVect.z));
+		//if(refraction) refrColor = cubeTexRefl.Sample(g_samLinear,float3(refrVect.x, refrVect.y, refrVect.z));
+		if(refraction){
+			//refrColor = cubeTexRefl.Sample(g_samLinear,float3(refrVectR.x, refrVectR.x, refrVectR.x));
+			    for(int r=0; r<3; r++) {
+			    	float3 refrVect = refract(-Vn, Nn , refractionIndex[r]);
+			    	//half3 T = refract2(-V, N, etas[i], fail);
+			    	refrColor += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
+				}
+		}
 		reflColor = lerp(refrColor,reflColor,fresRefl);
 		
 	
