@@ -90,10 +90,10 @@ struct vs2ps
     float4 PosWVP: SV_POSITION;
     float4 TexCd : TEXCOORD0;
 	float4 PosO: TEXCOORD1;
-    float3 NormV: TEXCOORD2;
-	float3 ViewDirV: TEXCOORD3;
-	float3 PosW: TEXCOORD4;
-	float3 NormW : TEXCOORD5;
+	float3 ViewDirV: TEXCOORD2;
+	float3 PosW: TEXCOORD3;
+	float3 NormW : TEXCOORD4;
+	float3 NormO : TEXCOORD5;
 
 	
 //  BumpMap
@@ -126,11 +126,12 @@ vs2ps VS_Bump(
 
     Out.PosW = mul(PosO, tW).xyz;
 	Out.PosO = PosO;
+	Out.NormO = NormO;
 	
 	Out.NormW = mul(NormO, NormalTransform);
 	
     //normal in view space
-    Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
+  //  Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
 
 //  BumpMap
 ///////////////////////////////////////
@@ -172,9 +173,9 @@ vs2ps VS_BumpUnwrap(
 	Out.PosO = PosO;
 	
 	Out.NormW = mul(NormO, NormalTransform);
-	
+
     //normal in view space
-    Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
+   // Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
 
 //  BumpMap
 ///////////////////////////////////////
@@ -216,7 +217,7 @@ vs2ps VS(
 	
 	
     //normal in view space
-    Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
+    //Out.NormV = normalize(mul(mul(Out.NormW, (float3x3)tWIT),(float3x3)tV).xyz);
 
 
 //	position (projected)
@@ -243,9 +244,8 @@ vs2ps VSUnwrap(
     Out.PosW = mul(PosO, tW).xyz;
     Out.NormW = mul(NormO, NormalTransform);
 	
-	
     //normal in view space
-    Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
+   // Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
 
 //	position (UV Projected)
    // Out.PosWVP  = mul(PosO, tWVP);
@@ -303,15 +303,19 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
-    float3 bumpNormal = (bumpMap.x * In.tangent) + (bumpMap.y * In.binormal) + (bumpMap.z * In.NormW);
+    float3 bumpNormal = (bumpMap.x * In.tangent) + (bumpMap.y * In.binormal) + (bumpMap.z * In.NormO);
 
-    bumpNormal = normalize(bumpNormal);
 	
-	In.NormV += bumpNormal*bumpy;
+	In.NormO += normalize(bumpNormal)*bumpy;
+	
+	float3 NormV =  normalize(mul(mul(In.NormO, (float3x3)tWIT),(float3x3)tV).xyz);
+	//In.NormV += normalize(bumpNormal)*bumpy;
 	
     float3 Tn = normalize(In.tangent);
     float3 Bn = normalize(In.binormal);
 	float3 Nb = Nn + (bumpMap.x * Tn + bumpMap.y * Bn)*bumpy;
+	
+	//In.NormV *= normalize(Nb);
 ///////////////////////////////////////
 	
 // Reflection and RimLight
@@ -319,6 +323,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	
 //BumpMap
 ///////////////////////////////////////
+
 	float3 reflVect = -reflect(Vn,Nb);
 	float3 reflVecNorm = Nn-reflect(Nn,Nb);
 	float3 refrVect = refract(-Vn, Nb , refractionIndex[0]);
@@ -439,7 +444,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 		switch (lightType[i]){
 			case 0:
 				LightDirV = normalize(-mul(lPos[i], tV));
-				newCol += PhongDirectional(In.NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+				newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 				break;
 
 			
@@ -449,17 +454,19 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPoint(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+			  		newCol += PhongPoint(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 					
 				}
 			
 				break;
 			
 			case 2:
-
+				
 				if(length(lightToObject) < spotRange[i%numSpotRange]){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
+					
+					
 					
 					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
@@ -469,7 +476,8 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPointSpot(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor).rgb;
+
+			  		newCol += PhongPointSpot(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor).rgb;
 					
 				}
 			
@@ -519,7 +527,9 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float4 col = texture2d.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[0%numTexTrans]));
 	float4 specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[1%numTexTrans]));
 	float4 diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[2%numTexTrans]));
-
+	
+	float3 NormV =  normalize(mul(mul(In.NormO, (float3x3)tWIT),(float3x3)tV).xyz);
+	
 	//float4 col = texture2d.Sample(g_samLinear, In.TexCd.xy);
 	//float4 specIntensity = specTex.Sample(g_samLinear, In.TexCd.xy);
 	//float4 diffuse = diffuseTex.Sample(g_samLinear, In.TexCd.xy);
@@ -658,7 +668,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		switch (lightType[i]){
 			case 0:
 				LightDirV = normalize(-mul(lPos[i], tV));
-				newCol += PhongDirectional(In.NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+				newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 				break;
 
 			
@@ -668,7 +678,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPoint(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+			  		newCol += PhongPoint(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 					
 				}
 			
@@ -689,7 +699,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPointSpot(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor).rgb;
+			  		newCol += PhongPointSpot(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor).rgb;
 					
 				}
 			
