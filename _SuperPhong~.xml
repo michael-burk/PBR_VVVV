@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta34.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\_SuperPhong.v4p" systemname="SuperPhong_3" filename="C:\Users\Michael\Desktop\SuperPhong_Final - Refl\SuperPhong_3.v4p" scrollx="375" scrolly="8025" bgcolor="15329769">
+   <PATCH nodename="C:\Users\PC-2\Desktop\superphong\_SuperPhong.v4p" systemname="SuperPhong_3" filename="C:\Users\Michael\Desktop\SuperPhong_Final - Refl\SuperPhong_3.v4p" scrollx="14640" scrolly="6120" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="2270" top="20005" width="100" height="100">
    </BOUNDS>
@@ -300,7 +300,7 @@
    </LINK>
    <LINK srcnodeid="46" srcpinname="Y Output Value" dstnodeid="44" dstpinname="Yaw">
    </LINK>
-   <BOUNDS type="Window" left="-120" top="-120" width="29040" height="16440">
+   <BOUNDS type="Window" left="14295" top="0" width="14610" height="17505">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.1.0">
    </PACK>
@@ -835,7 +835,7 @@
    </PIN>
    <PIN pinname="Saturation" visible="1" slicecount="1" values="0.662165520669373">
    </PIN>
-   <PIN pinname="Lightness" visible="1" slicecount="1" values="0">
+   <PIN pinname="Lightness" visible="1" slicecount="1" values="0.07">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -2109,7 +2109,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="2110" top="20860" width="4000" height="3000">
    </BOUNDS>
-   <BOUNDS type="Window" left="-28800" top="-1860" width="29040" height="18000">
+   <BOUNDS type="Window" left="0" top="375" width="14160" height="11910">
    </BOUNDS>
    <PIN pinname="Depth Buffer Mode" slicecount="1" values="Standard">
    </PIN>
@@ -2151,9 +2151,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="933" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="12120" top="15315" width="795" height="720">
+   <BOUNDS type="Box" left="14055" top="14820" width="795" height="720">
    </BOUNDS>
-   <BOUNDS type="Node" left="12120" top="15315" width="0" height="0">
+   <BOUNDS type="Node" left="14055" top="14820" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0.85,0.8,0.7">
    </PIN>
@@ -2179,7 +2179,7 @@
    </BOUNDS>
    <PIN pinname="refraction" visible="1" pintype="Input" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Ambient Color" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|" visible="1">
+   <PIN pinname="Ambient Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="refractionIndexXYZ" visible="1" pintype="Input">
    </PIN>
@@ -2320,8 +2320,10 @@
    </NODE>
    <LINK srcnodeid="936" srcpinname="Buffer" dstnodeid="934" dstpinname="refractionIndex">
    </LINK>
-   <LINK srcnodeid="933" srcpinname="Y Output Value" dstnodeid="936" dstpinname="Data">
-   <LINKPOINT x="12660" y="14820">
+   <LINK srcnodeid="933" srcpinname="Y Output Value" dstnodeid="936" dstpinname="Data" linkstyle="VHV">
+   <LINKPOINT x="14070" y="15023">
+   </LINKPOINT>
+   <LINKPOINT x="13635" y="15023">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="67" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
@@ -2341,7 +2343,7 @@
    </PIN>
    <PIN pinname="X Input Value" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" values="0" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="941" srcpinname="Y Output Value" dstnodeid="871" dstpinname="Y Input Value">
@@ -2361,5 +2363,11 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="953" srcpinname="Color Output" dstnodeid="934" dstpinname="Ambient Color">
+   </LINK>
+   <NODE systemname="Window (Windows)" nodename="Window (Windows)" componentmode="Hidden" id="954">
+   <BOUNDS type="Node" left="4995" top="21330" width="100" height="100">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="931" srcpinname="Bang" dstnodeid="941" dstpinname="Y Input Value">
    </LINK>
    </PATCH>

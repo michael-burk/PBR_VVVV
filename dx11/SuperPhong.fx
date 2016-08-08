@@ -214,7 +214,7 @@ vs2ps VS(
 	Out.PosO = PosO;
     Out.PosW = mul(PosO, tW).xyz;
     Out.NormW = mul(NormO, NormalTransform);
-	
+	Out.NormO = NormO;
 	
     //normal in view space
     //Out.NormV = normalize(mul(mul(Out.NormW, (float3x3)tWIT),(float3x3)tV).xyz);
@@ -243,7 +243,7 @@ vs2ps VSUnwrap(
 	//Out.PosO = float4((TexCd.xy-0.5)*2*float2(1,-1),0,1);
     Out.PosW = mul(PosO, tW).xyz;
     Out.NormW = mul(NormO, NormalTransform);
-	
+	Out.NormO = NormO;
     //normal in view space
    // Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
 
