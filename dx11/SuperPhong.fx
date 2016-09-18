@@ -47,7 +47,7 @@ cbuffer cbPerObject : register (b1)
 
 	StructuredBuffer <float4x4> texTransforms <string uiname="tColor,tSpec,tDiffuse,tNormal";>;
 	StructuredBuffer <float4x4> LightVP <string uiname="LightView";>;
-	StructuredBuffer <float> spotRange <string uiname="spotRange";>;
+	StructuredBuffer <float> lightRange <string uiname="LightRange";>;
 	StructuredBuffer <int> lightType <string uiname="Directional/Point/Spot";>;	
 	StructuredBuffer <float3> lPos <string uiname="lPos";>;
 
@@ -230,31 +230,6 @@ vs2ps VS(
     return Out;
 }
 
-vs2ps VSUnwrap(
-    float4 PosO: POSITION,
-    float3 NormO: NORMAL,
-    float4 TexCd : TEXCOORD0)
-{
-    //inititalize all fields of output struct with 0
-    vs2ps Out = (vs2ps)0;
-	
-	Out.PosO = PosO;
-	//Out.PosO = float4((TexCd.xy-0.5)*2*float2(1,-1),0,1);
-    Out.PosW = mul(PosO, tW).xyz;
-    Out.NormW = mul(NormO, NormalTransform);
-	
-	
-    //normal in view space
-    Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
-
-//	position (UV Projected)
-   // Out.PosWVP  = mul(PosO, tWVP);
-	Out.PosWVP = float4((float2(TexCd.x,TexCd.y)-0.5)*2*float2(1,-1),0,1);
-	
-	Out.TexCd = TexCd;
-    Out.ViewDirV = -normalize(mul(PosO, tWV).xyz);	
-    return Out;
-}
 // -----------------------------------------------------------------------------
 // PIXELSHADERS:
 // -----------------------------------------------------------------------------
@@ -344,20 +319,18 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 		float3 posonbox = In.PosW + reflVect*fa;
 		reflVect = posonbox - cubeMapPos;
 		
-		//if(cubeMapMode == 1){
 				
 		
-			rbmax = (cubeMapBoxBounds[0] - (In.PosW))/reflVecNorm;
-			rbmin = (cubeMapBoxBounds[1] - (In.PosW))/reflVecNorm;
+		rbmax = (cubeMapBoxBounds[0] - (In.PosW))/reflVecNorm;
+		rbmin = (cubeMapBoxBounds[1] - (In.PosW))/reflVecNorm;
+		
+		rbminmax = (reflVecNorm>0.0f)?rbmax:rbmin;
+		
+		fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);
+		
+		posonbox = In.PosW + reflVecNorm*fa;
+		reflVecNorm = posonbox - cubeMapPos;
 			
-			rbminmax = (reflVecNorm>0.0f)?rbmax:rbmin;
-			
-			fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);
-			
-			posonbox = In.PosW + reflVecNorm*fa;
-			reflVecNorm = posonbox - cubeMapPos;
-			
-		//}
 		
 		if(refraction){
 			rbmax = (cubeMapBoxBounds[0] - (In.PosW))/refrVect;
@@ -388,10 +361,9 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
 		
 		if(refraction){
-			//refrColor = cubeTexRefl.Sample(g_samLinear,float3(refrVectR.x, refrVectR.x, refrVectR.x));
+				float3 refrVect;
 			    for(int r=0; r<3; r++) {
-			    	float3 refrVect = refract(-Vn, Nb , refractionIndex[r]);
-			    	//half3 T = refract2(-V, N, etas[i], fail);
+			    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
 			    	refrColor += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
 				}
 		}
@@ -413,7 +385,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	lightMap.GetDimensions(d,d,textureCount);
 	
 	uint numSpotRange, dummySpot;
-    spotRange.GetDimensions(numSpotRange, dummySpot);
+    lightRange.GetDimensions(numSpotRange, dummySpot);
 	
 	uint numlDiff, dummyDiff;
     lDiff.GetDimensions(numlDiff, dummyDiff);
@@ -445,11 +417,11 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 			
 			case 1:
 				
-				if(length(lightToObject) < spotRange[i%numSpotRange]){	
+				if(length(lightToObject) < lightRange[i%numSpotRange]){	
 					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPoint(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+			  		newCol += PhongPoint(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numSpotRange]).rgb;
 					
 				}
 			
@@ -457,7 +429,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 			
 			case 2:
 
-				if(length(lightToObject) < spotRange[i%numSpotRange]){
+				if(length(lightToObject) < lightRange[i%numSpotRange]){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
@@ -469,7 +441,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPointSpot(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor).rgb;
+			  		newCol += PhongPointSpot(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numSpotRange]).rgb;
 					
 				}
 			
@@ -564,7 +536,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		float3 posonbox = In.PosW + reflVect*fa;
 		reflVect = posonbox - cubeMapPos;
 		
-	//	if(cubeMapMode == 1){
 				
 		
 			rbmax = (cubeMapBoxBounds[0] - (In.PosW))/reflVecNorm;
@@ -577,7 +548,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			posonbox = In.PosW + reflVecNorm*fa;
 			reflVecNorm = posonbox - cubeMapPos;
 			
-		//}
 		
 		if(refraction){
 			rbmax = (cubeMapBoxBounds[0] - (In.PosW))/refrVect;
@@ -603,12 +573,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 		reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
 		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
-		//if(refraction) refrColor = cubeTexRefl.Sample(g_samLinear,float3(refrVect.x, refrVect.y, refrVect.z));
 		if(refraction){
-			//refrColor = cubeTexRefl.Sample(g_samLinear,float3(refrVectR.x, refrVectR.x, refrVectR.x));
+				float3 refrVect;
 			    for(int r=0; r<3; r++) {
-			    	float3 refrVect = refract(-Vn, Nn , refractionIndex[r]);
-			    	//half3 T = refract2(-V, N, etas[i], fail);
+			    	refrVect = refract(-Vn, Nn , refractionIndex[r]);
 			    	refrColor += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
 				}
 		}
@@ -633,7 +601,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	lightMap.GetDimensions(d,d,textureCount);
 	
 	uint numSpotRange, dummySpot;
-    spotRange.GetDimensions(numSpotRange, dummySpot);
+    lightRange.GetDimensions(numSpotRange, dummySpot);
 	
 	uint numlDiff, dummyDiff;
     lDiff.GetDimensions(numlDiff, dummyDiff);
@@ -664,11 +632,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 			case 1:
 				
-				if(length(lightToObject) < spotRange[i%numSpotRange]){	
+				if(length(lightToObject) < lightRange[i%numSpotRange]){	
 					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPoint(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+			  		newCol += PhongPoint(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numSpotRange]).rgb;
 					
 				}
 			
@@ -676,7 +644,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 			case 2:
 
-				if(length(lightToObject) < spotRange[i%numSpotRange]){
+				if(length(lightToObject) < lightRange[i%numSpotRange]){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
@@ -689,7 +657,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPointSpot(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor).rgb;
+			  		newCol += PhongPointSpot(In.PosW, In.NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numSpotRange]).rgb;
 					
 				}
 			
@@ -730,28 +698,11 @@ technique10 Superphong
 		SetPixelShader( CompileShader( ps_5_0, PS_Superphong() ) );
 	}
 }
-technique10 Superphong_Unwrap
-{
-	pass P0
-	{
-		SetVertexShader( CompileShader( vs_4_0, VSUnwrap() ) );
-		SetPixelShader( CompileShader( ps_5_0, PS_Superphong() ) );
-	}
-}
 technique10 Superphong_Bump
 {
 	pass P0
 	{
 		SetVertexShader( CompileShader( vs_4_0, VS_Bump() ) );
-		SetPixelShader( CompileShader( ps_5_0, PS_SuperphongBump() ) );
-	}
-}
-
-technique10 Superphong_BumpUnwrap
-{
-	pass P0
-	{
-		SetVertexShader( CompileShader( vs_4_0, VS_BumpUnwrap() ) );
 		SetPixelShader( CompileShader( ps_5_0, PS_SuperphongBump() ) );
 	}
 }

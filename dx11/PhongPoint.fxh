@@ -8,7 +8,7 @@
 //float4 lSpec <bool color=true; String uiname="Specular Color";> = {0.35, 0.35, 0.35, 1};
 float lPower <String uiname="Power"; float uimin=0.0;> = 25.0;     //shininess of specular highlight
 //float specPower <String uiname="SpecPower"; float uimin=0.01;> = 1.0;
-float lRange <String uiname="Light Range"; float uimin=0.0;> = 10.0;
+//float lRange <String uiname="Light Range"; float uimin=0.0;> = 10.0;
 
 
 
@@ -16,7 +16,7 @@ float lRange <String uiname="Light Range"; float uimin=0.0;> = 10.0;
 
 //phong point function
 float4 PhongPoint(float3 PosW, float3 NormV, float3 ViewDirV, float3 LightDirV, float3 lightPos, float lAtt0,
-				  float lAtt1, float lAtt2, float4 lDiff, float4 lSpec, float specIntensity)
+				  float lAtt1, float lAtt2, float4 lDiff, float4 lSpec, float specIntensity,float lRange)
 {
 
     float d = distance(PosW, lightPos);
