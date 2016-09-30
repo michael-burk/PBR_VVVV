@@ -28,6 +28,7 @@ cbuffer cbPerObject : register (b1)
 	float2 Kr <String uiname="Fresnel Rim/Refl Max ";float uimin=0.0; float uimax=6.0;> = 0.5 ;
 	float2 FresExp <String uiname="Fresnel Rim/Refl Exp ";float uimin=0.0; float uimax=30;> = 5 ;
 	float3 camPos;
+	float3 LightDir;
 	float4 RimColor <bool color = true; string uiname="Rim Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 Color <bool color = true; string uiname="Color Overlay";>  = { 1.0f,1.0f,1.0f,1.0f };
 	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
@@ -385,8 +386,8 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 				break;
 			
 			case 2:
-
-				if(length(lightToObject) < lightRange[i%numSpotRange]){
+			
+				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,LightDir) < 0){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
@@ -603,7 +604,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 			case 2:
 
-				if(length(lightToObject) < lightRange[i%numSpotRange]){
+				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,LightDir) < 0){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
@@ -886,7 +887,7 @@ float4 PS_SuperphongAutoNormal(vs2ps In): SV_Target
 			
 			case 2:
 
-				if(length(lightToObject) < lightRange[i%numSpotRange]){
+				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,LightDir) < 0){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
