@@ -115,7 +115,7 @@ vs2ps VS_Bump(
     float4 PosO: POSITION,
     float3 NormO: NORMAL,
     float4 TexCd : TEXCOORD0,
-//  BumpMap (Remove last Comma if commented)
+//  BumpMap
 ///////////////////////////////////////
 	float3 tangent : TANGENT,
     float3 binormal : BINORMAL
@@ -130,9 +130,6 @@ vs2ps VS_Bump(
 	Out.NormO = NormO;
 	
 	Out.NormW = mul(NormO, NormalTransform);
-	
-    //normal in view space
-   // Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
 
 //  BumpMap
 ///////////////////////////////////////
@@ -170,10 +167,6 @@ vs2ps VS(
     Out.PosW = mul(PosO, tW).xyz;
     Out.NormW = mul(NormO, NormalTransform);
 	Out.NormO = NormO;
-	
-    //normal in view space
-//    Out.NormV = normalize(mul(mul(NormO, (float3x3)tWIT),(float3x3)tV).xyz);
-
 
 //	position (projected)
     Out.PosWVP  = mul(PosO, tWVP);
@@ -216,10 +209,6 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	float4 specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[1%numTexTrans]));
 	float4 diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[2%numTexTrans]));
 
-//	float4 col = texture2d.Sample(g_samLinear,In.TexCd.xy);
-//	float4 specIntensity = specTex.Sample(g_samLinear, In.TexCd.xy);
-//	float4 diffuse = diffuseTex.Sample(g_samLinear, In.TexCd.xy);
-	
 	{
 	if(diffuseMode == 1 || diffuseMode ==2)
 		specIntensity *= saturate(length(diffuse.rgb));
@@ -240,11 +229,10 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	In.NormO += normalize(bumpNormal)*bumpy;
 	
 	float3 NormV =  normalize(mul(mul(In.NormO, (float3x3)tWIT),(float3x3)tV).xyz);
-	//In.NormV += normalize(bumpNormal)*bumpy;
 	
     float3 Tn = normalize(In.tangent);
     float3 Bn = normalize(In.binormal);
-	float3 Nb = Nn + (bumpMap.x * Tn + bumpMap.y * Bn)*bumpy;
+	float3 Nb = normalize(Nn + (bumpMap.x * Tn + bumpMap.y * Bn)*bumpy);
 ///////////////////////////////////////
 	
 // Reflection and RimLight
@@ -257,7 +245,6 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	float3 refrVect = refract(-Vn, Nb , refractionIndex[0]);
 	
 ///////////////////////////////////////
-	
 
 	
 	// Box Projected CubeMap
@@ -421,7 +408,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	}	
 
 	col *= float4((newCol * Color.rgb), Alpha);
-    return col;
+    return saturate(col);
 }
 
 
@@ -451,10 +438,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float4 diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[2%numTexTrans]));
 	
 	float3 NormV =  normalize(mul(mul(In.NormO, (float3x3)tWIT),(float3x3)tV).xyz);
-	
-	//float4 col = texture2d.Sample(g_samLinear, In.TexCd.xy);
-	//float4 specIntensity = specTex.Sample(g_samLinear, In.TexCd.xy);
-	//float4 diffuse = diffuseTex.Sample(g_samLinear, In.TexCd.xy);
 	
 	if(diffuseMode == 1 || diffuseMode == 2){
 		specIntensity *= saturate(length(diffuse.rgb));
@@ -642,295 +625,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	
 	col *= float4((newCol * Color.rgb), Alpha);
-    return col;
+    return saturate(col);
 }
-
-
-float3 varyingNormal;
-float3 lightDirection;
-float3 viewDirection;
-float3 texCoord0;
-
-// "Followup: Normal Mapping Without Precomputed Tangents" from http://www.thetenthplanet.de/archives/1180
-float3x3 cotangent_frame( float3 N, float3 p, float2 uv )
-{
-/* get edge vectors of the pixel triangle */
-float3 dp1 = ddx( p );
-float3 dp2 = ddy( p );
-float2 duv1 = ddx( uv );
-float2 duv2 = ddy( uv );
-
-/* solve the linear system */
-float3 dp2perp = cross( dp2, N );
-float3 dp1perp = cross( N, dp1 );
-float3 T = dp2perp * duv1.x + dp1perp * duv2.x;
-float3 B = dp2perp * duv1.y + dp1perp * duv2.y;
-
-/* construct a scale-invariant frame */
-float invmax = 1/sqrt( abs(max( dot(T,T), dot(B,B) )) );
-return float3x3( T * invmax, B * invmax, N );
-}
-
-float3 perturb_normal( float3 N, float3 V, float2 texcoord )
-{
-/* assume N, the interpolated vertex normal and V, the view vector (vertex to eye) */
-//float3 map = texture2D( normalMap, texcoord ).xyz;
-uint numTexTrans, dummy;
-texTransforms.GetDimensions(numTexTrans, dummy);
-float3 bumpMap = normalTex.Sample(g_samLinear, mul(texcoord,texTransforms[3%numTexTrans])).xyz ;
-// WITH_NORMALMAP_UNSIGNED
-bumpMap = bumpMap * 255./127. - 128./127.;
-bumpMap *= bumpy;
-// WITH_NORMALMAP_2CHANNEL
-// bumpMap.z = sqrt( 1. - dot( bumpMap.xy, bumpMap.xy ) );
-// WITH_NORMALMAP_GREEN_UP
-// bumpMap.y = -bumpMap.y;
-float3x3 TBN = cotangent_frame( N, V, texcoord );
-return ( mul(TBN, bumpMap) );
-}
-
-float4 PS_SuperphongAutoNormal(vs2ps In): SV_Target
-{	
-	// wavelength colors
-	const half4 colors[3] =
-        {
-    	{ 1, 0, 0, 1 },
-    	{ 0, 1, 0, 1 },
-    	{ 0, 0, 1, 1 },
-	};
-	
-	float3 LightDirW;
-	float3 LightDirV;
-	float4 viewPosition;
-	float2 projectTexCoord;
-	float4 projectionColor;
-	float2 reflectTexCoord;
-	float4 reflectionColor;
-	
-	uint numTexTrans, dummy;
-    texTransforms.GetDimensions(numTexTrans, dummy);
-	
-	float4 col = texture2d.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[0%numTexTrans]));
-	float4 specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[1%numTexTrans]));
-	float4 diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[2%numTexTrans]));
-
-//	float4 col = texture2d.Sample(g_samLinear,In.TexCd.xy);
-//	float4 specIntensity = specTex.Sample(g_samLinear, In.TexCd.xy);
-//	float4 diffuse = diffuseTex.Sample(g_samLinear, In.TexCd.xy);
-	
-	{
-	if(diffuseMode == 1 || diffuseMode ==2)
-		specIntensity *= saturate(length(diffuse.rgb));
-	}
-	
-	float3 newCol;
-	float3 Nn = normalize(In.NormW);
-	
-//  BumpMap
-///////////////////////////////////////
-	float4 bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[3%numTexTrans]));;
-	
-	bumpMap = (bumpMap * 2.0f) - 1.0f;
-	
-    //float3 bumpNormal = (bumpMap.x * In.tangent) + (bumpMap.y * In.binormal) + (bumpMap.z * In.NormO);
-	float3 bumpNormal = perturb_normal( normalize( In.NormO ), normalize(camPos - In.PosW), In.TexCd );
-//	float3 bumpNormal = 0;
-	
-	In.NormO += bumpNormal;
-	
-	float3 NormV =  normalize(mul(mul(In.NormO, (float3x3)tWIT),(float3x3)tV).xyz);
-	//In.NormV += normalize(bumpNormal)*bumpy;
-	
-    float3 Tn = normalize(In.tangent);
-    float3 Bn = normalize(In.binormal);
-	//float3 Nb = Nn + (bumpMap.x * Tn + bumpMap.y * Bn)*bumpy;
-	float3 Nb = Nn + (bumpNormal)*.5;
-///////////////////////////////////////
-	
-// Reflection and RimLight
-	float3 Vn = normalize(camPos - In.PosW);
-	
-//BumpMap
-///////////////////////////////////////
-	float3 reflVect = -reflect(Vn,Nb);
-	float3 reflVecNorm = Nn-reflect(Nn,Nb);
-	float3 refrVect = refract(-Vn, Nb , refractionIndex[0]);
-	
-///////////////////////////////////////
-	
-
-	
-	// Box Projected CubeMap
-	////////////////////////////////////////////////////
-	
-	if(BPCM){
-		
-		
-		float3 rbmax = (cubeMapBoxBounds[0] - (In.PosW))/reflVect;
-		float3 rbmin = (cubeMapBoxBounds[1] - (In.PosW))/reflVect;
-		
-		
-		float3 rbminmax = (reflVect>0.0f)?rbmax:rbmin;
-		
-		float fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);
-		
-		float3 posonbox = In.PosW + reflVect*fa;
-		reflVect = posonbox - cubeMapPos;
-		
-				
-		
-		rbmax = (cubeMapBoxBounds[0] - (In.PosW))/reflVecNorm;
-		rbmin = (cubeMapBoxBounds[1] - (In.PosW))/reflVecNorm;
-		
-		rbminmax = (reflVecNorm>0.0f)?rbmax:rbmin;
-		
-		fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);
-		
-		posonbox = In.PosW + reflVecNorm*fa;
-		reflVecNorm = posonbox - cubeMapPos;
-			
-		
-		if(refraction){
-			rbmax = (cubeMapBoxBounds[0] - (In.PosW))/refrVect;
-			rbmin = (cubeMapBoxBounds[1] - (In.PosW))/refrVect;
-			
-
-			rbminmax = (refrVect>0.0f)?rbmax:rbmin;
-			
-			fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);
-			
-			posonbox = In.PosW + refrVect*fa;
-			refrVect = posonbox - cubeMapPos;
-		}
-		
-	}
-	
-	////////////////////////////////////////////////////
-	
-	
-	float vdn = -saturate(dot(reflVect,In.NormW));
-   	float fresRim = KrMin.x + (Kr.x-KrMin.x) * pow(1-abs(vdn),FresExp.x);
-	float fresRefl = KrMin.y + (Kr.y-KrMin.y) * pow(1-abs(vdn),FresExp.y);
-	float4 reflColor = float4(0,0,0,0);
-	float4 reflColorNorm = float4(0,0,0,0);
-	float4 refrColor = float4(0,0,0,0);
-	
-		reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
-		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
-		
-		if(refraction){
-				float3 refrVect;
-			    for(int r=0; r<3; r++) {
-			    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
-			    	refrColor += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
-				}
-		}
-		
-	
-		reflColor = lerp(refrColor,reflColor,fresRefl);
-
-		float inverseDotView = 1.0 - max(dot(Nb,Vn),0.0);
-		float4 iridescenceColor = float4(0,0,0,0);
-		if (useIridescence) iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*fresRefl;
-		
-	
-	if(diffuseMode == 0 || diffuseMode ==2){
-			reflColor *= saturate(length(diffuse.rgb));
-			reflColorNorm *= saturate(length(diffuse.rgb));			
-	} 
-	
-	uint d,textureCount;
-	lightMap.GetDimensions(d,d,textureCount);
-	
-	uint numSpotRange, dummySpot;
-    lightRange.GetDimensions(numSpotRange, dummySpot);
-	
-	uint numlDiff, dummyDiff;
-    lDiff.GetDimensions(numlDiff, dummyDiff);
-	
-	uint numlSpec, dummySpec;
-    lSpec.GetDimensions(numlSpec, dummySpec);
-	
-	uint numlAtt0, dummylAtt0;
-    lAtt0.GetDimensions(numlAtt0, dummylAtt0);
-	
-	uint numlAtt1, dummylAtt1;
-    lAtt1.GetDimensions(numlAtt1, dummylAtt1);
-	
-	uint numlAtt2, dummylAtt2;
-    lAtt2.GetDimensions(numlAtt2, dummylAtt2);
-	
-	uint numLVP, dummyLVP;
-    LightVP.GetDimensions(numLVP, dummyLVP);
-	
-	
-	for(int i = 0; i< lightCount; i++){
-		float3 lightToObject = lPos[i] - In.PosW;
-		switch (lightType[i]){
-			case 0:
-				LightDirV = normalize(-mul(lPos[i], tV));
-				newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
-				break;
-
-			
-			case 1:
-				
-				if(length(lightToObject) < lightRange[i%numSpotRange]){	
-					
-					LightDirW = normalize(lightToObject);
-					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPoint(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numSpotRange]).rgb;
-					
-				}
-			
-				break;
-			
-			case 2:
-
-				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,LightDir) < 0){
-					viewPosition = mul(In.PosO, tW);
-					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
-					
-					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
-		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
-					
-					float3 coords = float3(projectTexCoord, i % textureCount);	//make sure Instance ID buffer is in floats
-					projectionColor = lightMap.Sample(g_samLinear, coords, 0 );
-					projectionColor *= saturate(1/(viewPosition.z*spotFade));					
-					LightDirW = normalize(lightToObject);
-					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPointSpot(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numSpotRange]).rgb;
-					
-				}
-			
-				break;
-		}
-		
-		newCol += lAmb.rgb;
-	}
-
-	if(reflectMode == 0){
-		newCol *= (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity);
-		newCol += reflColorNorm*reflective.y;
-		newCol += (fresRim * RimColor);
-		
-	} else{
-		newCol += (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity);
-		newCol += reflColorNorm*reflective.y;
-		newCol += (fresRim * RimColor);
-	}	
-
-	col *= float4((newCol * Color.rgb), Alpha);
-    return col;
-}
-
-
-
-
-
-// -----------------------------------------------------------------------------
-// TECHNIQUES:
-// -----------------------------------------------------------------------------
 
 
 technique10 Superphong
@@ -947,14 +643,5 @@ technique10 Superphong_Bump
 	{
 		SetVertexShader( CompileShader( vs_4_0, VS_Bump() ) );
 		SetPixelShader( CompileShader( ps_5_0, PS_SuperphongBump() ) );
-	}
-}
-
-technique10 Superphong_Auto
-{
-	pass P0
-	{
-		SetVertexShader( CompileShader( vs_4_0, VS() ) );
-		SetPixelShader( CompileShader( ps_5_0, PS_SuperphongAutoNormal() ) );
 	}
 }
