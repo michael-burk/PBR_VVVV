@@ -26,7 +26,7 @@ cbuffer cbPerObject : register (b1)
 	float4x4 NormalTransform <string uiname="NormalRotation";>;
 	float2 KrMin <String uiname="Fresnel Rim/Refl Min ";float uimin=0.0; float uimax=1;> = 0.002 ;
 	float2 Kr <String uiname="Fresnel Rim/Refl Max ";float uimin=0.0; float uimax=6.0;> = 0.5 ;
-	float2 FresExp <String uiname="Fresnel Rim/Refl Exp ";float uimin=0.0; float uimax=30;> = 5 ;
+	float2 FresExp <String uiname="Fresnel Rim/Refl Exp ";float ufimin=0.0; float uimax=30;> = 5 ;
 	float3 camPos;
 	float3 LightDir;
 	float4 RimColor <bool color = true; string uiname="Rim Color";>  = { 0.0f,0.0f,0.0f,0.0f };
@@ -210,7 +210,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	float4 diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[2%numTexTrans]));
 
 	{
-	if(diffuseMode == 1 || diffuseMode ==2)
+	if(diffuseMode == 1 || diffuseMode == 2)
 		specIntensity *= saturate(length(diffuse.rgb));
 	}
 	
