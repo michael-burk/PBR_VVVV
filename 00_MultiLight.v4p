@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="3570" scrolly="3330" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="8730" scrolly="540" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="2255" top="23905" width="100" height="100">
    </BOUNDS>
@@ -1079,7 +1079,7 @@
    </PIN>
    <PIN pinname="useIridescence" slicecount="1" visible="-1" pintype="Input" values="0">
    </PIN>
-   <PIN pinname="SpotTex" slicecount="1" values="||" visible="1">
+   <PIN pinname="SpotTex" slicecount="1" visible="1" values="||">
    </PIN>
    <PIN pinname="Texture" visible="1">
    </PIN>
