@@ -31,7 +31,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6130" top="6605" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.2">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -89,7 +89,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5520" top="3540" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,2">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -179,7 +179,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="5">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="10">
    </PIN>
    </NODE>
    <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="406" dstpinname="Data">
@@ -443,7 +443,7 @@
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="1060">
    <BOUNDS type="Node" left="10710" top="2640" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\pano1.jpeg">
+   <PIN pinname="Filename" slicecount="1" values="Assets\pano4.jpeg">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -607,7 +607,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7515" top="3345" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0.9,0.88,0.86">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0.9,0.8,0.7">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -645,9 +645,9 @@
    </PIN>
    <PIN pinname="Projection" visible="1">
    </PIN>
-   <PIN pinname="Initial Yaw" slicecount="1" values="-0.44">
+   <PIN pinname="Initial Yaw" slicecount="1" values="-0.58">
    </PIN>
-   <PIN pinname="Initial Pitch" slicecount="1" values="0">
+   <PIN pinname="Initial Pitch" slicecount="1" values="0.08">
    </PIN>
    <PIN pinname="Initial Distance" slicecount="1" values="20">
    </PIN>
