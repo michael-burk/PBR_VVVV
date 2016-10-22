@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\LightTransform.v4p" locked="0" scrollx="0" scrolly="4935">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\LightTransform.v4p" locked="0" scrollx="0" scrolly="1950">
    <BOUNDS height="14115" left="840" top="945" type="Window" width="18570">
    </BOUNDS>
    <INFO author="vvvv group" description="move your camera with keyboard and mouse like in the 3d modeller &quot;Softimage&quot;" tags="3d, perspective, modelling, tool">
@@ -55,11 +55,11 @@
    </BOUNDS>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" values="0.08">
+   <PIN pinname="Y Input Value" slicecount="1" values="0.07">
    </PIN>
    <PIN pinname="Minimum" slicecount="1" values="-0.09">
    </PIN>
-   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="|Initial FOV|">
+   <PIN encoded="0" pinname="Descriptive Name" slicecount="1" values="FOV">
    </PIN>
    </NODE>
    <NODE id="80" nodename="MapRange (Value)" systemname="MapRange (Value)">

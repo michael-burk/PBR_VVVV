@@ -1,5 +1,5 @@
 //@author: mburk
-//@help: 
+//@help: internet
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
 
@@ -28,18 +28,16 @@ cbuffer cbPerObject : register (b1)
 	float2 Kr <String uiname="Fresnel Rim/Refl Max ";float uimin=0.0; float uimax=6.0;> = 0.5 ;
 	float2 FresExp <String uiname="Fresnel Rim/Refl Exp ";float ufimin=0.0; float uimax=30;> = 5 ;
 	float3 camPos;
-	float3 LightDir;
+	float3 SpotLightDir;
 	float4 RimColor <bool color = true; string uiname="Rim Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 Color <bool color = true; string uiname="Color Overlay";>  = { 1.0f,1.0f,1.0f,1.0f };
 	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
-
-	int lightCount <string uiname="lightCount";>;
 	
 	float spotFade = 1;
 	float bumpy = 1;
 	float2 reflective <String uiname="Reflective/Diffuse";float2 uimin=0.0; float uimax=1;> = 1 ;
 	bool refraction <bool visible=false;> = false;
-	StructuredBuffer <float> refractionIndex <bool visible=false;>; //= float3(1.2,1.2,1.2);
+	StructuredBuffer <float> refractionIndex <bool visible=false;>;
 	bool BPCM <bool visible=false;> = false;
 	float3 cubeMapPos  <bool visible=false;string uiname="CubeMapPos"; > = float3(0,0,0);
 	StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="CubeMapBounds";>;
@@ -350,8 +348,11 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	uint numLVP, dummyLVP;
     LightVP.GetDimensions(numLVP, dummyLVP);
 	
+	uint l,lightCount;
+	lightType.GetDimensions(l,lightCount);
 	
-	for(int i = 0; i< lightCount; i++){
+	
+	for(int i = 0; i<= lightCount; i++){
 		float3 lightToObject = lPos[i] - In.PosW;
 		switch (lightType[i]){
 			case 0:
@@ -374,7 +375,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 			
 			case 2:
 			
-				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,LightDir) < 0){
+				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir) < 0){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
@@ -564,7 +565,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	uint numLVP, dummyLVP;
     LightVP.GetDimensions(numLVP, dummyLVP);
 	
-	for(int i = 0; i< lightCount; i++){
+	uint l,lightCount;
+	lightType.GetDimensions(l,lightCount);
+	
+	for(int i = 0; i<= lightCount; i++){
 		float3 lightToObject = lPos[i] - In.PosW;
 		switch (lightType[i]){
 			case 0:
@@ -587,7 +591,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 			case 2:
 
-				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,LightDir) < 0){
+				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir) < 0){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
