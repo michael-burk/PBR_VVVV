@@ -72,9 +72,9 @@ cbuffer cbPerObject : register (b1)
 	
 
 
-#include "PhongPoint.fxh"
-#include "PhongPointSpot.fxh"
-#include "PhongDirectional.fxh"
+#include "dx11/PhongPoint.fxh"
+#include "dx11/PhongPointSpot.fxh"
+#include "dx11/PhongDirectional.fxh"
 
 SamplerState g_samLinear
 {
