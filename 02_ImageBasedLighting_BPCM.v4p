@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\011_ImageBasedLighting_BPCM.v4p" systemname="011_ImageBasedLighting_BPCM" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\011_ImageBasedLighting_BPCM.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\02_ImageBasedLighting_BPCM.v4p" systemname="011_ImageBasedLighting_BPCM" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\011_ImageBasedLighting_BPCM.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="650" top="9460" width="100" height="100">
    </BOUNDS>
@@ -15,7 +15,7 @@
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
    <NODE systemname="Transform (Transform 3d Vector)" nodename="Transform (Transform 3d Vector)" componentmode="Hidden" id="473">
-   <BOUNDS type="Node" left="2520" top="6135" width="100" height="100">
+   <BOUNDS type="Node" left="2595" top="6135" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
@@ -29,7 +29,7 @@
    </PIN>
    </NODE>
    <NODE systemname="UniformScale (Transform)" nodename="UniformScale (Transform)" componentmode="Hidden" id="499">
-   <BOUNDS type="Node" left="2520" top="6720" width="100" height="100">
+   <BOUNDS type="Node" left="2595" top="6720" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
@@ -41,7 +41,7 @@
    <LINK srcnodeid="473" srcpinname="Transform Out" dstnodeid="499" dstpinname="Transform In">
    </LINK>
    <NODE systemname="Rotate (Transform Vector)" nodename="Rotate (Transform Vector)" componentmode="Hidden" id="537">
-   <BOUNDS type="Node" left="2860" top="7905" width="100" height="100">
+   <BOUNDS type="Node" left="2980" top="7905" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
@@ -49,9 +49,9 @@
    </PIN>
    </NODE>
    <NODE id="539" nodename="IOBox (Value Advanced)" componentmode="InABox" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="3055" top="5640" width="285" height="240">
+   <BOUNDS type="Box" left="3130" top="5640" width="285" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="3055" top="5640" width="0" height="0">
+   <BOUNDS type="Node" left="3130" top="5640" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
    </PIN>
@@ -111,7 +111,7 @@
    </BOUNDS>
    </NODE>
    <NODE id="934" systemname="SuperPhong (DX11.Effect)" filename="dx11\SuperPhong.fx" nodename="SuperPhong (DX11.Effect)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
-   <BOUNDS type="Node" left="1490" top="8560" width="9690" height="270">
+   <BOUNDS type="Node" left="1490" top="8560" width="9735" height="270">
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="1005" width="2400" height="1800">
    </BOUNDS>
@@ -219,15 +219,29 @@
    </PIN>
    <PIN pinname="bumpy" slicecount="1" values="0">
    </PIN>
+   <PIN pinname="Camera PositionXYZ" visible="1">
+   </PIN>
+   <PIN pinname="Normal Rotation" visible="1">
+   </PIN>
+   <PIN pinname="Bumpiness" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Cube Map Bounds" visible="1" pintype="Input" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="SpotLight Fading" visible="-1" pintype="Input" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="SpotLight DirectionXYZ" visible="-1" pintype="Input" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Cube Map PositionXYZ" visible="1" pintype="Input" slicecount="3" values="0,0,0">
+   </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
    </LINK>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In">
    </LINK>
    <LINK srcnodeid="539" srcpinname="Y Output Value" dstnodeid="537" dstpinname="XYZ" linkstyle="Bezier">
-   <LINKPOINT x="3040" y="7113">
+   <LINKPOINT x="3130" y="7113">
    </LINKPOINT>
-   <LINKPOINT x="3455" y="7138">
+   <LINKPOINT x="3560" y="7138">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="878" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Irradiance" linkstyle="VHV">
@@ -409,9 +423,9 @@
    <LINK srcnodeid="1089" srcpinname="Texture Out" dstnodeid="1082" dstpinname="Texture">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1091" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="6300" top="7800" width="480" height="480">
+   <BOUNDS type="Box" left="6315" top="7755" width="480" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="6300" top="7800" width="0" height="0">
+   <BOUNDS type="Node" left="6315" top="7755" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
@@ -477,7 +491,7 @@
    </PIN>
    </NODE>
    <NODE systemname="RandomSpread (Spreads)" nodename="RandomSpread (Spreads)" componentmode="Hidden" id="1105">
-   <BOUNDS type="Node" left="2715" top="3825" width="100" height="100">
+   <BOUNDS type="Node" left="2790" top="3825" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -489,7 +503,7 @@
    </PIN>
    </NODE>
    <NODE systemname="Damper (Animation)" nodename="Damper (Animation)" componentmode="Hidden" id="1106">
-   <BOUNDS type="Node" left="2700" top="4395" width="100" height="100">
+   <BOUNDS type="Node" left="2775" top="4395" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Go To Position" visible="1" slicecount="3" values="0,0,0">
    </PIN>
@@ -499,7 +513,7 @@
    </PIN>
    </NODE>
    <NODE systemname="LFO (Animation)" nodename="LFO (Animation)" componentmode="Hidden" id="1107">
-   <BOUNDS type="Node" left="2745" top="3210" width="100" height="100">
+   <BOUNDS type="Node" left="2820" top="3210" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Cycles" visible="1">
    </PIN>
@@ -581,7 +595,7 @@
    </LINKPOINT>
    </LINK>
    <NODE systemname="Sphere (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sphere (DX11.Geometry)" componentmode="Hidden" id="1087">
-   <BOUNDS type="Node" left="2190" top="7260" width="100" height="100">
+   <BOUNDS type="Node" left="2235" top="7260" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Geometry Out" visible="1">
    </PIN>
@@ -616,6 +630,8 @@
    <PIN pinname="Input Node" slicecount="1" visible="1" values="||">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="CubeMapBounds">
+   </PIN>
+   <PIN pinname="Output Node" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1133" srcpinname="Output Node" dstnodeid="934" dstpinname="CubeMapBounds">
@@ -677,9 +693,9 @@
    <LINK srcnodeid="1102" srcpinname="OutputXYZ" dstnodeid="1094" dstpinname="DataXYZ">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1135" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="5970" top="5355" width="795" height="480">
+   <BOUNDS type="Box" left="5955" top="6270" width="795" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="5970" top="5355" width="0" height="0">
+   <BOUNDS type="Node" left="5955" top="6270" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,0.5">
    </PIN>
@@ -694,7 +710,11 @@
    <PIN pinname="Descriptive Name" slicecount="1" values="Reflective/DiffuseXY">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1135" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Reflective/DiffuseXY">
+   <LINK srcnodeid="1135" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Reflective/DiffuseXY" linkstyle="VHV">
+   <LINKPOINT x="6000" y="7643">
+   </LINKPOINT>
+   <LINKPOINT x="6690" y="7643">
+   </LINKPOINT>
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1137" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="11895" top="3900" width="795" height="480">
@@ -759,7 +779,7 @@
    </BOUNDS>
    <PIN pinname="Position Out" visible="1">
    </PIN>
-   <PIN pinname="Position In" slicecount="1" values="0.12" visible="1">
+   <PIN pinname="Position In" slicecount="1" visible="1" values="0.12">
    </PIN>
    <PIN pinname="Reset" slicecount="1" values="0">
    </PIN>
@@ -813,5 +833,17 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1144" srcpinname="Output" dstnodeid="1082" dstpinname="Light PositionXYZ">
+   </LINK>
+   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="5550" y="11085">
+   </LINKPOINT>
+   <LINKPOINT x="5760" y="7515">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
+   </LINK>
+   <LINK srcnodeid="1133" srcpinname="Output Node" dstnodeid="934" dstpinname="Cube Map Bounds">
+   </LINK>
+   <LINK srcnodeid="1097" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Cube Map PositionXYZ">
    </LINK>
    </PATCH>

@@ -10,7 +10,7 @@
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="13305" top="1035" width="14580" height="12930">
+   <BOUNDS type="Window" left="13320" top="1020" width="14580" height="12930">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -27,9 +27,9 @@
    </BOUNDS>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="369" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="6625" top="6650" width="540" height="240">
+   <BOUNDS type="Box" left="6805" top="6590" width="540" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="6625" top="6650" width="0" height="0">
+   <BOUNDS type="Node" left="6805" top="6590" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
@@ -40,6 +40,8 @@
    <PIN pinname="Descriptive Name" slicecount="1" values="bumpy">
    </PIN>
    <PIN pinname="X Input Value" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="386" systemname="IOBox (Value Advanced)">
@@ -389,6 +391,10 @@
    </PIN>
    <PIN pinname="Technique" slicecount="1" values="Superphong_Bump">
    </PIN>
+   <PIN pinname="Bumpiness" visible="1">
+   </PIN>
+   <PIN pinname="Camera PositionXYZ" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
    </LINK>
@@ -663,5 +669,13 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="539" srcpinname="Y Output Value" dstnodeid="473" dstpinname="Rotate XYZ">
+   </LINK>
+   <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Bumpiness">
+   </LINK>
+   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
+   <LINKPOINT x="6720" y="11070">
+   </LINKPOINT>
+   <LINKPOINT x="6585" y="5115">
+   </LINKPOINT>
    </LINK>
    </PATCH>

@@ -23,24 +23,24 @@ cbuffer cbPerObject : register (b1)
 	float4x4 tWIT: WORLDINVERSETRANSPOSE;
 };
 	
-	float4x4 NormalTransform <string uiname="NormalRotation";>;
+	float4x4 NormalTransform <string uiname="Normal Rotation";>;
 	float2 KrMin <String uiname="Fresnel Rim/Refl Min ";float uimin=0.0; float uimax=1;> = 0.002 ;
 	float2 Kr <String uiname="Fresnel Rim/Refl Max ";float uimin=0.0; float uimax=6.0;> = 0.5 ;
 	float2 FresExp <String uiname="Fresnel Rim/Refl Exp ";float ufimin=0.0; float uimax=30;> = 5 ;
-	float3 camPos;
-	float3 SpotLightDir;
+	float3 camPos <string uiname="Camera Position";> ;
+	float3 SpotLightDir <string uiname="SpotLight Direction";> ;;
 	float4 RimColor <bool color = true; string uiname="Rim Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 Color <bool color = true; string uiname="Color Overlay";>  = { 1.0f,1.0f,1.0f,1.0f };
 	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
 	
-	float spotFade = 1;
-	float bumpy = 1;
+	float spotFade <string uiname="SpotLight Fading";> = 1 ;
+	float bumpy <string uiname="Bumpiness";> = 1 ;
 	float2 reflective <String uiname="Reflective/Diffuse";float2 uimin=0.0; float uimax=1;> = 1 ;
-	bool refraction <bool visible=false;> = false;
-	StructuredBuffer <float> refractionIndex <bool visible=false;>;
-	bool BPCM <bool visible=false;> = false;
-	float3 cubeMapPos  <bool visible=false;string uiname="CubeMapPos"; > = float3(0,0,0);
-	StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="CubeMapBounds";>;
+	bool refraction <bool visible=false; String uiname="Refraction";> = false;
+	StructuredBuffer <float> refractionIndex <bool visible=false; String uiname="Refraction Index";>;
+	bool BPCM <bool visible=false;> = false; String uiname="Box Projected Cube Map";;
+	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
+	StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
 	int reflectMode <bool visible=false;string uiname="ReflectionMode: Mul/Add"; int uimin=0.0; int uimax=1.0;> = 1;
 	int diffuseMode <bool visible=false;string uiname="DiffuseAffect: Reflection/Specular/Both"; int uimin=0.0; int uimax=2.0;> = 2;
 

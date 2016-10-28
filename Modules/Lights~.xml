@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="0" scrolly="1200">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="0" scrolly="1995">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicBuffer (DX11.Buffer Value)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="16350" top="10995" width="100" height="100">
    </BOUNDS>
