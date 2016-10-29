@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Girlpower\02_ImageBasedLighting_BPCM.v4p" systemname="011_ImageBasedLighting_BPCM" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\011_ImageBasedLighting_BPCM.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\02_ImageBasedLighting_BPCM.v4p" systemname="011_ImageBasedLighting_BPCM" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\011_ImageBasedLighting_BPCM.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="1880" top="10255" width="100" height="100">
    </BOUNDS>
@@ -141,7 +141,7 @@
    </PIN>
    <PIN pinname="LightRange" visible="-1" slicecount="1" pintype="Input" values="||">
    </PIN>
-   <PIN pinname="Fresnel Rim/Refl Min XY" visible="1" slicecount="2" values="0,1">
+   <PIN pinname="Fresnel Rim/Refl Min XY" visible="1" slicecount="2" values="0,0.6">
    </PIN>
    <PIN pinname="Color Overlay" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
@@ -209,7 +209,7 @@
    </PIN>
    <PIN pinname="CubeMapBounds" visible="1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Fresnel Rim/Refl Exp XY" slicecount="2" values="0,1">
+   <PIN pinname="Fresnel Rim/Refl Exp XY" slicecount="2" visible="1" values="0,1">
    </PIN>
    <PIN pinname="Fresnel Rim/Refl Max XY" slicecount="2" values="0,1">
    </PIN>
@@ -399,18 +399,14 @@
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R16G16B16A16_Float">
    </PIN>
-   <PIN pinname="Texture SizeXY" visible="1" slicecount="2" values="1024,512">
+   <PIN pinname="Texture SizeXY" visible="1" slicecount="2" values="64,64">
+   </PIN>
+   <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1085" srcpinname="Texture Out" dstnodeid="1086" dstpinname="Texture In">
    </LINK>
    <LINK srcnodeid="1086" srcpinname="Texture Out" dstnodeid="877" dstpinname="Texture In">
-   </LINK>
-   <LINK srcnodeid="1085" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Refl" linkstyle="VHV">
-   <LINKPOINT x="11385" y="7148">
-   </LINKPOINT>
-   <LINKPOINT x="11010" y="7148">
-   </LINKPOINT>
    </LINK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="1089">
    <BOUNDS type="Node" left="14190" top="3435" width="100" height="100">
@@ -689,7 +685,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7035" top="7065" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,0.5">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -701,35 +697,15 @@
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="Reflective/DiffuseXY">
    </PIN>
+   <PIN pinname="Minimum" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Maximum" slicecount="1" values="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1135" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Reflective/DiffuseXY" linkstyle="VHV">
    <LINKPOINT x="7130" y="8438">
    </LINKPOINT>
    <LINKPOINT x="7870" y="8438">
-   </LINKPOINT>
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1137" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="13125" top="4695" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="13125" top="4695" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1024,256">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Integer">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1137" srcpinname="Y Output Value" dstnodeid="1086" dstpinname="Texture SizeXY" linkstyle="Bezier">
-   <LINKPOINT x="13125" y="5235">
-   </LINKPOINT>
-   <LINKPOINT x="12300" y="5235">
    </LINKPOINT>
    </LINK>
    <NODE systemname="HSCB (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\HSCB.tfx" nodename="HSCB (DX11.TextureFX)" componentmode="Hidden" id="1138">
@@ -879,23 +855,9 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1148" systemname="IOBox (String)">
    <BOUNDS type="Node" left="375" top="3735" width="4800" height="270">
    </BOUNDS>
-   <BOUNDS type="Box" left="375" top="3735" width="2265" height="2010">
+   <BOUNDS type="Box" left="375" top="3735" width="2370" height="1275">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|1. The boundaries of the box, that the cubemap is projected upon&cr;&lf;&cr;&lf;2. Yes, this has to be activated|">
-   </PIN>
-   <PIN pinname="Output String" visible="0">
-   </PIN>
-   <PIN pinname="Show Grid" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="String Type" slicecount="1" values="MultiLine">
-   </PIN>
-   </NODE>
-   <NODE nodename="IOBox (String)" componentmode="InABox" id="1149" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="720" top="4920" width="285" height="270">
-   </BOUNDS>
-   <BOUNDS type="Box" left="720" top="4920" width="285" height="270">
-   </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="1.">
    </PIN>
    <PIN pinname="Output String" visible="0">
    </PIN>
@@ -919,5 +881,11 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1097" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Cube Map PositionXYZ">
+   </LINK>
+   <LINK srcnodeid="1085" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Refl" linkstyle="VHV">
+   <LINKPOINT x="11385" y="7148">
+   </LINKPOINT>
+   <LINKPOINT x="11010" y="7148">
+   </LINKPOINT>
    </LINK>
    </PATCH>

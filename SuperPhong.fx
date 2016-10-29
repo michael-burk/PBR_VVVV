@@ -192,6 +192,9 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
     	{ 0, 0, 1, 1 },
 	};
 	
+
+
+	
 	float3 LightDirW;
 	float3 LightDirV;
 	float4 viewPosition;
@@ -203,7 +206,12 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	uint numTexTrans, dummy;
     texTransforms.GetDimensions(numTexTrans, dummy);
 	
-	float4 texCol = texture2d.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[0%numTexTrans]));
+	uint texColCount, tc;
+    texture2d.GetDimensions(texColCount, tc);
+	
+	float4 texCol = float4(0,0,0,0);
+	if(tc > 0) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[0%numTexTrans]));
+	
 	float4 specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[1%numTexTrans]));
 	float4 diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[2%numTexTrans]));
 
@@ -299,6 +307,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	float4 reflColor = float4(0,0,0,0);
 	float4 reflColorNorm = float4(0,0,0,0);
 	float4 refrColor = float4(0,0,0,0);
+	
 	
 		reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
 		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
@@ -397,12 +406,13 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 		
 	}
 	
-	float3 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity);
+	float3 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
 	float3 finalDiffuse = (newCol + lAmb.rgb + reflColorNorm * reflective.y) * texCol;
 
 	newCol += newRefl;
 	if(refraction) fresRefl = 1;
 	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
+
 
     return saturate(float4(newCol, Alpha)) * Color.rgba;
 }
@@ -429,7 +439,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	uint numTexTrans, dummy;
     texTransforms.GetDimensions(numTexTrans, dummy);
 	
+	uint texColCount, tc;
+    texture2d.GetDimensions(texColCount, tc);
+	
 	float4 texCol = texture2d.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[0%numTexTrans]));
+	
 	float4 specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[1%numTexTrans]));
 	float4 diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd.xy,texTransforms[2%numTexTrans]));
 	
@@ -611,13 +625,14 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	}
 	
 	
-	float3 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity);
-	float3 finalDiffuse = (texCol + newCol + lAmb.rgb + reflColorNorm * reflective.y);
+	float3 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
+	float3 finalDiffuse = (newCol + lAmb.rgb + reflColorNorm * reflective.y) * texCol;
 
 	newCol += newRefl;
 	if(refraction) fresRefl = 1;
-	newCol += finalDiffuse*(1 - reflective.x * fresRefl);	
+	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
 
+	
     return saturate(float4(newCol, Alpha)) * Color.rgba;
 
 }
