@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Girlpower\05_Refraction.v4p" systemname="04_Refraction" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_Refraction.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\05_Refraction.v4p" systemname="04_Refraction" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_Refraction.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="3455" top="10060" width="100" height="100">
    </BOUNDS>
@@ -193,7 +193,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8505" top="5355" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1.1,0">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -208,6 +208,10 @@
    <PIN pinname="X Input Value" slicecount="2" values="1,1">
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   <PIN pinname="Minimum" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Maximum" slicecount="1" values="1">
    </PIN>
    </NODE>
    <NODE systemname="Blur (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\Blur.tfx" nodename="Blur (DX11.TextureFX)" componentmode="Hidden" id="877">
@@ -291,7 +295,7 @@
    </PIN>
    <PIN pinname="Fresnel Rim/Refl Min XY" visible="1" slicecount="4" values="0,0,0,1">
    </PIN>
-   <PIN pinname="Color Overlay" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
+   <PIN pinname="Color Overlay" slicecount="1" values="|0.99518,0.70158,1.00000,1.00000|" visible="1">
    </PIN>
    <PIN pinname="Reflective/DiffuseXY" visible="1" slicecount="4" values="1,0,0,0">
    </PIN>
@@ -531,10 +535,16 @@
    </LINKPOINT>
    </LINK>
    <NODE id="1072" systemname="Sampler (DX11 Advanced)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sampler (DX11 Advanced)" componentmode="Hidden">
-   <BOUNDS type="Node" left="12060" top="7065" width="100" height="100">
+   <BOUNDS type="Node" left="12120" top="7140" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="12060" top="7065">
+   <BOUNDS type="Box" left="12120" top="7140">
    </BOUNDS>
+   <PIN pinname="Sampler" visible="1">
+   </PIN>
+   <PIN pinname="Maximum Anisotropy" slicecount="1" values="16">
+   </PIN>
+   <PIN pinname="Filter Mode" slicecount="1" values="Anisotropic">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
    </LINK>
@@ -652,64 +662,6 @@
    </LINK>
    <LINK srcnodeid="1081" srcpinname="Y Output Value" dstnodeid="1080" dstpinname="Data">
    </LINK>
-   <NODE systemname="Camera (Transform Orbit Legacy) Instant Position" filename="Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden" id="1">
-   <BOUNDS type="Node" left="5475" top="9990" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="View" visible="1">
-   </PIN>
-   <PIN pinname="Projection" visible="1">
-   </PIN>
-   <PIN pinname="Initial Yaw" slicecount="1" values="-0.58">
-   </PIN>
-   <PIN pinname="Initial Pitch" slicecount="1" values="0.08">
-   </PIN>
-   <PIN pinname="Initial Distance" slicecount="1" values="20">
-   </PIN>
-   <PIN pinname="Near Plane" slicecount="1" values="0.05">
-   </PIN>
-   <PIN pinname="Far Plane" slicecount="1" values="1000">
-   </PIN>
-   <PIN pinname="View Projection" visible="1">
-   </PIN>
-   <PIN pinname="Position" visible="1">
-   </PIN>
-   <PIN pinname="Initial FOV" slicecount="1" values="0.15">
-   </PIN>
-   <PIN pinname="Inital Distance" slicecount="1" values="7.1">
-   </PIN>
-   <PIN pinname="Camera Position" visible="1">
-   </PIN>
-   <PIN pinname="Target Initial Position" slicecount="3" visible="1" values="0,0,0">
-   </PIN>
-   <PIN pinname="Roll" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Camera Position Instant" visible="1">
-   </PIN>
-   <BOUNDS type="Window" left="1785" top="705" width="18435" height="13185">
-   </BOUNDS>
-   <PIN pinname="Camera Direction" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1" srcpinname="Projection" dstnodeid="928" dstpinname="Projection" linkstyle="VHV">
-   <LINKPOINT x="5670" y="10365">
-   </LINKPOINT>
-   <LINKPOINT x="5655" y="10365">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="View" dstnodeid="928" dstpinname="View" linkstyle="PolyLine">
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="camPosXYZ" linkstyle="Bezier">
-   <LINKPOINT x="6255" y="11205">
-   </LINKPOINT>
-   <LINKPOINT x="6195" y="5925">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
-   <LINKPOINT x="8415" y="11835">
-   </LINKPOINT>
-   <LINKPOINT x="8835" y="5685">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Bumpiness">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1082" systemname="IOBox (Value Advanced)">
@@ -805,5 +757,71 @@
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
    <LINKPOINT x="5600" y="7485">
    </LINKPOINT>
+   </LINK>
+   <NODE systemname="Camera (Transform Orbit Legacy) Instant Position" filename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden" id="1">
+   <BOUNDS type="Node" left="5475" top="9990" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="View" visible="1">
+   </PIN>
+   <PIN pinname="Projection" visible="1">
+   </PIN>
+   <PIN pinname="Initial Yaw" slicecount="1" values="-0.58">
+   </PIN>
+   <PIN pinname="Initial Pitch" slicecount="1" values="0.08">
+   </PIN>
+   <PIN pinname="Initial Distance" slicecount="1" values="20">
+   </PIN>
+   <PIN pinname="Near Plane" slicecount="1" values="0.05">
+   </PIN>
+   <PIN pinname="Far Plane" slicecount="1" values="1000">
+   </PIN>
+   <PIN pinname="View Projection" visible="1">
+   </PIN>
+   <PIN pinname="Position" visible="1">
+   </PIN>
+   <PIN pinname="Initial FOV" slicecount="1" values="0.15">
+   </PIN>
+   <PIN pinname="Inital Distance" slicecount="1" values="7.1">
+   </PIN>
+   <PIN pinname="Camera Position" visible="1">
+   </PIN>
+   <PIN pinname="Target Initial Position" slicecount="3" visible="1" values="0,0,0">
+   </PIN>
+   <PIN pinname="Roll" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Camera Position Instant" visible="1">
+   </PIN>
+   <BOUNDS type="Window" left="1785" top="705" width="18435" height="13185">
+   </BOUNDS>
+   <PIN pinname="Camera Direction" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1" srcpinname="Projection" dstnodeid="928" dstpinname="Projection" linkstyle="VHV">
+   <LINKPOINT x="5670" y="10365">
+   </LINKPOINT>
+   <LINKPOINT x="5655" y="10365">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1" srcpinname="View" dstnodeid="928" dstpinname="View" linkstyle="PolyLine">
+   </LINK>
+   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
+   <LINKPOINT x="8415" y="11835">
+   </LINKPOINT>
+   <LINKPOINT x="8835" y="5685">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="877" dstpinname="Sampler">
+   </LINK>
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1089" systemname="IOBox (Color)">
+   <BOUNDS type="Box" left="7215" top="6015" width="825" height="660">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7215" top="6015" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.99518,0.70158,1.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Color Overlay|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1089" srcpinname="Color Output" dstnodeid="934" dstpinname="Color Overlay">
    </LINK>
    </PATCH>

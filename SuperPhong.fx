@@ -398,12 +398,13 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	}
 	
 	float3 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity);
-	float3 finalDiffuse = (newCol + lAmb.rgb + reflColorNorm * reflective.y) * texCol * Color.rgb;
+	float3 finalDiffuse = (newCol + lAmb.rgb + reflColorNorm * reflective.y) * texCol;
 
 	newCol += newRefl;
-	newCol += finalDiffuse*(1 - reflective.x * fresRefl);	
+	if(refraction) fresRefl = 1;
+	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
 
-    return saturate(float4(newCol, Alpha));
+    return saturate(float4(newCol, Alpha)) * Color.rgba;
 }
 
 
@@ -611,12 +612,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	
 	float3 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity);
-	float3 finalDiffuse = (texCol + newCol + lAmb.rgb + reflColorNorm * reflective.y) * Color.rgb;
+	float3 finalDiffuse = (texCol + newCol + lAmb.rgb + reflColorNorm * reflective.y);
 
 	newCol += newRefl;
+	if(refraction) fresRefl = 1;
 	newCol += finalDiffuse*(1 - reflective.x * fresRefl);	
 
-    return saturate(float4(newCol, Alpha));
+    return saturate(float4(newCol, Alpha)) * Color.rgba;
 
 }
 

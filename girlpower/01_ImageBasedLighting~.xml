@@ -773,9 +773,9 @@
    <LINK srcnodeid="1069" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
    </LINK>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="1094" systemname="IOBox (Color)">
-   <BOUNDS type="Box" left="9825" top="2580" width="2250" height="480">
+   <BOUNDS type="Box" left="9405" top="2940" width="2250" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="9825" top="2580" width="0" height="0">
+   <BOUNDS type="Node" left="9405" top="2940" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Color Input" slicecount="1" visible="1" values="|1.00000,0.00000,0.65972,1.00000|">
    </PIN>
