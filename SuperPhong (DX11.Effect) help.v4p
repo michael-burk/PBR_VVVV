@@ -47,9 +47,9 @@
    <NODE nodename="IOBox (String)" componentmode="InABox" id="38" systemname="IOBox (String)">
    <BOUNDS type="Node" left="765" top="3690" width="285" height="270">
    </BOUNDS>
-   <BOUNDS type="Box" left="765" top="3690" width="2940" height="3045">
+   <BOUNDS type="Box" left="765" top="3690" width="2910" height="3915">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="|1. There a LOT of hidden pins. See girlpower for different use cases&cr;&lf;&cr;&lf;2. Bump Mapping Technique needs a mesh with Binormals and Tangents&cr;&lf;&cr;&lf;3. Rotate Transformations of the mesh have to be applied to normals&cr;&lf;&cr;&lf;4. Buffer for four texture transforms:&cr;&lf;Color, Specular, Diffuse, Bump&cr;&lf;&cr;&lf;5. Altered Orbit Camera, which outputs an instant position.|">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|1. There a LOT of hidden pins. See girlpower for different use cases&cr;&lf;&cr;&lf;2. Bump Mapping Technique needs a mesh with Binormals and Tangents&cr;&lf;&cr;&lf;3. Rotate Transformations of the mesh have to be applied to normals&cr;&lf;&cr;&lf;4. Buffer for four texture transforms:&cr;&lf;Color, Specular, Diffuse, Bump&cr;&lf;! Needs to be connected for textures to work !&cr;&lf;&cr;&lf;5. Altered Orbit Camera, which outputs an instant position.|">
    </PIN>
    <PIN pinname="Output String" visible="0">
    </PIN>

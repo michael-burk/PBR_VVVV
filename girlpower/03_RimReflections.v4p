@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\03_RimReflections.v4p" systemname="02_RimReflections" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\02_RimReflections.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Girlpower\03_RimReflections.v4p" systemname="02_RimReflections" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\02_RimReflections.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="1700" top="8110" width="100" height="100">
    </BOUNDS>
@@ -150,28 +150,6 @@
    </NODE>
    <PACK Name="VVVV.Packs" Version="0.2.0">
    </PACK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="806" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="7005" top="4035" width="810" height="510">
-   </BOUNDS>
-   <BOUNDS type="Node" left="7005" top="4035" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="Reflective/DiffuseXY">
-   </PIN>
-   <PIN pinname="X Input Value" slicecount="2" values="1,1">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   </NODE>
    <NODE id="934" systemname="SuperPhong (DX11.Effect)" filename="dx11\SuperPhong.fx" nodename="SuperPhong (DX11.Effect)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
    <BOUNDS type="Node" left="2390" top="7210" width="8550" height="270">
    </BOUNDS>
@@ -207,7 +185,7 @@
    </PIN>
    <PIN pinname="Color Overlay" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
-   <PIN pinname="Reflective/DiffuseXY" visible="1" slicecount="4" values="1,0,0,0">
+   <PIN pinname="Reflective/DiffuseXY" visible="1" slicecount="2" values="-0.17,0.13">
    </PIN>
    <PIN pinname="camDirXYZ" visible="1" slicecount="3" values="-0.803809344768524,-0.0407645367085934,-0.593488693237305">
    </PIN>
@@ -281,6 +259,8 @@
    </PIN>
    <PIN pinname="SpotLight Fading" visible="-1" pintype="Input" slicecount="1" values="1">
    </PIN>
+   <PIN pinname="Normal Rotation" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
    </LINK>
@@ -302,12 +282,6 @@
    <LINKPOINT x="5535" y="4800">
    </LINKPOINT>
    <LINKPOINT x="4350" y="4800">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="806" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Reflective/DiffuseXY" linkstyle="Bezier">
-   <LINKPOINT x="7035" y="5880">
-   </LINKPOINT>
-   <LINKPOINT x="7425" y="5880">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="574" srcpinname="Y Output Value" dstnodeid="473" dstpinname="Translate XYZ">
@@ -484,4 +458,46 @@
    <LINKPOINT x="6675" y="6285">
    </LINKPOINT>
    </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="1083" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="570" top="525" width="5100" height="450">
+   </BOUNDS>
+   <BOUNDS type="Box" left="570" top="525" width="5100" height="450">
+   </BOUNDS>
+   <PIN pinname="Input String" slicecount="1" visible="0" values="|SuperPhong (DX11.Effect)|">
+   </PIN>
+   <PIN pinname="Output String" slicecount="1" visible="0" values="||">
+   </PIN>
+   <PIN pinname="Size" slicecount="1" visible="1" values="14">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
+   </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="1084" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="5220" top="1950" width="285" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="5220" top="1950" width="285" height="270">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="1.">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="1085" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="570" top="1230" width="5085" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="570" top="1230" width="2955" height="3750">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|Rim Light is a fake reflection, suited also for creating indirect lighting looks&cr;&lf;&cr;&lf;1. The Fresnel Term is used for reflections.&cr;&lf;Fresnel Rim/Refl Min:&cr;&lf;The minumim Reflection for Rim light (x) and CubeMap (y)&cr;&lf;&cr;&lf;Fresnel Rim/Refl Max:&cr;&lf;The maximum Reflection for Rim light (x) and CubeMap (y)&cr;&lf;&cr;&lf;Fresnel Rim/Refl Exp:&cr;&lf;The exponent of the fresnel term for Rim light (x) and CubeMap (y)|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
    </PATCH>
