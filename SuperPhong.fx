@@ -357,11 +357,11 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	uint numLVP, dummyLVP;
     LightVP.GetDimensions(numLVP, dummyLVP);
 	
-	uint l,lightCount;
-	lightType.GetDimensions(l,lightCount);
+	uint numLights,lightCount;
+	lightType.GetDimensions(numLights,lightCount);
 	
 	
-	for(int i = 0; i<= lightCount; i++){
+	for(int i = 0; i<= numLights; i++){
 		float3 lightToObject = lPos[i] - In.PosW;
 		switch (lightType[i]){
 			case 0:
@@ -574,10 +574,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	uint numLVP, dummyLVP;
     LightVP.GetDimensions(numLVP, dummyLVP);
 	
-	uint l,lightCount;
-	lightType.GetDimensions(l,lightCount);
+	uint numLights,lightCount;
+	lightType.GetDimensions(numLights,lightCount);
 	
-	for(int i = 0; i<= lightCount; i++){
+	for(int i = 0; i<= numLights; i++){
 		float3 lightToObject = lPos[i] - In.PosW;
 		switch (lightType[i]){
 			case 0:
