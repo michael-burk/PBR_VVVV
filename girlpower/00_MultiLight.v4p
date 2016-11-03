@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <BOUNDS type="Window" left="13335" top="1695" width="14775" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
@@ -83,7 +83,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="0.02">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="0.01">
    </PIN>
    <PIN pinname="Transform In" visible="1">
    </PIN>
@@ -301,7 +301,7 @@
    </BOUNDS>
    <PIN pinname="Render State" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Mode" slicecount="1" values="NoCullSimple">
+   <PIN pinname="Mode" slicecount="1" values="BackCullSimple">
    </PIN>
    </NODE>
    <NODE systemname="SceneFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="SceneFile (DX11.Geometry Assimp)" componentmode="Hidden" id="960">

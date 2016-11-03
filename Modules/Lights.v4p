@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="0" scrolly="0">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="0" scrolly="1575">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicBuffer (DX11.Buffer Value)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="16350" top="10995" width="100" height="100">
    </BOUNDS>
@@ -467,7 +467,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6165" top="4905" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="5">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="4">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -489,7 +489,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="18795" top="10545" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.333">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -503,7 +503,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="17580" top="10545" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.33">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -517,7 +517,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="16365" top="10545" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.33">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.12">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -549,7 +549,7 @@
    </PIN>
    <PIN pinname="Hue" visible="1">
    </PIN>
-   <PIN pinname="Lightness" slicecount="1" values="0.08">
+   <PIN pinname="Lightness" slicecount="1" values="0.09">
    </PIN>
    <PIN pinname="Saturation" slicecount="1" values="1">
    </PIN>
@@ -597,13 +597,15 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
+   <PIN pinname="Color Input" visible="1" slicecount="6" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.05850,0.18000,1.00000|">
+   </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="46" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="8890" top="4995" width="795" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="8890" top="4995" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="2.3">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="5">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -687,13 +689,9 @@
    </BOUNDS>
    <BOUNDS type="Node" left="3435" top="13410" width="750" height="240">
    </BOUNDS>
+   <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
+   </PIN>
    </NODE>
-   <LINK srcnodeid="20" srcpinname="Layer" dstnodeid="50" dstpinname="Input Node" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="7350" y="9975">
-   </LINKPOINT>
-   <LINKPOINT x="3480" y="9975">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="7" srcpinname="Output" dstnodeid="6" dstpinname="Data" linkstyle="Bezier">
    <LINKPOINT x="10680" y="10628">
    </LINKPOINT>
@@ -968,38 +966,10 @@
    <LINKPOINT x="3945" y="5820">
    </LINKPOINT>
    </LINK>
-   <NODE id="58" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
-   <PIN pinname="Descriptive Name" slicecount="1" values="|Layer 1|">
-   </PIN>
-   <BOUNDS type="Box" left="4335" top="13410" width="300" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="4335" top="13410" width="750" height="240">
-   </BOUNDS>
-   </NODE>
-   <LINK srcnodeid="5" srcpinname="Layer" dstnodeid="58" dstpinname="Input Node" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="4605" y="9960">
-   </LINKPOINT>
-   <LINKPOINT x="4365" y="9960">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="35" srcpinname="XYZ" dstnodeid="29" dstpinname="Light Position" linkstyle="Bezier">
    <LINKPOINT x="4950" y="6083">
    </LINKPOINT>
    <LINKPOINT x="4950" y="6083">
-   </LINKPOINT>
-   </LINK>
-   <NODE id="59" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
-   <PIN pinname="Descriptive Name" slicecount="1" values="|Layer 2|">
-   </PIN>
-   <BOUNDS type="Box" left="5235" top="13410" width="300" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="5235" top="13410" width="750" height="240">
-   </BOUNDS>
-   </NODE>
-   <LINK srcnodeid="29" srcpinname="Layer" dstnodeid="59" dstpinname="Input Node" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="5520" y="9975">
-   </LINKPOINT>
-   <LINKPOINT x="5265" y="9975">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="28" srcpinname="Output" dstnodeid="35" dstpinname="Yaw" linkstyle="Bezier">
@@ -1040,8 +1010,6 @@
    <LINKPOINT x="13695" y="11348">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="45" dstpinname="Color Input" linkstyle="PolyLine">
-   </LINK>
    <LINK srcnodeid="42" srcpinname="Output" dstnodeid="41" dstpinname="Hue" linkstyle="Bezier">
    <LINKPOINT x="13710" y="7103">
    </LINKPOINT>
@@ -1068,7 +1036,7 @@
    <LINKPOINT x="15045" y="11348">
    </LINKPOINT>
    </LINK>
-   <BOUNDS type="Window" left="29880" top="1020" width="24345" height="13710">
+   <BOUNDS type="Window" left="29940" top="450" width="24345" height="13710">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -1087,7 +1055,7 @@
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="Color2" slicecount="1" values="|0.10195,0.10195,0.10195,1.00000|">
+   <PIN pinname="Color2" slicecount="1" values="|0.24097,0.24097,0.24097,1.00000|">
    </PIN>
    <PIN pinname="Control" visible="1">
    </PIN>
@@ -1189,11 +1157,11 @@
    </PIN>
    <PIN pinname="Columns" slicecount="1" values="11">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="11" values="0,0,0.5625,0.09375,0.34375,0.53125,0.84375,0.59375,0.6875,0.03125,0.75">
+   <PIN pinname="Y Input Value" slicecount="11" values="0,0,0.5625,0.09375,0.75,0.53125,0.5625,0.59375,0.6875,0.125,0.65625">
    </PIN>
    <PIN pinname="Slider Behavior" slicecount="1" values="Slider">
    </PIN>
-   <PIN pinname="X Input Value" pintype="Input" visible="1" slicecount="11" values=",0.235294117647059,1.76470588235294,,2,,0.588235294117647,,,0.235294117647059,">
+   <PIN pinname="X Input Value" pintype="Input" visible="1" slicecount="11" values=",0.235294117647059,1.76470588235294,,1.17647058823529,,0.588235294117647,,,0.588235294117647,0.352941176470588">
    </PIN>
    <PIN pinname="Slider Constraints" slicecount="1" values="scX">
    </PIN>
@@ -1431,5 +1399,41 @@
    <LINK srcnodeid="70" srcpinname="Texture Out" dstnodeid="77" dstpinname="Texture In">
    <LINKPOINT x="16215" y="8925">
    </LINKPOINT>
+   </LINK>
+   <NODE systemname="Group (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Group (DX11.Layer)" componentmode="Hidden" id="78">
+   <BOUNDS type="Node" left="3435" top="12885" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Layer 1" visible="1">
+   </PIN>
+   <PIN pinname="Input Count" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Layer 2" visible="1">
+   </PIN>
+   <PIN pinname="Layer 3" visible="1">
+   </PIN>
+   <PIN pinname="Layer Out" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="20" srcpinname="Layer" dstnodeid="78" dstpinname="Layer 1" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="7350" y="9713">
+   </LINKPOINT>
+   <LINKPOINT x="3645" y="9713">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="5" srcpinname="Layer" dstnodeid="78" dstpinname="Layer 2" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="4605" y="9713">
+   </LINKPOINT>
+   <LINKPOINT x="3810" y="9713">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="29" srcpinname="Layer" dstnodeid="78" dstpinname="Layer 3" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="5520" y="9713">
+   </LINKPOINT>
+   <LINKPOINT x="3990" y="9713">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="78" srcpinname="Layer Out" dstnodeid="50" dstpinname="Input Node">
+   </LINK>
+   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="45" dstpinname="Color Input">
    </LINK>
    </PATCH>

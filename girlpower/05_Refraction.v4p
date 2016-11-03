@@ -27,9 +27,9 @@
    </BOUNDS>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="369" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="8215" top="6605" width="540" height="240">
+   <BOUNDS type="Box" left="8050" top="7100" width="540" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="8215" top="6605" width="0" height="0">
+   <BOUNDS type="Node" left="8050" top="7100" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.1">
    </PIN>
@@ -221,7 +221,7 @@
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="Width" slicecount="1" values="0.75">
+   <PIN pinname="Width" slicecount="1" values="0.65">
    </PIN>
    <PIN pinname="Sampler" visible="1" slicecount="1" values="||">
    </PIN>
@@ -271,7 +271,7 @@
    </BOUNDS>
    <PIN pinname="refraction" visible="1" pintype="Input" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Ambient Color" slicecount="1" visible="-1" pintype="Input" values="|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Ambient Color" slicecount="1" visible="1" pintype="Input" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="refractionIndexXYZ" visible="1" pintype="Input">
    </PIN>
@@ -295,7 +295,7 @@
    </PIN>
    <PIN pinname="Fresnel Rim/Refl Min XY" visible="1" slicecount="4" values="0,0,0,1">
    </PIN>
-   <PIN pinname="Color Overlay" slicecount="1" values="|0.99518,0.70158,1.00000,1.00000|" visible="1">
+   <PIN pinname="Color Overlay" slicecount="1" visible="1" values="|0.99518,0.70158,1.00000,1.00000|">
    </PIN>
    <PIN pinname="Reflective/DiffuseXY" visible="1" slicecount="4" values="1,0,0,0">
    </PIN>
@@ -665,9 +665,9 @@
    <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Bumpiness">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1082" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="8865" top="6945" width="480" height="480">
+   <BOUNDS type="Box" left="8685" top="7035" width="480" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="8865" top="6945" width="0" height="0">
+   <BOUNDS type="Node" left="8685" top="7035" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
@@ -813,9 +813,9 @@
    <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="877" dstpinname="Sampler">
    </LINK>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="1089" systemname="IOBox (Color)">
-   <BOUNDS type="Box" left="7215" top="6015" width="825" height="660">
+   <BOUNDS type="Box" left="7440" top="6090" width="825" height="660">
    </BOUNDS>
-   <BOUNDS type="Node" left="7215" top="6015" width="0" height="0">
+   <BOUNDS type="Node" left="7440" top="6090" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.99518,0.70158,1.00000,1.00000|">
    </PIN>
