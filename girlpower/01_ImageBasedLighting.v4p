@@ -1,5 +1,5 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\01_ImageBasedLighting.v4p" systemname="01_ImageBasedLighting" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\01_ImageBasedLighting.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta34.dtd" >
+   <PATCH nodename="C:\Users\Ann-Katrin\Desktop\superphong\girlpower\01_ImageBasedLighting.v4p" systemname="01_ImageBasedLighting" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\01_ImageBasedLighting.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="3650" top="9610" width="100" height="100">
    </BOUNDS>
@@ -12,7 +12,7 @@
    </NODE>
    <BOUNDS type="Window" left="13500" top="1110" width="14580" height="12540">
    </BOUNDS>
-   <PACK Name="addonpack" Version="34.101.0">
+   <PACK Name="addonpack" Version="34.0.0">
    </PACK>
    <NODE systemname="Mesh (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="Mesh (DX11.Geometry Assimp)" componentmode="Hidden" id="67">
    <BOUNDS type="Node" left="3495" top="6525" width="100" height="100">
@@ -180,44 +180,6 @@
    <PIN pinname="Default" slicecount="1" values="|0,0,0|">
    </PIN>
    </NODE>
-   <NODE systemname="Camera (Transform Orbit Legacy)" filename="%VVVV%\addonpack\lib\nodes\modules\_legacy\Camera (Transform Orbit Legacy).v4p" nodename="Camera (Transform Orbit)" componentmode="Hidden" id="1">
-   <BOUNDS type="Node" left="5070" top="9690" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="View" visible="1">
-   </PIN>
-   <PIN pinname="Projection" visible="1">
-   </PIN>
-   <PIN pinname="Initial Yaw" slicecount="1" values="-0.44">
-   </PIN>
-   <PIN pinname="Initial Pitch" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Initial Distance" slicecount="1" values="20">
-   </PIN>
-   <PIN pinname="Near Plane" slicecount="1" values="0.05">
-   </PIN>
-   <PIN pinname="Far Plane" slicecount="1" values="1000">
-   </PIN>
-   <PIN pinname="View Projection" visible="1">
-   </PIN>
-   <PIN pinname="Position" visible="1">
-   </PIN>
-   <PIN pinname="Initial FOV" slicecount="1" values="0.15">
-   </PIN>
-   <PIN pinname="Inital Distance" slicecount="1" values="7.1">
-   </PIN>
-   <PIN pinname="Camera Position" visible="1">
-   </PIN>
-   <PIN pinname="Target Initial Position" slicecount="3" visible="1" values="0,0,0">
-   </PIN>
-   <PIN pinname="Roll" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Camera Position Instant" visible="1">
-   </PIN>
-   <BOUNDS type="Window" left="1785" top="705" width="18435" height="13185">
-   </BOUNDS>
-   <PIN pinname="Camera Direction" visible="1">
-   </PIN>
-   </NODE>
    <NODE systemname="UniformScale (Transform)" nodename="UniformScale (Transform)" componentmode="Hidden" id="745">
    <BOUNDS type="Node" left="9495" top="5640" width="100" height="100">
    </BOUNDS>
@@ -343,15 +305,11 @@
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
+   <PIN pinname="View" visible="1">
+   </PIN>
+   <PIN pinname="Projection" visible="1">
+   </PIN>
    </NODE>
-   <LINK srcnodeid="1" srcpinname="Projection" dstnodeid="928" dstpinname="Projection" linkstyle="VHV">
-   <LINKPOINT x="5265" y="10065">
-   </LINKPOINT>
-   <LINKPOINT x="5250" y="10065">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="View" dstnodeid="928" dstpinname="View" linkstyle="PolyLine">
-   </LINK>
    <LINK srcnodeid="2" srcpinname="Layer Out" dstnodeid="928" dstpinname="Layer">
    </LINK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="1060">
@@ -701,7 +659,7 @@
    </PIN>
    <PIN pinname="Bumpiness" visible="1">
    </PIN>
-   <PIN pinname="Camera PositionXYZ" visible="1">
+   <PIN pinname="Camera PositionXYZ" visible="1" slicecount="3" values="9.79528522491455,3.36893367767334,17.0385799407959">
    </PIN>
    <PIN pinname="Normal Rotation" visible="1">
    </PIN>
@@ -750,12 +708,6 @@
    </LINK>
    <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Bumpiness">
    </LINK>
-   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
-   <LINKPOINT x="8220" y="11220">
-   </LINKPOINT>
-   <LINKPOINT x="8085" y="5265">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
    </LINK>
    <LINK srcnodeid="406" srcpinname="Buffer" dstnodeid="934" dstpinname="tColor,tSpec,tDiffuse,tNormal">
@@ -785,5 +737,37 @@
    <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1039" dstpinname="Texture In">
    </LINK>
    <LINK srcnodeid="1061" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Refl">
+   </LINK>
+   <NODE systemname="Camera (Transform Orbit Legacy) Instant Position" filename="..\modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="..\modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden" id="1095">
+   <BOUNDS type="Node" left="4900" top="9720" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="View" visible="1">
+   </PIN>
+   <PIN pinname="Projection" visible="1">
+   </PIN>
+   <PIN pinname="Target Initial Position" visible="1" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Camera Position Instant" visible="1">
+   </PIN>
+   <PIN pinname="Initial Distance" slicecount="1" values="20">
+   </PIN>
+   <PIN pinname="Roll" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Initial Yaw" slicecount="1" values="-0.37">
+   </PIN>
+   <PIN pinname="Initial Pitch" slicecount="1" values="0.05">
+   </PIN>
+   <PIN pinname="FilterTime" slicecount="1" values="2">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1095" srcpinname="View" dstnodeid="928" dstpinname="View">
+   </LINK>
+   <LINK srcnodeid="1095" srcpinname="Projection" dstnodeid="928" dstpinname="Projection">
+   </LINK>
+   <LINK srcnodeid="1095" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
+   <LINKPOINT x="8000" y="11690">
+   </LINKPOINT>
+   <LINKPOINT x="8350" y="6150">
+   </LINKPOINT>
    </LINK>
    </PATCH>

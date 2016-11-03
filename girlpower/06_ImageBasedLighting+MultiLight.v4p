@@ -1,5 +1,5 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\06_ImageBasedLighting+MultiLight.v4p" systemname="06_ImageBasedLighting+MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\06_ImageBasedLighting+MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta34.dtd" >
+   <PATCH nodename="C:\Users\Ann-Katrin\Desktop\superphong\girlpower\06_ImageBasedLighting+MultiLight.v4p" systemname="06_ImageBasedLighting+MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\06_ImageBasedLighting+MultiLight.v4p" scrollx="0" scrolly="-360" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="2900" top="9040" width="100" height="100">
    </BOUNDS>
@@ -12,7 +12,7 @@
    </NODE>
    <BOUNDS type="Window" left="12435" top="1875" width="15570" height="12540">
    </BOUNDS>
-   <PACK Name="addonpack" Version="34.101.0">
+   <PACK Name="addonpack" Version="34.0.0">
    </PACK>
    <NODE systemname="Mesh (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="Mesh (DX11.Geometry Assimp)" componentmode="Hidden" id="67">
    <BOUNDS type="Node" left="2760" top="6075" width="100" height="100">
@@ -160,44 +160,6 @@
    <PIN pinname="XYZ" visible="1" slicecount="3" values="0,0.3,0">
    </PIN>
    </NODE>
-   <NODE systemname="Camera (Transform Orbit Legacy)" filename="%VVVV%\addonpack\lib\nodes\modules\_legacy\Camera (Transform Orbit Legacy).v4p" nodename="Camera (Transform Orbit)" componentmode="Hidden" id="1">
-   <BOUNDS type="Node" left="4920" top="9120" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="View" visible="1">
-   </PIN>
-   <PIN pinname="Projection" visible="1">
-   </PIN>
-   <PIN pinname="Initial Yaw" slicecount="1" values="-0.38">
-   </PIN>
-   <PIN pinname="Initial Pitch" slicecount="1" values="0.06">
-   </PIN>
-   <PIN pinname="Initial Distance" slicecount="1" values="2.5">
-   </PIN>
-   <PIN pinname="Near Plane" slicecount="1" values="0.05">
-   </PIN>
-   <PIN pinname="Far Plane" slicecount="1" values="1000">
-   </PIN>
-   <PIN pinname="View Projection" visible="1">
-   </PIN>
-   <PIN pinname="Position" visible="1">
-   </PIN>
-   <PIN pinname="Initial FOV" slicecount="1" values="0.15">
-   </PIN>
-   <PIN pinname="Inital Distance" slicecount="1" values="7.1">
-   </PIN>
-   <PIN pinname="Camera Position" visible="1">
-   </PIN>
-   <PIN pinname="Target Initial Position" slicecount="3" visible="1" values="0,0,0">
-   </PIN>
-   <PIN pinname="Roll" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Camera Position Instant" visible="1">
-   </PIN>
-   <BOUNDS type="Window" left="1785" top="705" width="18435" height="13185">
-   </BOUNDS>
-   <PIN pinname="Camera Direction" visible="1">
-   </PIN>
-   </NODE>
    <NODE systemname="UniformScale (Transform)" nodename="UniformScale (Transform)" componentmode="Hidden" id="745">
    <BOUNDS type="Node" left="8145" top="5730" width="100" height="100">
    </BOUNDS>
@@ -333,15 +295,11 @@
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
+   <PIN pinname="View" visible="1">
+   </PIN>
+   <PIN pinname="Projection" visible="1">
+   </PIN>
    </NODE>
-   <LINK srcnodeid="1" srcpinname="Projection" dstnodeid="928" dstpinname="Projection" linkstyle="VHV">
-   <LINKPOINT x="5115" y="9495">
-   </LINKPOINT>
-   <LINKPOINT x="5100" y="9495">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="View" dstnodeid="928" dstpinname="View" linkstyle="PolyLine">
-   </LINK>
    <LINK srcnodeid="2" srcpinname="Layer Out" dstnodeid="928" dstpinname="Layer">
    </LINK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="1060">
@@ -615,7 +573,7 @@
    </PIN>
    <PIN pinname="Bumpiness" visible="1">
    </PIN>
-   <PIN pinname="Camera PositionXYZ" visible="1">
+   <PIN pinname="Camera PositionXYZ" visible="1" slicecount="3" values="0,0,0">
    </PIN>
    <PIN pinname="Normal Rotation" visible="1">
    </PIN>
@@ -680,12 +638,6 @@
    <LINKPOINT x="6990" y="6473">
    </LINKPOINT>
    <LINKPOINT x="6990" y="6473">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
-   <LINKPOINT x="5455" y="7985">
-   </LINKPOINT>
-   <LINKPOINT x="5705" y="8035">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation" linkstyle="Bezier">
@@ -801,83 +753,83 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1096" srcpinname="Layer" dstnodeid="1074" dstpinname="Layer 3" linkstyle="Bezier">
-   <LINKPOINT x="9150" y="5205">
+   <LINKPOINT x="9160" y="5205">
    </LINKPOINT>
-   <LINKPOINT x="3555" y="5205">
+   <LINKPOINT x="3560" y="5205">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="67" srcpinname="Output" dstnodeid="934" dstpinname="Geometry" linkstyle="PolyLine">
    </LINK>
    <LINK srcnodeid="1096" srcpinname="LightPosition" dstnodeid="934" dstpinname="lPos" linkstyle="Bezier">
-   <LINKPOINT x="9345" y="4230">
+   <LINKPOINT x="9350" y="4225">
    </LINKPOINT>
-   <LINKPOINT x="9330" y="4230">
+   <LINKPOINT x="9340" y="4225">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="SpotLightVP" dstnodeid="934" dstpinname="LightView" linkstyle="Bezier">
-   <LINKPOINT x="9495" y="4238">
+   <LINKPOINT x="9510" y="4230">
    </LINKPOINT>
-   <LINKPOINT x="8460" y="4238">
+   <LINKPOINT x="8460" y="4230">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="SpotLight Range" dstnodeid="934" dstpinname="LightRange" linkstyle="Bezier">
-   <LINKPOINT x="9645" y="4230">
+   <LINKPOINT x="9660" y="4230">
    </LINKPOINT>
-   <LINKPOINT x="8745" y="4230">
+   <LINKPOINT x="8750" y="4230">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="934" dstpinname="Directional/Point/Spot" linkstyle="Bezier">
-   <LINKPOINT x="9975" y="4230">
+   <LINKPOINT x="9980" y="4230">
    </LINKPOINT>
-   <LINKPOINT x="9045" y="4230">
+   <LINKPOINT x="9050" y="4230">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="Diffuse Color" dstnodeid="934" dstpinname="Diffuse Color" linkstyle="Bezier">
-   <LINKPOINT x="10140" y="4238">
+   <LINKPOINT x="10150" y="4230">
    </LINKPOINT>
-   <LINKPOINT x="10500" y="4238">
+   <LINKPOINT x="10510" y="4230">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="Specular Color" dstnodeid="934" dstpinname="Specular Color" linkstyle="Bezier">
-   <LINKPOINT x="10290" y="4230">
+   <LINKPOINT x="10300" y="4225">
    </LINKPOINT>
-   <LINKPOINT x="10785" y="4230">
+   <LINKPOINT x="10800" y="4225">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="Light Direction" dstnodeid="934" dstpinname="SpotLight DirectionXYZ" linkstyle="Bezier">
-   <LINKPOINT x="9780" y="4230">
+   <LINKPOINT x="9790" y="4235">
    </LINKPOINT>
-   <LINKPOINT x="5835" y="4230">
+   <LINKPOINT x="5850" y="4235">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="SpotLightTex" dstnodeid="934" dstpinname="SpotTex" linkstyle="Bezier">
-   <LINKPOINT x="10470" y="4230">
+   <LINKPOINT x="10470" y="4225">
    </LINKPOINT>
-   <LINKPOINT x="12840" y="4230">
+   <LINKPOINT x="12850" y="4225">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="lAtt0" dstnodeid="934" dstpinname="lAtt0" linkstyle="Bezier">
-   <LINKPOINT x="10605" y="4230">
+   <LINKPOINT x="10610" y="4235">
    </LINKPOINT>
-   <LINKPOINT x="9630" y="4230">
+   <LINKPOINT x="9640" y="4235">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="lAtt1" dstnodeid="934" dstpinname="lAtt1" linkstyle="Bezier">
-   <LINKPOINT x="10755" y="4238">
+   <LINKPOINT x="10770" y="4230">
    </LINKPOINT>
-   <LINKPOINT x="9915" y="4238">
+   <LINKPOINT x="9930" y="4230">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="lAtt2" dstnodeid="934" dstpinname="lAtt2" linkstyle="Bezier">
-   <LINKPOINT x="11070" y="4230">
+   <LINKPOINT x="11080" y="4230">
    </LINKPOINT>
-   <LINKPOINT x="10215" y="4230">
+   <LINKPOINT x="10220" y="4230">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="spotFade" dstnodeid="934" dstpinname="SpotLight Fading" linkstyle="Bezier">
-   <LINKPOINT x="10875" y="4223">
+   <LINKPOINT x="10890" y="4235">
    </LINKPOINT>
-   <LINKPOINT x="6720" y="4223">
+   <LINKPOINT x="6730" y="4235">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Cross (2d)" nodename="Cross (2d)" componentmode="Hidden" id="1098">
@@ -993,9 +945,9 @@
    <LINK srcnodeid="1102" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1104" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="4905" top="8340" width="285" height="600">
+   <BOUNDS type="Box" left="4755" top="8480" width="285" height="600">
    </BOUNDS>
-   <BOUNDS type="Node" left="4905" top="8340" width="0" height="0">
+   <BOUNDS type="Node" left="4755" top="8480" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0.11,0">
    </PIN>
@@ -1007,7 +959,41 @@
    </PIN>
    <PIN pinname="Rows" slicecount="1" values="3">
    </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
    </NODE>
-   <LINK srcnodeid="1104" srcpinname="Y Output Value" dstnodeid="1" dstpinname="Target Initial Position" linkstyle="PolyLine">
+   <NODE systemname="Camera (Transform Orbit Legacy) Instant Position" filename="..\modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="..\modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden" id="1106">
+   <BOUNDS type="Node" left="4760" top="9210" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="View" visible="1">
+   </PIN>
+   <PIN pinname="Projection" visible="1">
+   </PIN>
+   <PIN pinname="Target Initial Position" visible="1">
+   </PIN>
+   <PIN pinname="Camera Position Instant" visible="1">
+   </PIN>
+   <PIN pinname="Initial Distance" slicecount="1" values="2.45">
+   </PIN>
+   <PIN pinname="Roll" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Initial Yaw" slicecount="1" values="-0.37">
+   </PIN>
+   <PIN pinname="Initial Pitch" slicecount="1" values="0.05">
+   </PIN>
+   <PIN pinname="FilterTime" slicecount="1" values="2">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1106" srcpinname="View" dstnodeid="928" dstpinname="View">
+   </LINK>
+   <LINK srcnodeid="1106" srcpinname="Projection" dstnodeid="928" dstpinname="Projection">
+   </LINK>
+   <LINK srcnodeid="1104" srcpinname="Y Output Value" dstnodeid="1106" dstpinname="Target Initial Position">
+   </LINK>
+   <LINK srcnodeid="1106" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
+   <LINKPOINT x="6410" y="10823">
+   </LINKPOINT>
+   <LINKPOINT x="6760" y="5247">
+   </LINKPOINT>
    </LINK>
    </PATCH>
