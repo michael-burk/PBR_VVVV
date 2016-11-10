@@ -10,7 +10,7 @@
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="13305" top="1035" width="14580" height="12540">
+   <BOUNDS type="Window" left="13305" top="1035" width="12525" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -491,7 +491,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="570" top="1230" width="2955" height="3750">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="|Rim Light is a fake reflection, suited also for creating indirect lighting looks&cr;&lf;&cr;&lf;1. The Fresnel Term is used for reflections.&cr;&lf;Fresnel Rim/Refl Min:&cr;&lf;The minumim Reflection for Rim light (x) and CubeMap (y)&cr;&lf;&cr;&lf;Fresnel Rim/Refl Max:&cr;&lf;The maximum Reflection for Rim light (x) and CubeMap (y)&cr;&lf;&cr;&lf;Fresnel Rim/Refl Exp:&cr;&lf;The exponent of the fresnel term for Rim light (x) and CubeMap (y)|">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|Rim Light is a fake reflection, suited also for creating velvety loos&cr;&lf;&cr;&lf;1. The Fresnel Term is used for reflections.&cr;&lf;Fresnel Rim/Refl Min:&cr;&lf;The minumim Reflection for Rim light (x) and CubeMap (y)&cr;&lf;&cr;&lf;Fresnel Rim/Refl Max:&cr;&lf;The maximum Reflection for Rim light (x) and CubeMap (y)&cr;&lf;&cr;&lf;Fresnel Rim/Refl Exp:&cr;&lf;The exponent of the fresnel term for Rim light (x) and CubeMap (y)|">
    </PIN>
    <PIN pinname="Output String" visible="0">
    </PIN>
