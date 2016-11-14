@@ -28,7 +28,7 @@ cbuffer cbPerObject : register (b1)
 	float2 Kr <String uiname="Fresnel Rim/Refl Max ";float uimin=0.0; float uimax=6.0;> = 0.5 ;
 	float2 FresExp <String uiname="Fresnel Rim/Refl Exp ";float ufimin=0.0; float uimax=30;> = 5 ;
 	float3 camPos <string uiname="Camera Position";> ;
-	float3 SpotLightDir <string uiname="SpotLight Direction";> ;;
+	StructuredBuffer <float3> SpotLightDir <string uiname="SpotLight Direction";> ;;
 	float4 RimColor <bool color = true; string uiname="Rim Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 Color <bool color = true; string uiname="Color Overlay";>  = { 1.0f,1.0f,1.0f,1.0f };
 	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
@@ -43,9 +43,12 @@ cbuffer cbPerObject : register (b1)
 	StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
 	//int reflectMode <bool visible=false;string uiname="ReflectionMode: Mul/Add"; int uimin=0.0; int uimax=1.0;> = 1;
 	int diffuseMode <bool visible=false;string uiname="DiffuseAffect: Reflection/Specular/Both"; int uimin=0.0; int uimax=2.0;> = 2;
-
+	
+	float shadowMapBias = .2;
+	
 	StructuredBuffer <float4x4> texTransforms <string uiname="tColor,tSpec,tDiffuse,tNormal";>;
 	StructuredBuffer <float4x4> LightVP <string uiname="LightView";>;
+	StructuredBuffer <float4x4> LightP <string uiname="LightProjection";>;
 	StructuredBuffer <float> lightRange <string uiname="LightRange";>;
 	StructuredBuffer <int> lightType <string uiname="Directional/Point/Spot";>;	
 	StructuredBuffer <float3> lPos <string uiname="lPos";>;
@@ -337,6 +340,9 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	uint d,textureCount;
 	lightMap.GetDimensions(d,d,textureCount);
 	
+	uint dP,textureCountDepth;
+	shadowMap.GetDimensions(dP,dP,textureCountDepth);
+	
 	uint numSpotRange, dummySpot;
     lightRange.GetDimensions(numSpotRange, dummySpot);
 	
@@ -385,7 +391,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 			
 			case 2:
 			
-				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir) < 0){
+				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir[i%textureCountDepth]) < 0){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
@@ -460,7 +466,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	}
 	
 	
-	float3 newCol;
+	float3 newCol = float4(0,0,0,0);
 
 	float3 Nn = normalize(In.NormW);
 	
@@ -559,6 +565,9 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	uint d,textureCount;
 	lightMap.GetDimensions(d,d,textureCount);
 	
+	uint dP,textureCountDepth;
+	shadowMap.GetDimensions(dP,dP,textureCountDepth);
+	
 	uint numSpotRange, dummySpot;
     lightRange.GetDimensions(numSpotRange, dummySpot);
 	
@@ -583,6 +592,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	uint numLights,lightCount;
 	lightType.GetDimensions(numLights,lightCount);
 	
+	
 	for(int i = 0; i<= numLights; i++){
 		float3 lightToObject = lPos[i] - In.PosW;
 		switch (lightType[i]){
@@ -606,7 +616,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 			case 2:
 
-				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir) < 0){
+				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir[i%textureCountDepth]) < 0){
+					
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
@@ -614,10 +625,17 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 					
 					
-					float3 coords = float3(projectTexCoord, i % textureCount);	//make sure Instance ID buffer is in floats
+					float3 coords = float3(projectTexCoord, i % textureCountDepth);	//make sure Instance ID buffer is in floats
 					
-					float shadowMapDepth = shadowMap.Sample(g_samLinear, coords, 0 );
+					float shadowMapDepth = shadowMap.Sample(g_samLinear, coords, 0 ).x;
+					
+					shadowMapDepth =LightP[0]._43/(shadowMapDepth-LightP[0]._33);
+					
+					shadowMapDepth += shadowMapBias;
+					
 					if ( shadowMapDepth < viewPosition.z) break;
+					coords = float3(projectTexCoord, i % textureCount);	//make sure Instance ID buffer is in floats
+					
 					projectionColor = lightMap.Sample(g_samLinear, coords, 0 );
 
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));					

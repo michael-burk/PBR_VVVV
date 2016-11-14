@@ -1,30 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0">
-   <NODE systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="Hidden" id="0">
-   <BOUNDS type="Node" left="1080" top="3105" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Layer" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Depth Buffer Mode" slicecount="1" values="Standard">
-   </PIN>
-   <PIN pinname="Depth Buffer Format" slicecount="1" values="D32_Float">
-   </PIN>
-   <PIN pinname="Depth Buffer" visible="1">
-   </PIN>
-   <PIN pinname="View" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Buffers" visible="1">
-   </PIN>
-   <PIN pinname="Texture SizeXY" visible="1">
-   </PIN>
-   <PIN pinname="Projection" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="AA Samples per Pixel" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="Target Format" slicecount="1" values="R8_UInt">
-   </PIN>
-   </NODE>
-   <BOUNDS type="Window" left="14535" top="4110" width="6630" height="8355">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="165" scrolly="-360">
+   <BOUNDS type="Window" left="18510" top="2835" width="6630" height="8355">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -64,32 +40,12 @@
    </NODE>
    <LINK srcnodeid="1" srcpinname="Layer" dstnodeid="5" dstpinname="Layer In">
    </LINK>
-   <NODE nodename="IOBox (Node)" componentmode="InABox" id="6" systemname="IOBox (Node)">
-   <BOUNDS type="Box" left="2655" top="5070" width="660" height="1110">
-   </BOUNDS>
-   <BOUNDS type="Node" left="2655" top="5070" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Descriptive Name" slicecount="1" values="DepthMap">
-   </PIN>
-   <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
-   </PIN>
-   </NODE>
-   <NODE systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="Hidden" id="8" stayontop="1">
-   <BOUNDS type="Node" left="3840" top="5100" width="840" height="270">
-   </BOUNDS>
-   <BOUNDS type="Box" left="3840" top="5100" width="6000" height="4500">
-   </BOUNDS>
-   <BOUNDS type="Window" left="6735" top="630" width="6240" height="5085">
-   </BOUNDS>
-   <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
-   </PIN>
-   </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="9" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="2400" top="2430" width="795" height="480">
+   <BOUNDS type="Box" left="2370" top="2310" width="795" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="2400" top="2430" width="0" height="0">
+   <BOUNDS type="Node" left="2370" top="2310" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="512,512">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="256,256">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -99,11 +55,11 @@
    </PIN>
    <PIN pinname="Rows" slicecount="1" values="2">
    </PIN>
-   <PIN pinname="X Input Value" slicecount="2" values="400,400">
+   <PIN pinname="X Input Value" slicecount="2" values="512,512">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="9" srcpinname="Y Output Value" dstnodeid="0" dstpinname="Texture SizeXY">
-   </LINK>
    <NODE nodename="IOBox (Node)" componentmode="InABox" id="10" systemname="IOBox (Node)">
    <BOUNDS type="Box" left="3375" top="2010" width="795" height="240">
    </BOUNDS>
@@ -113,11 +69,11 @@
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="View">
    </PIN>
+   <PIN pinname="Output Node" visible="1">
+   </PIN>
    </NODE>
-   <LINK srcnodeid="10" srcpinname="Output Node" dstnodeid="0" dstpinname="View">
-   </LINK>
    <NODE nodename="IOBox (Node)" componentmode="InABox" id="11" systemname="IOBox (Node)">
-   <BOUNDS type="Box" left="4590" top="2055" width="795" height="240">
+   <BOUNDS type="Box" left="4590" top="2055" width="525" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="4590" top="2055" width="0" height="0">
    </BOUNDS>
@@ -128,24 +84,20 @@
    <PIN pinname="Output Node" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="11" srcpinname="Output Node" dstnodeid="0" dstpinname="Projection">
-   </LINK>
-   <LINK srcnodeid="5" srcpinname="Layer Out" dstnodeid="0" dstpinname="Layer">
-   </LINK>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="12" systemname="IOBox (Enumerations)">
    <BOUNDS type="Box" left="555" top="195" width="1590" height="270">
    </BOUNDS>
    <BOUNDS type="Node" left="555" top="195" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Input Enum" slicecount="1" visible="1" values="NoCullSimple">
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="FrontCullSimple">
    </PIN>
    </NODE>
    <LINK srcnodeid="12" srcpinname="Output Enum" dstnodeid="4" dstpinname="Mode">
    </LINK>
    <NODE systemname="LinearDepth (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\LinearDepth.tfx" nodename="LinearDepth (DX11.TextureFX)" componentmode="Hidden" id="13">
-   <BOUNDS type="Node" left="5130" top="3810" width="100" height="100">
+   <BOUNDS type="Node" left="3600" top="4650" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Texture In" visible="1">
+   <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -157,41 +109,25 @@
    </PIN>
    <PIN pinname="MaxDepth" slicecount="1" values="10">
    </PIN>
+   <PIN pinname="Enabled" slicecount="1" values="1">
+   </PIN>
    </NODE>
-   <LINK srcnodeid="0" srcpinname="Depth Buffer" dstnodeid="13" dstpinname="Texture In">
-   </LINK>
-   <LINK srcnodeid="13" srcpinname="Texture Out" dstnodeid="8" dstpinname="Texture In">
-   </LINK>
    <LINK srcnodeid="11" srcpinname="Output Node" dstnodeid="13" dstpinname="Projection">
-   <LINKPOINT x="4665" y="2340">
+   <LINKPOINT x="3899" y="2759">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Blur (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\Blur.tfx" nodename="Blur (DX11.TextureFX)" componentmode="Hidden" id="14">
-   <BOUNDS type="Node" left="1305" top="4365" width="100" height="100">
+   <BOUNDS type="Node" left="3525" top="5595" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="Width" slicecount="1" values="0.02">
+   <PIN pinname="Width" slicecount="1" values="0.5">
    </PIN>
    <PIN pinname="Enabled" slicecount="1" values="0">
    </PIN>
    </NODE>
-   <LINK srcnodeid="14" srcpinname="Texture Out" dstnodeid="6" dstpinname="Input Node">
-   </LINK>
-   <NODE systemname="FXAA11 (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\FXAA11.tfx" nodename="FXAA11 (DX11.TextureFX)" componentmode="Hidden" id="15">
-   <BOUNDS type="Node" left="3120" top="4335" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Texture In" visible="1">
-   </PIN>
-   <PIN pinname="Texture Out" visible="1">
-   </PIN>
-   <PIN pinname="Enabled" slicecount="1" values="0">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="13" srcpinname="Texture Out" dstnodeid="15" dstpinname="Texture In">
-   </LINK>
    <LINK srcnodeid="13" srcpinname="Texture Out" dstnodeid="14" dstpinname="Texture In">
    </LINK>
    <NODE nodename="IOBox (Node)" componentmode="InABox" id="17" systemname="IOBox (Node)">
@@ -217,5 +153,97 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="18" srcpinname="Output Node" dstnodeid="1" dstpinname="Transform In">
+   </LINK>
+   <NODE systemname="Count (Node)" nodename="Count (Node)" componentmode="Hidden" id="19">
+   <BOUNDS type="Node" left="4530" top="420" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Count" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Output Node" dstnodeid="19" dstpinname="Input">
+   </LINK>
+   <NODE id="0" systemname="Renderer (DX11 TextureArray)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TextureArray)" componentmode="Hidden">
+   <PIN pinname="Texture Slices Out" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <BOUNDS type="Node" left="1080" top="3105" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Layer" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Depth Buffer Mode" slicecount="1" values="Standard">
+   </PIN>
+   <PIN pinname="Depth Buffer Format" slicecount="1" values="D32_Float">
+   </PIN>
+   <PIN pinname="Depth Buffer" visible="1">
+   </PIN>
+   <PIN pinname="View" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Buffers" visible="1">
+   </PIN>
+   <PIN pinname="Texture SizeXY" visible="1">
+   </PIN>
+   <PIN pinname="Projection" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="AA Samples per Pixel" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Target Format" slicecount="1" values="R8_UInt">
+   </PIN>
+   <PIN pinname="Depth Out" visible="1">
+   </PIN>
+   <PIN pinname="SizeXY" visible="1">
+   </PIN>
+   <PIN pinname="Element Count" visible="1">
+   </PIN>
+   <PIN pinname="Mips" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Enable Depth Buffer" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Bind Whole Target" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="13" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="19" srcpinname="Count" dstnodeid="0" dstpinname="Element Count">
+   </LINK>
+   <LINK srcnodeid="9" srcpinname="Y Output Value" dstnodeid="0" dstpinname="SizeXY">
+   </LINK>
+   <LINK srcnodeid="10" srcpinname="Output Node" dstnodeid="0" dstpinname="View">
+   </LINK>
+   <NODE systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="Hidden" id="22">
+   <BOUNDS type="Node" left="3480" top="3135" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Depth Buffer Mode" slicecount="1" values="Standard">
+   </PIN>
+   <PIN pinname="Depth Buffer Format" slicecount="1" values="D32_Float">
+   </PIN>
+   <PIN pinname="Depth Buffer" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Output Node" dstnodeid="22" dstpinname="View">
+   </LINK>
+   <LINK srcnodeid="11" srcpinname="Output Node" dstnodeid="22" dstpinname="Projection">
+   </LINK>
+   <LINK srcnodeid="9" srcpinname="Y Output Value" dstnodeid="22" dstpinname="Texture SizeXY">
+   </LINK>
+   <LINK srcnodeid="1" srcpinname="Layer" dstnodeid="22" dstpinname="Layer">
+   </LINK>
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="30" systemname="IOBox (Node)">
+   <BOUNDS type="Box" left="1800" top="6705" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1800" top="6705" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Depth Out|">
+   </PIN>
+   <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="30" dstpinname="Input Node">
+   </LINK>
+   <LINK srcnodeid="11" srcpinname="Output Node" dstnodeid="0" dstpinname="Projection">
+   </LINK>
+   <LINK srcnodeid="5" srcpinname="Layer Out" dstnodeid="0" dstpinname="Layer">
    </LINK>
    </PATCH>
