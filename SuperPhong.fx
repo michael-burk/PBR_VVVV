@@ -68,6 +68,7 @@ cbuffer cbPerObject : register (b1)
 	TextureCube cubeTexRefl <string uiname="CubeMap Refl"; >;
 	TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
 	Texture2DArray lightMap <string uiname="SpotTex"; >;
+	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
 
 	
 
@@ -392,7 +393,12 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 					
 					float3 coords = float3(projectTexCoord, i % textureCount);	//make sure Instance ID buffer is in floats
+					
+					float shadowMapDepth = shadowMap.Sample(g_samLinear, coords, 0 );
+					if ( shadowMapDepth < viewPosition.z) break;
+					
 					projectionColor = lightMap.Sample(g_samLinear, coords, 0 );
+					
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
@@ -609,7 +615,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 					
 					float3 coords = float3(projectTexCoord, i % textureCount);	//make sure Instance ID buffer is in floats
+					
+					float shadowMapDepth = shadowMap.Sample(g_samLinear, coords, 0 );
+					if ( shadowMapDepth < viewPosition.z) break;
 					projectionColor = lightMap.Sample(g_samLinear, coords, 0 );
+
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;

@@ -52,5 +52,5 @@ float4 PhongPoint(float3 PosW, float3 NormV, float3 ViewDirV, float3 LightDirV, 
     result =  diff + spec;
 
 
-    return result;
+    return result * (lRange-d);
 }

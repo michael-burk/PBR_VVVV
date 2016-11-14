@@ -217,7 +217,7 @@
    </BOUNDS>
    <PIN pinname="Buffer" visible="1">
    </PIN>
-   <PIN pinname="Data" slicecount="3" visible="1" values="5,10,5">
+   <PIN pinname="Data" slicecount="1" visible="1" values="2.8">
    </PIN>
    <BOUNDS type="Box" left="7830" top="10995">
    </BOUNDS>
