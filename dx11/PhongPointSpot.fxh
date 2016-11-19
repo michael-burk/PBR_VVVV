@@ -62,5 +62,5 @@ float4 PhongPointSpot(float3 PosW, float3 NormV, float3 ViewDirV, float3 LightDi
     }
 
 
-    return result;
+    return saturate(result * (lRange-d));
 }

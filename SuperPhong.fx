@@ -72,6 +72,7 @@ cbuffer cbPerObject : register (b1)
 	TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
 	Texture2DArray lightMap <string uiname="SpotTex"; >;
 	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
+	TextureCube shadowCubeMap <string uiname="ShadowCubeMap"; >;
 
 	
 
@@ -430,6 +431,24 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 }
 
 
+ float zNear = .1;
+ float zFar = 100.0;
+
+// depthSample from depthTexture.r, for instance
+float linearDepth(float depthSample)
+{
+ //   depthSample = 2.0 * depthSample - 1.0;
+     
+    return zFar*zNear / (zFar + depthSample * (zNear - zFar));
+}
+
+float depthSample(float linearDepth)
+{
+    float nonLinearDepth = 4*zFar*(1-zNear/linearDepth)/(zFar-zNear);
+   //nonLinearDepth = (nonLinearDepth + 1.0) / 2.0;
+    return nonLinearDepth;
+}
+
 float4 PS_Superphong(vs2ps In): SV_Target
 {	
 	// wavelength colors
@@ -594,7 +613,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	
 	for(int i = 0; i<= numLights; i++){
-		float3 lightToObject = lPos[i] - In.PosW;
+	
+		
+		float4 lightToObject = float4(lPos[i],1) - mul(In.PosO,tW);
+
+		
 		switch (lightType[i]){
 			case 0:
 				LightDirV = normalize(-mul(lPos[i], tV));
@@ -604,13 +627,22 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 			case 1:
 				
-				if(length(lightToObject) < lightRange[i%numSpotRange]){	
+//				if(length(lightToObject) < lightRange[i%numSpotRange]){	
 					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPoint(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numSpotRange]).rgb;
 					
-				}
+					
+				//	float depth = shadowCubeMap.Sample(g_samLinear,-LightDirW).x;
+					//depth = LightP[0]._43/(depth-LightP[0]._33);
+					//depth = 100/(depth-.1);
+				//depth *= 100;
+			//	if ( (length(lightToObject)) > (depth)) break;
+					
+			  		newCol += PhongPoint(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numSpotRange]).rgb;
+					//newCol = depth;
+//				newCol = 1;
+//				}
 			
 				break;
 			
@@ -628,12 +660,12 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					float3 coords = float3(projectTexCoord, i % textureCountDepth);	//make sure Instance ID buffer is in floats
 					
 					float shadowMapDepth = shadowMap.Sample(g_samLinear, coords, 0 ).x;
-					
+				
 					shadowMapDepth =LightP[0]._43/(shadowMapDepth-LightP[0]._33);
-					
+		
 					shadowMapDepth += shadowMapBias;
 					
-					if ( shadowMapDepth < viewPosition.z) break;
+					if ( (shadowMapDepth) < viewPosition.z) break;
 					coords = float3(projectTexCoord, i % textureCount);	//make sure Instance ID buffer is in floats
 					
 					projectionColor = lightMap.Sample(g_samLinear, coords, 0 );
@@ -654,7 +686,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	
 	float3 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
-	float3 finalDiffuse = (newCol + lAmb.rgb + reflColorNorm * reflective.y) * texCol;
+	float3 finalDiffuse = (saturate(newCol) + lAmb.rgb + reflColorNorm * reflective.y) * texCol;
 
 	newCol += newRefl;
 	if(refraction) fresRefl = 1;
