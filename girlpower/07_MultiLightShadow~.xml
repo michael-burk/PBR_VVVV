@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="11745" top="2175" width="14775" height="12540">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="915" bgcolor="15329769">
+   <BOUNDS type="Window" left="10620" top="3210" width="14775" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -27,11 +27,17 @@
    </PIN>
    <BOUNDS type="Box" left="11850" top="6570">
    </BOUNDS>
+   <PIN pinname="Address U" visible="1" slicecount="1" values="Wrap">
+   </PIN>
+   <PIN pinname="Address V" visible="1" slicecount="1" values="Wrap">
+   </PIN>
+   <PIN pinname="Address W" visible="1" slicecount="1" values="Wrap">
+   </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="369" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="6805" top="6725" width="540" height="240">
+   <BOUNDS type="Box" left="6250" top="6845" width="540" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="6805" top="6725" width="0" height="0">
+   <BOUNDS type="Node" left="6250" top="6845" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
@@ -141,6 +147,8 @@
    </PIN>
    <PIN pinname="Scene" visible="1">
    </PIN>
+   <PIN pinname="Mesh" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="960" srcpinname="Scene" dstnodeid="67" dstpinname="Scene">
    </LINK>
@@ -161,7 +169,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="1035" top="615" width="12240" height="12585">
+   <BOUNDS type="Window" left="225" top="255" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -599,7 +607,7 @@
    </PIN>
    <PIN pinname="shadowMapBias" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="ShadowCubeMap" visible="1">
+   <PIN pinname="ShadowCubeMap" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="zNear" slicecount="1" values="0.100000001490116">
    </PIN>
@@ -719,7 +727,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="1800" top="150" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="14295" top="0" width="14610" height="15855">
+   <BOUNDS type="Window" left="12585" top="-105" width="16215" height="15855">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.14">
    </PIN>
@@ -727,13 +735,13 @@
    </PIN>
    <PIN pinname="Spread Count" visible="-1" pintype="Input" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Far Plane" visible="-1" pintype="Input" slicecount="1" values="8">
+   <PIN pinname="Far Plane" visible="-1" pintype="Input" slicecount="1" values="6">
    </PIN>
    <PIN pinname="Initial Distance" visible="-1" pintype="Input" slicecount="1" values="0">
    </PIN>
    <PIN pinname="SpotLightTex" visible="1">
    </PIN>
-   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0,0.5625,0.09375,0.8125,0.53125,0.5625,0.59375,0.6875,0.03125,0.75">
+   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0.625,0.5625,0.09375,1.03125,0.53125,0.78125,0.59375,1.125,0.90625,1.21875">
    </PIN>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
@@ -863,9 +871,9 @@
    </PIN>
    <PIN pinname="Maximum Foreground FPS" slicecount="1" values="120">
    </PIN>
+   <PIN pinname="Maximum Background FPS" slicecount="1" values="10">
+   </PIN>
    </NODE>
-   <LINK srcnodeid="1091" srcpinname="Depth Out CubeMap" dstnodeid="934" dstpinname="ShadowCubeMap" linkstyle="Bezier">
-   </LINK>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="1119">
    <BOUNDS type="Box" left="870" top="5550" width="1590" height="270">
    </BOUNDS>
