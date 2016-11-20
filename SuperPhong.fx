@@ -72,7 +72,6 @@ cbuffer cbPerObject : register (b1)
 	TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
 	Texture2DArray lightMap <string uiname="SpotTex"; >;
 	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
-	TextureCube shadowCubeMap <string uiname="ShadowCubeMap"; >;
 
 	
 
@@ -82,6 +81,13 @@ cbuffer cbPerObject : register (b1)
 #include "dx11/PhongDirectional.fxh"
 
 SamplerState g_samLinear
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Clamp;
+    AddressV = Clamp;
+};
+
+SamplerState shadowSampler
 {
     Filter = MIN_MAG_MIP_LINEAR;
     AddressU = Clamp;
@@ -431,24 +437,6 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 }
 
 
- float zNear = .1;
- float zFar = 100.0;
-
-// depthSample from depthTexture.r, for instance
-float linearDepth(float depthSample)
-{
- //   depthSample = 2.0 * depthSample - 1.0;
-     
-    return zFar*zNear / (zFar + depthSample * (zNear - zFar));
-}
-
-float depthSample(float linearDepth)
-{
-    float nonLinearDepth = 4*zFar*(1-zNear/linearDepth)/(zFar-zNear);
-   //nonLinearDepth = (nonLinearDepth + 1.0) / 2.0;
-    return nonLinearDepth;
-}
-
 float4 PS_Superphong(vs2ps In): SV_Target
 {	
 	// wavelength colors
@@ -459,8 +447,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
     	{ 0, 0, 1, 1 },
 	};
 	
-	float3 LightDirW;
-	float3 LightDirV;
+	float4 LightDirW;
+	float4 LightDirV;
 	float4 viewPosition;
 	float2 projectTexCoord;
 	float4 projectionColor;
@@ -620,38 +608,57 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 		switch (lightType[i]){
 			case 0:
+			
 				LightDirV = normalize(-mul(lPos[i], tV));
-				newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+//				newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 				break;
 
 			
 			case 1:
-				
-//				if(length(lightToObject) < lightRange[i%numSpotRange]){	
-					
-					LightDirW = normalize(lightToObject);
-					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-					
-					
-				//	float depth = shadowCubeMap.Sample(g_samLinear,-LightDirW).x;
-					//depth = LightP[0]._43/(depth-LightP[0]._33);
-					//depth = 100/(depth-.1);
-				//depth *= 100;
-			//	if ( (length(lightToObject)) > (depth)) break;
-					
-			  		newCol += PhongPoint(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numSpotRange]).rgb;
-					//newCol = depth;
-//				newCol = 1;
-//				}
 			
+				
+					bool shadowed = false;
+					float shadow = 0;
+				
+					for(int p = 0; p < 6; p++){
+						
+						viewPosition = mul(float4(In.PosW,1), LightVP[p]);
+				
+						projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+					
+						if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
+							
+							float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, p),0 ).x;
+						
+							shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
+				
+							shadowMapDepth += shadowMapBias;
+						
+					
+						
+							
+							if ( (shadowMapDepth) < viewPosition.z) shadowed = true;
+						}
+						
+					}
+					
+					if(shadowed) break;
+
+			
+					LightDirW = normalize(lightToObject);
+					LightDirV = mul(LightDirW, tV);
+				
+			  		newCol += PhongPoint(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numSpotRange]).rgb;
+
+					
 				break;
 			
 			case 2:
 
 				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir[i%textureCountDepth]) < 0){
-					
-					viewPosition = mul(In.PosO, tW);
-					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
+	
+					viewPosition = mul(float4(In.PosW,1), LightVP[i%numLVP]);
 					
 					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
@@ -659,9 +666,9 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 					float3 coords = float3(projectTexCoord, i % textureCountDepth);	//make sure Instance ID buffer is in floats
 					
-					float shadowMapDepth = shadowMap.Sample(g_samLinear, coords, 0 ).x;
+					float shadowMapDepth = shadowMap.Sample(shadowSampler, coords, 0 ).x;
 				
-					shadowMapDepth =LightP[0]._43/(shadowMapDepth-LightP[0]._33);
+					shadowMapDepth =LightP[i]._43/(shadowMapDepth-LightP[i]._33);
 		
 					shadowMapDepth += shadowMapBias;
 					
@@ -672,8 +679,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));					
 					LightDirW = normalize(lightToObject);
-					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
-			  		newCol += PhongPointSpot(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numSpotRange]).rgb;
+					LightDirV = mul(LightDirW, tV);
+//			  		newCol += PhongPointSpot(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numSpotRange]).rgb;
 					
 				}
 			
