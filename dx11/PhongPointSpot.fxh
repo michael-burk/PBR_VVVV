@@ -54,7 +54,7 @@ float4 PhongPointSpot(float3 PosW, float3 NormV, float3 ViewDirV, float3 LightDi
        
 
         // Set the output color of this pixel to the projection texture overriding the regular color value.
-       result =  saturate( diff + spec)*projectionColor;
+       result =  saturate( diff + spec)*projectionColor*2;
 
         
     }else{

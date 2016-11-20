@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="150" scrolly="45">
-   <BOUNDS type="Window" left="18645" top="6285" width="8895" height="8355">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="90" scrolly="195">
+   <BOUNDS type="Window" left="19290" top="3270" width="8895" height="8355">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -63,9 +63,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Node)" componentmode="InABox" id="10" systemname="IOBox (Node)">
-   <BOUNDS type="Box" left="3660" top="585" width="645" height="240">
+   <BOUNDS type="Box" left="3615" top="1125" width="645" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="3660" top="585" width="0" height="0">
+   <BOUNDS type="Node" left="3615" top="1125" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input Node" slicecount="1" visible="1" values="||">
    </PIN>
@@ -109,7 +109,7 @@
    <LINK srcnodeid="18" srcpinname="Output Node" dstnodeid="1" dstpinname="Transform In">
    </LINK>
    <NODE systemname="Count (Node)" nodename="Count (Node)" componentmode="Hidden" id="19">
-   <BOUNDS type="Node" left="3645" top="1320" width="100" height="100">
+   <BOUNDS type="Node" left="3600" top="1860" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input" visible="1">
    </PIN>
@@ -185,5 +185,31 @@
    <LINK srcnodeid="10" srcpinname="Output Node" dstnodeid="0" dstpinname="View">
    </LINK>
    <LINK srcnodeid="5" srcpinname="Layer Out" dstnodeid="0" dstpinname="Layer">
+   </LINK>
+   <NODE systemname="GetSlice (DX11.DepthTextureArray)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="GetSlice (DX11.DepthTextureArray)" componentmode="Hidden" id="31">
+   <BOUNDS type="Node" left="5715" top="5115" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="TextureArray In" visible="1">
+   </PIN>
+   <PIN pinname="Textures Out" visible="1">
+   </PIN>
+   <PIN pinname="Index" slicecount="1" values="13">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="31" dstpinname="TextureArray In">
+   </LINK>
+   <NODE systemname="HSCB (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\HSCB.tfx" nodename="HSCB (DX11.TextureFX)" componentmode="Hidden" id="33">
+   <BOUNDS type="Node" left="5520" top="6015" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="Brightness" slicecount="1" values="6.02">
+   </PIN>
+   <PIN pinname="Contrast" slicecount="1" values="3.15">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="31" srcpinname="Textures Out" dstnodeid="33" dstpinname="Texture In">
    </LINK>
    </PATCH>

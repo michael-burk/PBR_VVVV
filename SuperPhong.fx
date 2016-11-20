@@ -28,7 +28,6 @@ cbuffer cbPerObject : register (b1)
 	float2 Kr <String uiname="Fresnel Rim/Refl Max ";float uimin=0.0; float uimax=6.0;> = 0.5 ;
 	float2 FresExp <String uiname="Fresnel Rim/Refl Exp ";float ufimin=0.0; float uimax=30;> = 5 ;
 	float3 camPos <string uiname="Camera Position";> ;
-	StructuredBuffer <float3> SpotLightDir <string uiname="SpotLight Direction";> ;;
 	float4 RimColor <bool color = true; string uiname="Rim Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 Color <bool color = true; string uiname="Color Overlay";>  = { 1.0f,1.0f,1.0f,1.0f };
 	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
@@ -50,7 +49,7 @@ cbuffer cbPerObject : register (b1)
 	StructuredBuffer <float4x4> LightVP <string uiname="LightView";>;
 	StructuredBuffer <float4x4> LightP <string uiname="LightProjection";>;
 	StructuredBuffer <float> lightRange <string uiname="LightRange";>;
-	StructuredBuffer <int> lightType <string uiname="Directional/Point/Spot";>;	
+	StructuredBuffer <int> lightType <string uiname="Directional/Spot/Point";>;	
 	StructuredBuffer <float3> lPos <string uiname="lPos";>;
 
 	StructuredBuffer <float> lAtt0 <string uiname="lAtt0";>;
@@ -398,7 +397,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 			
 			case 2:
 			
-				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir[i%textureCountDepth]) < 0){
+//				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir[i%textureCountDepth]) < 0){
 					viewPosition = mul(In.PosO, tW);
 					viewPosition = mul(viewPosition, LightVP[i%numLVP]);
 					
@@ -417,7 +416,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 					LightDirV = mul(float4(LightDirW,0.0f), tV).xyz;
 			  		newCol += PhongPointSpot(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numSpotRange]).rgb;
 					
-				}
+//				}
 			
 				break;
 		}
@@ -600,80 +599,45 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	lightType.GetDimensions(numLights,lightCount);
 	
 	
-	for(int i = 0; i<= numLights; i++){
+	int pL = 0;
+	int caseCount = 0;
 	
+	for(int i = 0; i<= numLights; i++){
+		
 		
 		float4 lightToObject = float4(lPos[i],1) - mul(In.PosO,tW);
 
 		
 		switch (lightType[i]){
 			case 0:
+				caseCount++;
 			
 				LightDirV = normalize(-mul(lPos[i], tV));
 				newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 				break;
 
 			
+			
 			case 1:
-			
-				
-					bool shadowed = false;
-					float shadow = 0;
-				
-					for(int p = 0; p < 6; p++){
-						
-						viewPosition = mul(float4(In.PosW,1), LightVP[i+p]);
-				
-						projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
-			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
-					
-						if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
-							
-							float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, i+p),0 ).x;
-						
-							shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
-				
-							shadowMapDepth += shadowMapBias;
-						
-					
-						
-							
-							if ( (shadowMapDepth) < viewPosition.z) shadowed = true;
-						}
-						
-					}
-					
-					if(shadowed) break;
-
-			
-					LightDirW = normalize(lightToObject);
-					LightDirV = mul(LightDirW, tV);
-				
-			  		newCol += PhongPoint(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i]).rgb;
-
-					
-				break;
-			
-			case 2:
-
+				caseCount++;
 //				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir[i%textureCountDepth]) < 0){
 
-					viewPosition = mul(float4(In.PosW,1), LightVP[6]);
+					viewPosition = mul(float4(In.PosW,1), LightVP[i]);
 					
 					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 	
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
 			
-					float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, 6), 0 ).x;
+					float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, i), 0 ).x;
 				
-					shadowMapDepth =LightP[i]._43/(shadowMapDepth-LightP[i]._33);
+					shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
 		
 					shadowMapDepth += shadowMapBias;
 				
 					if ( (shadowMapDepth) < viewPosition.z) break;
 				
-					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, 6), 0 );
+					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
 
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));
 
@@ -681,10 +645,50 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					LightDirV = mul(LightDirW, tV);
 					
 			  		newCol += PhongPointSpot(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i]).rgb;
-			
+//					newCol = 1;
 				}
 			
 				break;
+	
+			case 2:
+				
+				pL++;
+	
+				bool shadowed = false;
+		
+			
+				for(int p = ((pL*6) - 6); p < (6 * pL); p++){
+//				for(int p = 0; p < 6; p++){
+					
+					viewPosition = mul(float4(In.PosW,1), LightVP[p+caseCount]);
+			
+					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+				
+					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
+						
+						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, p+caseCount),0 ).x;
+					
+						shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
+						shadowMapDepth += shadowMapBias;
+
+						if ( (shadowMapDepth) < viewPosition.z) shadowed = true;
+					}
+					
+				}
+				
+	
+				if(shadowed) break;
+
+		
+				LightDirW = normalize(lightToObject);
+				LightDirV = mul(LightDirW, tV);
+			
+		  		newCol += PhongPoint(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i]).rgb;
+				
+				
+			break;
+			
 		}
 		
 		
