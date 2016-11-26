@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="90" scrolly="195">
-   <BOUNDS type="Window" left="19290" top="3270" width="8895" height="8355">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0">
+   <BOUNDS type="Window" left="10215" top="2745" width="8895" height="8355">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -149,7 +149,7 @@
    </PIN>
    <PIN pinname="SizeXY" visible="1">
    </PIN>
-   <PIN pinname="Element Count" visible="1">
+   <PIN pinname="Element Count" visible="1" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Mips" slicecount="1" values="0">
    </PIN>
@@ -159,11 +159,9 @@
    </PIN>
    <PIN pinname="Clear" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Enabled" slicecount="1" values="1">
+   <PIN pinname="Enabled" slicecount="1" visible="1" values="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="19" srcpinname="Count" dstnodeid="0" dstpinname="Element Count">
-   </LINK>
    <LINK srcnodeid="9" srcpinname="Y Output Value" dstnodeid="0" dstpinname="SizeXY">
    </LINK>
    <NODE nodename="IOBox (Node)" componentmode="InABox" id="30" systemname="IOBox (Node)">
@@ -182,34 +180,92 @@
    </PACK>
    <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="30" dstpinname="Input Node">
    </LINK>
-   <LINK srcnodeid="10" srcpinname="Output Node" dstnodeid="0" dstpinname="View">
-   </LINK>
    <LINK srcnodeid="5" srcpinname="Layer Out" dstnodeid="0" dstpinname="Layer">
    </LINK>
    <NODE systemname="GetSlice (DX11.DepthTextureArray)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="GetSlice (DX11.DepthTextureArray)" componentmode="Hidden" id="31">
-   <BOUNDS type="Node" left="5715" top="5115" width="100" height="100">
+   <BOUNDS type="Node" left="3675" top="4695" width="100" height="100">
    </BOUNDS>
    <PIN pinname="TextureArray In" visible="1">
    </PIN>
    <PIN pinname="Textures Out" visible="1">
    </PIN>
-   <PIN pinname="Index" slicecount="1" values="13">
+   <PIN pinname="Index" slicecount="1" values="4">
    </PIN>
+   <BOUNDS type="Box" left="3675" top="4695">
+   </BOUNDS>
    </NODE>
    <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="31" dstpinname="TextureArray In">
    </LINK>
    <NODE systemname="HSCB (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\HSCB.tfx" nodename="HSCB (DX11.TextureFX)" componentmode="Hidden" id="33">
-   <BOUNDS type="Node" left="5520" top="6015" width="100" height="100">
+   <BOUNDS type="Node" left="3675" top="5595" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Texture In" visible="1">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="Brightness" slicecount="1" values="6.02">
+   <PIN pinname="Brightness" slicecount="1" values="5.72">
    </PIN>
-   <PIN pinname="Contrast" slicecount="1" values="3.15">
+   <PIN pinname="Contrast" slicecount="1" values="1.8">
    </PIN>
+   <BOUNDS type="Box" left="3675" top="5595">
+   </BOUNDS>
    </NODE>
    <LINK srcnodeid="31" srcpinname="Textures Out" dstnodeid="33" dstpinname="Texture In">
+   </LINK>
+   <NODE systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow" id="34" stayontop="1">
+   <BOUNDS type="Node" left="3675" top="6105" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="3675" top="6105" width="6000" height="4500">
+   </BOUNDS>
+   <BOUNDS type="Window" left="675" top="9795" width="6240" height="5085">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="10" srcpinname="Output Node" dstnodeid="0" dstpinname="View">
+   </LINK>
+   <NODE systemname="HSCB (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\HSCB.tfx" nodename="HSCB (DX11.TextureFX)" componentmode="Hidden" id="35">
+   <BOUNDS type="Node" left="5010" top="5040" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="Brightness" slicecount="1" values="5.72">
+   </PIN>
+   <PIN pinname="Contrast" slicecount="1" values="3.1">
+   </PIN>
+   <BOUNDS type="Box" left="5010" top="5040">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="19" srcpinname="Count" dstnodeid="0" dstpinname="Element Count" linkstyle="Bezier">
+   <LINKPOINT x="3600" y="2933">
+   </LINKPOINT>
+   <LINKPOINT x="1575" y="2933">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="31" srcpinname="Textures Out" dstnodeid="35" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="35" srcpinname="Texture Out" dstnodeid="34" dstpinname="Texture In">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="36">
+   <BOUNDS type="Box" left="3495" top="2625" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3495" top="2625" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="36" srcpinname="Y Output Value" dstnodeid="0" dstpinname="Enabled">
    </LINK>
    </PATCH>

@@ -71,7 +71,7 @@ cbuffer cbPerObject : register (b1)
 	TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
 	Texture2DArray lightMap <string uiname="SpotTex"; >;
 	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
-
+	StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 	
 
 
@@ -600,9 +600,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	
 	int pL = 0;
-	int caseCount = 0;
+	int shadowCounter = 0;
+	int lightCounter = 0;
 	
-	for(int i = 0; i<= numLights; i++){
+	for(int i = 0; i< numLights; i++){
 		
 		
 		float4 lightToObject = float4(lPos[i],1) - mul(In.PosO,tW);
@@ -610,77 +611,117 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 		switch (lightType[i]){
 			case 0:
-				caseCount++;
 			
-				LightDirV = normalize(-mul(lPos[i], tV));
-				newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+				lightCounter ++;
+//				shadowCounter++;
+
+				if(useShadow[i] == 1){
+					
+					shadowCounter++;
+				
+					viewPosition = mul(float4(In.PosW,1), LightVP[i]);
+					
+					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+		
+					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
+	
+							
+						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
+			
+						shadowMapDepth += shadowMapBias + 0.0001;
+					
+						if ( (shadowMapDepth) < viewPosition.z) break;
+	
+							LightDirV = mul(normalize(lightToObject), tV);
+							newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+						
+					} else {
+						LightDirV = mul(normalize(lightToObject), tV);
+						newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+					}
+				} else {
+					LightDirV = mul(normalize(lightToObject), tV);
+					newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+				}
+			
+			
 				break;
 
 			
 			
 			case 1:
-				caseCount++;
-//				if(length(lightToObject) < lightRange[i%numSpotRange] && dot(lightToObject,SpotLightDir[i%textureCountDepth]) < 0){
-
-					viewPosition = mul(float4(In.PosW,1), LightVP[i]);
-					
-					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
-		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
-	
-				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
+				
+				lightCounter ++;
 			
-					float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, i), 0 ).x;
-				
-					shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
-		
-					shadowMapDepth += shadowMapBias;
-				
-					if ( (shadowMapDepth) < viewPosition.z) break;
-				
-					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
+				if(useShadow[i]  == 1){
+					shadowCounter++;
+				} 
 
+				viewPosition = mul(float4(In.PosW,1), LightVP[i]);
+					
+				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+				
+				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
+					
+					if(useShadow[i]){
+						
+						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
+					
+						shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
+			
+						shadowMapDepth += shadowMapBias;
+					
+						if ( (shadowMapDepth) < viewPosition.z) break;
+						
+					} 
+					
+					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));
 
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(LightDirW, tV);
 					
 			  		newCol += PhongPointSpot(In.PosW, NormV, In.ViewDirV, LightDirV, lPos[i], lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i]).rgb;
-//					newCol = 1;
 				}
 			
 				break;
 	
 			case 2:
 				
-				pL++;
-	
-				bool shadowed = false;
-		
-			
-				for(int p = ((pL*6) - 6); p < (6 * pL); p++){
-//				for(int p = 0; p < 6; p++){
-					
-					viewPosition = mul(float4(In.PosW,1), LightVP[p+caseCount]);
-			
-					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
-		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 				
-					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
-						
-						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, p+caseCount),0 ).x;
-					
-						shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
-						shadowMapDepth += shadowMapBias;
+				bool shadowed = false;
+				//lightCounter++;
+				pL++;
+			
+				if(useShadow[i]){
 
-						if ( (shadowMapDepth) < viewPosition.z) shadowed = true;
+					//shadowCounter+=6;		
+					
+					for(int p = ((pL*6) - 6); p < (6 * pL); p++){
+						
+						viewPosition = mul(float4(In.PosW,1), LightVP[p + lightCounter]);
+				
+						projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+					
+						if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
+
+							float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord,p+shadowCounter-6),0 ).x;
+						
+							shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
+							shadowMapDepth += shadowMapBias;
+	
+							if ( (shadowMapDepth) < viewPosition.z) shadowed = true;
+							
+						}
+						
 					}
 					
+					if(shadowed) break;
 				}
-				
-	
-				if(shadowed) break;
-
-		
+			
 				LightDirW = normalize(lightToObject);
 				LightDirV = mul(LightDirW, tV);
 			
