@@ -197,9 +197,9 @@
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
-   <PIN pinname="View" slicecount="1" values="||" visible="1">
+   <PIN pinname="View" slicecount="1" visible="1" values="||">
    </PIN>
-   <PIN pinname="Projection" slicecount="1" values="||" visible="1">
+   <PIN pinname="Projection" slicecount="1" visible="1" values="||">
    </PIN>
    </NODE>
    <NODE id="3" systemname="Group (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Group (DX11.Layer)" componentmode="Hidden">
@@ -711,7 +711,7 @@
    </PIN>
    <PIN pinname="SpotLightTex" visible="1">
    </PIN>
-   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0.625,0.5625,0.09375,1.03125,0.53125,0.78125,0.59375,1.125,0.90625,1.21875">
+   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0.625,0.5625,0.09375,0.90625,0.53125,0.78125,0.59375,1.125,0.90625,1.21875">
    </PIN>
    <PIN pinname="Light Direction" visible="1">
    </PIN>

@@ -1,8 +1,8 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv45beta34.2.dtd" >
-   <PATCH nodename="C:\Users\user\Desktop\SuperPhong_Final\Modules\Cone (DX11).v4p" systemname="Cone (DX11)" filename="C:\vvvv\vvvv-addons\Modules\Cone (DX11).v4p" scrollx="0" scrolly="0">
+<!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Cone (DX11).v4p" systemname="Cone (DX11)" filename="C:\vvvv\vvvv-addons\Modules\Cone (DX11).v4p" scrollx="0" scrolly="0">
    <BOUNDS type="Window" left="4920" top="4725" width="8100" height="5880">
    </BOUNDS>
-   <PACK Name="addonpack" Version="34.1.0">
+   <PACK Name="addonpack" Version="34.101.0">
    </PACK>
    <NODE id="4" nodename="Multiply (Transform)" systemname="Multiply (Transform)">
    <BOUNDS height="270" left="4125" top="1680" type="Node" width="495">
@@ -164,6 +164,40 @@
    </LINK>
    <LINK srcnodeid="14" srcpinname="Y Output Value" dstnodeid="2" dstpinname="Enabled">
    </LINK>
-   <LINK srcnodeid="15" srcpinname="Transform Out" dstnodeid="2" dstpinname="Transform In">
+   <PACK Name="vvvv-Message" Version="2.7">
+   </PACK>
+   <PACK Name="vvvv-ZeroMQ" Version="0.5.0">
+   </PACK>
+   <NODE systemname="Transform (Transform 3d Vector)" nodename="Transform (Transform 3d Vector)" componentmode="Hidden" id="18">
+   <BOUNDS type="Node" left="1065" top="1185" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Transform In" visible="1">
+   </PIN>
+   <PIN pinname="Transform Out" visible="1">
+   </PIN>
+   <PIN pinname="Center XYZ" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="15" srcpinname="Transform Out" dstnodeid="18" dstpinname="Transform In">
+   </LINK>
+   <LINK srcnodeid="18" srcpinname="Transform Out" dstnodeid="2" dstpinname="Transform In">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="19">
+   <BOUNDS type="Box" left="1710" top="360" width="795" height="720">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1710" top="360" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,-1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="3">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="19" srcpinname="Y Output Value" dstnodeid="18" dstpinname="Center XYZ">
    </LINK>
    </PATCH>

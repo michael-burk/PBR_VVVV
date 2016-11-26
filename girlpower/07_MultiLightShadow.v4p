@@ -169,7 +169,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="810" top="-15795" width="11880" height="12585">
+   <BOUNDS type="Window" left="15765" top="2055" width="11880" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -692,12 +692,12 @@
    <LINKPOINT x="6330" y="6360">
    </LINKPOINT>
    </LINK>
-   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="1">
+   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="1">
    <BOUNDS type="Node" left="7158" top="2218" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="1800" top="150" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="12780" top="-15210" width="15045" height="14235">
+   <BOUNDS type="Window" left="14295" top="0" width="14610" height="15855">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -711,7 +711,7 @@
    </PIN>
    <PIN pinname="SpotLightTex" visible="1">
    </PIN>
-   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0.625,0.5625,0.09375,1.03125,0.53125,0.78125,0.59375,1.125,0.90625,1.21875">
+   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0.625,0.5625,0.09375,0.90625,0.53125,0.78125,0.59375,1.125,0.90625,1.21875">
    </PIN>
    <PIN pinname="Light Direction" visible="1">
    </PIN>

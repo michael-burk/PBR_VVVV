@@ -692,16 +692,16 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				
 				
 				bool shadowed = false;
-				//lightCounter++;
-				pL++;
+				
+				lightCounter+=6;
 			
 				if(useShadow[i]){
-
-					//shadowCounter+=6;		
 					
-					for(int p = ((pL*6) - 6); p < (6 * pL); p++){
+					shadowCounter+=6;
+							
+					for(int p = 0; p < 6; p++){
 						
-						viewPosition = mul(float4(In.PosW,1), LightVP[p + lightCounter]);
+						viewPosition = mul(float4(In.PosW,1), LightVP[p + lightCounter-6]);
 				
 						projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
@@ -721,6 +721,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 					if(shadowed) break;
 				}
+			
 			
 				LightDirW = normalize(lightToObject);
 				LightDirV = mul(LightDirW, tV);
