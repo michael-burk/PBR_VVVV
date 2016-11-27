@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="180" top="705" width="14775" height="12540">
+   <BOUNDS type="Window" left="435" top="840" width="14775" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -169,7 +169,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="15765" top="2055" width="11880" height="12585">
+   <BOUNDS type="Window" left="16320" top="435" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -187,7 +187,7 @@
    </PIN>
    <PIN pinname="AA Samples per Pixel" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.09228,0.52643,0.57553,1.00000|">
+   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Show Cursor" slicecount="1" values="1">
    </PIN>
@@ -242,16 +242,6 @@
    </LINK>
    <LINK srcnodeid="3" srcpinname="Layer Out" dstnodeid="2" dstpinname="Layer In">
    </LINK>
-   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1082" systemname="IOBox (Color)">
-   <BOUNDS type="Box" left="6720" top="5595" width="555" height="525">
-   </BOUNDS>
-   <BOUNDS type="Node" left="6720" top="5595" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|Ambient Color|">
-   </PIN>
-   </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1092" systemname="IOBox (String)">
    <BOUNDS type="Node" left="465" top="360" width="5100" height="450">
    </BOUNDS>
@@ -267,9 +257,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1093" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="10485" top="2220" width="990" height="270">
+   <BOUNDS type="Node" left="9735" top="2220" width="990" height="270">
    </BOUNDS>
-   <BOUNDS type="Box" left="10485" top="2220" width="990" height="270">
+   <BOUNDS type="Box" left="9735" top="2220" width="990" height="270">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|Look inside!|">
    </PIN>
@@ -281,9 +271,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1095" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="60" top="1155" width="285" height="270">
+   <BOUNDS type="Node" left="510" top="1155" width="285" height="270">
    </BOUNDS>
-   <BOUNDS type="Box" left="60" top="1155" width="2685" height="3690">
+   <BOUNDS type="Box" left="510" top="1155" width="2685" height="3690">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|1. There a LOT of hidden pins. See girlpower for different use cases&cr;&lf;&cr;&lf;2. Bump Mapping Technique needs a mesh with Binormals and Tangents&cr;&lf;&cr;&lf;3. Rotate Transformations of the mesh have to be applied to normals&cr;&lf;&cr;&lf;4. Buffer for four texture transforms:&cr;&lf;Color, Specular, Diffuse, Bump&cr;&lf;! Needs to be connected for textures to work !&cr;&lf;&cr;&lf;5. Altered Orbit Camera, which outputs an instant position.|">
    </PIN>
@@ -371,7 +361,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5790" top="4020" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="6,0.005,0.005">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="10,0.005,0.005">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -475,7 +465,7 @@
    </BOUNDS>
    <PIN pinname="refraction" visible="-1" pintype="Input" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Ambient Color" slicecount="1" visible="1" values="|0.10009,0.01972,0.00000,1.00000|">
+   <PIN pinname="Ambient Color" slicecount="1" visible="1" values="||">
    </PIN>
    <PIN pinname="refractionIndexXYZ" visible="1" pintype="Input">
    </PIN>
@@ -591,6 +581,10 @@
    </PIN>
    <PIN pinname="Shadow" visible="1">
    </PIN>
+   <PIN pinname="shadowSampler" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Ambient Colo" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   </PIN>
    </NODE>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In">
    </LINK>
@@ -601,8 +595,6 @@
    <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 1">
    </LINK>
    <LINK srcnodeid="956" srcpinname="Render State" dstnodeid="934" dstpinname="Render State">
-   </LINK>
-   <LINK srcnodeid="1082" srcpinname="Color Output" dstnodeid="934" dstpinname="Ambient Color">
    </LINK>
    <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Bumpiness">
    </LINK>
@@ -692,12 +684,12 @@
    <LINKPOINT x="6330" y="6360">
    </LINKPOINT>
    </LINK>
-   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="1">
+   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0">
    <BOUNDS type="Node" left="7158" top="2218" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="1800" top="150" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="14295" top="0" width="14610" height="15855">
+   <BOUNDS type="Window" left="165" top="360" width="16260" height="15030">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -735,6 +727,8 @@
    </PIN>
    <PIN pinname="UseShadow" visible="1">
    </PIN>
+   <PIN pinname="AmbientColor" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
    <LINKPOINT x="7155" y="5280">
@@ -743,39 +737,39 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1104" srcpinname="Output" dstnodeid="1091" dstpinname="Geometry" linkstyle="Bezier">
-   <LINKPOINT x="1905" y="4415">
+   <LINKPOINT x="1665" y="4538">
    </LINKPOINT>
-   <LINKPOINT x="7245" y="4660">
+   <LINKPOINT x="8565" y="4538">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Transform In" linkstyle="Bezier">
    <LINKPOINT x="4935" y="3683">
    </LINKPOINT>
-   <LINKPOINT x="7845" y="3683">
+   <LINKPOINT x="9030" y="3683">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt0" dstnodeid="934" dstpinname="lAtt0" linkstyle="Bezier">
-   <LINKPOINT x="8595" y="4875">
+   <LINKPOINT x="8895" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="8850" y="4875">
+   <LINKPOINT x="8595" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt1" dstnodeid="934" dstpinname="lAtt1" linkstyle="Bezier">
-   <LINKPOINT x="8910" y="4875">
+   <LINKPOINT x="9195" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="9105" y="4875">
+   <LINKPOINT x="8835" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt2" dstnodeid="934" dstpinname="lAtt2" linkstyle="Bezier">
-   <LINKPOINT x="9075" y="4875">
+   <LINKPOINT x="9360" y="4883">
    </LINKPOINT>
-   <LINKPOINT x="9360" y="4875">
+   <LINKPOINT x="9075" y="4883">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightPosition" dstnodeid="934" dstpinname="lPos" linkstyle="Bezier">
    <LINKPOINT x="7350" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="8595" y="4875">
+   <LINKPOINT x="8340" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="934" dstpinname="Directional/Point/Spot" linkstyle="Bezier">
@@ -785,51 +779,51 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Diffuse Color" dstnodeid="934" dstpinname="Diffuse Color" linkstyle="Bezier">
-   <LINKPOINT x="8280" y="4875">
+   <LINKPOINT x="8595" y="4883">
    </LINKPOINT>
-   <LINKPOINT x="9615" y="4875">
+   <LINKPOINT x="9540" y="4883">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Specular Color" dstnodeid="934" dstpinname="Specular Color" linkstyle="Bezier">
-   <LINKPOINT x="8445" y="4875">
+   <LINKPOINT x="8745" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="9870" y="4875">
+   <LINKPOINT x="9780" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightVP" dstnodeid="934" dstpinname="LightView" linkstyle="Bezier">
-   <LINKPOINT x="7650" y="4875">
+   <LINKPOINT x="7635" y="4883">
    </LINKPOINT>
-   <LINKPOINT x="7605" y="4875">
+   <LINKPOINT x="7395" y="4883">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="SpotLight Range" dstnodeid="934" dstpinname="LightRange" linkstyle="Bezier">
    <LINKPOINT x="7815" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="8100" y="4875">
+   <LINKPOINT x="7860" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="SpotLightTex" dstnodeid="934" dstpinname="SpotTex" linkstyle="Bezier">
-   <LINKPOINT x="8775" y="4875">
+   <LINKPOINT x="9075" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="11145" y="4875">
+   <LINKPOINT x="10980" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="spotFade" dstnodeid="934" dstpinname="SpotLight Fading" linkstyle="Bezier">
-   <LINKPOINT x="9195" y="4883">
+   <LINKPOINT x="9480" y="4868">
    </LINKPOINT>
-   <LINKPOINT x="6090" y="4883">
+   <LINKPOINT x="5985" y="4868">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Projection" dstnodeid="934" dstpinname="LightProjection" linkstyle="Bezier">
-   <LINKPOINT x="7500" y="4875">
+   <LINKPOINT x="7500" y="4868">
    </LINKPOINT>
-   <LINKPOINT x="7845" y="4875">
+   <LINKPOINT x="7620" y="4868">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Depth Out" dstnodeid="934" dstpinname="ShadowMap" linkstyle="Bezier">
-   <LINKPOINT x="8160" y="4868">
+   <LINKPOINT x="8160" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="11385" y="4868">
+   <LINKPOINT x="11205" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="SpotLightDirection" dstnodeid="934" dstpinname="SpotLight Direction" linkstyle="Bezier">
@@ -879,9 +873,9 @@
    <LINK srcnodeid="67" srcpinname="Output" dstnodeid="1104" dstpinname="Input 2">
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="934" dstpinname="Directional/Spot/Point" linkstyle="Bezier">
-   <LINKPOINT x="7980" y="4883">
+   <LINKPOINT x="7965" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="8340" y="4883">
+   <LINKPOINT x="8100" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="242" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
@@ -897,7 +891,19 @@
    <LINK srcnodeid="1091" srcpinname="UseShadow" dstnodeid="934" dstpinname="Shadow" linkstyle="Bezier">
    <LINKPOINT x="8310" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="11910" y="4875">
+   <LINKPOINT x="11445" y="4875">
    </LINKPOINT>
    </LINK>
+   <LINK srcnodeid="1091" srcpinname="AmbientColor" dstnodeid="934" dstpinname="Ambient Color" linkstyle="Bezier">
+   <LINKPOINT x="8430" y="4875">
+   </LINKPOINT>
+   <LINKPOINT x="9300" y="4875">
+   </LINKPOINT>
+   </LINK>
+   <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
+   <BOUNDS type="Node" left="8235" top="9720" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Maximum Background FPS" slicecount="1" values="5">
+   </PIN>
+   </NODE>
    </PATCH>

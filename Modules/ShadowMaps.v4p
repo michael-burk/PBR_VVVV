@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0">
-   <BOUNDS type="Window" left="10215" top="2745" width="8895" height="8355">
+   <BOUNDS type="Window" left="4710" top="2715" width="8895" height="8355">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>

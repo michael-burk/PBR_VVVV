@@ -13,19 +13,19 @@
 
 
 //phong point function
-float4 PhongPointSpot(float3 PosW, float3 NormV, float3 ViewDirV, float3 LightDirV, float3 lightPos, float lAtt0,
+float4 PhongPointSpot(float lightToObject, float3 NormV, float3 ViewDirV, float3 LightDirV, float3 lightPos, float lAtt0,
 				  float lAtt1, float lAtt2, float4 lDiff, float4 lSpec, float specIntensity, float2 projectTexCoord, float4 projectionColor, float lRange)
 {
 
-    float d = distance(PosW, lightPos);
+   // float d = distance(PosW, lightPos);
     float atten = 0;
     float4 result;
 
     //compute attenuation only if vertex within lightrange
-    if (d<lRange)
-    {
-       atten = 1/(saturate(lAtt0) + saturate(lAtt1) * d + saturate(lAtt2) * pow(d, 2));
-    }
+  //  if (lightToObject<lRange)
+ //   {
+       atten = 1/(saturate(lAtt0) + saturate(lAtt1) * lightToObject + saturate(lAtt2) * pow(lightToObject, 2));
+   // }
 
 
     //halfvector
@@ -48,18 +48,8 @@ float4 PhongPointSpot(float3 PosW, float3 NormV, float3 ViewDirV, float3 LightDi
 	
     spec *= specIntensity;
 
-    if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y))
-    {
-        // Sample the color value from the projection texture using the sampler at the projected texture coordinate location.
-       
-
         // Set the output color of this pixel to the projection texture overriding the regular color value.
        result =  saturate( diff + spec)*projectionColor*2;
-
-        
-    }else{
-        result = 0;
-    }
 
 
     return result;
