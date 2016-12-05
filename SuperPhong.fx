@@ -689,7 +689,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 							
 						if ( (shadowMapDepth) < viewPosition.z){
-							ambient += saturate(lAmbient[i%numlAmb]*falloff);
+							//ambient += saturate(lAmbient[i%numlAmb]*falloff);
 							break;
 						} 
 						
@@ -731,7 +731,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 						
 							shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
 							shadowMapDepth += shadowMapBias;
-							//|| && viewPosition.z < lightRange[i%numLighRange]-0.1
+
 							if ( (shadowMapDepth) < viewPosition.z ) shadowed = true;
 							
 						} 
@@ -739,7 +739,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					}
 				
 					if ( shadowed){
-						ambient += saturate(lAmbient[i%numlAmb]*falloff);
+						//ambient += saturate(lAmbient[i%numlAmb]*falloff);
 						break;
 					} 
 				}

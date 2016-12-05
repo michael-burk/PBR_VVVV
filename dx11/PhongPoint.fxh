@@ -52,8 +52,11 @@ float4 PhongPoint(float lightToObject, float3 NormV, float3 ViewDirV, float3 Lig
 		    float4 spec = pow(max(dot(R, V),0), lPower) * lSpec;
 			
 		    spec *= specIntensity;
-		
-		    result =  saturate(diff * (lRange-lightToObject)) + spec;
+			
+			diff += spec;
+			result =  saturate(diff * (lRange-lightToObject));
+
+		   // result =  saturate(diff * (lRange-lightToObject)) + spec;
 		
 	
 			 return result;
