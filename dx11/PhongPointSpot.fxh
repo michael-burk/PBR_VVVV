@@ -22,10 +22,10 @@ float4 PhongPointSpot(float lightToObject, float3 NormV, float3 ViewDirV, float3
     float4 result;
 
     //compute attenuation only if vertex within lightrange
-  //  if (lightToObject<lRange)
- //   {
+    if (lightToObject<lRange)
+    {
        atten = 1/(saturate(lAtt0) + saturate(lAtt1) * lightToObject + saturate(lAtt2) * pow(lightToObject, 2));
-   // }
+    }
 
 
     //halfvector
@@ -47,9 +47,9 @@ float4 PhongPointSpot(float lightToObject, float3 NormV, float3 ViewDirV, float3
     float4 spec = pow(max(dot(R, V),0), lPower*.2) * lSpec;
 	
     spec *= specIntensity;
-
+    diff += spec;
         // Set the output color of this pixel to the projection texture overriding the regular color value.
-       result =  saturate( diff + spec)*projectionColor*2;
+       result =  saturate( diff * (lRange-lightToObject))*projectionColor*2;
 
 
     return result;

@@ -75,6 +75,7 @@ cbuffer cbPerObject : register (b1)
 	StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 	
 
+
 #include "dx11/PhongPoint.fxh"
 #include "dx11/PhongPointSpot.fxh"
 #include "dx11/PhongDirectional.fxh"
@@ -92,40 +93,6 @@ SamplerState shadowSampler
     AddressU = Clamp;
     AddressV = Clamp;
 };
-
-float2 doMoments(float Depth){
-	float2 Moments;
-	// First moment is the depth itself.  
-	Moments.x = Depth;
-	// Compute partial derivatives of depth.  
-	float dx = ddx(Depth);
-	float dy = ddy(Depth);
-	// Compute second moment over the pixel extents.  
-	Moments.y = Depth*Depth + 0.25*(dx*dx + dy*dy);
-	return Moments;
-};
-
-float linstep(float low, float high, float v){
-    return clamp((v-low)/(high-low), 0.0, 1.0);
-}
-
-float ReduceLightBleeding(float p_max, float Amount)
-{
-	return linstep(Amount, 1, p_max);
-}
-
-float VSM(float3 uvz, float compare, float depth){
-//    float2 moments = shadowMap.Sample(shadowSampler, uvz).xy;
-	float2 moments = doMoments(depth);
-    float p = smoothstep(compare-0.02, compare, moments.x);
-    float variance = max(moments.y - moments.x*moments.x, -0.001);
-    float d = compare - moments.x;
-    float p_max = linstep(0.2, 1.0, variance / (variance + d*d));
-	p_max = ReduceLightBleeding(p_max,0);
-    return clamp(max(p, p_max), 0.0, 1.0);
-//	return moments.y;
-}
-
 
 
 struct vs2ps
@@ -672,9 +639,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
 			
 						shadowMapDepth += shadowMapBias + 0.001;
-//						float3(projectTexCoord, shadowCounter-1)
-//						shadowMapDepth = VSM(float3(projectTexCoord, shadowCounter-1), (lightDist*.1),shadowMapDepth);
-						
+					
 						if ( (shadowMapDepth) < viewPosition.z){
 							ambient += lAmbient[i%numlAmb];
 							break;
@@ -682,7 +647,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 							LightDirV = mul(normalize(lightToObject), tV);
 							newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
-//							newCol *= shadowMapDepth;
+						
 					} else {
 						LightDirV = mul(normalize(lightToObject), tV);
 						newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
@@ -708,21 +673,18 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 			
-				float shadowMapDepth = 0;
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
 					
 					
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));
-
 					
 					if(useShadow[i]){
 						
-						shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
+						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
 					
 						shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
-//						shadowMapDepth = VSM(float3(projectTexCoord, shadowCounter-1), lightDist*shadowMapBias,shadowMapDepth);
-						
+			
 						shadowMapDepth += shadowMapBias;
 					
 							
@@ -739,7 +701,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			  		newCol += PhongPointSpot(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange]).rgb;
-//					newCol *= shadowMapDepth;
 				
 				}
 					

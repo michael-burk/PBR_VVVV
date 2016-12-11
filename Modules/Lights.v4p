@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="5535" scrolly="3645" bgcolor="15921906">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="4740" scrolly="345" bgcolor="15921906">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicBuffer (DX11.Buffer Value)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="22860" top="15390" width="100" height="100">
    </BOUNDS>
@@ -163,7 +163,7 @@
    </BOUNDS>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
-   <PIN pinname="FOV" slicecount="1" values="0.09">
+   <PIN pinname="FOV" slicecount="1" values="0.18">
    </PIN>
    <PIN pinname="Roll" visible="1" slicecount="1" values="0">
    </PIN>
@@ -285,11 +285,11 @@
    </PIN>
    <PIN pinname="Spread Count" slicecount="1" visible="1" values="5">
    </PIN>
-   <PIN pinname="Width" slicecount="1" values="1">
+   <PIN pinname="Width" slicecount="1" values="0.5">
    </PIN>
    <PIN pinname="Phase" slicecount="1" values="0.25">
    </PIN>
-   <PIN pinname="Input" slicecount="1" values="0">
+   <PIN pinname="Input" slicecount="1" values="-0.37">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="45" systemname="IOBox (Color)">
@@ -301,7 +301,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.48008,0.48008,0.48008,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|1.00000,1.00000,1.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
@@ -494,7 +494,7 @@
    <LINKPOINT x="21255" y="15743">
    </LINKPOINT>
    </LINK>
-   <BOUNDS type="Window" left="735" top="570" width="16260" height="15030">
+   <BOUNDS type="Window" left="2715" top="2340" width="16260" height="15030">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -909,7 +909,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="9180" top="13005" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="3.71">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="3">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1091,7 +1091,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8760" top="12195" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1.44">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="3">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1639,9 +1639,9 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="X Input Value" slicecount="5" values="1,1,1,1,0">
+   <PIN pinname="X Input Value" slicecount="5" values="0,1,0,0,0">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="5" values="1,1,1,1,0">
+   <PIN pinname="Y Input Value" slicecount="5" values="0,1,0,0,0">
    </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Int)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicBuffer (DX11.Buffer Int)" componentmode="Hidden" id="246">
@@ -1773,7 +1773,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.27063,0.22193,1.00000|,|0.00000,0.01575,0.06300,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="299" srcpinname="Color Output" dstnodeid="297" dstpinname="Data" linkstyle="Bezier">
