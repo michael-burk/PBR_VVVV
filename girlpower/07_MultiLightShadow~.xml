@@ -689,7 +689,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="1800" top="150" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="1395" top="1095" width="16260" height="15030">
+   <BOUNDS type="Window" left="735" top="570" width="16260" height="15030">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>

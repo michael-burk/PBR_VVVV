@@ -656,7 +656,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					LightDirV = mul(normalize(lightToObject), tV);
 					newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 				}
-				ambient += lAmbient[i%numlAmb];
+				ambient += saturate(lAmbient[i%numlAmb]);
 			
 				break;
 	
@@ -689,7 +689,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 							
 						if ( (shadowMapDepth) < viewPosition.z){
-							//ambient += saturate(lAmbient[i%numlAmb]*falloff);
+							ambient += saturate(lAmbient[i%numlAmb]*falloff);
 							break;
 						} 
 						
@@ -739,7 +739,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					}
 				
 					if ( shadowed){
-						//ambient += saturate(lAmbient[i%numlAmb]*falloff);
+						ambient += saturate(lAmbient[i%numlAmb]*falloff);
 						break;
 					} 
 				}
