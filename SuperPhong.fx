@@ -3,10 +3,6 @@
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
 
-// -----------------------------------------------------------------------------
-// PARAMETERS:
-// -----------------------------------------------------------------------------
-
 
 cbuffer cbPerRender : register( b0 )
 {
@@ -74,11 +70,13 @@ cbuffer cbPerObject : register (b1)
 	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
 	StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 	
-
+	float SceneScale = .01;
+	float LightSize = 1.5;
 
 #include "dx11/PhongPoint.fxh"
 #include "dx11/PhongPointSpot.fxh"
 #include "dx11/PhongDirectional.fxh"
+#include "dx11/PCSS.fxh"
 
 SamplerState g_samLinear
 {
@@ -637,17 +635,67 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){							
 						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
-			
-						shadowMapDepth += shadowMapBias + 0.001;
+//			
+//						shadowMapDepth += shadowMapBias + 0.001;
+//					
+//						if ( (shadowMapDepth) < viewPosition.z){
+//							ambient += lAmbient[i%numlAmb];
+//							break;
+//						} 
+
+					////////// NEW ///
+									
+									//viewPosition.z -= shadowMapBias;
+								   // ---------------------------------------------------------
+								   // Step 1: Find blocker estimate
+								   float searchSamples = 8;   // how many samples to use for blocker search
+								   float zReceiver = viewPosition.z ;
+								   float searchWidth = SceneScale * (zReceiver - 1.0) / zReceiver;
+								   float blocker = findBlocker(float3(projectTexCoord, shadowCounter-1), (viewPosition.z), shadowSampler, shadowMapBias,
+								                              SceneScale * LightSize / (viewPosition.z), searchSamples);
+								   
+								   //return (blocker*1);  // uncomment to visualize blockers
+								   
+								   // ---------------------------------------------------------
+								   // Step 2: Estimate penumbra using parallel planes approximation
+								   float penumbra;  
+								   penumbra = estimatePenumbra(viewPosition, blocker, LightSize);
+								
+								  // return penumbra*32;  // uncomment to visualize penumbrae
+								
+								   // ---------------------------------------------------------
+								   // Step 3: Compute percentage-closer filter
+								   // based on penumbra estimate
+								   float samples = 12;	// reduce this for higher performance
+								
+								   // Now do a penumbra-based percentage-closer filter
+								   float shadowed; 
+								
+								   shadowed = PCF_Filter(float3(projectTexCoord, shadowCounter-1), viewPosition-float4(0,0,shadowMapBias,0), shadowSampler, shadowMapBias, penumbra, samples);
+								   
+								   // If no blocker was found, just return 1.0
+								   // since the point isn't occluded
+								   
+//								   if (blocker > 1) {
+//								   		//ambient += lAmbient[i%numlAmb];
+//										//break;
+//								  	 	shadowed = 1.0;
+//								   }
+						
+//									if(shadowed <= 0){
+//										break;
+//									}
+//								   		
+									
 					
-						if ( (shadowMapDepth) < viewPosition.z){
-							ambient += lAmbient[i%numlAmb];
-							break;
-						} 
+					/////////////////
 	
 							LightDirV = mul(normalize(lightToObject), tV);
 							newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
-						
+//							newCol = min(shadowed,newCol);
+//							newCol *= saturate(shadowed+.5);
+							newCol *= shadowed;
+//						
 					} else {
 						LightDirV = mul(normalize(lightToObject), tV);
 						newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
@@ -763,14 +811,14 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	float3 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
 //	float3 finalDiffuse = (saturate(newCol) + lAmb.rgb + reflColorNorm * reflective.y) * texCol;
-	float3 finalDiffuse = saturate(saturate(newCol) + saturate(ambient) + reflColorNorm * reflective.y) ;
+	float3 finalDiffuse = saturate(saturate(newCol) + saturate(ambient) + reflColorNorm * reflective.y);
 
 	newCol += newRefl;
 	if(refraction) fresRefl = 1;
 	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
 
 	
-    return saturate(float4(newCol, Alpha)) * Color.rgba * texCol;
+    return (float4(newCol, Alpha)) * Color.rgba * texCol;
 
 }
 
