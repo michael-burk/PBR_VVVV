@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="0" scrolly="960">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="45" scrolly="360">
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (Spreads)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="8710" top="3410" width="1520" height="270">
    </BOUNDS>
@@ -371,7 +371,7 @@
    <LINK srcnodeid="18" srcpinname="Output" dstnodeid="9" dstpinname="Input 3">
    </LINK>
    <NODE id="24" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
-   <PIN pinname="Descriptive Name" slicecount="1" values="LightVP">
+   <PIN pinname="Descriptive Name" slicecount="1" values="|LightVP - Shadow Selection|">
    </PIN>
    <BOUNDS type="Box" left="4215" top="11405" width="750" height="240">
    </BOUNDS>
@@ -663,5 +663,21 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="42" srcpinname="Y Output Value" dstnodeid="37" dstpinname="Select">
+   </LINK>
+   <NODE id="43" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
+   <PIN pinname="Descriptive Name" slicecount="1" values="LightVP">
+   </PIN>
+   <BOUNDS type="Box" left="3135" top="11550" width="750" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3135" top="11550" width="750" height="240">
+   </BOUNDS>
+   <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="9" srcpinname="Output" dstnodeid="43" dstpinname="Input Node" linkstyle="Bezier">
+   <LINKPOINT x="4230" y="8588">
+   </LINKPOINT>
+   <LINKPOINT x="3165" y="8588">
+   </LINKPOINT>
    </LINK>
    </PATCH>

@@ -72,6 +72,8 @@ cbuffer cbPerObject : register (b1)
 	
 	float SceneScale = .01;
 	float LightSize = 1.5;
+ 	static	float PCFSamples = 9;	// reduce this for higher performance
+ 	static	float shadowsearchSamples = 9;   // how many samples to use for blocker search
 
 #include "dx11/PhongPoint.fxh"
 #include "dx11/PhongPointSpot.fxh"
@@ -190,7 +192,41 @@ vs2ps VS(
 // PIXELSHADERS:
 // -----------------------------------------------------------------------------
 
+float calcShadow(float3 seed, float4 viewPosition, float2 projectTexCoord, int shadowCounter){
+	////////// NEW ///
+									
+						//viewPosition.z -= shadowMapBias;
+					   // ---------------------------------------------------------
+					   // Step 1: Find blocker estimate
 
+					   float zReceiver = viewPosition.z ;
+					   float searchWidth = SceneScale * (zReceiver - 1.0) / zReceiver;
+					   float blocker = findBlocker(float3(projectTexCoord, shadowCounter-1), (viewPosition.z), shadowSampler, shadowMapBias,
+					                              SceneScale * LightSize / (viewPosition.z), shadowsearchSamples);
+					   
+					   //return (blocker*1);  // uncomment to visualize blockers
+					   
+					   // ---------------------------------------------------------
+					   // Step 2: Estimate penumbra using parallel planes approximation
+					   float penumbra;  
+					   penumbra = estimatePenumbra(viewPosition, blocker, LightSize);
+					
+					  // return penumbra*32;  // uncomment to visualize penumbrae
+					
+					   // ---------------------------------------------------------
+					   // Step 3: Compute percentage-closer filter
+					   // based on penumbra estimate
+
+					
+					   // Now do a penumbra-based percentage-closer filter
+					   float shadowed; 
+					
+					   shadowed = PCF_Filter(seed,float3(projectTexCoord, shadowCounter-1), viewPosition-float4(0,0,shadowMapBias,0), shadowSampler, shadowMapBias, penumbra, PCFSamples);
+									
+					
+					/////////////////
+					return shadowed;
+}
 float4 PS_SuperphongBump(vs2ps In): SV_Target
 {	
 	// wavelength colors
@@ -634,7 +670,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 		
 					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){							
-						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
+			
+					//		float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
 //			
 //						shadowMapDepth += shadowMapBias + 0.001;
 //					
@@ -643,58 +680,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 //							break;
 //						} 
 
-					////////// NEW ///
-									
-									//viewPosition.z -= shadowMapBias;
-								   // ---------------------------------------------------------
-								   // Step 1: Find blocker estimate
-								   float searchSamples = 8;   // how many samples to use for blocker search
-								   float zReceiver = viewPosition.z ;
-								   float searchWidth = SceneScale * (zReceiver - 1.0) / zReceiver;
-								   float blocker = findBlocker(float3(projectTexCoord, shadowCounter-1), (viewPosition.z), shadowSampler, shadowMapBias,
-								                              SceneScale * LightSize / (viewPosition.z), searchSamples);
-								   
-								   //return (blocker*1);  // uncomment to visualize blockers
-								   
-								   // ---------------------------------------------------------
-								   // Step 2: Estimate penumbra using parallel planes approximation
-								   float penumbra;  
-								   penumbra = estimatePenumbra(viewPosition, blocker, LightSize);
-								
-								  // return penumbra*32;  // uncomment to visualize penumbrae
-								
-								   // ---------------------------------------------------------
-								   // Step 3: Compute percentage-closer filter
-								   // based on penumbra estimate
-								   float samples = 12;	// reduce this for higher performance
-								
-								   // Now do a penumbra-based percentage-closer filter
-								   float shadowed; 
-								
-								   shadowed = PCF_Filter(float3(projectTexCoord, shadowCounter-1), viewPosition-float4(0,0,shadowMapBias,0), shadowSampler, shadowMapBias, penumbra, samples);
-								   
-								   // If no blocker was found, just return 1.0
-								   // since the point isn't occluded
-								   
-//								   if (blocker > 1) {
-//								   		//ambient += lAmbient[i%numlAmb];
-//										//break;
-//								  	 	shadowed = 1.0;
-//								   }
-						
-//									if(shadowed <= 0){
-//										break;
-//									}
-//								   		
-									
 					
-					/////////////////
 	
 							LightDirV = mul(normalize(lightToObject), tV);
 							newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 //							newCol = min(shadowed,newCol);
 //							newCol *= saturate(shadowed+.5);
-							newCol *= shadowed;
+							newCol *= calcShadow(In.PosO,viewPosition,projectTexCoord,shadowCounter);
 //						
 					} else {
 						LightDirV = mul(normalize(lightToObject), tV);
@@ -727,29 +719,32 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));
 					
-					if(useShadow[i]){
-						
-						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
-					
-						shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
-			
-						shadowMapDepth += shadowMapBias;
-					
-							
-						if ( (shadowMapDepth) < viewPosition.z){
-							ambient += saturate(lAmbient[i%numlAmb]*falloff);
-							break;
-						} 
-						
-					} 
+//					if(useShadow[i]){
+//						
+//						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
+//					
+//						shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
+//			
+//						shadowMapDepth += shadowMapBias;
+//					
+//							
+//						if ( (shadowMapDepth) < viewPosition.z){
+//							ambient += saturate(lAmbient[i%numlAmb]*falloff);
+//							break;
+//						} 
+//						
+//					} 
 					
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(LightDirW, tV);
-					
+					if(useShadow[i]){
+					projectionColor *= saturate(calcShadow(float3(In.TexCd.xy,1),viewPosition,projectTexCoord,shadowCounter)+.2);
+							
+					}
 			  		newCol += PhongPointSpot(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange]).rgb;
-				
+
 				}
 					
 				ambient += saturate(lAmbient[i%numlAmb]*falloff);

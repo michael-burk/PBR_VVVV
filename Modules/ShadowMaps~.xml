@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\madhat\Desktop\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0">
-   <BOUNDS type="Window" left="4530" top="4605" width="8895" height="9240">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="1155">
+   <BOUNDS type="Window" left="4710" top="2715" width="8895" height="8355">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -133,7 +133,7 @@
    </PIN>
    <PIN pinname="Element Count" visible="1" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Mips" slicecount="1" values="0">
+   <PIN pinname="Mips" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Enable Depth Buffer" slicecount="1" values="1">
    </PIN>
@@ -190,30 +190,6 @@
    </NODE>
    <LINK srcnodeid="36" srcpinname="Y Output Value" dstnodeid="0" dstpinname="Enabled">
    </LINK>
-   <NODE systemname="Blur (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\Blur.tfx" nodename="Blur (DX11.TextureFX)" componentmode="Hidden" id="39">
-   <BOUNDS type="Node" left="2355" top="6495" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Texture In" visible="1">
-   </PIN>
-   <PIN pinname="Texture Out" visible="1">
-   </PIN>
-   <PIN pinname="Width" slicecount="1" values="0.12">
-   </PIN>
-   <PIN pinname="Technique" slicecount="1" values="FastBlur">
-   </PIN>
-   <PIN pinname="Enabled" slicecount="1" values="0">
-   </PIN>
-   </NODE>
-   <NODE systemname="VSM (DX11.TextureFX)" filename="texture11\VSM.tfx" nodename="VSM (DX11.TextureFX)" componentmode="Hidden" id="40">
-   <BOUNDS type="Node" left="2355" top="6060" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Texture Out" visible="1">
-   </PIN>
-   <PIN pinname="Enabled" slicecount="1" values="0">
-   </PIN>
-   </NODE>
    <NODE id="1" systemname="Constant (DX11.Effect)" filename="%VVVV%\packs\dx11\nodes\dx11\Constant.fx" nodename="Constant (DX11.Effect)" componentmode="Hidden">
    <BOUNDS type="Node" left="1215" top="1980" width="100" height="100">
    </BOUNDS>
@@ -236,42 +212,84 @@
    </LINK>
    <LINK srcnodeid="4" srcpinname="Render State" dstnodeid="1" dstpinname="Render State">
    </LINK>
-   <NODE systemname="LinearDepth (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\LinearDepth.tfx" nodename="LinearDepth (DX11.TextureFX)" componentmode="Hidden" id="49">
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="58">
+   <BOUNDS type="Box" left="4650" top="1530" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="4650" top="1530" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Node" slicecount="1" visible="1" values="||">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Projection">
+   </PIN>
+   </NODE>
+   <NODE systemname="LinearDepth (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\LinearDepth.tfx" nodename="LinearDepth (DX11.TextureFX)" componentmode="Hidden" id="61">
    <BOUNDS type="Node" left="4185" top="6735" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Projection" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Texture Out" visible="1">
-   </PIN>
-   <PIN pinname="Texture In" visible="1">
+   <PIN pinname="MinDepth" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Technique" slicecount="1" values="LinearDepth">
    </PIN>
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="MinDepth" slicecount="1" values="0">
+   <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="MaxDepth" slicecount="1" values="7.85">
+   <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="MaxDepth" slicecount="1" values="10">
    </PIN>
    </NODE>
-   <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="49" dstpinname="Texture In">
+   <LINK srcnodeid="58" srcpinname="Output Node" dstnodeid="61" dstpinname="Projection">
    </LINK>
-   <LINK srcnodeid="40" srcpinname="Texture Out" dstnodeid="39" dstpinname="Texture In">
-   </LINK>
-   <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="40" dstpinname="Texture In" linkstyle="PolyLine">
-   </LINK>
-   <NODE systemname="Blur (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\Blur.tfx" nodename="Blur (DX11.TextureFX)" componentmode="Hidden" id="57">
-   <BOUNDS type="Node" left="1365" top="7020" width="100" height="100">
+   <NODE systemname="FXAA11 (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\FXAA11.tfx" nodename="FXAA11 (DX11.TextureFX)" componentmode="Hidden" id="63">
+   <BOUNDS type="Node" left="4230" top="7260" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Width" slicecount="1" values="0.11">
+   <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="Texture In" visible="1">
+   <PIN pinname="Enabled" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="KeepAlpha" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="57" srcpinname="Texture Out" dstnodeid="30" dstpinname="Input Node">
+   <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="61" dstpinname="Texture In">
    </LINK>
-   <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="57" dstpinname="Texture In">
+   <NODE systemname="Blur (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\Blur.tfx" nodename="Blur (DX11.TextureFX)" componentmode="Hidden" id="64">
+   <BOUNDS type="Node" left="4275" top="7935" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="Width" slicecount="1" values="0.16">
+   </PIN>
+   <PIN pinname="Technique" slicecount="1" values="ThreePass">
+   </PIN>
+   <PIN pinname="Enabled" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="63" srcpinname="Texture Out" dstnodeid="64" dstpinname="Texture In">
+   <LINKPOINT x="5145" y="7625">
+   </LINKPOINT>
+   <LINKPOINT x="4725" y="7765">
+   </LINKPOINT>
+   </LINK>
+   <NODE systemname="HSCB (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\HSCB.tfx" nodename="HSCB (DX11.TextureFX)" componentmode="Hidden" id="65">
+   <BOUNDS type="Node" left="5805" top="6855" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="Brightness" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Contrast" slicecount="1" values="0.4">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="61" srcpinname="Texture Out" dstnodeid="65" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="61" srcpinname="Texture Out" dstnodeid="63" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="61" srcpinname="Texture Out" dstnodeid="30" dstpinname="Input Node">
    </LINK>
    </PATCH>
