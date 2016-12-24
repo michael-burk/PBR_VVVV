@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="1155">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="1335">
    <BOUNDS type="Window" left="4710" top="2715" width="8895" height="8355">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
@@ -61,7 +61,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="555" top="195" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Input Enum" slicecount="1" visible="1" values="BackCullSimple">
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="FrontCullSimple">
    </PIN>
    </NODE>
    <LINK srcnodeid="12" srcpinname="Output Enum" dstnodeid="4" dstpinname="Mode">
@@ -242,6 +242,20 @@
    </LINK>
    <LINK srcnodeid="0" srcpinname="Depth Out" dstnodeid="61" dstpinname="Texture In">
    </LINK>
-   <LINK srcnodeid="61" srcpinname="Texture Out" dstnodeid="30" dstpinname="Input Node">
+   <NODE systemname="FXAA11 (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\FXAA11.tfx" nodename="FXAA11 (DX11.TextureFX)" componentmode="Hidden" id="63">
+   <BOUNDS type="Node" left="3660" top="7875" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="Enabled" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="KeepAlpha" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="61" srcpinname="Texture Out" dstnodeid="63" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="63" srcpinname="Texture Out" dstnodeid="30" dstpinname="Input Node">
    </LINK>
    </PATCH>

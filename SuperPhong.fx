@@ -2,8 +2,11 @@
 //@help: internet
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
-
-
+	float SceneScale = .01;
+	float LightSize = 1.5;
+ 	static	float PCFSamples = 9;	// reduce this for higher performance
+ 	static	float shadowsearchSamples = 12;   // how many samples to use for blocker search
+	float shadowLightness = 0;
 cbuffer cbPerRender : register( b0 )
 {
 	float4x4 tP: PROJECTION;   //projection matrix as set via Renderer
@@ -70,10 +73,7 @@ cbuffer cbPerObject : register (b1)
 	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
 	StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 	
-	float SceneScale = .01;
-	float LightSize = 1.5;
- 	static	float PCFSamples = 9;	// reduce this for higher performance
- 	static	float shadowsearchSamples = 9;   // how many samples to use for blocker search
+
 
 #include "dx11/PhongPoint.fxh"
 #include "dx11/PhongPointSpot.fxh"
@@ -194,14 +194,19 @@ vs2ps VS(
 
 float calcShadow(float3 seed, float4 viewPosition, float2 projectTexCoord, int shadowCounter){
 	////////// NEW ///
-									
-						//viewPosition.z -= shadowMapBias;
+					
+//					http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-16-shadow-mapping/#Poisson_Sampling	
+//					float bias = 0.005*tan(acos(cosTheta)); // cosTheta is dot( n,l ), clamped between 0 and 1
+//					bias = clamp(bias, 0,0.01);
+	
+	
+	
 					   // ---------------------------------------------------------
 					   // Step 1: Find blocker estimate
-
+					
 					   float zReceiver = viewPosition.z ;
 					   float searchWidth = SceneScale * (zReceiver - 1.0) / zReceiver;
-					   float blocker = findBlocker(float3(projectTexCoord, shadowCounter-1), (viewPosition.z), shadowSampler, shadowMapBias,
+					   float blocker = findBlocker(float3(projectTexCoord, shadowCounter-1), viewPosition-float4(0,0,shadowMapBias,0), shadowSampler, shadowMapBias,
 					                              SceneScale * LightSize / (viewPosition.z), shadowsearchSamples);
 					   
 					   //return (blocker*1);  // uncomment to visualize blockers
@@ -236,9 +241,6 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
     	{ 0, 1, 0, 1 },
     	{ 0, 0, 1, 1 },
 	};
-	
-
-
 	
 	float3 LightDirW;
 	float3 LightDirV;
@@ -617,7 +619,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	uint numlAmb, dummyAmb;
     lAmbient.GetDimensions(numlAmb, dummyAmb);
-	
 	uint numlDiff, dummyDiff;
     lDiff.GetDimensions(numlDiff, dummyDiff);
 	
@@ -683,10 +684,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 	
 							LightDirV = mul(normalize(lightToObject), tV);
-							newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+							newCol += PhongDirectional(In.PosO, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 //							newCol = min(shadowed,newCol);
 //							newCol *= saturate(shadowed+.5);
-							newCol *= calcShadow(In.PosO,viewPosition,projectTexCoord,shadowCounter);
+							newCol *= calcShadow(NormV,viewPosition,projectTexCoord,shadowCounter);
 //						
 					} else {
 						LightDirV = mul(normalize(lightToObject), tV);
@@ -738,7 +739,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(LightDirW, tV);
 					if(useShadow[i]){
-					projectionColor *= saturate(calcShadow(float3(In.TexCd.xy,1),viewPosition,projectTexCoord,shadowCounter)+.2);
+					projectionColor *= saturate(calcShadow(In.PosWVP,viewPosition,projectTexCoord,shadowCounter)+shadowLightness);
 							
 					}
 			  		newCol += PhongPointSpot(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],

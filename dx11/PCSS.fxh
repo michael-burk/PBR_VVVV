@@ -24,6 +24,7 @@ float random(float3 seed, int i){
 	float dot_product = dot(seed4, float4(12.9898,78.233,45.164,94.673));
 	return frac(sin(dot_product) * 43758.5453);
 }
+
 float _dnoise1(float3 u){
 	u=dot(u+.2,float3(1,57,21));
 	return (u.x*(.1+sin(u.x)));
@@ -144,23 +145,22 @@ float PCF_Filter(float3 seed, float3 uv, float4 LP, SamplerState ShadowMapSample
                        // get depth at current texel of the shadow map
                        float shadMapDepth = 0;
                	
-//               		 int index = (_dnoise4(seed,seed.z).x*16)%16;
-               			 int index = (rand(seed.xy))*16%16;
-//               		 int index = seed.xy;
-//                       shadMapDepth = shadowMap.Sample(ShadowMapSampler, float3( (uv.xy + float2(i*stepSize,j*stepSize) ), uv.z )).x;
-               			 shadMapDepth = shadowMap.Sample(ShadowMapSampler, float3( (uv.xy + poissonDisk[index]*noise+float2(i*stepSize,j*stepSize) ), uv.z )).x;
-               			
+//               		 int index = (floor(random(seed,seed.z).x*1000))%16;
+               			 int index = floor(_dnoise4(seed.xy,0)*1000)%16;
+               				
+
+               		   shadMapDepth = shadowMap.Sample(ShadowMapSampler, float3( (uv.xy + poissonDisk[index]*noise*stepSize+float2(i*stepSize,j*stepSize) ), uv.z )).x;
+//               		   shadMapDepth = shadowMap.Sample(ShadowMapSampler, float3( (uv.xy + _dnoise4(seed.xy,seed.z)*noise*stepSize+float2(i*stepSize,j*stepSize) ), uv.z )).x;
+               	
                        // test if the depth in the shadow map is closer than
                        // the eye-view point
                        float shad = LP.z < shadMapDepth;
 
                        // accumulate result
                        sum += shad;
-               		//	sum = 1;
                }
        }
        
        // return average of the samples
        return sum / (numSamples*numSamples);
-		//return 1;
 }

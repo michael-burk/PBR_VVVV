@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="10320" scrolly="3345" bgcolor="15921906">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="6510" scrolly="7065" bgcolor="15921906">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicBuffer (DX11.Buffer Value)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="22860" top="15390" width="100" height="100">
    </BOUNDS>
@@ -141,7 +141,7 @@
    </PIN>
    <PIN pinname="Initial Pitch" slicecount="1" visible="1" values="0">
    </PIN>
-   <PIN pinname="Initial Distance" visible="1" slicecount="1" values="0">
+   <PIN pinname="Initial Distance" visible="1" slicecount="1" values="1">
    </PIN>
    <BOUNDS type="Window" left="9855" top="960" width="18570" height="14115">
    </BOUNDS>
@@ -149,7 +149,7 @@
    </PIN>
    <PIN pinname="Initial FOV" slicecount="1" values="0.07">
    </PIN>
-   <PIN pinname="Near Plane" slicecount="1" values="0.05">
+   <PIN pinname="Near Plane" slicecount="1" values="0">
    </PIN>
    <PIN pinname="View" visible="1">
    </PIN>
@@ -291,7 +291,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|0.22800,0.22800,0.22800,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|0.44577,0.44577,0.44577,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
@@ -478,7 +478,7 @@
    <LINKPOINT x="21255" y="15743">
    </LINKPOINT>
    </LINK>
-   <BOUNDS type="Window" left="735" top="2070" width="16260" height="15015">
+   <BOUNDS type="Window" left="0" top="2175" width="14970" height="12360">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -487,7 +487,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="23085" top="12885">
    </BOUNDS>
-   <PIN pinname="Gamma" slicecount="1" visible="1" values="0.74">
+   <PIN pinname="Gamma" slicecount="1" visible="1" values="0.58">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -495,7 +495,7 @@
    </PIN>
    <PIN pinname="Control" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Technique" slicecount="1" values="Textured">
+   <PIN pinname="Technique" slicecount="1" values="Smooth">
    </PIN>
    <PIN pinname="Color1" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
@@ -839,7 +839,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="13185" top="14670" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="256,256">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="512,512">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1207,9 +1207,9 @@
    <NODE systemname="Vector (3d Join)" nodename="Vector (3d Join)" componentmode="Hidden" id="209">
    <BOUNDS type="Node" left="8835" top="915" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" visible="1" values="1.92">
+   <PIN pinname="Y" slicecount="1" visible="1" values="0.89">
    </PIN>
-   <PIN pinname="X" slicecount="1" values="0">
+   <PIN pinname="X" slicecount="1" values="0.07">
    </PIN>
    <PIN pinname="Z" slicecount="1" values="0">
    </PIN>
@@ -1337,11 +1337,11 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="X" slicecount="1" values="0">
+   <PIN pinname="X" slicecount="1" values="-0.02">
    </PIN>
-   <PIN pinname="Y" slicecount="1" visible="1" values="-0.16">
+   <PIN pinname="Y" slicecount="1" visible="1" values="0.26">
    </PIN>
-   <PIN pinname="Z" slicecount="1" visible="1" values="-0.02">
+   <PIN pinname="Z" slicecount="1" visible="1" values="0.12">
    </PIN>
    </NODE>
    <LINK srcnodeid="218" srcpinname="XYZ Transformed" dstnodeid="222" dstpinname="Initial Interest" linkstyle="Bezier">
@@ -1751,7 +1751,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|0.23359,0.00000,0.15716,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.55336,0.00000,0.57834,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="299" srcpinname="Color Output" dstnodeid="297" dstpinname="Data" linkstyle="Bezier">
@@ -1769,7 +1769,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|0.17423,0.17423,0.17423,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|0.10009,0.10009,0.10009,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="300" srcpinname="Color Output" dstnodeid="14" dstpinname="Data" linkstyle="Bezier">
@@ -1845,7 +1845,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8850" top="3555" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.12">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.15">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1857,11 +1857,11 @@
    <NODE systemname="Rotate (Transform)" nodename="Rotate (Transform)" componentmode="Hidden" id="306">
    <BOUNDS type="Node" left="7720" top="1020" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="-1.25">
+   <PIN pinname="Y" slicecount="1" values="-0.59" visible="1">
    </PIN>
-   <PIN pinname="X" slicecount="1" values="0.08">
+   <PIN pinname="X" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Z" slicecount="1" values="0.11">
+   <PIN pinname="Z" slicecount="1" values="-0.16">
    </PIN>
    </NODE>
    <LINK srcnodeid="306" srcpinname="Transform Out" dstnodeid="25" dstpinname="Transform" linkstyle="Bezier">
@@ -1870,4 +1870,10 @@
    <LINKPOINT x="7755" y="1433">
    </LINKPOINT>
    </LINK>
+   <NODE systemname="Rekorder (Windows)" filename="%VVVV%\lib\nodes\modules\Windows\Rekorder (Windows).v4p" nodename="Rekorder (Windows)" componentmode="Hidden" id="308">
+   <BOUNDS type="Node" left="9885" top="1080" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Delay in Seconds" slicecount="1" values="0.06">
+   </PIN>
+   </NODE>
    </PATCH>
