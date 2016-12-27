@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="6510" scrolly="7065" bgcolor="15921906">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="4230" scrolly="0" bgcolor="15921906">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicBuffer (DX11.Buffer Value)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="22860" top="15390" width="100" height="100">
    </BOUNDS>
@@ -478,7 +478,7 @@
    <LINKPOINT x="21255" y="15743">
    </LINKPOINT>
    </LINK>
-   <BOUNDS type="Window" left="0" top="2175" width="14970" height="12360">
+   <BOUNDS type="Window" left="-105" top="0" width="14610" height="15855">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
    </PACK>
@@ -1838,8 +1838,6 @@
    <LINKPOINT x="16095" y="11685">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="70" srcpinname="Texture Out" dstnodeid="71" dstpinname="Input Node">
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="304">
    <BOUNDS type="Box" left="8850" top="3555" width="795" height="240">
    </BOUNDS>
@@ -1855,19 +1853,19 @@
    <LINK srcnodeid="304" srcpinname="Y Output Value" dstnodeid="21" dstpinname="FOV">
    </LINK>
    <NODE systemname="Rotate (Transform)" nodename="Rotate (Transform)" componentmode="Hidden" id="306">
-   <BOUNDS type="Node" left="7720" top="1020" width="100" height="100">
+   <BOUNDS type="Node" left="7720" top="960" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="-0.59" visible="1">
+   <PIN pinname="Y" slicecount="1" visible="1" values="-0.6">
    </PIN>
    <PIN pinname="X" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Z" slicecount="1" values="-0.16">
+   <PIN pinname="Z" slicecount="1" values="-0.14">
    </PIN>
    </NODE>
    <LINK srcnodeid="306" srcpinname="Transform Out" dstnodeid="25" dstpinname="Transform" linkstyle="Bezier">
-   <LINKPOINT x="7755" y="1433">
+   <LINKPOINT x="7755" y="1393">
    </LINKPOINT>
-   <LINKPOINT x="7755" y="1433">
+   <LINKPOINT x="7755" y="1413">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Rekorder (Windows)" filename="%VVVV%\lib\nodes\modules\Windows\Rekorder (Windows).v4p" nodename="Rekorder (Windows)" componentmode="Hidden" id="308">
@@ -1876,4 +1874,6 @@
    <PIN pinname="Delay in Seconds" slicecount="1" values="0.06">
    </PIN>
    </NODE>
+   <LINK srcnodeid="70" srcpinname="Texture Out" dstnodeid="71" dstpinname="Input Node">
+   </LINK>
    </PATCH>
