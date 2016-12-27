@@ -232,6 +232,61 @@ float calcShadow(float3 seed, float4 viewPosition, float2 projectTexCoord, int s
 					/////////////////
 					return shadowed;
 }
+
+
+float minVariance;
+float lightBleedingLimit;
+float2	nearFarPlane;
+
+
+float reduceLightBleeding(float p_max, float amount)
+{
+    return clamp((p_max-amount)/ (1.0-amount), 0.0, 1.0);
+}
+
+float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
+	
+	    float currentDistanceToLight = clamp((worldSpaceDistance - nearFarPlane.x) 
+        / (nearFarPlane.y - nearFarPlane.x), 0, 1);
+
+    /////////////////////////////////////////////////////////
+
+    // get blured and blured squared distance to light
+
+	float2 depths = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).xy;
+	
+    float M1 = depths.x;
+    float M2 = depths.y;
+    float M12 = M1 * M1;
+
+    float p = 0.0;
+    float lightIntensity = 1.0;
+    if(currentDistanceToLight >= M1)
+    {
+        // standard deviation
+        float sigma2 = M2 - M12;
+
+        // when standard deviation is smaller than epsilon
+        if(sigma2 < minVariance)
+        {
+            sigma2 = minVariance;
+        }
+
+        // chebyshev inequality - upper bound on the 
+        // probability that fragment is occluded
+        float intensity = sigma2 / (sigma2 + pow(currentDistanceToLight - M1, 2));
+
+        // reduce light bleeding
+        lightIntensity = reduceLightBleeding(intensity, lightBleedingLimit);
+    }
+
+    /////////////////////////////////////////////////////////
+
+    float4 resultingColor = float4(float3(lightIntensity,lightIntensity,lightIntensity),1);
+	
+	return resultingColor;
+	
+}
 float4 PS_SuperphongBump(vs2ps In): SV_Target
 {	
 	// wavelength colors
@@ -688,7 +743,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 //							newCol = min(shadowed,newCol);
 //							newCol *= saturate(shadowed+.5);
 							newCol *= calcShadow(NormV,viewPosition,projectTexCoord,shadowCounter);
-//						
+//							newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter);					
 					} else {
 						LightDirV = mul(normalize(lightToObject), tV);
 						newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
@@ -739,13 +794,14 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(LightDirW, tV);
 					if(useShadow[i]){
-					projectionColor *= saturate(calcShadow(In.PosWVP,viewPosition,projectTexCoord,shadowCounter)+shadowLightness);
-							
+//					projectionColor *= saturate(calcShadow(In.PosWVP,viewPosition,projectTexCoord,shadowCounter)+shadowLightness);
+//					projectionColor *= saturate(1-calcShadowVSM(lightDist,projectTexCoord,shadowCounter));
+					projectionColor *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter);
 					}
 			  		newCol += PhongPointSpot(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange]).rgb;
-
+//					newCol = calcShadowVSM(lightDist,projectTexCoord,shadowCounter)*.1;
 				}
 					
 				ambient += saturate(lAmbient[i%numlAmb]*falloff);

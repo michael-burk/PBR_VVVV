@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "https://vvvv.org/versions/vvvv50alpha34.106.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="3570" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <BOUNDS type="Window" left="495" top="660" width="12960" height="12360">
    </BOUNDS>
    <PACK Name="addonpack" Version="34.101.0">
@@ -571,6 +571,12 @@
    </PIN>
    <PIN pinname="shadowLightness" visible="1">
    </PIN>
+   <PIN pinname="nearFarPlaneXY" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="lightBleedingLimit" slicecount="1" values="0.37">
+   </PIN>
+   <PIN pinname="minVariance" slicecount="1" values="0">
+   </PIN>
    </NODE>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In">
    </LINK>
@@ -677,7 +683,7 @@
    </PIN>
    <PIN pinname="Spread Count" visible="-1" pintype="Input" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Far Plane" visible="-1" pintype="Input" slicecount="1" values="9">
+   <PIN pinname="Far Plane" visible="-1" pintype="Input" slicecount="1" values="10">
    </PIN>
    <PIN pinname="Initial Distance" visible="-1" pintype="Input" slicecount="1" values="0">
    </PIN>
@@ -708,6 +714,8 @@
    <PIN pinname="UseShadow" visible="1">
    </PIN>
    <PIN pinname="AmbientColor" visible="1">
+   </PIN>
+   <PIN pinname="NearFarPlane" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -987,7 +995,7 @@
    </BOUNDS>
    <PIN pinname="Time Mode" slicecount="1" values="Filtered">
    </PIN>
-   <PIN pinname="Maximum Foreground FPS" slicecount="1" values="30">
+   <PIN pinname="Maximum Foreground FPS" slicecount="1" values="60">
    </PIN>
    </NODE>
    <NODE systemname="Torus (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Torus (DX11.Geometry)" componentmode="Hidden" id="1126">
@@ -1001,7 +1009,7 @@
    </PIN>
    <PIN pinname="Radius" slicecount="1" values="0.6">
    </PIN>
-   <PIN pinname="Thickness" slicecount="1" values="0.04">
+   <PIN pinname="Thickness" slicecount="1" values="0.01">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1134">
@@ -1176,4 +1184,10 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
+   <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="nearFarPlaneXY" linkstyle="Bezier">
+   <LINKPOINT x="8145" y="4875">
+   </LINKPOINT>
+   <LINKPOINT x="12000" y="4875">
+   </LINKPOINT>
+   </LINK>
    </PATCH>
