@@ -737,13 +737,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 //						} 
 
 					
-	
+							
 							LightDirV = mul(normalize(lightToObject), tV);
 							newCol += PhongDirectional(In.PosO, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 //							newCol = min(shadowed,newCol);
 //							newCol *= saturate(shadowed+.5);
-							newCol *= calcShadow(NormV,viewPosition,projectTexCoord,shadowCounter);
-//							newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter);					
+//							newCol *= calcShadow(NormV,viewPosition,projectTexCoord,shadowCounter);
+							newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter);					
 					} else {
 						LightDirV = mul(normalize(lightToObject), tV);
 						newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
