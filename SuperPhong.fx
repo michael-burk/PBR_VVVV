@@ -237,7 +237,8 @@ float calcShadow(float3 seed, float4 viewPosition, float2 projectTexCoord, int s
 float minVariance;
 float lightBleedingLimit;
 float2	nearFarPlane;
-
+float depthMultiplier;
+float epsilon;
 
 float reduceLightBleeding(float p_max, float amount)
 {
@@ -286,6 +287,37 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
 	
 	return resultingColor;
 	
+}
+
+float4 calcShadowESM(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
+	  /////////////////////////////////////////////////
+
+    // current distance to light
+        float currentDistanceToLight = clamp((worldSpaceDistance - nearFarPlane.x) 
+        / (nearFarPlane.y - nearFarPlane.x), 0, 1);
+
+
+    /////////////////////////////////////////////////
+
+    // get blured exp of depth
+   // float3 projectedCoords = o_shadowCoord.xyz / o_shadowCoord.w;
+//    float depthCExpBlured = texture(u_textureShadowMap, projectedCoords.xy).r;
+	float depthCExpBlured = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).r;
+    // current exp of depth
+    float depthCExpActual = exp(- (depthMultiplier * currentDistanceToLight));
+    float expFactor = depthCExpBlured * depthCExpActual;
+
+    // Threshold classification for high frequency artifacts
+    if(expFactor > 1.0 + epsilon)
+    {
+        expFactor = 1.0;
+    }
+
+    /////////////////////////////////////////////////
+
+    float4 resultingColor = float4(expFactor,expFactor,expFactor,1);
+    
+	return expFactor;
 }
 float4 PS_SuperphongBump(vs2ps In): SV_Target
 {	
@@ -794,9 +826,12 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(LightDirW, tV);
 					if(useShadow[i]){
-//					projectionColor *= saturate(calcShadow(In.PosWVP,viewPosition,projectTexCoord,shadowCounter)+shadowLightness);
-//					projectionColor *= saturate(1-calcShadowVSM(lightDist,projectTexCoord,shadowCounter));
-					projectionColor *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter);
+	//					projectionColor *= saturate(calcShadow(In.PosWVP,viewPosition,projectTexCoord,shadowCounter)+shadowLightness);
+	//					projectionColor *= saturate(1-calcShadowVSM(lightDist,projectTexCoord,shadowCounter));
+//						if(calcShadowESM(lightDist,projectTexCoord,shadowCounter).r < 1){
+//							projectionColor = 0;
+//						}
+						projectionColor *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter);
 					}
 			  		newCol += PhongPointSpot(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff],

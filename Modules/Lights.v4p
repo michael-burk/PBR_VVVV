@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="12300" scrolly="7635" bgcolor="15921906">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="8895" scrolly="7905" bgcolor="15921906">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="22860" top="15390" width="100" height="100">
    </BOUNDS>
@@ -291,7 +291,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|1.00000,0.00000,0.43438,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|0.98704,0.24709,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)">
@@ -478,7 +478,7 @@
    <LINKPOINT x="21255" y="15743">
    </LINKPOINT>
    </LINK>
-   <BOUNDS type="Window" left="690" top="1590" width="12960" height="12360">
+   <BOUNDS type="Window" left="0" top="3630" width="14145" height="12705">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -802,8 +802,8 @@
    </NODE>
    <LINK srcnodeid="88" srcpinname="Buffer" dstnodeid="87" dstpinname="Input Node">
    </LINK>
-   <NODE id="80" stayontop="1" componentmode="Hidden" systemname="ShadowMaps" filename="ShadowMaps.v4p" nodename="SHADOWMAPS.V4P" debug="0">
-   <BOUNDS type="Window" left="2700" top="5085" width="9960" height="8280">
+   <NODE id="80" stayontop="1" componentmode="InAWindow" systemname="ShadowMaps" filename="ShadowMaps.v4p" nodename="SHADOWMAPS.V4P" debug="0">
+   <BOUNDS type="Window" left="315" top="2295" width="12765" height="8280">
    </BOUNDS>
    <BOUNDS type="Node" left="13170" top="15390" width="2970" height="270">
    </BOUNDS>
@@ -843,7 +843,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="13185" top="14670" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1024,1024">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="256,256">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1933,9 +1933,9 @@
    <LINK srcnodeid="309" srcpinname="XY" dstnodeid="80" dstpinname="nearFarPlaneXY">
    </LINK>
    <NODE nodename="IOBOX (VALUE ADVANCED)" componentmode="InABox" id="312">
-   <BOUNDS type="Box" left="12795" top="17055" width="795" height="480">
+   <BOUNDS type="Box" left="12195" top="16905" width="795" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="12795" top="17055" width="0" height="0">
+   <BOUNDS type="Node" left="12195" top="16905" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1949,22 +1949,6 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="309" srcpinname="XY" dstnodeid="312" dstpinname="Y Input Value">
-   </LINK>
-   <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="CONS (SPREADS)" componentmode="Hidden" id="314">
-   <BOUNDS type="Node" left="9120" top="10065" width="2445" height="270">
-   </BOUNDS>
-   <BOUNDS type="Box" left="9120" top="10065">
-   </BOUNDS>
-   <PIN pinname="Input 1" visible="1">
-   </PIN>
-   <PIN pinname="Input 2" visible="1">
-   </PIN>
-   <PIN pinname="Output" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="222" srcpinname="Position" dstnodeid="314" dstpinname="Input 1">
-   </LINK>
-   <LINK srcnodeid="21" srcpinname="Position" dstnodeid="314" dstpinname="Input 2">
    </LINK>
    <LINK srcnodeid="21" srcpinname="Position" dstnodeid="80" dstpinname="lightPosXYZ">
    </LINK>
