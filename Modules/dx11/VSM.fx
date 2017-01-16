@@ -32,6 +32,7 @@ cbuffer cbPerObj : register( b1 )
 	float3 lightPos;
 	float2 nearFarPlane;
 	float depthOffset;
+	
 };
 
 
@@ -55,9 +56,7 @@ float4 PS(psInput input): SV_Target
 
 	col.r = clamp(dist, 0, 1);
 	col.g = col.r * col.r;
-	
-//	col.r = 1;
-//	col.g = 1;
+
     return col;
 }
 

@@ -7,6 +7,7 @@
  	static	float PCFSamples = 9;	// reduce this for higher performance
  	static	float shadowsearchSamples = 12;   // how many samples to use for blocker search
 	float shadowLightness = 0;
+
 cbuffer cbPerRender : register( b0 )
 {
 	float4x4 tP: PROJECTION;   //projection matrix as set via Renderer
@@ -254,8 +255,8 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
 
     // get blured and blured squared distance to light
 
-	float2 depths = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).xy;
-	
+	float2 depths = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter), 0 ).xy;
+
     float M1 = depths.x;
     float M2 = depths.y;
     float M12 = M1 * M1;
@@ -775,8 +776,9 @@ float4 PS_Superphong(vs2ps In): SV_Target
 //							newCol = min(shadowed,newCol);
 //							newCol *= saturate(shadowed+.5);
 //							newCol *= calcShadow(NormV,viewPosition,projectTexCoord,shadowCounter);
-							newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter);					
-					} else {
+							newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);					
+					} 
+					else {
 						LightDirV = mul(normalize(lightToObject), tV);
 						newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 					}
@@ -807,38 +809,20 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));
 					
-//					if(useShadow[i]){
-//						
-//						float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
-//					
-//						shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
-//			
-//						shadowMapDepth += shadowMapBias;
-//					
-//							
-//						if ( (shadowMapDepth) < viewPosition.z){
-//							ambient += saturate(lAmbient[i%numlAmb]*falloff);
-//							break;
-//						} 
-//						
-//					} 
-					
+
 					LightDirW = normalize(lightToObject);
 					LightDirV = mul(LightDirW, tV);
 					if(useShadow[i]){
-	//					projectionColor *= saturate(calcShadow(In.PosWVP,viewPosition,projectTexCoord,shadowCounter)+shadowLightness);
-	//					projectionColor *= saturate(1-calcShadowVSM(lightDist,projectTexCoord,shadowCounter));
-//						if(calcShadowESM(lightDist,projectTexCoord,shadowCounter).r < 1){
-//							projectionColor = 0;
-//						}
-						projectionColor *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter);
+
+						projectionColor *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);
+			
 					}
 			  		newCol += PhongPointSpot(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange]).rgb;
-//					newCol = calcShadowVSM(lightDist,projectTexCoord,shadowCounter)*.1;
+						
 				}
-					
+			
 				ambient += saturate(lAmbient[i%numlAmb]*falloff);
 				
 				break;
@@ -849,9 +833,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				bool shadowed = false;
 			
 				lightCounter+=6;
-			
+				float4 shadow = 1;
+				
 				if(useShadow[i]){
-					
+						
 					shadowCounter+=6;
 					for(int p = 0; p < 6; p++){
 
@@ -862,22 +847,30 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 						if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){
 
-							float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord,p+shadowCounter-6),0 ).x;
+//							float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord,p+shadowCounter-6),0 ).x;
 						
-							shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
-							shadowMapDepth += shadowMapBias;
-
-							if ( (shadowMapDepth) < viewPosition.z ) shadowed = true;
+//							shadowMapDepth = LightP[i]._43/(shadowMapDepth-LightP[i]._33);
+//							shadowMapDepth += shadowMapBias;
+//
+//							if ( (shadowMapDepth) < viewPosition.z ) shadowed = true;
+		
+							shadow -= min(shadow, calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+//							shadow = calcShadowVSM(lightDist,projectTexCoord,8);
 							
+//							shadow = calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6);
+//							saturate(shadow);
+//							newCol *= (calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+						//	newCol = 1;
 						} 
 						
 					}
 				
-					if ( shadowed){
-						ambient += saturate(lAmbient[i%numlAmb]*falloff);
-						break;
-					} 
-				}
+//					if ( shadowed){
+//						ambient += saturate(lAmbient[i%numlAmb]*falloff);
+//						break;
+//					} 
+					
+				} 
 			
 				LightDirW = normalize(lightToObject);
 				LightDirV = mul(LightDirW, tV);
@@ -885,7 +878,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		  		newCol += PhongPoint(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 						  			 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-									 lightRange[i%numLighRange]).rgb;
+									 lightRange[i%numLighRange]).rgb * saturate(shadow);
+				//newCol = shadow;
 				
 			break;
 			
