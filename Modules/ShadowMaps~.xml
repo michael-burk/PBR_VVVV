@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0">
-   <BOUNDS type="Window" left="465" top="5265" width="12960" height="10290">
+   <BOUNDS type="Window" left="270" top="4245" width="12960" height="10290">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -405,11 +405,13 @@
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="Width" slicecount="1" values="0.15">
+   <PIN pinname="Width" slicecount="1" values="0.45">
    </PIN>
-   <PIN pinname="Technique" slicecount="1" values="ThreePass">
+   <PIN pinname="Technique" slicecount="1" visible="1" values="ThreePass">
    </PIN>
    <PIN pinname="Enabled" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Sampler" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
    <NODE id="79" systemname="VSM (DX11.Effect)" filename="dx11\VSM.fx" nodename="VSM (DX11.Effect)" componentmode="Hidden">
@@ -492,7 +494,7 @@
    <BOUNDS type="Box" left="3885" top="4095">
    </BOUNDS>
    </NODE>
-   <NODE systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow" id="85" stayontop="1">
+   <NODE systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="Hidden" id="85" stayontop="1">
    <BOUNDS type="Node" left="9600" top="7830" width="100" height="100">
    </BOUNDS>
    <BOUNDS type="Box" left="9600" top="7830" width="6000" height="4500">
@@ -516,7 +518,7 @@
    <BOUNDS type="Box" left="9615" top="7035">
    </BOUNDS>
    </NODE>
-   <NODE systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow" id="87" stayontop="1">
+   <NODE systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="Hidden" id="87" stayontop="1">
    <BOUNDS type="Node" left="11025" top="7830" width="100" height="100">
    </BOUNDS>
    <BOUNDS type="Box" left="11025" top="7830" width="6000" height="4500">
@@ -641,7 +643,7 @@
    </LINKPOINT>
    </LINK>
    <NODE systemname="FXAA11 (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\FXAA11.tfx" nodename="FXAA11 (DX11.TextureFX)" componentmode="Hidden" id="134">
-   <BOUNDS type="Node" left="6885" top="6765" width="100" height="100">
+   <BOUNDS type="Node" left="6495" top="6870" width="100" height="100">
    </BOUNDS>
    <PIN pinname="KeepAlpha" slicecount="1" values="0">
    </PIN>
@@ -651,9 +653,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="72" srcpinname="Texture Slices Out" dstnodeid="134" dstpinname="Texture In" linkstyle="Bezier">
-   <LINKPOINT x="6635" y="6440">
+   <LINKPOINT x="6505" y="6475">
    </LINKPOINT>
-   <LINKPOINT x="6775" y="6445">
+   <LINKPOINT x="6515" y="6515">
    </LINKPOINT>
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="135">
@@ -696,18 +698,14 @@
    <LINKPOINT x="7890" y="2070">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="72" srcpinname="Texture Slices Out" dstnodeid="73" dstpinname="Texture In" linkstyle="Bezier">
-   <LINKPOINT x="6510" y="6765">
-   </LINKPOINT>
-   <LINKPOINT x="6510" y="6765">
-   </LINKPOINT>
-   </LINK>
    <NODE systemname="BuildTextureArray (DX11.TextureFX)" filename="%VVVV%\packs\InstanceNoodles\nodes\modules\DX11.TextureFX\BuildTextureArray (DX11.TextureFX)\BuildTextureArray (DX11.TextureFX).v4p" nodename="BuildTextureArray (DX11.TextureFX)" componentmode="Hidden" id="136">
    <BOUNDS type="Node" left="1200" top="7905" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Target Format" slicecount="1" values="R32G32_Float">
    </PIN>
    <PIN pinname="Texture Array Out" visible="1">
+   </PIN>
+   <PIN pinname="Mips" slicecount="1" values="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="73" srcpinname="Texture Out" dstnodeid="136" dstpinname="Texture">
@@ -734,24 +732,26 @@
    </NODE>
    <LINK srcnodeid="69" srcpinname="Y Output Value" dstnodeid="142" dstpinname="Y Input Value">
    </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="143">
-   <BOUNDS type="Box" left="10440" top="900" width="795" height="720">
+   <LINK srcnodeid="69" srcpinname="Y Output Value" dstnodeid="79" dstpinname="lightPosXYZ">
+   </LINK>
+   <LINK srcnodeid="72" srcpinname="Texture Slices Out" dstnodeid="73" dstpinname="Texture In">
+   </LINK>
+   <NODE systemname="Sampler (DX11)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sampler (DX11)" componentmode="Hidden" id="143">
+   <BOUNDS type="Node" left="7755" top="7200" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Node" left="10440" top="900" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
+   <PIN pinname="Sampler" visible="1">
    </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="3">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="3">
-   </PIN>
-   <PIN pinname="X Input Value" slicecount="3" values="0,0,0">
+   <PIN pinname="Mode" slicecount="1" visible="1" values="LinearClamp">
    </PIN>
    </NODE>
-   <LINK srcnodeid="69" srcpinname="Y Output Value" dstnodeid="79" dstpinname="lightPosXYZ">
+   <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="144">
+   <BOUNDS type="Box" left="7755" top="6645" width="1590" height="270">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7755" top="6645" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="LinearWrap">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="144" srcpinname="Output Enum" dstnodeid="143" dstpinname="Mode">
    </LINK>
    </PATCH>

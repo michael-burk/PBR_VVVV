@@ -833,7 +833,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				bool shadowed = false;
 			
 				lightCounter+=6;
-				float4 shadow = 1;
+				float4 shadow = 0;
 				
 				if(useShadow[i]){
 						
@@ -854,12 +854,12 @@ float4 PS_Superphong(vs2ps In): SV_Target
 //
 //							if ( (shadowMapDepth) < viewPosition.z ) shadowed = true;
 		
-							shadow -= min(shadow, calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+							shadow += calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6);
 //							shadow = calcShadowVSM(lightDist,projectTexCoord,8);
 							
-//							shadow = calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6);
+//							shadow *= calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6);
 //							saturate(shadow);
-//							newCol *= (calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+							//newCol *= (calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
 						//	newCol = 1;
 						} 
 						
@@ -878,7 +878,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		  		newCol += PhongPoint(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 						  			 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-									 lightRange[i%numLighRange]).rgb * saturate(shadow);
+									 lightRange[i%numLighRange]).rgb * shadow;
 				//newCol = shadow;
 				
 			break;

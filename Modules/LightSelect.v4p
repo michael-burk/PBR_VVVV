@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="720" scrolly="2220">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="1410" scrolly="3690">
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (Spreads)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="8710" top="3410" width="1520" height="270">
    </BOUNDS>
@@ -853,7 +853,7 @@
    <LINK srcnodeid="57" srcpinname="Output" dstnodeid="58" dstpinname="Input">
    </LINK>
    <NODE systemname="Select (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Select (Value)" componentmode="Hidden" id="56">
-   <BOUNDS type="Node" left="10740" top="9810" width="100" height="100">
+   <BOUNDS type="Node" left="10725" top="9645" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Select" visible="1" slicecount="1" values="0">
    </PIN>
@@ -877,7 +877,7 @@
    <LINK srcnodeid="56" srcpinname="Former Slice" dstnodeid="55" dstpinname="Index">
    </LINK>
    <NODE systemname="GetSlice (Spreads)" nodename="GetSlice (Spreads)" componentmode="Hidden" id="54">
-   <BOUNDS type="Node" left="10605" top="10725" width="100" height="100">
+   <BOUNDS type="Node" left="10575" top="10650" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input" visible="1">
    </PIN>
@@ -939,7 +939,7 @@
    <LINK srcnodeid="59" srcpinname="Output" dstnodeid="61" dstpinname="Y Input Value">
    </LINK>
    <NODE systemname="Multiply (Value)" nodename="Multiply (Value)" componentmode="Hidden" id="62">
-   <BOUNDS type="Node" left="10005" top="10680" width="100" height="100">
+   <BOUNDS type="Node" left="10065" top="10845" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input 1" visible="1">
    </PIN>
