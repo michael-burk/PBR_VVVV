@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="6390" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="-105" top="0" width="14610" height="15855">
+   <PATCH nodename="C:\Projects\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="3135" scrolly="0" bgcolor="15329769">
+   <BOUNDS type="Window" left="0" top="0" width="14505" height="15855">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -151,7 +151,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="3390" top="4320">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="|..\..\..\ThreeD Scans\Dragon.fbx|">
+   <PIN pinname="Filename" slicecount="1" values="Assets\Dragon.fbx">
    </PIN>
    <PIN pinname="Scene" visible="1">
    </PIN>
@@ -201,7 +201,7 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
-   <PIN pinname="Texture SizeXY" slicecount="2" values="1024,1024">
+   <PIN pinname="Texture SizeXY" slicecount="2" values="2048,2048">
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
@@ -391,7 +391,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5820" top="450" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="4" visible="1" values="-0.21,-0.15,-0.15,0.22">
+   <PIN pinname="Y Input Value" slicecount="4" visible="1" values="-0.21,-0.15,-0.15,0.3">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -811,7 +811,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6825" top="645" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="4" visible="1" values="0,0,0,0.16">
+   <PIN pinname="Y Input Value" slicecount="4" visible="1" values="0,0,0,0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -831,7 +831,7 @@
    </BOUNDS>
    <PIN pinname="Time Mode" slicecount="1" values="Filtered">
    </PIN>
-   <PIN pinname="Maximum Foreground FPS" slicecount="1" values="60">
+   <PIN pinname="Maximum Foreground FPS" slicecount="1" values="300">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1134">
@@ -839,7 +839,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8970" top="450" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="4" visible="1" values="0,0,0,-1.47">
+   <PIN pinname="Y Input Value" slicecount="4" visible="1" values="0,0,0,-2.37">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -899,7 +899,7 @@
    </BOUNDS>
    <PIN pinname="XYZW" visible="1">
    </PIN>
-   <PIN pinname="W" visible="1" slicecount="1" values="-3.86">
+   <PIN pinname="W" visible="1" slicecount="1" values="-3.91">
    </PIN>
    <PIN pinname="Z" slicecount="1" values="0">
    </PIN>
@@ -966,8 +966,6 @@
    </NODE>
    <LINK srcnodeid="1151" srcpinname="Y Output Value" dstnodeid="934" dstpinname="shadowLightness">
    </LINK>
-   <LINK srcnodeid="67" srcpinname="Output" dstnodeid="1104" dstpinname="Input 2">
-   </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1155">
    <BOUNDS type="Node" left="14580" top="1680" width="1230" height="270">
    </BOUNDS>
@@ -987,7 +985,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="16050" top="7110" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.3">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1036,8 +1034,6 @@
    </LINK>
    <LINK srcnodeid="1140" srcpinname="Y Output Value" dstnodeid="1126" dstpinname="Resolution Y">
    </LINK>
-   <LINK srcnodeid="1126" srcpinname="Geometry Out" dstnodeid="1104" dstpinname="Input 3">
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1158">
    <BOUNDS type="Box" left="13560" top="5610" width="795" height="240">
    </BOUNDS>
@@ -1075,7 +1071,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="1800" top="150" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="-105" top="0" width="14610" height="15855">
+   <BOUNDS type="Window" left="0" top="0" width="14505" height="15855">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -1243,5 +1239,9 @@
    </LINKPOINT>
    <LINKPOINT x="7725" y="4875">
    </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="67" srcpinname="Output" dstnodeid="1104" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="1126" srcpinname="Geometry Out" dstnodeid="1104" dstpinname="Input 3">
    </LINK>
    </PATCH>

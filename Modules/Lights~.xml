@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="6900" scrolly="7155" bgcolor="15921906">
+   <PATCH nodename="C:\Projects\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="8100" scrolly="465" bgcolor="15921906">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="22860" top="16140" width="100" height="100">
    </BOUNDS>
@@ -291,7 +291,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="5" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.20668,0.20668,0.20668,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="5" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.30995,0.00000,0.32197,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)">
@@ -478,7 +478,7 @@
    <LINKPOINT x="21255" y="16493">
    </LINKPOINT>
    </LINK>
-   <BOUNDS type="Window" left="-105" top="0" width="14610" height="15855">
+   <BOUNDS type="Window" left="0" top="0" width="14505" height="15855">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -807,7 +807,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="13185" top="15420" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="512,512">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="256,256">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1151,18 +1151,6 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="66" srcpinname="Texture Out" dstnodeid="70" dstpinname="Control">
-   </LINK>
-   <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="209">
-   <BOUNDS type="Node" left="8835" top="1665" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Y" slicecount="1" visible="1" values="1">
-   </PIN>
-   <PIN pinname="X" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Z" slicecount="1" values="0">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="209" srcpinname="XYZ" dstnodeid="25" dstpinname="XYZ UnTransformed">
    </LINK>
    <NODE systemname="Select (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="SELECT (VALUE)" componentmode="Hidden" id="210">
    <BOUNDS type="Node" left="8760" top="13440" width="100" height="100">
@@ -1681,7 +1669,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="5" values="|0.24836,0.24836,0.24836,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="5" values="|0.30190,0.18193,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="299" srcpinname="Color Output" dstnodeid="297" dstpinname="Data" linkstyle="Bezier">
@@ -1691,21 +1679,21 @@
    </LINKPOINT>
    </LINK>
    <NODE nodename="IOBOX (COLOR)" componentmode="InABox" id="300" systemname="IOBox (Color)">
-   <BOUNDS type="Box" left="20220" top="12795" width="960" height="2505">
+   <BOUNDS type="Box" left="22425" top="12450" width="960" height="2505">
    </BOUNDS>
-   <BOUNDS type="Node" left="20220" top="12795" width="0" height="0">
+   <BOUNDS type="Node" left="22425" top="12450" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Rows" slicecount="1" values="6">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="5" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="5" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="300" srcpinname="Color Output" dstnodeid="14" dstpinname="Data" linkstyle="Bezier">
-   <LINKPOINT x="20280" y="15705">
+   <LINKPOINT x="21750" y="15475">
    </LINKPOINT>
-   <LINKPOINT x="21210" y="15705">
+   <LINKPOINT x="21945" y="15590">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="MULTIPLY (COLOR)" componentmode="Hidden" id="301">
@@ -1883,6 +1871,8 @@
    </PIN>
    <PIN pinname="Z" visible="1" slicecount="3" values="0.1,0,0.1">
    </PIN>
+   <PIN pinname="Y" slicecount="1" values="-0.01">
+   </PIN>
    </NODE>
    <LINK srcnodeid="318" srcpinname="Transform Out" dstnodeid="25" dstpinname="Transform" linkstyle="Bezier">
    <LINKPOINT x="7755" y="2143">
@@ -1957,7 +1947,7 @@
    </PIN>
    <PIN pinname="Depth Out CubeMap" visible="1">
    </PIN>
-   <PIN pinname="lightPosXYZ" visible="1">
+   <PIN pinname="lightPosXYZ" visible="1" slicecount="3" values="-0.46,0.54,0.56">
    </PIN>
    <PIN pinname="nearFarPlaneXY" visible="1">
    </PIN>
@@ -2083,11 +2073,11 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="339">
    <BOUNDS type="Node" left="12435" top="3015" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="0.75">
+   <PIN pinname="Y" slicecount="1" values="0.88">
    </PIN>
-   <PIN pinname="X" slicecount="1" values="-0.56">
+   <PIN pinname="X" slicecount="1" values="-0.18">
    </PIN>
-   <PIN pinname="Z" slicecount="1" values="-0.5">
+   <PIN pinname="Z" slicecount="1" values="0.78">
    </PIN>
    <PIN pinname="XYZ" visible="1">
    </PIN>
@@ -2145,6 +2135,18 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="234" srcpinname="LightType" dstnodeid="341" dstpinname="Y Input Value">
+   </LINK>
+   <NODE id="209" systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden">
+   <PIN pinname="X" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Y" slicecount="1" visible="1" values="0.9">
+   </PIN>
+   <BOUNDS type="Node" left="8835" top="1665" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Z" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="209" srcpinname="XYZ" dstnodeid="25" dstpinname="XYZ UnTransformed">
    </LINK>
    <LINK srcnodeid="339" srcpinname="XYZ" dstnodeid="80" dstpinname="lightPosXYZ">
    <LINKPOINT x="12990" y="13875">

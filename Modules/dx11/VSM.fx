@@ -54,7 +54,7 @@ float4 PS(psInput input): SV_Target
 	float dist = (worldSpaceDistance - nearFarPlane.x) /
               (nearFarPlane.y - nearFarPlane.x) + depthOffset;
 
-	col.r = clamp(dist, 0, 1);
+	col.r = saturate(dist);
 	col.g = col.r * col.r;
 
     return col;
