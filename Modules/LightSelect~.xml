@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="1770" scrolly="2010">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="1515" scrolly="1320">
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (Spreads)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="8710" top="3410" width="1520" height="270">
    </BOUNDS>
@@ -475,10 +475,12 @@
    <NODE id="28" systemname="IOBox (Value Advanced)" componentmode="InABox" nodename="IOBox (Value Advanced)">
    <PIN pinname="Descriptive Name" slicecount="1" values="LightType">
    </PIN>
-   <BOUNDS type="Box" left="8710" top="4355" width="750" height="240">
+   <BOUNDS type="Box" left="10270" top="5345" width="750" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="8710" top="4355" width="750" height="240">
+   <BOUNDS type="Node" left="10270" top="5345" width="750" height="240">
    </BOUNDS>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="0" srcpinname="Output" dstnodeid="28" dstpinname="Y Input Value">
    </LINK>
@@ -534,7 +536,7 @@
    </NODE>
    <LINK srcnodeid="7" srcpinname="Output" dstnodeid="29" dstpinname="Y Input Value">
    </LINK>
-   <BOUNDS type="Window" left="660" top="1110" width="14550" height="11865">
+   <BOUNDS type="Window" left="690" top="2280" width="14550" height="11865">
    </BOUNDS>
    <PACK Name="vvvv-Message" Version="2.9.0">
    </PACK>
@@ -815,7 +817,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10110" top="7860" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="1,1,6">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="3,3,3">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -853,7 +855,7 @@
    <LINK srcnodeid="57" srcpinname="Output" dstnodeid="58" dstpinname="Input">
    </LINK>
    <NODE systemname="Select (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Select (Value)" componentmode="Hidden" id="56">
-   <BOUNDS type="Node" left="10740" top="9810" width="100" height="100">
+   <BOUNDS type="Node" left="10725" top="9645" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Select" visible="1" slicecount="1" values="0">
    </PIN>
@@ -877,7 +879,7 @@
    <LINK srcnodeid="56" srcpinname="Former Slice" dstnodeid="55" dstpinname="Index">
    </LINK>
    <NODE systemname="GetSlice (Spreads)" nodename="GetSlice (Spreads)" componentmode="Hidden" id="54">
-   <BOUNDS type="Node" left="10605" top="10725" width="100" height="100">
+   <BOUNDS type="Node" left="10575" top="10650" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input" visible="1">
    </PIN>
@@ -938,32 +940,70 @@
    </NODE>
    <LINK srcnodeid="59" srcpinname="Output" dstnodeid="61" dstpinname="Y Input Value">
    </LINK>
-   <NODE systemname="Multiply (Value)" nodename="Multiply (Value)" componentmode="Hidden" id="62">
-   <BOUNDS type="Node" left="10065" top="10845" width="100" height="100">
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="64">
+   <BOUNDS type="Box" left="13455" top="9060" width="795" height="960">
    </BOUNDS>
-   <PIN pinname="Input 1" visible="1">
+   <BOUNDS type="Node" left="13455" top="9060" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Input 2" slicecount="1" values="3">
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="5">
+   </PIN>
+   <PIN pinname="Y Input Value" slicecount="4" values="0,,," visible="1">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="|0, 0, 0, 1|">
+   </PIN>
+   <PIN pinname="Pages" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|LightType - ShadowSelection|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="55" srcpinname="Output" dstnodeid="59" dstpinname="Offset">
+   </LINK>
+   <LINK srcnodeid="54" srcpinname="Output" dstnodeid="59" dstpinname="Count">
+   </LINK>
+   <NODE systemname="Select (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Select (Value)" componentmode="Hidden" id="66">
+   <BOUNDS type="Node" left="13440" top="8565" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Select" visible="1">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="55" srcpinname="Output" dstnodeid="62" dstpinname="Input 1">
+   <LINK srcnodeid="0" srcpinname="Output" dstnodeid="66" dstpinname="Input">
    </LINK>
-   <NODE systemname="Multiply (Value)" nodename="Multiply (Value)" componentmode="Hidden" id="63">
-   <BOUNDS type="Node" left="10560" top="11070" width="100" height="100">
+   <LINK srcnodeid="42" srcpinname="Y Output Value" dstnodeid="66" dstpinname="Select">
+   </LINK>
+   <LINK srcnodeid="66" srcpinname="Output" dstnodeid="64" dstpinname="Y Input Value" linkstyle="PolyLine">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="67">
+   <BOUNDS type="Box" left="13590" top="4995" width="795" height="960">
    </BOUNDS>
-   <PIN pinname="Input 1" visible="1" slicecount="1" values="1">
+   <BOUNDS type="Node" left="13590" top="4995" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Input 2" slicecount="1" values="3">
+   <PIN pinname="Precision" slicecount="1" values="4">
    </PIN>
-   <PIN pinname="Output" visible="1">
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="6">
+   </PIN>
+   <PIN pinname="Y Input Value" slicecount="4" values="0,,,">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="|0, 0, 0, 1|">
    </PIN>
    </NODE>
-   <LINK srcnodeid="54" srcpinname="Output" dstnodeid="63" dstpinname="Input 1">
-   </LINK>
-   <LINK srcnodeid="62" srcpinname="Output" dstnodeid="59" dstpinname="Offset">
-   </LINK>
-   <LINK srcnodeid="63" srcpinname="Output" dstnodeid="59" dstpinname="Count">
+   <LINK srcnodeid="28" srcpinname="Y Output Value" dstnodeid="67" dstpinname="Y Input Value">
    </LINK>
    </PATCH>

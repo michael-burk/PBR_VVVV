@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Projects\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="3135" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="0" top="0" width="14505" height="15855">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="2715" scrolly="0" bgcolor="15329769">
+   <BOUNDS type="Window" left="1335" top="660" width="12540" height="14265">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -17,7 +17,7 @@
    </BOUNDS>
    </NODE>
    <NODE systemname="Sampler (DX11 Advanced)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sampler (DX11 Advanced)" componentmode="Hidden" id="242">
-   <BOUNDS type="Node" left="11655" top="6150" width="100" height="100">
+   <BOUNDS type="Node" left="11610" top="5880" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Sampler" visible="1">
    </PIN>
@@ -25,7 +25,7 @@
    </PIN>
    <PIN pinname="Maximum Anisotropy" slicecount="1" values="16">
    </PIN>
-   <BOUNDS type="Box" left="11655" top="6150">
+   <BOUNDS type="Box" left="11610" top="5880">
    </BOUNDS>
    <PIN pinname="Address U" visible="1" slicecount="1" values="Clamp">
    </PIN>
@@ -117,7 +117,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="20">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="19.16">
    </PIN>
    </NODE>
    <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="406" dstpinname="Data" linkstyle="Bezier">
@@ -201,7 +201,7 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
-   <PIN pinname="Texture SizeXY" slicecount="2" values="2048,2048">
+   <PIN pinname="Texture SizeXY" slicecount="2" values="1024,1024">
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
@@ -827,11 +827,13 @@
    <LINK srcnodeid="1128" srcpinname="Y Output Value" dstnodeid="1106" dstpinname="Z">
    </LINK>
    <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
-   <BOUNDS type="Node" left="8235" top="9720" width="100" height="100">
+   <BOUNDS type="Node" left="8430" top="10515" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Time Mode" slicecount="1" values="Filtered">
    </PIN>
-   <PIN pinname="Maximum Foreground FPS" slicecount="1" values="300">
+   <PIN pinname="Maximum Foreground FPS" slicecount="1" values="25" visible="1">
+   </PIN>
+   <PIN pinname="Maximum Background FPS" visible="1">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1134">
@@ -879,7 +881,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2835" top="5505" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="128">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="512">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -933,9 +935,9 @@
    <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ">
    </LINK>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="1147">
-   <BOUNDS type="Box" left="11775" top="5040" width="1590" height="270">
+   <BOUNDS type="Box" left="11730" top="4770" width="1590" height="270">
    </BOUNDS>
-   <BOUNDS type="Node" left="11775" top="5040" width="0" height="0">
+   <BOUNDS type="Node" left="11730" top="4770" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input Enum" slicecount="1" visible="1" values="Wrap">
    </PIN>
@@ -985,7 +987,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="16050" top="7110" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.16">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1071,7 +1073,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="1800" top="150" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="0" top="0" width="14505" height="15855">
+   <BOUNDS type="Window" left="1335" top="660" width="12540" height="14265">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -1205,10 +1207,6 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Depth Out" dstnodeid="934" dstpinname="ShadowMap" linkstyle="Bezier">
-   <LINKPOINT x="8310" y="4883">
-   </LINKPOINT>
-   <LINKPOINT x="11385" y="4883">
-   </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="SpotLightDirection" dstnodeid="934" dstpinname="SpotLight Direction" linkstyle="Bezier">
    <LINKPOINT x="7950" y="4875">
@@ -1243,5 +1241,25 @@
    <LINK srcnodeid="67" srcpinname="Output" dstnodeid="1104" dstpinname="Input 2">
    </LINK>
    <LINK srcnodeid="1126" srcpinname="Geometry Out" dstnodeid="1104" dstpinname="Input 3">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1160">
+   <BOUNDS type="Box" left="8370" top="9945" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="8370" top="9945" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="25">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1160" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Foreground FPS">
+   </LINK>
+   <LINK srcnodeid="1160" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Background FPS">
    </LINK>
    </PATCH>
