@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightTransform.v4p" locked="0" scrollx="0" scrolly="0">
-   <BOUNDS height="13065" left="8220" top="1020" type="Window" width="16785">
+   <BOUNDS height="14115" left="9855" top="960" type="Window" width="18570">
    </BOUNDS>
    <INFO author="vvvv group" description="move your camera with keyboard and mouse like in the 3d modeller &quot;Softimage&quot;" tags="3d, perspective, modelling, tool">
    </INFO>
@@ -55,7 +55,7 @@
    </BOUNDS>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" values="0.23">
+   <PIN pinname="Y Input Value" slicecount="1" values="0.16">
    </PIN>
    <PIN pinname="Minimum" slicecount="1" values="-0.09">
    </PIN>
@@ -380,8 +380,6 @@
    </NODE>
    <LINK dstnodeid="79" dstpinname="Near Plane" srcnodeid="28" srcpinname="Y Output Value" linkstyle="PolyLine">
    </LINK>
-   <LINK dstnodeid="77" dstpinname="Z" srcnodeid="65" srcpinname="Output" linkstyle="PolyLine">
-   </LINK>
    <NODE id="26" nodename="Gamma (Value)" systemname="Gamma (Value)">
    <BOUNDS height="0" left="13920" top="3255" type="Node" width="0">
    </BOUNDS>
@@ -663,5 +661,7 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="106" srcpinname="XYZ" dstnodeid="110" dstpinname="Y Input Value">
+   </LINK>
+   <LINK srcnodeid="65" srcpinname="Output" dstnodeid="77" dstpinname="Z">
    </LINK>
    </PATCH>

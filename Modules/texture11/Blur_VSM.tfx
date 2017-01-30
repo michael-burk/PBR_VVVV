@@ -18,28 +18,13 @@ cbuffer controls:register(b0){
 SamplerState s0 <bool visible=true;string uiname="Sampler";> {Filter=MIN_MAG_MIP_LINEAR;AddressU=CLAMP;AddressV=CLAMP;};
 
 float4 doBlur(float4 c, float2 x,float2 off, float lod){
-	float2 XY;
+	
 	c+=tex0.SampleLevel(s0,x+float2( 0, 0)*off,lod);
 	c+=tex0.SampleLevel(s0,x+float2( 1, 1)*off,lod);
 	c+=tex0.SampleLevel(s0,x+float2( 1,-1)*off,lod);
 	c+=tex0.SampleLevel(s0,x+float2(-1,-1)*off,lod);
 	c+=tex0.SampleLevel(s0,x+float2(-1, 1)*off,lod);
 	off*=1.86;
-
-//	XY = x + float2( 0, 1)*off;
-////	if(XY.x >= texSize[0].x){
-//	if(XY.y > 1){
-//		c+=texArray.SampleLevel(s0,float3(1-XY,0),lod);
-//	}else{
-//		c+=tex0.SampleLevel(s0,XY,lod);
-//	}
-//	
-//	XY = x + float2( 0, -1)*off;
-//	if(XY.y*256 < 0){
-//		c+=texArray.SampleLevel(s0,float3(XY,4),lod);
-//	}else{
-//		c+=tex0.SampleLevel(s0,XY,lod);
-//	}
 
 	c+=tex0.SampleLevel(s0,x+float2( 0,1)*off,lod);
 	c+=tex0.SampleLevel(s0,x+float2( 0,-1)*off,lod);

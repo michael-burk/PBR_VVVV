@@ -2,11 +2,6 @@
 //@help: internet
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
-	float SceneScale = .01;
-	float LightSize = 1.5;
- 	static	float PCFSamples = 9;	// reduce this for higher performance
- 	static	float shadowsearchSamples = 12;   // how many samples to use for blocker search
-	float shadowLightness = 0;
 
 cbuffer cbPerRender : register( b0 )
 {
@@ -43,10 +38,10 @@ cbuffer cbPerObject : register (b1)
 	//int reflectMode <bool visible=false;string uiname="ReflectionMode: Mul/Add"; int uimin=0.0; int uimax=1.0;> = 1;
 	int diffuseMode <bool visible=false;string uiname="DiffuseAffect: Reflection/Specular/Both"; int uimin=0.0; int uimax=2.0;> = 2;
 	
-	float shadowMapBias = .2;
 	
 	StructuredBuffer <float4x4> texTransforms <string uiname="tColor,tSpec,tDiffuse,tNormal";>;
-	StructuredBuffer <float4x4> LightVP <string uiname="LightView";>;
+	StructuredBuffer <float4x4> LightVP <string uiname="LightViewProjection";>;
+	StructuredBuffer <float4x4> LightV <string uiname="LightView";>;
 	StructuredBuffer <float4x4> LightP <string uiname="LightProjection";>;
 	StructuredBuffer <float> lightRange <string uiname="LightRange";>;
 	StructuredBuffer <int> lightType <string uiname="Directional/Spot/Point";>;	
@@ -235,11 +230,9 @@ vs2ps VS(
 //}
 
 
-float minVariance;
+static const float minVariance = 0;
 float lightBleedingLimit;
 float2	nearFarPlane;
-float depthMultiplier;
-float epsilon;
 
 float reduceLightBleeding(float p_max, float amount)
 {
@@ -262,7 +255,7 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
     float M12 = M1 * M1;
 
     float p = 0.0;
-    float lightIntensity = 1.0;
+    float lightIntensity = 1;
     if(currentDistanceToLight >= M1)
     {
         // standard deviation
@@ -290,36 +283,6 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
 	
 }
 
-float4 calcShadowESM(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
-	  /////////////////////////////////////////////////
-
-    // current distance to light
-        float currentDistanceToLight = clamp((worldSpaceDistance - nearFarPlane.x) 
-        / (nearFarPlane.y - nearFarPlane.x), 0, 1);
-
-
-    /////////////////////////////////////////////////
-
-    // get blured exp of depth
-   // float3 projectedCoords = o_shadowCoord.xyz / o_shadowCoord.w;
-//    float depthCExpBlured = texture(u_textureShadowMap, projectedCoords.xy).r;
-	float depthCExpBlured = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).r;
-    // current exp of depth
-    float depthCExpActual = exp(- (depthMultiplier * currentDistanceToLight));
-    float expFactor = depthCExpBlured * depthCExpActual;
-
-    // Threshold classification for high frequency artifacts
-    if(expFactor > 1.0 + epsilon)
-    {
-        expFactor = 1.0;
-    }
-
-    /////////////////////////////////////////////////
-
-    float4 resultingColor = float4(expFactor,expFactor,expFactor,1);
-    
-	return expFactor;
-}
 float4 PS_SuperphongBump(vs2ps In): SV_Target
 {	
 	// wavelength colors
@@ -735,7 +698,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	int pL = 0;
 	int shadowCounter = 0;
 	int lightCounter = 0;
-	
+
 	for(int i = 0; i< numLights; i++){
 		
 		
@@ -835,47 +798,61 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				float pZ;
 				LightDirW = normalize(lightToObject);
 				LightDirV = mul(LightDirW, tV);
-			
+				
+		
+				
 				if(useShadow[i]){
 						
 					shadowCounter+=6;
 					for(int p = 0; p < 6; p++){
-
-						viewPosition = mul(float4(In.PosW,1), LightVP[p + lightCounter-6]);
+						
+						float4x4 LightPcropp = LightP[p + lightCounter-6];
 				
+						
+						LightPcropp._m00 = 1;
+						LightPcropp._m11 = 1;
+						
+						
+						float4x4 LightVPNew = mul(LightV[p + lightCounter-6],LightPcropp);
+						
+						viewPosition = mul(float4(In.PosW,1), LightVPNew);
+						
+						
 						projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
-						
 						projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 					
 						if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 						&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
+							
+						viewPosition = mul(float4(In.PosW,1), LightVP[p + lightCounter-6]);
 
+						projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+						projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
+						
 							shadow += (calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
 
 						} 
-					
 					}
-				
-
-					
-					ambient += saturate(lAmbient[i%numlAmb]*falloff);
+		
+					ambient += (lAmbient[i%numlAmb]*falloff);
 		  			newCol += PhongPoint(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 						  			 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
 									 lightRange[i%numLighRange]).rgb * saturate(shadow);
-					
+			
 				} else {
-					ambient += saturate(lAmbient[i%numlAmb]*falloff);
+					ambient += (lAmbient[i%numlAmb]*falloff);
 		  			newCol += PhongPoint(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 						  			 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
 									 lightRange[i%numLighRange]).rgb;
 
-				}
+				}	
 			
-			
-					newCol /=2;
+				newCol /=2;
+				ambient /=2;
 			break;
 			
 		}
