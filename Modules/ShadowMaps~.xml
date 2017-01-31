@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0">
+   <PATCH nodename="C:\Projects\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="15">
    <BOUNDS type="Window" left="2730" top="3060" width="10845" height="12105">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -29,7 +29,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6480" top="180" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Input Enum" slicecount="1" visible="1" values="BackCullSimple">
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="NoCullSimple">
    </PIN>
    </NODE>
    <LINK srcnodeid="12" srcpinname="Output Enum" dstnodeid="4" dstpinname="Mode" linkstyle="Bezier">
@@ -339,9 +339,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="146">
-   <BOUNDS type="Box" left="3360" top="7185" width="1590" height="270">
+   <BOUNDS type="Box" left="2295" top="7680" width="1590" height="270">
    </BOUNDS>
-   <BOUNDS type="Node" left="3360" top="7185" width="0" height="0">
+   <BOUNDS type="Node" left="2295" top="7680" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input Enum" slicecount="1" visible="1" values="Border">
    </PIN>
@@ -489,7 +489,7 @@
    <LINK srcnodeid="136" srcpinname="Texture Array Out" dstnodeid="30" dstpinname="Input Node">
    </LINK>
    <NODE systemname="Sampler (DX11 Advanced)" nodename="Sampler (DX11 Advanced)" componentmode="Hidden" id="165" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll">
-   <BOUNDS type="Node" left="3210" top="7620" width="1500" height="270">
+   <BOUNDS type="Node" left="2145" top="8115" width="1500" height="270">
    </BOUNDS>
    <PIN pinname="Filter Mode" slicecount="1" visible="1" values="MinMagMipLinear">
    </PIN>
@@ -505,21 +505,21 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="146" srcpinname="Output Enum" dstnodeid="165" dstpinname="Address U" linkstyle="Bezier">
-   <LINKPOINT x="3360" y="7563">
+   <LINKPOINT x="2295" y="8058">
    </LINKPOINT>
-   <LINKPOINT x="3240" y="7513">
+   <LINKPOINT x="2175" y="8008">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="146" srcpinname="Output Enum" dstnodeid="165" dstpinname="Address V" linkstyle="Bezier">
-   <LINKPOINT x="3390" y="7555">
+   <LINKPOINT x="2325" y="8050">
    </LINKPOINT>
-   <LINKPOINT x="3390" y="7505">
+   <LINKPOINT x="2325" y="8000">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="146" srcpinname="Output Enum" dstnodeid="165" dstpinname="Address W" linkstyle="Bezier">
-   <LINKPOINT x="3405" y="7563">
+   <LINKPOINT x="2340" y="8058">
    </LINKPOINT>
-   <LINKPOINT x="3540" y="7513">
+   <LINKPOINT x="2475" y="8008">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="10" srcpinname="Output Node" dstnodeid="72" dstpinname="View" linkstyle="Bezier">
@@ -547,7 +547,7 @@
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="Width" slicecount="1" visible="1" values="0.2">
+   <PIN pinname="Width" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Technique" slicecount="1" values="ThreePass">
    </PIN>

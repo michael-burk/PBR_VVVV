@@ -1144,8 +1144,16 @@
    </NODE>
    <LINK srcnodeid="73" srcpinname="Output" dstnodeid="75" dstpinname="Input Node">
    </LINK>
-   <LINK srcnodeid="19" srcpinname="Output" dstnodeid="17" dstpinname="Count">
+   <LINK srcnodeid="19" srcpinname="Output" dstnodeid="17" dstpinname="Count" linkstyle="Bezier">
+   <LINKPOINT x="10620" y="3908">
+   </LINKPOINT>
+   <LINKPOINT x="6465" y="3908">
+   </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="19" srcpinname="Output" dstnodeid="70" dstpinname="Count">
+   <LINK srcnodeid="19" srcpinname="Output" dstnodeid="70" dstpinname="Count" linkstyle="Bezier">
+   <LINKPOINT x="10620" y="3915">
+   </LINKPOINT>
+   <LINKPOINT x="3600" y="3915">
+   </LINKPOINT>
    </LINK>
    </PATCH>
