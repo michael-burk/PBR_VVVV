@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Projects\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="9645" scrolly="5595" bgcolor="15132390">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="8700" scrolly="5595" bgcolor="15132390">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="22860" top="16140" width="100" height="100">
    </BOUNDS>
@@ -221,7 +221,7 @@
    </PIN>
    <PIN pinname="Lightness" slicecount="1" values="0.1">
    </PIN>
-   <PIN pinname="Saturation" slicecount="1" values="1">
+   <PIN pinname="Saturation" slicecount="1" values="0.49">
    </PIN>
    </NODE>
    <NODE systemname="LinearSpread (Spreads)" nodename="LINEARSPREAD (SPREADS)" componentmode="Hidden" id="42">
@@ -231,11 +231,11 @@
    </PIN>
    <PIN pinname="Spread Count" slicecount="1" visible="1" values="5">
    </PIN>
-   <PIN pinname="Width" slicecount="1" values="1">
+   <PIN pinname="Width" slicecount="1" values="0.2">
    </PIN>
    <PIN pinname="Phase" slicecount="1" values="0.25">
    </PIN>
-   <PIN pinname="Input" slicecount="1" values="0">
+   <PIN pinname="Input" slicecount="1" values="-1.07">
    </PIN>
    </NODE>
    <NODE nodename="IOBOX (COLOR)" componentmode="InABox" id="45" systemname="IOBox (Color)">
@@ -1431,7 +1431,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="5" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="3" values="|0.00000,0.00000,0.00000,1.00000|,|0.14900,0.05100,0.06276,1.00000|,|0.14900,0.05100,0.14116,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="299" srcpinname="Color Output" dstnodeid="297" dstpinname="Data" linkstyle="Bezier">
@@ -2148,8 +2148,8 @@
    </LINK>
    <LINK srcnodeid="41" srcpinname="Output" dstnodeid="45" dstpinname="Color Input">
    </LINK>
-   <LINK srcnodeid="301" srcpinname="Output" dstnodeid="299" dstpinname="Color Input">
-   </LINK>
    <LINK srcnodeid="302" srcpinname="Output" dstnodeid="300" dstpinname="Color Input">
+   </LINK>
+   <LINK srcnodeid="301" srcpinname="Output" dstnodeid="299" dstpinname="Color Input">
    </LINK>
    </PATCH>
