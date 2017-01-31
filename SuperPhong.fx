@@ -706,8 +706,12 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		float lightDist = length(lightToObject);
 		float falloff = lightRange[i%numLighRange]-length(lightToObject);
 		float projectTexCoordZ;
+//		LightDirV = mul(LightDirW, tV);
+		LightDirW = normalize(lightToObject);
+		LightDirV = mul(LightDirW, tV);
 		
 		switch (lightType[i]){
+			
 			case 0:
 			
 				lightCounter ++;
@@ -720,35 +724,24 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+					projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 		
-					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)){							
-			
-					//		float shadowMapDepth = shadowMap.Sample(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0 ).x;
-//			
-//						shadowMapDepth += shadowMapBias + 0.001;
-//					
-//						if ( (shadowMapDepth) < viewPosition.z){
-//							ambient += lAmbient[i%numlAmb];
-//							break;
-//						} 
-
-							LightDirV = mul(normalize(lightToObject), tV);
-							newCol += PhongDirectional(In.PosO, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
-
-							newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);					
-					} 
-					else {
-						LightDirV = mul(normalize(lightToObject), tV);
+					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
+					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
+						newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+						newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);					
+//						newCol = calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);	
+					} else {
 						newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 					}
 				} else {
-					LightDirV = mul(normalize(lightToObject), tV);
 					newCol += PhongDirectional(NormV, In.ViewDirV, LightDirV, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
 				}
 				ambient += saturate(lAmbient[i%numlAmb]);
-			
+				
 				break;
 	
+			
 			case 1:
 				
 				lightCounter ++;
@@ -766,18 +759,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					
-					
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
 					projectionColor *= saturate(1/(viewPosition.z*spotFade));
 					
-
-					LightDirW = normalize(lightToObject);
-					LightDirV = mul(LightDirW, tV);
 					if(useShadow[i]){
-
-						projectionColor *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
-			
+						projectionColor *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
 					}
+					
 			  		newCol += PhongPointSpot(lightDist, NormV, In.ViewDirV, LightDirV, lPos[i],
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange]).rgb;
@@ -788,16 +776,17 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				
 				break;
 	
+			
 			case 2:
-				
 				
 				bool shadowed = false;
 			
 				lightCounter+=6;
 				float4 shadow = 0;
 				float pZ;
-				LightDirW = normalize(lightToObject);
-				LightDirV = mul(LightDirW, tV);
+			
+//				LightDirW = normalize(lightToObject);
+//				LightDirV = mul(LightDirW, tV);
 				
 		
 				
