@@ -98,7 +98,6 @@ struct vs2ps
 	float4 NormW : TEXCOORD4;
 	float4 NormO : TEXCOORD5;
 
-	
 //  BumpMap
 ///////////////////////////////////////
 	float4 tangent : TEXCOORD6;
@@ -165,10 +164,11 @@ vs2ps VS(
     //inititalize all fields of output struct with 0
     vs2ps Out = (vs2ps)0;
 	
-	Out.PosO = PosO;
     Out.PosW = mul(PosO, tW);
-    Out.NormW = mul(NormO, tWIT);
+	Out.PosO = PosO;
 	Out.NormO = NormO;
+	
+	Out.NormW = mul(NormO, NormalTransform);
 
 //	position (projected)
     Out.PosWVP  = mul(PosO, tWVP);
@@ -256,11 +256,8 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	uint numTexTrans, dummy;
     texTransforms.GetDimensions(numTexTrans, dummy);
 	
-//	uint texColCount, tc;
-//    texture2d.GetDimensions(texColCount, tc);
 	
 	float4 texCol = float4(0,0,0,0);
-//	if(tc > 0) 
 	texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,texTransforms[0%numTexTrans]).xy);
 
 	float4 specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[1%numTexTrans]).xy);
@@ -283,12 +280,11 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	
     float4 bumpNormal = (bumpMap.x * In.tangent) + (bumpMap.y * In.binormal) + (bumpMap.z * In.NormO);
 
+	In.NormO += normalize(-bumpNormal)*bumpy;
 	
-	In.NormO += normalize(bumpNormal)*bumpy;
-	
-	float3 NormV =  normalize(mul(mul(In.NormO, (float4x4)tWIT),(float4x4)tV).xyz);
-	
-    float3 Tn = normalize(In.tangent).xyz;
+	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
+   
+	float3 Tn = normalize(In.tangent).xyz;
     float3 Bn = normalize(In.binormal.xyz);
 	float3 Nb = normalize(Nn.xyz + (bumpMap.x * Tn + bumpMap.y * Bn)*bumpy);
 ///////////////////////////////////////
@@ -304,7 +300,7 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	
 ///////////////////////////////////////
 
-	
+
 	// Box Projected CubeMap
 	////////////////////////////////////////////////////
 	
@@ -456,7 +452,6 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
 						newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);					
-//						newCol = calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);	
 					} else {
 						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
 					}
@@ -510,11 +505,6 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 				lightCounter+=6;
 				float4 shadow = 0;
 				float pZ;
-			
-//				LightDirW = normalize(lightToObject);
-//				LightDirV = mul(LightDirW, tV);
-				
-		
 				
 				if(useShadow[i]){
 						
@@ -584,8 +574,8 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	if(refraction) fresRefl = 1;
 	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
 
-
-    return saturate(newCol) * Color.rgba  * texCol;
+	
+	return (newCol + Color.rgba) * texCol;
 }
 
 
@@ -628,7 +618,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float4 newCol = float4(0,0,0,0);
 	float4 ambient = float4(0,0,0,0);
 
-	float4 Nn = normalize(In.NormW);
+	float3 Nn = normalize(In.NormW.xyz);
 	
 	
 // Reflection and RimLight
@@ -694,7 +684,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float4 reflColorNorm = float4(0,0,0,0);
 	float4 refrColor = float4(0,0,0,0);
 	
-
 		
 		reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
 		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
@@ -792,7 +781,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
 						newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);					
-//						newCol = calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);	
 					} else {
 						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
 					}
@@ -846,11 +834,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				lightCounter+=6;
 				float4 shadow = 0;
 				float pZ;
-			
-//				LightDirW = normalize(lightToObject);
-//				LightDirV = mul(LightDirW, tV);
-				
-		
 				
 				if(useShadow[i]){
 						
@@ -921,7 +904,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
 
 	
-    return newCol * Color.rgba * texCol;
+    return (newCol + Color.rgba) * texCol;
 
 }
 

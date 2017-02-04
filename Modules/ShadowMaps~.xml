@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Projects\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="15">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0">
    <BOUNDS type="Window" left="2730" top="3060" width="10845" height="12105">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -183,11 +183,11 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
-   <PIN pinname="Geometry" visible="1" slicecount="1" values="||">
+   <PIN pinname="Geometry" visible="1" slicecount="8" values=",,,,,,,">
    </PIN>
    <PIN pinname="Render State" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Transform In" visible="1">
+   <PIN pinname="Transform In" visible="1" slicecount="8" values=",,,,,,,">
    </PIN>
    <PIN pinname="depthOffset" slicecount="1" values="0">
    </PIN>
@@ -241,7 +241,7 @@
    <NODE systemname="Select (Node)" filename="%VVVV%\lib\nodes\modules\Node\Select (Node).v4p" nodename="Select (Node)" componentmode="Hidden" id="124">
    <BOUNDS type="Node" left="2055" top="3855" width="735" height="270">
    </BOUNDS>
-   <PIN pinname="Input" visible="1">
+   <PIN pinname="Input" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -547,7 +547,7 @@
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="Width" slicecount="1" visible="1" values="0">
+   <PIN pinname="Width" slicecount="1" visible="1" values="0.2">
    </PIN>
    <PIN pinname="Technique" slicecount="1" values="ThreePass">
    </PIN>

@@ -1,7 +1,7 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Projects\superphong\girlpower\01_ImageBasedLighting.v4p" systemname="01_ImageBasedLighting" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\01_ImageBasedLighting.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\01_ImageBasedLighting.v4p" systemname="01_ImageBasedLighting" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\01_ImageBasedLighting.v4p" scrollx="1125" scrolly="720" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
-   <BOUNDS type="Node" left="3650" top="9610" width="100" height="100">
+   <BOUNDS type="Node" left="3065" top="9715" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Layer In" visible="1" slicecount="1" values="||">
    </PIN>
@@ -10,7 +10,7 @@
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="13500" top="1110" width="14580" height="12540">
+   <BOUNDS type="Window" left="0" top="1980" width="14580" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -31,7 +31,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7090" top="6320" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.5">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -197,7 +197,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="10">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="5">
    </PIN>
    </NODE>
    <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="406" dstpinname="Data">
@@ -269,13 +269,13 @@
    <LINK srcnodeid="877" srcpinname="Texture Out" dstnodeid="878" dstpinname="Texture In" linkstyle="PolyLine">
    </LINK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="882">
-   <BOUNDS type="Node" left="10275" top="6885" width="100" height="100">
+   <BOUNDS type="Node" left="10845" top="6795" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Filename" slicecount="1" values="Assets\stone_normal\Pink_marble_pxr128_normal.tif">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="10275" top="6885">
+   <BOUNDS type="Box" left="10845" top="6795">
    </BOUNDS>
    </NODE>
    <LINK srcnodeid="574" srcpinname="Y Output Value" dstnodeid="473" dstpinname="Translate XYZ">
@@ -397,19 +397,19 @@
    </LINKPOINT>
    </LINK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="1069">
-   <BOUNDS type="Node" left="9735" top="6480" width="100" height="100">
+   <BOUNDS type="Node" left="10230" top="6300" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Filename" slicecount="1" values="Assets\stone_color\Pink_marble_pxr128.tif">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="9735" top="6480">
+   <BOUNDS type="Box" left="10230" top="6300">
    </BOUNDS>
    </NODE>
    <NODE id="1072" systemname="Sampler (DX11 Advanced)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sampler (DX11 Advanced)" componentmode="Hidden">
-   <BOUNDS type="Node" left="11985" top="6660" width="100" height="100">
+   <BOUNDS type="Node" left="11850" top="6465" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="11985" top="6660">
+   <BOUNDS type="Box" left="11850" top="6465">
    </BOUNDS>
    <PIN pinname="Sampler" visible="1">
    </PIN>
@@ -439,7 +439,7 @@
    </PIN>
    <PIN pinname="Contrast" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Brightness" slicecount="1" values="1.5">
+   <PIN pinname="Brightness" slicecount="1" values="2">
    </PIN>
    <PIN pinname="Saturation" slicecount="1" values="2">
    </PIN>
@@ -455,7 +455,7 @@
    <NODE id="1039" systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow">
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="1185" top="1020" width="12240" height="12585">
+   <BOUNDS type="Window" left="15135" top="2250" width="12240" height="12585">
    </BOUNDS>
    <BOUNDS type="Node" left="3780" top="10710" width="100" height="100">
    </BOUNDS>
@@ -463,9 +463,9 @@
    </BOUNDS>
    </NODE>
    <NODE id="539" nodename="IOBox (Value Advanced)" componentmode="InABox" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="5485" top="5550" width="285" height="240">
+   <BOUNDS type="Box" left="6025" top="4650" width="435" height="810">
    </BOUNDS>
-   <BOUNDS type="Node" left="5485" top="5550" width="0" height="0">
+   <BOUNDS type="Node" left="6025" top="4650" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
    </PIN>
@@ -485,9 +485,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="539" srcpinname="Y Output Value" dstnodeid="537" dstpinname="XYZ" linkstyle="Bezier">
-   <LINKPOINT x="5455" y="6723">
+   <LINKPOINT x="5815" y="6123">
    </LINKPOINT>
-   <LINKPOINT x="5855" y="6448">
+   <LINKPOINT x="6035" y="6148">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="539" srcpinname="Y Output Value" dstnodeid="473" dstpinname="Rotate XYZ">
@@ -667,17 +667,25 @@
    </PIN>
    <PIN pinname="g_samLinear" slicecount="1" visible="1" values="||">
    </PIN>
-   <PIN pinname="Technique" slicecount="1" values="Superphong_Bump">
+   <PIN pinname="Technique" slicecount="1" visible="1" values="Superphong_Bump">
    </PIN>
    <PIN pinname="Bumpiness" visible="1">
    </PIN>
-   <PIN pinname="Camera PositionXYZ" visible="1">
+   <PIN pinname="Camera PositionXYZ" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Normal Rotation" visible="1">
+   <PIN pinname="Normal Rotation" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="tColor,tSpec,tDiffuse,tNormal" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="SpotLight DirectionXYZ" visible="-1" pintype="Input" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="SpotLight Fading" visible="-1" pintype="Input" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="ShadowMap" visible="-1" pintype="Input" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Shadow" visible="-1" pintype="Input" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="shadowSampler" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
    </NODE>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In">
@@ -720,21 +728,17 @@
    </LINK>
    <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Bumpiness">
    </LINK>
-   <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
-   </LINK>
    <LINK srcnodeid="406" srcpinname="Buffer" dstnodeid="934" dstpinname="tColor,tSpec,tDiffuse,tNormal">
    </LINK>
    <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="877" dstpinname="Sampler" linkstyle="Bezier">
-   <LINKPOINT x="14730" y="8385">
+   <LINKPOINT x="14640" y="8255">
    </LINKPOINT>
-   <LINKPOINT x="14325" y="2715">
+   <LINKPOINT x="14280" y="2650">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="882" srcpinname="Texture Out" dstnodeid="934" dstpinname="NormalMap">
    </LINK>
    <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1039" dstpinname="Texture In">
-   </LINK>
-   <LINK srcnodeid="1061" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Refl">
    </LINK>
    <NODE systemname="Camera (Transform Orbit Legacy) Instant Position" filename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden" id="1095">
    <BOUNDS type="Node" left="5055" top="9750" width="100" height="100">
@@ -746,12 +750,34 @@
    <PIN pinname="Projection" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1095" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ">
-   </LINK>
    <LINK srcnodeid="1095" srcpinname="View" dstnodeid="928" dstpinname="View">
    </LINK>
    <LINK srcnodeid="1095" srcpinname="Projection" dstnodeid="928" dstpinname="Projection">
    </LINK>
+   <PACK Name="vvvv-Message" Version="2.9.0">
+   </PACK>
+   <PACK Name="vvvv-ZeroMQ" Version="0.5.2">
+   </PACK>
    <LINK srcnodeid="1069" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
+   </LINK>
+   <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="1096">
+   <BOUNDS type="Box" left="12375" top="6900" width="1590" height="270">
+   </BOUNDS>
+   <BOUNDS type="Node" left="12375" top="6900" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="Superphong_Bump">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1096" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique">
+   </LINK>
+   <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
+   </LINK>
+   <LINK srcnodeid="1095" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
+   <LINKPOINT x="7410" y="11565">
+   </LINKPOINT>
+   <LINKPOINT x="7470" y="5880">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1061" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Refl">
    </LINK>
    </PATCH>
