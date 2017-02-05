@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="2880" scrolly="5325">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="2025" scrolly="5445">
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (Spreads)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="12325" top="3260" width="1520" height="270">
    </BOUNDS>
@@ -1162,7 +1162,11 @@
    <LINKPOINT x="18345" y="11138">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="66" srcpinname="Output" dstnodeid="77" dstpinname="Index" linkstyle="PolyLine">
+   <LINK srcnodeid="66" srcpinname="Output" dstnodeid="77" dstpinname="Index" linkstyle="Bezier">
+   <LINKPOINT x="19695" y="10733">
+   </LINKPOINT>
+   <LINKPOINT x="19335" y="10733">
+   </LINKPOINT>
    </LINK>
    <NODE systemname="Select (Value Vector)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Select (Value Vector)" componentmode="Hidden" id="79">
    <BOUNDS type="Node" left="12810" top="12345" width="600" height="270">
