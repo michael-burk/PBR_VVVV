@@ -66,7 +66,8 @@ cbuffer cbPerObject : register (b1)
 	Texture2DArray lightMap <string uiname="SpotTex"; >;
 	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
 	StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
-	
+	StructuredBuffer <float2> nearFarPlane <string uiname="Near Plane / Far Plane"; >;
+	//float2	nearFarPlane;
 
 
 #include "dx11/PhongPoint.fxh"
@@ -184,7 +185,7 @@ vs2ps VS(
 
 static const float minVariance = 0;
 float lightBleedingLimit;
-float2	nearFarPlane;
+//float2	nearFarPlane;
 
 float reduceLightBleeding(float p_max, float amount)
 {
@@ -193,8 +194,8 @@ float reduceLightBleeding(float p_max, float amount)
 
 float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
 	
-	    float currentDistanceToLight = clamp((worldSpaceDistance - nearFarPlane.x) 
-        / (nearFarPlane.y - nearFarPlane.x), 0, 1);
+	    float currentDistanceToLight = clamp((worldSpaceDistance - nearFarPlane[shadowCounter].x) 
+        / (nearFarPlane[shadowCounter].y - nearFarPlane[shadowCounter].x), 0, 1);
 
     /////////////////////////////////////////////////////////
 
