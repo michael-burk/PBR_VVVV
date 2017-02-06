@@ -35,7 +35,6 @@ cbuffer cbPerObject : register (b1)
 	bool BPCM <bool visible=false;> = false; String uiname="Box Projected Cube Map";;
 	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
 	StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
-	//int reflectMode <bool visible=false;string uiname="ReflectionMode: Mul/Add"; int uimin=0.0; int uimax=1.0;> = 1;
 	int diffuseMode <bool visible=false;string uiname="DiffuseAffect: Reflection/Specular/Both"; int uimin=0.0; int uimax=2.0;> = 2;
 	
 	
@@ -67,7 +66,6 @@ cbuffer cbPerObject : register (b1)
 	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
 	StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 	StructuredBuffer <float2> nearFarPlane <string uiname="Near Plane / Far Plane"; >;
-	//float2	nearFarPlane;
 
 
 #include "dx11/PhongPoint.fxh"
@@ -747,25 +745,22 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	uint numLighRange,lightRangeCount;
 	lightRange.GetDimensions(numLighRange,lightRangeCount);
 	
-	
+
 	int pL = 0;
 	int shadowCounter = 0;
 	int lightCounter = 0;
 
 	for(uint i = 0; i< numLights; i++){
-		
-		
 		float4 lightToObject = float4(lPos[i],1) - In.PosW;
 		float lightDist = length(lightToObject);
 		float falloff = lightRange[i%numLighRange]-length(lightToObject);
 		float projectTexCoordZ;
 		LightDirW = normalize(lightToObject);
 		LightDirV = mul(LightDirW, tV);
-		
+
 		switch (lightType[i]){
-			
+		
 			case 0:
-			
 				lightCounter ++;
 
 				if(useShadow[i] == 1){
@@ -789,12 +784,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
 				}
 				ambient += saturate(lAmbient[i%numlAmb]);
-				
+			
 				break;
 	
-			
 			case 1:
-				
+			
 				lightCounter ++;
 				
 				if(useShadow[i]  == 1){
@@ -889,10 +883,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 				newCol  /=2;
 				ambient /=2;
+				
 			break;
 			
 		}
-		
 		
 		
 	}
@@ -904,7 +898,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	if(refraction) fresRefl = 1;
 	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
 
-	
     return (newCol + Color.rgba) * texCol;
 
 }

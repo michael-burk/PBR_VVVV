@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50alpha34.104.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\02_ImageBasedLighting_BPCM.v4p" systemname="011_ImageBasedLighting_BPCM" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\011_ImageBasedLighting_BPCM.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="1880" top="10255" width="100" height="100">
@@ -12,7 +12,7 @@
    </NODE>
    <BOUNDS type="Window" left="13185" top="495" width="15615" height="12600">
    </BOUNDS>
-   <PACK Name="addonpack" Version="34.101.0">
+   <PACK Name="addonpack" Version="35.0.0">
    </PACK>
    <NODE systemname="Transform (Transform 3d Vector)" nodename="Transform (Transform 3d Vector)" componentmode="Hidden" id="473">
    <BOUNDS type="Node" left="3825" top="6930" width="100" height="100">
@@ -110,144 +110,10 @@
    <BOUNDS type="Box" left="11850" top="6870">
    </BOUNDS>
    </NODE>
-   <NODE id="934" systemname="SuperPhong (DX11.Effect)" filename="dx11\SuperPhong.fx" nodename="SuperPhong (DX11.Effect)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
-   <BOUNDS type="Node" left="2720" top="9355" width="9735" height="270">
-   </BOUNDS>
-   <BOUNDS type="Box" left="1230" top="1800" width="2400" height="1800">
-   </BOUNDS>
-   <BOUNDS type="Window" left="0" top="0" width="6000" height="4500">
-   </BOUNDS>
-   <PIN pinname="refraction" visible="-1" pintype="Input" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Ambient Color" slicecount="1" visible="-1" pintype="Input" values="|0.00000,0.00000,0.00000,1.00000|">
-   </PIN>
-   <PIN pinname="refractionIndexXYZ" visible="1" pintype="Input">
-   </PIN>
-   <PIN pinname="refractionIndex" visible="1" pintype="Input" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="25">
-   </PIN>
-   <PIN pinname="colors Bin Size" visible="-1" pintype="Input" slicecount="1" values="3">
-   </PIN>
-   <PIN pinname="Geometry" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="camPosXYZ" visible="1" slicecount="3" values="0,0,-6.98639154434204">
-   </PIN>
-   <PIN pinname="NormalMap" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Render State" slicecount="1" visible="1" values="||">
-   </PIN>
-   <PIN pinname="Rim Color" slicecount="1" visible="-1" pintype="Input" values="|0.00000,0.00000,0.00000,0.00000|">
-   </PIN>
-   <PIN pinname="LightRange" visible="-1" slicecount="1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="Fresnel Rim/Refl Min XY" visible="1" slicecount="2" values="0,0.6">
-   </PIN>
-   <PIN pinname="Color Overlay" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
-   </PIN>
-   <PIN pinname="Reflective/DiffuseXY" visible="1" slicecount="2" values="1,0">
-   </PIN>
-   <PIN pinname="camDirXYZ" visible="1" slicecount="3" values="-0.803809344768524,-0.0407645367085934,-0.593488693237305">
-   </PIN>
-   <PIN pinname="LightDirXYZ" visible="-1" slicecount="3" pintype="Input" values="0.599873185157776,-0.728968620300293,0.329783082008362">
-   </PIN>
-   <PIN pinname="varyingNormalXYZ" slicecount="3" values="-0.37,-0.37,-0.37">
-   </PIN>
-   <PIN pinname="lightDirectionXYZ" slicecount="3" values="0.22,0.22,0.22">
-   </PIN>
-   <PIN pinname="viewDirectionXYZ" slicecount="3" values="0.73,0.73,0.73">
-   </PIN>
-   <PIN pinname="texCoord0XYZ" slicecount="3" values="-0.01,-0.01,-0.01">
-   </PIN>
-   <PIN pinname="Iridescence" visible="-1" slicecount="1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="CubeMap Irradiance" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="CubeMap Refl" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="spotFade" slicecount="1" visible="-1" pintype="Input" values="0">
-   </PIN>
-   <PIN pinname="Alpha" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="ReflectionMode: Mul/Add" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="DiffuseAffect: Reflection/Specular/Both" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Directional/Point/Spot" slicecount="1" visible="-1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="lightCount" visible="-1" slicecount="1" pintype="Input" values="0">
-   </PIN>
-   <PIN pinname="lPos" visible="-1" slicecount="1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="lAtt0" visible="-1" slicecount="1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="lAtt1" visible="-1" slicecount="1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="lAtt2" visible="-1" slicecount="1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="Diffuse Color" visible="-1" slicecount="1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="Specular Color" visible="-1" slicecount="1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="LightView" slicecount="1" visible="-1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="SpotTex" visible="-1" slicecount="1" pintype="Input" values="||">
-   </PIN>
-   <PIN pinname="useIridescence" slicecount="1" visible="-1" pintype="Input" values="0">
-   </PIN>
-   <PIN pinname="SpecularMap" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Texture" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="DiffuseMap" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="g_samLinear" slicecount="1" visible="1" values="||">
-   </PIN>
-   <PIN pinname="BPCM" visible="1" pintype="Input" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="CubeMapPosXYZ" visible="1" pintype="Input" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="CubeMapBounds" visible="1" pintype="Input" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Fresnel Rim/Refl Exp XY" slicecount="2" visible="1" values="0,1">
-   </PIN>
-   <PIN pinname="Fresnel Rim/Refl Max XY" slicecount="2" values="0,1">
-   </PIN>
-   <PIN pinname="tColor,tSpec,tDiffuse,tNormal" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Technique" slicecount="1" values="Superphong">
-   </PIN>
-   <PIN pinname="bumpy" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Camera PositionXYZ" visible="1">
-   </PIN>
-   <PIN pinname="Normal Rotation" visible="1">
-   </PIN>
-   <PIN pinname="Bumpiness" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Cube Map Bounds" visible="1" pintype="Input" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="SpotLight Fading" visible="-1" pintype="Input" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="SpotLight DirectionXYZ" visible="-1" pintype="Input" slicecount="3" values="0,0,0">
-   </PIN>
-   <PIN pinname="Cube Map PositionXYZ" visible="1" pintype="Input" slicecount="3" values="0,5.45,0">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
-   </LINK>
-   <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In">
-   </LINK>
    <LINK srcnodeid="539" srcpinname="Y Output Value" dstnodeid="537" dstpinname="XYZ" linkstyle="Bezier">
    <LINKPOINT x="4360" y="7908">
    </LINKPOINT>
    <LINKPOINT x="4790" y="7933">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="878" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Irradiance" linkstyle="VHV">
-   <LINKPOINT x="11865" y="8250">
-   </LINKPOINT>
-   <LINKPOINT x="11355" y="8250">
    </LINKPOINT>
    </LINK>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -306,8 +172,6 @@
    <PIN pinname="Sampler" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
-   </LINK>
    <NODE systemname="Group (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Group (DX11.Layer)" componentmode="Hidden" id="1074">
    <BOUNDS type="Node" left="2555" top="9805" width="600" height="270">
    </BOUNDS>
@@ -316,14 +180,12 @@
    </NODE>
    <LINK srcnodeid="1074" srcpinname="Layer Out" dstnodeid="2" dstpinname="Layer In">
    </LINK>
-   <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="1074" dstpinname="Layer 1">
-   </LINK>
    <NODE systemname="Box (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Box (DX11.Geometry)" componentmode="Hidden" id="1081">
    <BOUNDS type="Node" left="11865" top="2745" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Geometry Out" visible="1">
    </PIN>
-   <PIN pinname="SizeXYZ" slicecount="1" values="5" visible="1">
+   <PIN pinname="SizeXYZ" slicecount="1" visible="1" values="5">
    </PIN>
    </NODE>
    <NODE systemname="PhongPoint (DX11.Effect)" filename="%VVVV%\packs\dx11\nodes\dx11\PhongPoint.fx" nodename="PhongPoint (DX11.Effect)" componentmode="Hidden" id="1082">
@@ -438,8 +300,6 @@
    <PIN pinname="X Input Value" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1091" srcpinname="Y Output Value" dstnodeid="934" dstpinname="BPCM">
-   </LINK>
    <NODE systemname="DynamicBuffer (DX11.Buffer 3d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicBuffer (DX11.Buffer 3d)" componentmode="Hidden" id="1094">
    <BOUNDS type="Node" left="8655" top="8370" width="100" height="100">
    </BOUNDS>
@@ -472,12 +332,6 @@
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1097" srcpinname="Y Output Value" dstnodeid="934" dstpinname="CubeMapPosXYZ" linkstyle="Bezier">
-   <LINKPOINT x="6675" y="5490">
-   </LINKPOINT>
-   <LINKPOINT x="6675" y="5490">
-   </LINKPOINT>
-   </LINK>
    <NODE systemname="Cons (3d)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (3d)" componentmode="Hidden" id="1102">
    <BOUNDS type="Node" left="8670" top="7875" width="100" height="100">
    </BOUNDS>
@@ -596,8 +450,6 @@
    <PIN pinname="Thickness" slicecount="1" values="0.72">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1087" srcpinname="Geometry Out" dstnodeid="934" dstpinname="Geometry">
-   </LINK>
    <LINK srcnodeid="1105" srcpinname="Output" dstnodeid="1106" dstpinname="Go To Position">
    </LINK>
    <LINK srcnodeid="1106" srcpinname="Position Out" dstnodeid="473" dstpinname="Translate XYZ">
@@ -622,61 +474,7 @@
    <PIN pinname="Output Node" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1133" srcpinname="Output Node" dstnodeid="934" dstpinname="CubeMapBounds">
-   </LINK>
    <LINK srcnodeid="1094" srcpinname="Buffer" dstnodeid="1133" dstpinname="Input Node">
-   </LINK>
-   <NODE systemname="Camera (Transform Orbit Legacy) Instant Position" filename="Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden" id="1">
-   <BOUNDS type="Node" left="3900" top="10185" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="View" visible="1">
-   </PIN>
-   <PIN pinname="Projection" visible="1">
-   </PIN>
-   <PIN pinname="Initial Yaw" slicecount="1" visible="1" values="0">
-   </PIN>
-   <PIN pinname="Initial Pitch" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Initial Distance" slicecount="1" values="8">
-   </PIN>
-   <PIN pinname="Near Plane" slicecount="1" visible="1" pintype="Input" values="0.3">
-   </PIN>
-   <PIN pinname="Far Plane" slicecount="1" visible="1" pintype="Input" values="30">
-   </PIN>
-   <PIN pinname="View Projection" visible="1">
-   </PIN>
-   <PIN pinname="Position" visible="1">
-   </PIN>
-   <PIN pinname="Initial FOV" slicecount="1" values="0.15">
-   </PIN>
-   <PIN pinname="Inital Distance" slicecount="1" values="7.1">
-   </PIN>
-   <PIN pinname="Camera Position" visible="1">
-   </PIN>
-   <PIN pinname="Target Initial Position" slicecount="3" visible="1" values="0,0,0">
-   </PIN>
-   <PIN pinname="Roll" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Camera Position Instant" visible="1">
-   </PIN>
-   <BOUNDS type="Window" left="1785" top="705" width="18435" height="13185">
-   </BOUNDS>
-   <PIN pinname="Camera Direction" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="camPosXYZ" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="6210" y="10710">
-   </LINKPOINT>
-   <LINKPOINT x="5400" y="7485">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="Projection" dstnodeid="928" dstpinname="Projection" linkstyle="VHV">
-   <LINKPOINT x="4095" y="10560">
-   </LINKPOINT>
-   <LINKPOINT x="4080" y="10560">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="View" dstnodeid="928" dstpinname="View" linkstyle="PolyLine">
    </LINK>
    <LINK srcnodeid="1102" srcpinname="OutputXYZ" dstnodeid="1094" dstpinname="DataXYZ">
    </LINK>
@@ -702,12 +500,6 @@
    <PIN pinname="Maximum" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1135" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Reflective/DiffuseXY" linkstyle="VHV">
-   <LINKPOINT x="7130" y="8438">
-   </LINKPOINT>
-   <LINKPOINT x="7870" y="8438">
-   </LINKPOINT>
-   </LINK>
    <NODE systemname="HSCB (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\HSCB.tfx" nodename="HSCB (DX11.TextureFX)" componentmode="Hidden" id="1138">
    <BOUNDS type="Node" left="11865" top="6420" width="100" height="100">
    </BOUNDS>
@@ -802,16 +594,6 @@
    </LINK>
    <LINK srcnodeid="1144" srcpinname="Output" dstnodeid="1082" dstpinname="Light PositionXYZ">
    </LINK>
-   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="6780" y="11880">
-   </LINKPOINT>
-   <LINKPOINT x="6990" y="8310">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
-   </LINK>
-   <LINK srcnodeid="1133" srcpinname="Output Node" dstnodeid="934" dstpinname="Cube Map Bounds">
-   </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1146" systemname="IOBox (String)">
    <BOUNDS type="Node" left="375" top="330" width="5100" height="450">
    </BOUNDS>
@@ -880,14 +662,6 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1097" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Cube Map PositionXYZ">
-   </LINK>
-   <LINK srcnodeid="1085" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Refl" linkstyle="VHV">
-   <LINKPOINT x="11385" y="7148">
-   </LINKPOINT>
-   <LINKPOINT x="11010" y="7148">
-   </LINKPOINT>
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1151" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="12015" top="1500" width="795" height="720">
    </BOUNDS>
@@ -907,5 +681,231 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1151" srcpinname="Y Output Value" dstnodeid="1081" dstpinname="SizeXYZ">
+   </LINK>
+   <NODE id="934" systemname="SuperPhong (DX11.Effect)" filename="..\SuperPhong.fx" nodename="SuperPhong (DX11.Effect)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
+   <BOUNDS type="Node" left="2720" top="9355" width="9735" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="1230" top="1800" width="2400" height="1800">
+   </BOUNDS>
+   <BOUNDS type="Window" left="0" top="0" width="6000" height="4500">
+   </BOUNDS>
+   <PIN pinname="refraction" visible="-1" pintype="Input" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Ambient Color" slicecount="1" visible="-1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="refractionIndexXYZ" visible="1" pintype="Input">
+   </PIN>
+   <PIN pinname="refractionIndex" visible="1" pintype="Input" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="25">
+   </PIN>
+   <PIN pinname="colors Bin Size" visible="-1" pintype="Input" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Geometry" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="camPosXYZ" visible="1" slicecount="3" values="0,0,-6.98639154434204">
+   </PIN>
+   <PIN pinname="NormalMap" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Render State" slicecount="1" visible="1" values="||">
+   </PIN>
+   <PIN pinname="Rim Color" slicecount="1" visible="-1" pintype="Input" values="|0.00000,0.00000,0.00000,0.00000|">
+   </PIN>
+   <PIN pinname="LightRange" visible="-1" slicecount="1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="Fresnel Rim/Refl Min XY" visible="1" slicecount="2" values="0,0.6">
+   </PIN>
+   <PIN pinname="Color Overlay" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Reflective/DiffuseXY" visible="1" slicecount="2" values="1,0">
+   </PIN>
+   <PIN pinname="camDirXYZ" visible="1" slicecount="3" values="-0.803809344768524,-0.0407645367085934,-0.593488693237305">
+   </PIN>
+   <PIN pinname="LightDirXYZ" visible="-1" slicecount="3" pintype="Input" values="0.599873185157776,-0.728968620300293,0.329783082008362">
+   </PIN>
+   <PIN pinname="varyingNormalXYZ" slicecount="3" values="-0.37,-0.37,-0.37">
+   </PIN>
+   <PIN pinname="lightDirectionXYZ" slicecount="3" values="0.22,0.22,0.22">
+   </PIN>
+   <PIN pinname="viewDirectionXYZ" slicecount="3" values="0.73,0.73,0.73">
+   </PIN>
+   <PIN pinname="texCoord0XYZ" slicecount="3" values="-0.01,-0.01,-0.01">
+   </PIN>
+   <PIN pinname="Iridescence" visible="-1" slicecount="1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="CubeMap Irradiance" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="CubeMap Refl" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="spotFade" slicecount="1" visible="-1" pintype="Input" values="0">
+   </PIN>
+   <PIN pinname="Alpha" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="ReflectionMode: Mul/Add" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="DiffuseAffect: Reflection/Specular/Both" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Directional/Point/Spot" slicecount="1" visible="-1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="lightCount" visible="-1" slicecount="1" pintype="Input" values="0">
+   </PIN>
+   <PIN pinname="lPos" visible="-1" slicecount="1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="lAtt0" visible="-1" slicecount="1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="lAtt1" visible="-1" slicecount="1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="lAtt2" visible="-1" slicecount="1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="Diffuse Color" visible="-1" slicecount="1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="Specular Color" visible="-1" slicecount="1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="LightView" slicecount="1" visible="-1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="SpotTex" visible="-1" slicecount="1" pintype="Input" values="||">
+   </PIN>
+   <PIN pinname="useIridescence" slicecount="1" visible="-1" pintype="Input" values="0">
+   </PIN>
+   <PIN pinname="SpecularMap" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Texture" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="DiffuseMap" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="g_samLinear" slicecount="1" visible="1" values="||">
+   </PIN>
+   <PIN pinname="BPCM" visible="1" pintype="Input" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="CubeMapPosXYZ" visible="1" pintype="Input" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="CubeMapBounds" visible="1" pintype="Input" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Fresnel Rim/Refl Exp XY" slicecount="2" visible="1" values="0,1">
+   </PIN>
+   <PIN pinname="Fresnel Rim/Refl Max XY" slicecount="2" values="0,1">
+   </PIN>
+   <PIN pinname="tColor,tSpec,tDiffuse,tNormal" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Technique" slicecount="1" values="Superphong">
+   </PIN>
+   <PIN pinname="bumpy" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Camera PositionXYZ" visible="1" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Normal Rotation" visible="1">
+   </PIN>
+   <PIN pinname="Bumpiness" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Cube Map Bounds" visible="1" pintype="Input" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="SpotLight Fading" visible="-1" pintype="Input" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="SpotLight DirectionXYZ" visible="-1" pintype="Input" slicecount="3" values="0,0,0">
+   </PIN>
+   <PIN pinname="Cube Map PositionXYZ" visible="1" pintype="Input" slicecount="3" values="0,5.45,0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
+   </LINK>
+   <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In">
+   </LINK>
+   <LINK srcnodeid="878" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Irradiance" linkstyle="VHV">
+   <LINKPOINT x="11865" y="8250">
+   </LINKPOINT>
+   <LINKPOINT x="11355" y="8250">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
+   </LINK>
+   <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="1074" dstpinname="Layer 1">
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="Y Output Value" dstnodeid="934" dstpinname="BPCM">
+   </LINK>
+   <LINK srcnodeid="1097" srcpinname="Y Output Value" dstnodeid="934" dstpinname="CubeMapPosXYZ" linkstyle="Bezier">
+   <LINKPOINT x="6675" y="5490">
+   </LINKPOINT>
+   <LINKPOINT x="6675" y="5490">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1087" srcpinname="Geometry Out" dstnodeid="934" dstpinname="Geometry">
+   </LINK>
+   <LINK srcnodeid="1133" srcpinname="Output Node" dstnodeid="934" dstpinname="CubeMapBounds">
+   </LINK>
+   <LINK srcnodeid="1135" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Reflective/DiffuseXY" linkstyle="VHV">
+   <LINKPOINT x="7130" y="8438">
+   </LINKPOINT>
+   <LINKPOINT x="7870" y="8438">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
+   </LINK>
+   <LINK srcnodeid="1133" srcpinname="Output Node" dstnodeid="934" dstpinname="Cube Map Bounds">
+   </LINK>
+   <LINK srcnodeid="1097" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Cube Map PositionXYZ">
+   </LINK>
+   <LINK srcnodeid="1085" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Refl" linkstyle="VHV">
+   <LINKPOINT x="11385" y="7148">
+   </LINKPOINT>
+   <LINKPOINT x="11010" y="7148">
+   </LINKPOINT>
+   </LINK>
+   <NODE systemname="Camera (Transform Orbit Legacy) Instant Position" filename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden" id="1">
+   <BOUNDS type="Node" left="3900" top="10185" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="View" visible="1">
+   </PIN>
+   <PIN pinname="Projection" visible="1">
+   </PIN>
+   <PIN pinname="Initial Yaw" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Initial Pitch" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Initial Distance" slicecount="1" values="8">
+   </PIN>
+   <PIN pinname="Near Plane" slicecount="1" visible="1" pintype="Input" values="0.3">
+   </PIN>
+   <PIN pinname="Far Plane" slicecount="1" visible="1" pintype="Input" values="30">
+   </PIN>
+   <PIN pinname="View Projection" visible="1">
+   </PIN>
+   <PIN pinname="Position" visible="1">
+   </PIN>
+   <PIN pinname="Initial FOV" slicecount="1" values="0.15">
+   </PIN>
+   <PIN pinname="Inital Distance" slicecount="1" values="7.1">
+   </PIN>
+   <PIN pinname="Camera Position" visible="1">
+   </PIN>
+   <PIN pinname="Target Initial Position" slicecount="3" visible="1" values="0,0,0">
+   </PIN>
+   <PIN pinname="Roll" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Camera Position Instant" visible="1">
+   </PIN>
+   <BOUNDS type="Window" left="1785" top="705" width="18435" height="13185">
+   </BOUNDS>
+   <PIN pinname="Camera Direction" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1" srcpinname="Projection" dstnodeid="928" dstpinname="Projection" linkstyle="VHV">
+   <LINKPOINT x="4095" y="10560">
+   </LINKPOINT>
+   <LINKPOINT x="4080" y="10560">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1" srcpinname="View" dstnodeid="928" dstpinname="View" linkstyle="PolyLine">
+   </LINK>
+   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="camPosXYZ" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="6210" y="10710">
+   </LINKPOINT>
+   <LINKPOINT x="5400" y="7485">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="6780" y="11880">
+   </LINKPOINT>
+   <LINKPOINT x="6990" y="8310">
+   </LINKPOINT>
    </LINK>
    </PATCH>

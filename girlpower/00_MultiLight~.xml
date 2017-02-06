@@ -57,6 +57,8 @@
    </PIN>
    <BOUNDS type="Box" left="7635" top="6810">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="422" systemname="IOBox (Enumerations)">
    <BOUNDS type="Box" left="12135" top="5985" width="1575" height="300">
@@ -413,7 +415,7 @@
    </PIN>
    <PIN pinname="Fresnel Rim/Refl Min XY" visible="-1" slicecount="2" pintype="Input" values="0,0">
    </PIN>
-   <PIN pinname="Color Overlay" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Overlay" slicecount="1" values="|0.32623,0.32623,0.32623,1.00000|">
    </PIN>
    <PIN pinname="Reflective/DiffuseXY" visible="-1" slicecount="2" pintype="Input" values="0,0">
    </PIN>
@@ -502,6 +504,8 @@
    <PIN pinname="g_samLinear" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Layer" visible="1">
+   </PIN>
+   <PIN pinname="Near Plane / Far Plane" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
@@ -780,11 +784,7 @@
    <LINKPOINT x="6600" y="4883">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="882" srcpinname="Texture Out" dstnodeid="934" dstpinname="NormalMap">
-   </LINK>
    <LINK srcnodeid="242" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
-   </LINK>
-   <LINK srcnodeid="1076" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
    </LINK>
    <NODE systemname="Group (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Group (DX11.Layer)" componentmode="Hidden" id="1101">
    <BOUNDS type="Node" left="3885" top="7785" width="100" height="100">
@@ -806,6 +806,16 @@
    <LINKPOINT x="7155" y="5138">
    </LINKPOINT>
    <LINKPOINT x="4290" y="5138">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1076" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
+   </LINK>
+   <LINK srcnodeid="882" srcpinname="Texture Out" dstnodeid="934" dstpinname="NormalMap">
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="Near Plane / Far Plane" linkstyle="Bezier">
+   <LINKPOINT x="8310" y="4868">
+   </LINKPOINT>
+   <LINKPOINT x="11475" y="4868">
    </LINKPOINT>
    </LINK>
    </PATCH>

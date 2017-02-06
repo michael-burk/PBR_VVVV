@@ -57,6 +57,8 @@
    </PIN>
    <BOUNDS type="Box" left="7635" top="6810">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="422" systemname="IOBox (Enumerations)">
    <BOUNDS type="Box" left="12135" top="5985" width="1575" height="300">
@@ -413,7 +415,7 @@
    </PIN>
    <PIN pinname="Fresnel Rim/Refl Min XY" visible="-1" slicecount="2" pintype="Input" values="0,0">
    </PIN>
-   <PIN pinname="Color Overlay" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Overlay" slicecount="1" values="|0.32623,0.32623,0.32623,1.00000|">
    </PIN>
    <PIN pinname="Reflective/DiffuseXY" visible="-1" slicecount="2" pintype="Input" values="0,0">
    </PIN>
@@ -503,6 +505,8 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
+   <PIN pinname="Near Plane / Far Plane" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
    </LINK>
@@ -581,39 +585,39 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="67" srcpinname="Output" dstnodeid="1091" dstpinname="Shadow Geometry" linkstyle="Bezier">
-   <LINKPOINT x="4605" y="4253">
+   <LINKPOINT x="3810" y="4245">
    </LINKPOINT>
-   <LINKPOINT x="7155" y="4253">
+   <LINKPOINT x="7140" y="4245">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Transform" linkstyle="Bezier">
    <LINKPOINT x="4935" y="3683">
    </LINKPOINT>
-   <LINKPOINT x="9795" y="3683">
+   <LINKPOINT x="9015" y="3683">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt0" dstnodeid="934" dstpinname="lAtt0" linkstyle="Bezier">
-   <LINKPOINT x="9195" y="4883">
+   <LINKPOINT x="9345" y="4868">
+   </LINKPOINT>
+   <LINKPOINT x="8475" y="4868">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="lAtt1" dstnodeid="934" dstpinname="lAtt1" linkstyle="Bezier">
+   <LINKPOINT x="9645" y="4883">
    </LINKPOINT>
    <LINKPOINT x="8700" y="4883">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1091" srcpinname="lAtt1" dstnodeid="934" dstpinname="lAtt1" linkstyle="Bezier">
-   <LINKPOINT x="9495" y="4868">
-   </LINKPOINT>
-   <LINKPOINT x="8940" y="4868">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt2" dstnodeid="934" dstpinname="lAtt2" linkstyle="Bezier">
-   <LINKPOINT x="9660" y="4875">
+   <LINKPOINT x="9810" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="9165" y="4875">
+   <LINKPOINT x="8940" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightPosition" dstnodeid="934" dstpinname="lPos" linkstyle="Bezier">
-   <LINKPOINT x="7350" y="4883">
+   <LINKPOINT x="7335" y="4883">
    </LINKPOINT>
-   <LINKPOINT x="8460" y="4883">
+   <LINKPOINT x="8220" y="4883">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightCount" dstnodeid="934" dstpinname="lightCount" linkstyle="Bezier">
@@ -629,21 +633,21 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Diffuse Color" dstnodeid="934" dstpinname="Diffuse Color" linkstyle="Bezier">
-   <LINKPOINT x="8895" y="4883">
+   <LINKPOINT x="9045" y="4875">
+   </LINKPOINT>
+   <LINKPOINT x="9390" y="4875">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="Specular Color" dstnodeid="934" dstpinname="Specular Color" linkstyle="Bezier">
+   <LINKPOINT x="9195" y="4883">
    </LINKPOINT>
    <LINKPOINT x="9615" y="4883">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1091" srcpinname="Specular Color" dstnodeid="934" dstpinname="Specular Color" linkstyle="Bezier">
-   <LINKPOINT x="9045" y="4883">
-   </LINKPOINT>
-   <LINKPOINT x="9855" y="4883">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="1091" srcpinname="SpotLight Range" dstnodeid="934" dstpinname="LightRange" linkstyle="Bezier">
-   <LINKPOINT x="7965" y="4868">
+   <LINKPOINT x="7950" y="4868">
    </LINKPOINT>
-   <LINKPOINT x="7980" y="4868">
+   <LINKPOINT x="7770" y="4868">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Light Direction" dstnodeid="934" dstpinname="SpotLightDirXYZ" linkstyle="Bezier">
@@ -653,9 +657,9 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="SpotLightTex" dstnodeid="934" dstpinname="SpotTex" linkstyle="Bezier">
-   <LINKPOINT x="9375" y="4875">
+   <LINKPOINT x="9510" y="4868">
    </LINKPOINT>
-   <LINKPOINT x="11025" y="4875">
+   <LINKPOINT x="10785" y="4868">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Light Direction" dstnodeid="934" dstpinname="SpotLight DirectionXYZ" linkstyle="Bezier">
@@ -665,7 +669,7 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="spotFade" dstnodeid="934" dstpinname="SpotLight Fading" linkstyle="Bezier">
-   <LINKPOINT x="9780" y="4875">
+   <LINKPOINT x="9930" y="4875">
    </LINKPOINT>
    <LINKPOINT x="5925" y="4875">
    </LINKPOINT>
@@ -673,25 +677,25 @@
    <LINK srcnodeid="1091" srcpinname="LightVP" dstnodeid="934" dstpinname="LightViewProjection" linkstyle="Bezier">
    <LINKPOINT x="7485" y="4883">
    </LINKPOINT>
-   <LINKPOINT x="7305" y="4883">
+   <LINKPOINT x="7065" y="4883">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightProjection" dstnodeid="934" dstpinname="LightProjection" linkstyle="Bezier">
-   <LINKPOINT x="7800" y="4883">
+   <LINKPOINT x="7785" y="4883">
    </LINKPOINT>
-   <LINKPOINT x="7770" y="4883">
+   <LINKPOINT x="7530" y="4883">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightView" dstnodeid="934" dstpinname="LightView" linkstyle="Bezier">
    <LINKPOINT x="7635" y="4883">
    </LINKPOINT>
-   <LINKPOINT x="7530" y="4883">
+   <LINKPOINT x="7305" y="4883">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="934" dstpinname="Directional/Spot/Point" linkstyle="Bezier">
-   <LINKPOINT x="8115" y="4875">
+   <LINKPOINT x="8100" y="4868">
    </LINKPOINT>
-   <LINKPOINT x="8220" y="4875">
+   <LINKPOINT x="7995" y="4868">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="nearFarPlaneXY" linkstyle="Bezier">
@@ -701,15 +705,15 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="UseShadow" dstnodeid="934" dstpinname="Shadow" linkstyle="Bezier">
-   <LINKPOINT x="8610" y="4883">
+   <LINKPOINT x="8760" y="4883">
    </LINKPOINT>
-   <LINKPOINT x="11475" y="4883">
+   <LINKPOINT x="11235" y="4883">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="AmbientColor" dstnodeid="934" dstpinname="Ambient Color" linkstyle="Bezier">
-   <LINKPOINT x="8745" y="4875">
+   <LINKPOINT x="8895" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="9390" y="4875">
+   <LINKPOINT x="9150" y="4875">
    </LINKPOINT>
    </LINK>
    <NODE id="1" systemname="Camera (Transform Orbit Legacy) Instant Position" filename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden">
@@ -771,13 +775,13 @@
    <LINK srcnodeid="1091" srcpinname="Shadow Map" dstnodeid="934" dstpinname="ShadowMap" linkstyle="Bezier">
    <LINKPOINT x="8460" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="11235" y="4875">
+   <LINKPOINT x="11010" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lightBleedingLimit" dstnodeid="934" dstpinname="lightBleedingLimit" linkstyle="Bezier">
-   <LINKPOINT x="8550" y="4883">
+   <LINKPOINT x="8550" y="4875">
    </LINKPOINT>
-   <LINKPOINT x="6600" y="4883">
+   <LINKPOINT x="6600" y="4875">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="242" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
@@ -807,5 +811,11 @@
    <LINK srcnodeid="1076" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
    </LINK>
    <LINK srcnodeid="882" srcpinname="Texture Out" dstnodeid="934" dstpinname="NormalMap">
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="Near Plane / Far Plane" linkstyle="Bezier">
+   <LINKPOINT x="8295" y="4875">
+   </LINKPOINT>
+   <LINKPOINT x="11475" y="4875">
+   </LINKPOINT>
    </LINK>
    </PATCH>
