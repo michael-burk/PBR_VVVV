@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" systemname="07_MultiLightShadow_Spreaded" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" scrollx="450" scrolly="585" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" systemname="07_MultiLightShadow_Spreaded" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" scrollx="300" scrolly="0" bgcolor="15329769">
    <BOUNDS type="Window" left="2265" top="780" width="14460" height="14265">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -371,7 +371,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="9105" top="11055" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="120">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="500">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -651,6 +651,8 @@
    </PIN>
    <PIN pinname="Near Plane / Far Plane" visible="1">
    </PIN>
+   <PIN pinname="Layer" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="UseShadow" dstnodeid="934" dstpinname="Shadow" linkstyle="Bezier">
    <LINKPOINT x="9750" y="8280">
@@ -680,12 +682,6 @@
    <LINKPOINT x="9855" y="8288">
    </LINKPOINT>
    <LINKPOINT x="9495" y="8288">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1091" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="934" dstpinname="Directional/Spot/Point" linkstyle="Bezier">
-   <LINKPOINT x="9045" y="8288">
-   </LINKPOINT>
-   <LINKPOINT x="8355" y="8288">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightProjection" dstnodeid="934" dstpinname="LightProjection" linkstyle="Bezier">
@@ -751,8 +747,6 @@
    <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ">
    </LINK>
    <LINK srcnodeid="956" srcpinname="Render State" dstnodeid="934" dstpinname="Render State">
-   </LINK>
-   <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 1">
    </LINK>
    <LINK srcnodeid="422" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique" linkstyle="PolyLine">
    </LINK>
@@ -822,6 +816,8 @@
    <PIN pinname="Output" visible="1">
    </PIN>
    <PIN pinname="Period" slicecount="1" visible="1" values="5">
+   </PIN>
+   <PIN pinname="Pause" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="1120" srcpinname="Y Output Value" dstnodeid="1105" dstpinname="Resolution X">
@@ -967,9 +963,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1179" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="11415" top="645" width="795" height="240">
+   <BOUNDS type="Box" left="9660" top="150" width="795" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="11415" top="645" width="0" height="0">
+   <BOUNDS type="Node" left="9660" top="150" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="20">
    </PIN>
@@ -1113,5 +1109,27 @@
    <LINK srcnodeid="1126" srcpinname="Geometry Out" dstnodeid="1187" dstpinname="Input">
    </LINK>
    <LINK srcnodeid="1187" srcpinname="Output" dstnodeid="1164" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="934" dstpinname="Directional/Spot/Point" linkstyle="Bezier">
+   <LINKPOINT x="9045" y="8288">
+   </LINKPOINT>
+   <LINKPOINT x="8355" y="8288">
+   </LINKPOINT>
+   </LINK>
+   <NODE systemname="DepthOnly (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DepthOnly (DX11.Layer)" componentmode="Hidden" id="1188">
+   <BOUNDS type="Node" left="4230" top="9210" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Layer In" visible="1">
+   </PIN>
+   <PIN pinname="Layer Out" visible="1">
+   </PIN>
+   <PIN pinname="Enabled" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="1188" dstpinname="Layer In">
+   </LINK>
+   <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 2">
+   </LINK>
+   <LINK srcnodeid="1188" srcpinname="Layer Out" dstnodeid="3" dstpinname="Layer 1">
    </LINK>
    </PATCH>
