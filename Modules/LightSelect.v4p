@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Projects\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="8745" scrolly="2085">
+   <PATCH nodename="C:\Projects\superphong\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="8715" scrolly="2190">
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (Spreads)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="12325" top="3260" width="1520" height="270">
    </BOUNDS>
@@ -1798,22 +1798,6 @@
    </NODE>
    <LINK srcnodeid="110" srcpinname="Y Output Value" dstnodeid="108" dstpinname="Input">
    </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="111">
-   <BOUNDS type="Box" left="21735" top="10485" width="795" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="21735" top="10485" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.2">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|Shadow Blur Width|">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   </NODE>
    <LINK srcnodeid="100" srcpinname="Output" dstnodeid="99" dstpinname="Count">
    </LINK>
    <LINK srcnodeid="101" srcpinname="Output" dstnodeid="99" dstpinname="Offset">
@@ -1833,7 +1817,7 @@
    </BOUNDS>
    <PIN pinname="Descriptive Name" pintype="Configuration" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Input" pintype="Input" visible="1" slicecount="1" values="0.2">
+   <PIN pinname="Input" pintype="Input" visible="1" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Window Handle" pintype="Output">
    </PIN>
@@ -1898,8 +1882,22 @@
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="111" srcpinname="Y Output Value" dstnodeid="129" dstpinname="Input">
-   </LINK>
    <LINK srcnodeid="131" srcpinname="Output" dstnodeid="135" dstpinname="Y Input Value">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="136">
+   <BOUNDS type="Box" left="21840" top="9495" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="21840" top="9495" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Shadow Blur Width|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="136" srcpinname="Y Output Value" dstnodeid="129" dstpinname="Input">
    </LINK>
    </PATCH>

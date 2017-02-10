@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Projects\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="615" bgcolor="15329769">
+   <PATCH nodename="C:\Projects\superphong\girlpower\07_MultiLightShadow.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <BOUNDS type="Window" left="2265" top="780" width="14460" height="14265">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -466,6 +466,10 @@
    <PIN pinname="Shadow Map" visible="1">
    </PIN>
    <PIN pinname="lightBleedingLimit" visible="1" slicecount="1" values="0.25">
+   </PIN>
+   <PIN pinname="Res²" slicecount="1" values="512">
+   </PIN>
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.2">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">

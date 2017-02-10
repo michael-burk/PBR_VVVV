@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" systemname="07_MultiLightShadow_Spreaded" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" scrollx="300" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Projects\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" systemname="07_MultiLightShadow_Spreaded" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <BOUNDS type="Window" left="2265" top="780" width="14460" height="14265">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -357,7 +357,7 @@
    </PIN>
    <PIN pinname="Radius" slicecount="1" values="0.5">
    </PIN>
-   <PIN pinname="Thickness" slicecount="1" values="0.100000001490116">
+   <PIN pinname="Thickness" slicecount="1" values="0.04">
    </PIN>
    <PIN pinname="SizeXYZ" slicecount="3" values="0.31,0.31,0.31">
    </PIN>
@@ -411,7 +411,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="5415" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="1065" top="330" width="14670" height="14265">
+   <BOUNDS type="Window" left="1440" top="1710" width="24345" height="13665">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -466,6 +466,8 @@
    <PIN pinname="Shadow Map" visible="1">
    </PIN>
    <PIN pinname="lightBleedingLimit" visible="1" slicecount="1" values="0.2">
+   </PIN>
+   <PIN pinname="Light Range" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -702,12 +704,6 @@
    <LINKPOINT x="11100" y="8295">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1091" srcpinname="SpotLight Range" dstnodeid="934" dstpinname="LightRange" linkstyle="Bezier">
-   <LINKPOINT x="8895" y="8288">
-   </LINKPOINT>
-   <LINKPOINT x="8130" y="8288">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="1091" srcpinname="Specular Color" dstnodeid="934" dstpinname="Specular Color" linkstyle="Bezier">
    <LINKPOINT x="10170" y="8288">
    </LINKPOINT>
@@ -849,7 +845,7 @@
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Transform" linkstyle="Bezier">
    <LINKPOINT x="5100" y="7035">
    </LINKPOINT>
-   <LINKPOINT x="9990" y="7035">
+   <LINKPOINT x="8835" y="7035">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1162" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
@@ -873,7 +869,7 @@
    <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="Near Plane / Far Plane" linkstyle="Bezier">
    <LINKPOINT x="9285" y="8280">
    </LINKPOINT>
-   <LINKPOINT x="12270" y="8280">
+   <LINKPOINT x="11805" y="8280">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (Spreads)" componentmode="Hidden" id="1173">
@@ -967,7 +963,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="9660" top="150" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="20">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="32">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1131,5 +1127,11 @@
    <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 2">
    </LINK>
    <LINK srcnodeid="1188" srcpinname="Layer Out" dstnodeid="3" dstpinname="Layer 1">
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="Light Range" dstnodeid="934" dstpinname="LightRange" linkstyle="Bezier">
+   <LINKPOINT x="8895" y="8288">
+   </LINKPOINT>
+   <LINKPOINT x="8130" y="8288">
+   </LINKPOINT>
    </LINK>
    </PATCH>

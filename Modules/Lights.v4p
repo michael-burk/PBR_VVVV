@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Projects\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="10785" scrolly="4965" bgcolor="15132390">
+   <PATCH nodename="C:\Projects\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="3195" scrolly="0" bgcolor="15132390">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="22860" top="16140" width="100" height="100">
    </BOUNDS>
@@ -9,6 +9,8 @@
    </PIN>
    <BOUNDS type="Box" left="22860" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="1">
    <BOUNDS type="Node" left="24090" top="16140" width="100" height="100">
@@ -19,6 +21,8 @@
    </PIN>
    <BOUNDS type="Box" left="24090" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="25290" top="16140" width="100" height="100">
@@ -29,6 +33,8 @@
    </PIN>
    <BOUNDS type="Box" left="25290" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer 3d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER 3D)" componentmode="Hidden" id="3">
    <BOUNDS type="Node" left="3315" top="16140" width="100" height="100">
@@ -41,6 +47,8 @@
    </PIN>
    <BOUNDS type="Box" left="3315" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Int)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER INT)" componentmode="Hidden" id="6">
    <BOUNDS type="Node" left="10410" top="16140" width="100" height="100">
@@ -51,6 +59,8 @@
    </PIN>
    <BOUNDS type="Box" left="10410" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="CONS (SPREADS)" componentmode="Hidden" id="10">
    <BOUNDS type="Node" left="14490" top="8895" width="495" height="270">
@@ -77,6 +87,8 @@
    </PIN>
    <BOUNDS type="Box" left="19875" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Color)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER COLOR)" componentmode="Hidden" id="14">
    <BOUNDS type="Node" left="21225" top="16140" width="100" height="100">
@@ -87,6 +99,8 @@
    </PIN>
    <BOUNDS type="Box" left="21225" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Transform)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER TRANSFORM)" componentmode="Hidden" id="15">
    <BOUNDS type="Node" left="4620" top="16140" width="100" height="100">
@@ -97,6 +111,8 @@
    </PIN>
    <BOUNDS type="Box" left="4620" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="18">
    <BOUNDS type="Node" left="8760" top="16140" width="100" height="100">
@@ -107,6 +123,8 @@
    </PIN>
    <BOUNDS type="Box" left="8760" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE systemname="Cone (DX11)" filename="Cone (DX11).v4p" nodename="CONE (DX11)" componentmode="Hidden" id="20">
    <BOUNDS type="Node" left="7545" top="5430" width="100" height="100">
@@ -721,6 +739,8 @@
    </PIN>
    <BOUNDS type="Box" left="7485" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <LINK srcnodeid="88" srcpinname="Buffer" dstnodeid="87" dstpinname="Input Node">
    </LINK>
@@ -1163,7 +1183,7 @@
    </PIN>
    <PIN pinname="Res²" visible="1">
    </PIN>
-   <PIN pinname="Shadow Blur Width" visible="1" slicecount="3" values="0.41,0.62,0.34">
+   <PIN pinname="Shadow Blur Width" visible="1" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="234" srcpinname="LightCount" dstnodeid="42" dstpinname="Spread Count" linkstyle="Bezier">
@@ -1241,9 +1261,9 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="X Input Value" slicecount="3" values="0,0,0">
+   <PIN pinname="X Input Value" slicecount="3" values="1,1,1">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="3" values="0,0,0">
+   <PIN pinname="Y Input Value" slicecount="3" values="1,1,1">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="Shadow">
    </PIN>
@@ -1257,6 +1277,8 @@
    </PIN>
    <BOUNDS type="Box" left="16665" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE nodename="IOBOX (NODE)" componentmode="InABox" id="247">
    <BOUNDS type="Box" left="16665" top="16590" width="795" height="240">
@@ -1343,6 +1365,8 @@
    </PIN>
    <BOUNDS type="Box" left="18570" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <NODE id="296" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)">
    <PIN pinname="Descriptive Name" slicecount="1" values="AmbientColor">
@@ -1477,78 +1501,6 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="209" srcpinname="XYZ" dstnodeid="25" dstpinname="XYZ UnTransformed">
-   </LINK>
-   <NODE id="80" stayontop="1" componentmode="Hidden" systemname="ShadowMaps" filename="ShadowMaps.v4p" nodename="SHADOWMAPS.V4P" debug="0">
-   <BOUNDS type="Window" left="-14025" top="3735" width="10890" height="11790">
-   </BOUNDS>
-   <BOUNDS type="Node" left="13170" top="16140" width="2625" height="270">
-   </BOUNDS>
-   <BOUNDS type="Box" left="13170" top="16140" width="3100" height="3100">
-   </BOUNDS>
-   <PIN pinname="View" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="DepthMap" visible="1">
-   </PIN>
-   <PIN pinname="Projection" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Geometry" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Transform In" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Depth Out" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Texture Out" visible="1">
-   </PIN>
-   <PIN pinname="Resolution" visible="1">
-   </PIN>
-   <PIN pinname="PointLightPos" visible="1">
-   </PIN>
-   <PIN pinname="Depth Out CubeMap" visible="1">
-   </PIN>
-   <PIN pinname="lightPosXYZ" visible="1" slicecount="3" values="-0.46,0.54,0.56">
-   </PIN>
-   <PIN pinname="nearFarPlaneXY" visible="1" slicecount="6" values="0,5,0,10,0,5">
-   </PIN>
-   <PIN pinname="LightType - ShadowSelection" visible="1">
-   </PIN>
-   <PIN pinname="SizeXY" visible="1" slicecount="16" values="256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256">
-   </PIN>
-   <PIN pinname="Width" visible="1" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Output" visible="1">
-   </PIN>
-   <PIN pinname="Shadow Blur Width" visible="1" slicecount="1" values="0.2">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="82" srcpinname="Output Node" dstnodeid="80" dstpinname="Geometry" linkstyle="PolyLine">
-   </LINK>
-   <LINK srcnodeid="83" srcpinname="Output Node" dstnodeid="80" dstpinname="Transform In" linkstyle="PolyLine">
-   </LINK>
-   <LINK srcnodeid="234" srcpinname="LightVP - Shadow Selection" dstnodeid="80" dstpinname="View" linkstyle="Bezier">
-   <LINKPOINT x="9735" y="13350">
-   </LINKPOINT>
-   <LINKPOINT x="13605" y="13350">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="234" srcpinname="LightP - Shadow Selection" dstnodeid="80" dstpinname="Projection" linkstyle="Bezier">
-   <LINKPOINT x="9195" y="13675">
-   </LINKPOINT>
-   <LINKPOINT x="12600" y="13055">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="80" srcpinname="Depth Out" dstnodeid="119" dstpinname="Input Node">
-   </LINK>
-   <LINK srcnodeid="234" srcpinname="LightPos - Shadow Selection" dstnodeid="80" dstpinname="lightPosXYZ" linkstyle="Bezier">
-   <LINKPOINT x="11835" y="13365">
-   </LINKPOINT>
-   <LINKPOINT x="14880" y="13365">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="234" srcpinname="LightType - ShadowSelection" dstnodeid="80" dstpinname="LightType - ShadowSelection" linkstyle="Bezier">
-   <LINKPOINT x="17055" y="13358">
-   </LINKPOINT>
-   <LINKPOINT x="16110" y="13358">
-   </LINKPOINT>
    </LINK>
    <LINK srcnodeid="70" srcpinname="Texture Out" dstnodeid="71" dstpinname="Input Node">
    </LINK>
@@ -1837,6 +1789,8 @@
    </PIN>
    <BOUNDS type="Box" left="6135" top="16140">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   </PIN>
    </NODE>
    <LINK srcnodeid="346" srcpinname="Buffer" dstnodeid="347" dstpinname="Input Node">
    </LINK>
@@ -1895,7 +1849,7 @@
    </BOUNDS>
    <PIN pinname="Y" slicecount="1" values="0.88">
    </PIN>
-   <PIN pinname="X" slicecount="1" values="0" visible="1">
+   <PIN pinname="X" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Z" slicecount="1" values="-0.1">
    </PIN>
@@ -1994,6 +1948,8 @@
    <BOUNDS type="Box" left="11820" top="16140">
    </BOUNDS>
    <PIN pinname="DataXY" visible="1" slicecount="16" values="0,5,0,10,0,5,0,5,0,5,0,5,0,5,0,5">
+   </PIN>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Node)" componentmode="InABox" id="370">
@@ -2166,12 +2122,6 @@
    </LINK>
    <LINK srcnodeid="382" srcpinname="XY" dstnodeid="371" dstpinname="Input 3XY">
    </LINK>
-   <LINK srcnodeid="234" srcpinname="nearFarPlaneXY - Shadow Selection" dstnodeid="80" dstpinname="nearFarPlaneXY" linkstyle="Bezier">
-   <LINKPOINT x="13905" y="13365">
-   </LINKPOINT>
-   <LINKPOINT x="15330" y="13365">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="234" srcpinname="nearFarPlaneXY - Shadow Selection" dstnodeid="369" dstpinname="DataXY" linkstyle="Bezier">
    <LINKPOINT x="13875" y="13365">
    </LINKPOINT>
@@ -2240,16 +2190,10 @@
    <LINKPOINT x="14865" y="9728">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="234" srcpinname="Resolution - Shadow Selection" dstnodeid="80" dstpinname="SizeXY" linkstyle="Bezier">
-   <LINKPOINT x="14955" y="13358">
-   </LINKPOINT>
-   <LINKPOINT x="13200" y="13358">
-   </LINKPOINT>
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="393">
-   <BOUNDS type="Box" left="15990" top="4770" width="795" height="240">
+   <BOUNDS type="Box" left="15570" top="4770" width="795" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="15990" top="4770" width="0" height="0">
+   <BOUNDS type="Node" left="15570" top="4770" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="512">
    </PIN>
@@ -2262,40 +2206,6 @@
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="234" srcpinname="Shadow Blur Width" dstnodeid="80" dstpinname="Shadow Blur Width" linkstyle="Bezier">
-   <LINKPOINT x="16095" y="13350">
-   </LINKPOINT>
-   <LINKPOINT x="15765" y="13350">
-   </LINKPOINT>
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="397">
-   <BOUNDS type="Box" left="16905" top="4770" width="795" height="720">
-   </BOUNDS>
-   <BOUNDS type="Node" left="16905" top="4770" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0.41,0.62,0.34">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="3">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="3">
-   </PIN>
-   <PIN pinname="Default" slicecount="1" values="|0, 0, 0|">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|Shadow Blur Width|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="393" srcpinname="Y Output Value" dstnodeid="234" dstpinname="Res²" linkstyle="Bezier">
-   <LINKPOINT x="16005" y="7658">
-   </LINKPOINT>
-   <LINKPOINT x="15615" y="7658">
-   </LINKPOINT>
-   </LINK>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="400">
    <BOUNDS type="Node" left="14085" top="1485" width="3015" height="270">
    </BOUNDS>
@@ -2310,10 +2220,112 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
-   <LINK srcnodeid="397" srcpinname="Y Output Value" dstnodeid="234" dstpinname="Shadow Blur Width" linkstyle="Bezier">
-   <LINKPOINT x="16935" y="7898">
+   <NODE id="80" stayontop="0" componentmode="Hidden" systemname="ShadowMaps" filename="ShadowMaps.v4p" nodename="SHADOWMAPS.V4P" debug="0">
+   <BOUNDS type="Window" left="8760" top="2550" width="10890" height="11790">
+   </BOUNDS>
+   <BOUNDS type="Node" left="13170" top="16140" width="2625" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="13170" top="16140" width="3100" height="3100">
+   </BOUNDS>
+   <PIN pinname="View" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="DepthMap" visible="1">
+   </PIN>
+   <PIN pinname="Projection" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Geometry" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Transform In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Depth Out" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="Resolution" visible="1">
+   </PIN>
+   <PIN pinname="PointLightPos" visible="1">
+   </PIN>
+   <PIN pinname="Depth Out CubeMap" visible="1">
+   </PIN>
+   <PIN pinname="lightPosXYZ" visible="1" slicecount="3" values="-0.46,0.54,0.56">
+   </PIN>
+   <PIN pinname="nearFarPlaneXY" visible="1" slicecount="6" values="0,5,0,10,0,5">
+   </PIN>
+   <PIN pinname="LightType - ShadowSelection" visible="1">
+   </PIN>
+   <PIN pinname="SizeXY" visible="1" slicecount="16" values="256,256,256,256,256,256,256,256,256,256,256,256,256,256,256,256">
+   </PIN>
+   <PIN pinname="Width" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Shadow Blur Width" visible="1" slicecount="1" values="0.2">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="82" srcpinname="Output Node" dstnodeid="80" dstpinname="Geometry" linkstyle="PolyLine">
+   </LINK>
+   <LINK srcnodeid="83" srcpinname="Output Node" dstnodeid="80" dstpinname="Transform In" linkstyle="PolyLine">
+   </LINK>
+   <LINK srcnodeid="234" srcpinname="LightVP - Shadow Selection" dstnodeid="80" dstpinname="View" linkstyle="Bezier">
+   <LINKPOINT x="9735" y="13350">
    </LINKPOINT>
-   <LINKPOINT x="17055" y="7898">
+   <LINKPOINT x="13605" y="13350">
    </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="234" srcpinname="LightP - Shadow Selection" dstnodeid="80" dstpinname="Projection" linkstyle="Bezier">
+   <LINKPOINT x="9195" y="13675">
+   </LINKPOINT>
+   <LINKPOINT x="12600" y="13055">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="80" srcpinname="Depth Out" dstnodeid="119" dstpinname="Input Node">
+   </LINK>
+   <LINK srcnodeid="234" srcpinname="LightPos - Shadow Selection" dstnodeid="80" dstpinname="lightPosXYZ" linkstyle="Bezier">
+   <LINKPOINT x="11835" y="13365">
+   </LINKPOINT>
+   <LINKPOINT x="14880" y="13365">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="234" srcpinname="LightType - ShadowSelection" dstnodeid="80" dstpinname="LightType - ShadowSelection" linkstyle="Bezier">
+   <LINKPOINT x="17055" y="13358">
+   </LINKPOINT>
+   <LINKPOINT x="16110" y="13358">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="234" srcpinname="nearFarPlaneXY - Shadow Selection" dstnodeid="80" dstpinname="nearFarPlaneXY" linkstyle="Bezier">
+   <LINKPOINT x="13905" y="13365">
+   </LINKPOINT>
+   <LINKPOINT x="15330" y="13365">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="234" srcpinname="Resolution - Shadow Selection" dstnodeid="80" dstpinname="SizeXY" linkstyle="Bezier">
+   <LINKPOINT x="14955" y="13358">
+   </LINKPOINT>
+   <LINKPOINT x="13200" y="13358">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="234" srcpinname="Shadow Blur Width" dstnodeid="80" dstpinname="Shadow Blur Width" linkstyle="Bezier">
+   <LINKPOINT x="16095" y="13350">
+   </LINKPOINT>
+   <LINKPOINT x="15765" y="13350">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="393" srcpinname="Y Output Value" dstnodeid="234" dstpinname="Res²">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="401">
+   <BOUNDS type="Box" left="17055" top="4935" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="17055" top="4935" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.2">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Shadow Blur Width|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="401" srcpinname="Y Output Value" dstnodeid="234" dstpinname="Shadow Blur Width">
    </LINK>
    </PATCH>
