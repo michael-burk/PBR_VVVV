@@ -3,6 +3,10 @@
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
 
+#include "dx11/PhongPoint.fxh"
+#include "dx11/PhongPointSpot.fxh"
+#include "dx11/PhongDirectional.fxh"
+
 cbuffer cbPerRender : register( b0 )
 {
 	float4x4 tP: PROJECTION;   //projection matrix as set via Renderer
@@ -16,8 +20,9 @@ cbuffer cbPerObject : register (b1)
 	float4x4 tWV: WORLDVIEW;
 	float4x4 tWVP: WORLDVIEWPROJECTION;
 	float4x4 tWIT: WORLDINVERSETRANSPOSE;
-};
+
 	
+
 	float4x4 NormalTransform <string uiname="Normal Rotation";>;
 	float2 KrMin <String uiname="Fresnel Rim/Refl Min ";float uimin=0.0; float uimax=1;> = 0.002 ;
 	float2 Kr <String uiname="Fresnel Rim/Refl Max ";float uimin=0.0; float uimax=6.0;> = 0.5 ;
@@ -31,13 +36,14 @@ cbuffer cbPerObject : register (b1)
 	float bumpy <string uiname="Bumpiness";> = 1 ;
 	float2 reflective <String uiname="Reflective/Diffuse";float2 uimin=0.0; float uimax=1;> = 1 ;
 	bool refraction <bool visible=false; String uiname="Refraction";> = false;
-	StructuredBuffer <float> refractionIndex <bool visible=false; String uiname="Refraction Index";>;
-	bool BPCM <bool visible=false;> = false; String uiname="Box Projected Cube Map";;
+	bool BPCM <bool visible= false; String uiname="Box Projected Cube Map";>;
 	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
-	StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
 	int diffuseMode <bool visible=false;string uiname="DiffuseAffect: Reflection/Specular/Both"; int uimin=0.0; int uimax=2.0;> = 2;
-	
-	
+	bool useIridescence = false;
+};
+	StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
+	StructuredBuffer <float> refractionIndex <bool visible=false; String uiname="Refraction Index";>;
+
 	StructuredBuffer <float4x4> texTransforms <string uiname="tColor,tSpec,tDiffuse,tNormal";>;
 	StructuredBuffer <float4x4> LightVP <string uiname="LightViewProjection";>;
 	StructuredBuffer <float4x4> LightV <string uiname="LightView";>;
@@ -58,7 +64,7 @@ cbuffer cbPerObject : register (b1)
 	Texture2D specTex <string uiname="SpecularMap"; >;
 	Texture2D normalTex <string uiname="NormalMap"; >;
 	Texture2D diffuseTex <string uiname="DiffuseMap"; >;
-	bool useIridescence = false;
+	
 	Texture2D iridescence <string uiname="Iridescence"; >;
 	TextureCube cubeTexRefl <string uiname="CubeMap Refl"; >;
 	TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
@@ -66,11 +72,6 @@ cbuffer cbPerObject : register (b1)
 	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
 	StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 	StructuredBuffer <float2> nearFarPlane <string uiname="Near Plane / Far Plane"; >;
-
-
-#include "dx11/PhongPoint.fxh"
-#include "dx11/PhongPointSpot.fxh"
-#include "dx11/PhongDirectional.fxh"
 
 SamplerState g_samLinear
 {
@@ -87,6 +88,20 @@ SamplerState shadowSampler
 };
 
 
+struct vs2psBump
+{
+    float4 PosWVP: SV_POSITION;
+    float4 TexCd : TEXCOORD0;
+	float4 PosO: TEXCOORD1;
+	float4 ViewDirV: TEXCOORD2;
+	float4 PosW: TEXCOORD3;
+	float4 NormW : TEXCOORD4;
+	float4 NormO : TEXCOORD5;
+	float4 tangent : TEXCOORD6;
+	float4 binormal : TEXCOORD7;
+};
+
+
 struct vs2ps
 {
     float4 PosWVP: SV_POSITION;
@@ -96,34 +111,22 @@ struct vs2ps
 	float4 PosW: TEXCOORD3;
 	float4 NormW : TEXCOORD4;
 	float4 NormO : TEXCOORD5;
-
-//  BumpMap
-///////////////////////////////////////
-	float4 tangent : TEXCOORD6;
-	float4 binormal : TEXCOORD7;
-///////////////////////////////////////	
-
-	float4 reflectionPosition : TEXCOORD8;
-
 };
 
 // -----------------------------------------------------------------------------
 // VERTEXSHADERS
 // -----------------------------------------------------------------------------
 
-vs2ps VS_Bump(
+vs2psBump VS_Bump(
     float4 PosO: POSITION,
     float4 NormO: NORMAL,
     float4 TexCd : TEXCOORD0,
-//  BumpMap
-///////////////////////////////////////
 	float4 tangent : TANGENT,
     float4 binormal : BINORMAL
-///////////////////////////////////////
 )
 {
     //inititalize all fields of output struct with 0
-    vs2ps Out = (vs2ps)0;
+    vs2psBump Out = (vs2psBump)0;
 
     Out.PosW = mul(PosO, tW);
 	Out.PosO = PosO;
@@ -183,7 +186,6 @@ vs2ps VS(
 
 static const float minVariance = 0;
 float lightBleedingLimit;
-//float2	nearFarPlane;
 
 float reduceLightBleeding(float p_max, float amount)
 {
@@ -234,7 +236,7 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
 	
 }
 
-float4 PS_SuperphongBump(vs2ps In): SV_Target
+float4 PS_SuperphongBump(vs2psBump In): SV_Target
 {	
 	// wavelength colors
 	const half4 colors[3] =
@@ -255,12 +257,21 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	uint numTexTrans, dummy;
     texTransforms.GetDimensions(numTexTrans, dummy);
 	
-	
-	float4 texCol = float4(0,0,0,0);
-	texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,texTransforms[0%numTexTrans]).xy);
+	uint tX,tY,m;
 
-	float4 specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[1%numTexTrans]).xy);
-	float4 diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[2%numTexTrans]).xy);
+	
+	float4 texCol = float4(1,1,1,1);
+	float4 specIntensity = float4(1,1,1,1);
+	float4 diffuse = float4(1,1,1,1);
+	
+	texture2d.GetDimensions(tX,tY);
+	if(tX+tY > 0) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,texTransforms[0%numTexTrans]).xy);
+
+	specTex.GetDimensions(tX,tY);
+	if(tX+tY > 0) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[1%numTexTrans]).xy);
+	
+	diffuseTex.GetDimensions(tX,tY);
+	if(tX+tY > 0) diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[2%numTexTrans]).xy);
 
 	{
 	if(diffuseMode == 1 || diffuseMode == 2)
@@ -273,7 +284,10 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	
 //  BumpMap
 ///////////////////////////////////////
-	float4 bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[3%numTexTrans]).xy);;
+	float4 bumpMap = float4(0,0,0,0);
+	
+	normalTex.GetDimensions(tX,tY);
+	if(tX+tY > 0) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[3%numTexTrans]).xy);;
 	
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
@@ -355,8 +369,12 @@ float4 PS_SuperphongBump(vs2ps In): SV_Target
 	float4 reflColorNorm = float4(0,0,0,0);
 	float4 refrColor = float4(0,0,0,0);
 	
-	
+		cubeTexRefl.GetDimensions(tX,tY);
+		if(tX+tY > 0)	
 		reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
+	
+		cubeTexIrradiance.GetDimensions(tX,tY);
+		if(tX+tY > 0)
 		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
 		
 		if(refraction){
@@ -598,14 +616,23 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	uint numTexTrans, dummy;
     texTransforms.GetDimensions(numTexTrans, dummy);
+
 	
-	uint texColCount, tc;
-    texture2d.GetDimensions(texColCount, tc);
+	float4 texCol = float4(1,1,1,1);
+	float4 specIntensity = float4(1,1,1,1);
+	float4 diffuse = float4(1,1,1,1);
 	
-	float4 texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,texTransforms[0%numTexTrans]).xy);
+	uint tX,tY,m;
 	
-	float4 specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[1%numTexTrans]).xy);
-	float4 diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[2%numTexTrans]).xy);
+	texture2d.GetDimensions(tX,tY);
+	if(tX+tY > 2) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,texTransforms[0%numTexTrans]).xy);
+	
+	specTex.GetDimensions(tX,tY);
+	if(tX+tY > 2) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[1%numTexTrans]).xy);
+	
+	diffuseTex.GetDimensions(tX,tY);
+	if(tX+tY > 2) diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd,texTransforms[2%numTexTrans]).xy);
+	
 	
 	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
 	
@@ -683,9 +710,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float4 reflColorNorm = float4(0,0,0,0);
 	float4 refrColor = float4(0,0,0,0);
 	
+		cubeTexRefl.GetDimensions(tX,tY);
+		if(tX+tY > 2) reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
 		
-		reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
-		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
+		cubeTexIrradiance.GetDimensions(tX,tY);
+		if(tX+tY > 2) reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
 		if(refraction){
 				float3 refrVect;
 			    for(int r=0; r<3; r++) {

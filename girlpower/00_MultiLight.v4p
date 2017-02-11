@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
+   <PATCH nodename="C:\Projects\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
    <BOUNDS type="Window" left="13425" top="1710" width="14775" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -167,13 +167,13 @@
    <PACK Name="VVVV.Packs" Version="0.2.0">
    </PACK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="882">
-   <BOUNDS type="Node" left="10545" top="6705" width="100" height="100">
+   <BOUNDS type="Node" left="10275" top="6735" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Filename" slicecount="1" values="Assets\stone_normal\Pink_marble_pxr128_normal.tif">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="10545" top="6705">
+   <BOUNDS type="Box" left="10275" top="6735">
    </BOUNDS>
    </NODE>
    <LINK srcnodeid="539" srcpinname="Y Output Value" dstnodeid="537" dstpinname="XYZ" linkstyle="Bezier">
@@ -205,13 +205,13 @@
    <LINK srcnodeid="960" srcpinname="Scene" dstnodeid="67" dstpinname="Scene">
    </LINK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="1076">
-   <BOUNDS type="Node" left="10050" top="6210" width="100" height="100">
+   <BOUNDS type="Node" left="9825" top="6285" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Filename" slicecount="1" values="Assets\stone_color\Pink_marble_pxr128.tif">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="10050" top="6210">
+   <BOUNDS type="Box" left="9825" top="6285">
    </BOUNDS>
    </NODE>
    <NODE id="1039" systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow" stayontop="0">
@@ -415,7 +415,7 @@
    </PIN>
    <PIN pinname="Fresnel Rim/Refl Min XY" visible="-1" slicecount="2" pintype="Input" values="0,0">
    </PIN>
-   <PIN pinname="Color Overlay" slicecount="1" values="|0.32623,0.32623,0.32623,1.00000|">
+   <PIN pinname="Color Overlay" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Reflective/DiffuseXY" visible="-1" slicecount="2" pintype="Input" values="0,0">
    </PIN>
@@ -583,6 +583,8 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
+   <PIN pinname="Light Range" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="67" srcpinname="Output" dstnodeid="1091" dstpinname="Shadow Geometry" linkstyle="Bezier">
    <LINKPOINT x="3810" y="4245">
@@ -642,12 +644,6 @@
    <LINKPOINT x="9195" y="4883">
    </LINKPOINT>
    <LINKPOINT x="9615" y="4883">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1091" srcpinname="SpotLight Range" dstnodeid="934" dstpinname="LightRange" linkstyle="Bezier">
-   <LINKPOINT x="7950" y="4868">
-   </LINKPOINT>
-   <LINKPOINT x="7770" y="4868">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Light Direction" dstnodeid="934" dstpinname="SpotLightDirXYZ" linkstyle="Bezier">
@@ -808,8 +804,6 @@
    <LINKPOINT x="4290" y="5138">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1076" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
-   </LINK>
    <LINK srcnodeid="882" srcpinname="Texture Out" dstnodeid="934" dstpinname="NormalMap">
    </LINK>
    <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="Near Plane / Far Plane" linkstyle="Bezier">
@@ -817,5 +811,9 @@
    </LINKPOINT>
    <LINKPOINT x="11475" y="4875">
    </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="Light Range" dstnodeid="934" dstpinname="LightRange">
+   </LINK>
+   <LINK srcnodeid="1076" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
    </LINK>
    </PATCH>

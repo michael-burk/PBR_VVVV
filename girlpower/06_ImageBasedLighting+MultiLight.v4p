@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\06_ImageBasedLighting+MultiLight.v4p" systemname="06_ImageBasedLighting+MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\06_ImageBasedLighting+MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Projects\superphong\girlpower\06_ImageBasedLighting+MultiLight.v4p" systemname="06_ImageBasedLighting+MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\06_ImageBasedLighting+MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="2900" top="9040" width="100" height="100">
    </BOUNDS>
@@ -569,7 +569,7 @@
    </PIN>
    <PIN pinname="g_samLinear" slicecount="1" visible="1" values="||">
    </PIN>
-   <PIN pinname="Technique" slicecount="1" values="Superphong">
+   <PIN pinname="Technique" slicecount="1" values="Superphong" visible="1">
    </PIN>
    <PIN pinname="Bumpiness" visible="1">
    </PIN>
@@ -598,6 +598,10 @@
    <PIN pinname="Shadow" visible="1">
    </PIN>
    <PIN pinname="lightBleedingLimit" visible="1">
+   </PIN>
+   <PIN pinname="Near Plane / Far Plane" visible="1">
+   </PIN>
+   <PIN pinname="shadowSampler" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In" linkstyle="Bezier">
@@ -755,6 +759,8 @@
    </PIN>
    <PIN pinname="lightBleedingLimit" visible="1" slicecount="1" values="0.2">
    </PIN>
+   <PIN pinname="Light Range" visible="1">
+   </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1095" systemname="IOBox (String)">
    <BOUNDS type="Node" left="12417" top="1502" width="990" height="270">
@@ -782,12 +788,6 @@
    <LINKPOINT x="9330" y="4238">
    </LINKPOINT>
    <LINKPOINT x="8955" y="4238">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1096" srcpinname="SpotLight Range" dstnodeid="934" dstpinname="LightRange" linkstyle="Bezier">
-   <LINKPOINT x="9960" y="4230">
-   </LINKPOINT>
-   <LINKPOINT x="8460" y="4230">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1096" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="934" dstpinname="Directional/Point/Spot" linkstyle="Bezier">
@@ -1031,5 +1031,21 @@
    </LINKPOINT>
    <LINKPOINT x="6975" y="4230">
    </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1096" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="Near Plane / Far Plane">
+   </LINK>
+   <LINK srcnodeid="1096" srcpinname="Light Range" dstnodeid="934" dstpinname="LightRange">
+   </LINK>
+   <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="934" dstpinname="shadowSampler">
+   </LINK>
+   <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="1106">
+   <BOUNDS type="Box" left="14430" top="6420" width="1590" height="270">
+   </BOUNDS>
+   <BOUNDS type="Node" left="14430" top="6420" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="Superphong">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1106" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique">
    </LINK>
    </PATCH>
