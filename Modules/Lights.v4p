@@ -430,7 +430,7 @@
    <LINKPOINT x="21255" y="16493">
    </LINKPOINT>
    </LINK>
-   <BOUNDS type="Window" left="29940" top="450" width="24345" height="13710">
+   <BOUNDS type="Window" left="11775" top="6060" width="24345" height="13710">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -2313,7 +2313,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="17055" top="4770" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.2">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.05">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
