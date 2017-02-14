@@ -208,15 +208,17 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
     /////////////////////////////////////////////////////////
 
     // get blured and blured squared distance to light
-
-	float2 depths = shadowMap.SampleLevel(shadowSampler, float3(projectTexCoord, shadowCounter), 0 ).xy;
-
+	
+	float4 shadowCol = shadowMap.SampleLevel(shadowSampler, float3(projectTexCoord, shadowCounter), 0 );
+	float2 depths = shadowCol.xy;
+	
     float M1 = depths.x;
     float M2 = depths.y;
     float M12 = M1 * M1;
 
     float p = 0.0;
     float lightIntensity = 1;
+	float alpha = 0;
     if(currentDistanceToLight >= M1)
     {
         // standard deviation
@@ -234,13 +236,14 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
 
         // reduce light bleeding
         lightIntensity = reduceLightBleeding(intensity, lightBleedingLimit[shadowCounter]);
+    	alpha +=  (1 - saturate(shadowCol.a));
     }
 
     /////////////////////////////////////////////////////////
 
     float4 resultingColor = float4(float3(lightIntensity,lightIntensity,lightIntensity),1);
 	
-	return resultingColor;
+	return resultingColor+alpha;
 	
 }
 
@@ -808,8 +811,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
-						newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);					
+						newCol.rgb += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
+						newCol.rgb *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1).rgb;					
 					} else {
 						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
 					}
@@ -844,11 +847,12 @@ float4 PS_Superphong(vs2ps In): SV_Target
 						projectionColor *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
 					}
 					
-			  		newCol += PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
+			  		newCol.rgb += PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff],
-							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange]);
+							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange]).rgb;
 						
-				}
+				} 
+			
 			
 				ambient += saturate(lAmbient[i%numlAmb]*falloff);
 				

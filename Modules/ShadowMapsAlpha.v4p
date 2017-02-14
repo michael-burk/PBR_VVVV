@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="1485" locked="0">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMapsAlpha.v4p" systemname="ShadowMapsAlpha" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMapsAlpha.v4p" scrollx="0" scrolly="0" locked="0">
    <BOUNDS type="Window" left="5625" top="3375" width="10890" height="11790">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -135,7 +135,7 @@
    </PIN>
    <PIN pinname="Layer In" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Technique" slicecount="1" visible="1" values="VSM_AlphaTex">
+   <PIN pinname="Technique" slicecount="1" values="VSM_AlphaTex" visible="1">
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
