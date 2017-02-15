@@ -6,7 +6,7 @@
 //float lPower <String uiname="Power"; float uimin=0.0;> = 25.0;     //shininess of specular highlight
 
 //phong directional function
-float4 PhongDirectional(float3 NormV, float3 ViewDirV, float3 LightDirV, float4 lDiff, float4 lSpec, float4 specIntensity)
+float4 PhongDirectional(float3 NormV, float3 ViewDirV, float3 LightDirV, float4 lDiff, float4 lSpec, float4 specIntensity,float lRange,float lightToObject)
 {
     //In.TexCd = In.TexCd / In.TexCd.w; // for perpective texture projections (e.g. shadow maps) ps_2_0
 
@@ -29,6 +29,6 @@ float4 PhongDirectional(float3 NormV, float3 ViewDirV, float3 LightDirV, float4 
     float4 spec = pow(max(dot(R, V),0), lPower*.2) * lSpec;
 
     spec = spec * specIntensity;
-
-    return  diff + spec;
+	diff += spec;
+    return saturate(diff * (lRange-lightToObject));
 }

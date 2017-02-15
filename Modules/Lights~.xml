@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="1845" scrolly="930" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Projects\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="7170" scrolly="7950" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="24060" top="16140" width="100" height="100">
    </BOUNDS>
@@ -139,7 +139,7 @@
    </BOUNDS>
    <PIN pinname="Z" slicecount="1" values="0.5">
    </PIN>
-   <PIN pinname="Enabled" slicecount="1" values="1">
+   <PIN pinname="Enabled" slicecount="1" values="0">
    </PIN>
    <BOUNDS type="Box" left="7545" top="5430">
    </BOUNDS>
@@ -239,7 +239,7 @@
    </PIN>
    <PIN pinname="Lightness" slicecount="1" values="0.2">
    </PIN>
-   <PIN pinname="Saturation" slicecount="1" values="0.49">
+   <PIN pinname="Saturation" slicecount="1" values="0.02">
    </PIN>
    </NODE>
    <NODE systemname="LinearSpread (Spreads)" nodename="LINEARSPREAD (SPREADS)" componentmode="Hidden" id="42">
@@ -253,7 +253,7 @@
    </PIN>
    <PIN pinname="Phase" slicecount="1" values="0.25">
    </PIN>
-   <PIN pinname="Input" slicecount="1" values="0.6">
+   <PIN pinname="Input" slicecount="1" values="0">
    </PIN>
    </NODE>
    <NODE nodename="IOBOX (COLOR)" componentmode="InABox" id="45" systemname="IOBox (Color)">
@@ -265,7 +265,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="3" values="|0.00000,0.00000,0.00000,1.00000|,|1.00000,1.00000,1.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="3" values="|0.00000,0.00000,0.00000,1.00000|,|1.00000,0.34117,0.88456,1.00000|,|0.00342,0.00637,0.01001,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)">
@@ -430,7 +430,7 @@
    <LINKPOINT x="22455" y="16493">
    </LINKPOINT>
    </LINK>
-   <BOUNDS type="Window" left="3240" top="540" width="17895" height="13575">
+   <BOUNDS type="Window" left="3240" top="540" width="14775" height="13575">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -439,7 +439,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="24285" top="13635">
    </BOUNDS>
-   <PIN pinname="Gamma" slicecount="1" visible="1" values="0.2">
+   <PIN pinname="Gamma" slicecount="1" visible="1" values="0.5">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -1063,7 +1063,7 @@
    </BOUNDS>
    <PIN pinname="Z" slicecount="1" values="0.5">
    </PIN>
-   <PIN pinname="Enabled" slicecount="1" values="1">
+   <PIN pinname="Enabled" slicecount="1" values="0">
    </PIN>
    <BOUNDS type="Box" left="3675" top="5430">
    </BOUNDS>
@@ -1397,7 +1397,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="3" values="|0.00000,0.00000,0.00000,1.00000|,|1.00000,1.00000,1.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="3" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="300" srcpinname="Color Output" dstnodeid="14" dstpinname="Data" linkstyle="Bezier">
@@ -1407,7 +1407,7 @@
    </LINKPOINT>
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="MULTIPLY (COLOR)" componentmode="Hidden" id="301">
-   <BOUNDS type="Node" left="18570" top="13635" width="100" height="100">
+   <BOUNDS type="Node" left="18570" top="13755" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Color" visible="1">
    </PIN>
@@ -1417,9 +1417,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="41" srcpinname="Output" dstnodeid="301" dstpinname="Color" linkstyle="VHV">
-   <LINKPOINT x="20025" y="13508">
+   <LINKPOINT x="20025" y="13548">
    </LINKPOINT>
-   <LINKPOINT x="18630" y="13508">
+   <LINKPOINT x="18630" y="13588">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="MULTIPLY (COLOR)" componentmode="Hidden" id="302">
@@ -1525,7 +1525,7 @@
    </BOUNDS>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
-   <PIN pinname="FOV" slicecount="1" visible="1" values="0.16">
+   <PIN pinname="FOV" slicecount="1" visible="1" values="0.2">
    </PIN>
    <PIN pinname="Roll" visible="1" slicecount="1" values="0">
    </PIN>
@@ -2181,7 +2181,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15870" top="4770" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.12">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2445,5 +2445,11 @@
    <LINK srcnodeid="121" srcpinname="Output" dstnodeid="18" dstpinname="Data">
    </LINK>
    <LINK srcnodeid="70" srcpinname="Texture Out" dstnodeid="71" dstpinname="Input Node">
+   </LINK>
+   <LINK srcnodeid="301" srcpinname="Output" dstnodeid="299" dstpinname="Color Input">
+   </LINK>
+   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="45" dstpinname="Color Input">
+   </LINK>
+   <LINK srcnodeid="302" srcpinname="Output" dstnodeid="300" dstpinname="Color Input">
    </LINK>
    </PATCH>

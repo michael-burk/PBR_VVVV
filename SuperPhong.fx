@@ -476,13 +476,13 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		
 					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
-						newCol *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1);					
+						newCol.rgb += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist).rgb;
+						newCol.rgb *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1).rgb);					
 					} else {
-						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
+						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
 					}
 				} else {
-					newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
+					newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
 				}
 				ambient += saturate(lAmbient[i%numlAmb]);
 				
@@ -562,7 +562,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 						projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 						
-							shadow += (calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+							shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
 
 						} 
 					}
@@ -811,13 +811,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-						newCol.rgb += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity).rgb;
-						newCol.rgb *= calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1).rgb;					
+						newCol.rgb += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist).rgb;
+						newCol.rgb *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1).rgb);					
 					} else {
-						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
+						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
 					}
 				} else {
-					newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity);
+					newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
 				}
 				ambient += saturate(lAmbient[i%numlAmb]);
 			
