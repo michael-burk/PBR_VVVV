@@ -24,15 +24,15 @@ cbuffer cbPerObject : register (b1)
 	
 
 	float4x4 NormalTransform <string uiname="Normal Rotation";>;
-	float2 KrMin <String uiname="Fresnel Rim/Refl Min ";float uimin=0.0; float uimax=1;> = 0.002 ;
-	float2 Kr <String uiname="Fresnel Rim/Refl Max ";float uimin=0.0; float uimax=6.0;> = 0.5 ;
-	float2 FresExp <String uiname="Fresnel Rim/Refl Exp ";float ufimin=0.0; float uimax=30;> = 5 ;
+	float2 KrMin <String uiname="MIN Fresnel Rim / Fresnel Refl";float uimin=0.0; float uimax=1;> = 0.002 ;
+	float2 Kr <String uiname="MAX Fresnel Rim / Fresnel Refl";float uimin=0.0; float uimax=6.0;> = 0.5 ;
+	float2 FresExp <String uiname="EXP Fresnel Rim / Fresnel Refl ";float ufimin=0.0; float uimax=30;> = 5 ;
 	float3 camPos <string uiname="Camera Position";> ;
 	float4 RimColor <bool color = true; string uiname="Rim Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 Color <bool color = true; string uiname="Color Overlay";>  = { 1.0f,1.0f,1.0f,1.0f };
 	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
 	
-	float spotFade <string uiname="SpotLight Fading";> = 1 ;
+	//float spotFade <string uiname="SpotLight Fading";> = 1 ;
 	float bumpy <string uiname="Bumpiness";> = 1 ;
 	float2 reflective <String uiname="Reflective/Diffuse";float2 uimin=0.0; float uimax=1;> = 1 ;
 	bool refraction <bool visible=false; String uiname="Refraction";> = false;
@@ -78,9 +78,9 @@ cbuffer cbPerObject : register (b1)
 	TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
 	Texture2DArray lightMap <string uiname="SpotTex"; >;
 	Texture2DArray shadowMap <string uiname="ShadowMap"; >;
-	StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 	StructuredBuffer <float2> nearFarPlane <string uiname="Near Plane / Far Plane"; >;
 	StructuredBuffer <float> lightBleedingLimit <string uiname="Light Bleeding Limit";>;
+	StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 
 SamplerState g_samLinear
 {
@@ -507,7 +507,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
-					projectionColor *= saturate(1/(viewPosition.z*spotFade));
+			//		projectionColor *= saturate(1/(viewPosition.z*spotFade));
 					
 					if(useShadow[i]){
 						projectionColor *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
@@ -596,12 +596,13 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	float4 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
 	float4 finalDiffuse = saturate(saturate(newCol) + saturate(ambient) + reflColorNorm * reflective.y);
 
-	newCol += newRefl;
+//	newCol += newRefl;
 	if(refraction) fresRefl = 1;
-	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
-
+	newCol += (newRefl + finalDiffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;	
+	newCol.a = Alpha;
 	
-	return (newCol + Color.rgba) * texCol;
+	return newCol;
+
 }
 
 
@@ -841,7 +842,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
-					projectionColor *= saturate(1/(viewPosition.z*spotFade));
+//					projectionColor *= saturate(1/(viewPosition.z*spotFade));
 					
 					if(useShadow[i]){
 						projectionColor *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
@@ -931,12 +932,17 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float4 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
 	float4 finalDiffuse = saturate(saturate(newCol) + saturate(ambient) + reflColorNorm * reflective.y);
 
-	newCol += newRefl;
+//	newCol += newRefl;
+//	if(refraction) fresRefl = 1;
+//	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
+//	newCol.a *= Alpha;
+//    return (newCol + Color.rgba) * texCol;
+	
 	if(refraction) fresRefl = 1;
-	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
-
-    return (newCol + Color.rgba) * texCol;
-
+	newCol += (newRefl + finalDiffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;	
+	newCol.a = Alpha;
+	
+	return newCol;
 }
 
 
