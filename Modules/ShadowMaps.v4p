@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="1320" locked="0">
-   <BOUNDS type="Window" left="5625" top="3375" width="10890" height="11790">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0" locked="0">
+   <BOUNDS type="Window" left="16260" top="3615" width="10890" height="11790">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -25,11 +25,11 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="12" systemname="IOBox (Enumerations)">
-   <BOUNDS type="Box" left="2775" top="2625" width="1245" height="390">
+   <BOUNDS type="Box" left="2775" top="2625" width="1455" height="285">
    </BOUNDS>
    <BOUNDS type="Node" left="2775" top="2625" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Input Enum" slicecount="1" visible="1" values="NoCullSimple">
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="BackCullSimple">
    </PIN>
    </NODE>
    <LINK srcnodeid="12" srcpinname="Output Enum" dstnodeid="4" dstpinname="Mode" linkstyle="PolyLine">
@@ -145,7 +145,7 @@
    </PIN>
    <PIN pinname="Transform In" visible="1" slicecount="8" values=",,,,,,,">
    </PIN>
-   <PIN pinname="depthOffset" slicecount="1" values="0">
+   <PIN pinname="depthOffset" slicecount="1" values="0.001">
    </PIN>
    <PIN pinname="c" visible="1">
    </PIN>

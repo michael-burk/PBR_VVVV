@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="1320" locked="0">
-   <BOUNDS type="Window" left="5625" top="3375" width="10890" height="11790">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0" locked="0">
+   <BOUNDS type="Window" left="16260" top="3615" width="10890" height="11790">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -25,11 +25,11 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="12" systemname="IOBox (Enumerations)">
-   <BOUNDS type="Box" left="2775" top="2625" width="1245" height="390">
+   <BOUNDS type="Box" left="2775" top="2625" width="1455" height="285">
    </BOUNDS>
    <BOUNDS type="Node" left="2775" top="2625" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Input Enum" slicecount="1" visible="1" values="NoCullSimple">
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="BackCullSimple">
    </PIN>
    </NODE>
    <LINK srcnodeid="12" srcpinname="Output Enum" dstnodeid="4" dstpinname="Mode" linkstyle="PolyLine">
@@ -345,9 +345,9 @@
    <NODE id="72" systemname="Renderer (DX11 TextureSpread)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TextureSpread)" componentmode="Hidden">
    <BOUNDS type="Node" left="1035" top="7230" width="1950" height="270">
    </BOUNDS>
-   <PIN pinname="Mips" slicecount="1" values="0">
+   <PIN pinname="Mips" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Target Format" slicecount="1" visible="1" values="R32G32B32A32_Float">
+   <PIN pinname="Target Format" slicecount="1" visible="1" values="R16G16B16A16_Float">
    </PIN>
    <PIN pinname="Layer" visible="1" slicecount="1" values="||">
    </PIN>
@@ -624,16 +624,8 @@
    </NODE>
    <LINK srcnodeid="211" srcpinname="Output" dstnodeid="212" dstpinname="Ord Value">
    </LINK>
-   <LINK srcnodeid="212" srcpinname="Enum" dstnodeid="72" dstpinname="Target Format" linkstyle="Bezier">
-   <LINKPOINT x="405" y="7020">
-   </LINKPOINT>
-   <LINKPOINT x="1035" y="7020">
-   </LINKPOINT>
+   <LINK srcnodeid="212" srcpinname="Enum" dstnodeid="72" dstpinname="Target Format">
    </LINK>
-   <LINK srcnodeid="212" srcpinname="Enum" dstnodeid="136" dstpinname="Target Format" linkstyle="Bezier">
-   <LINKPOINT x="390" y="8333">
-   </LINKPOINT>
-   <LINKPOINT x="1380" y="8333">
-   </LINKPOINT>
+   <LINK srcnodeid="212" srcpinname="Enum" dstnodeid="136" dstpinname="Target Format">
    </LINK>
    </PATCH>

@@ -507,8 +507,6 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
-			//		projectionColor *= saturate(1/(viewPosition.z*spotFade));
-					
 					if(useShadow[i]){
 						projectionColor *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
 					}
@@ -562,7 +560,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 						projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 						
-							shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+						shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
 
 						} 
 					}
@@ -583,8 +581,6 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 
 				}	
 			
-				newCol  /=2;
-				ambient /=2;
 			break;
 			
 		}
@@ -593,10 +589,12 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		
 	}
 	
+	newCol  /=2;
+//	ambient /=numLights;
+	
 	float4 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
 	float4 finalDiffuse = saturate(saturate(newCol) + saturate(ambient) + reflColorNorm * reflective.y);
 
-//	newCol += newRefl;
 	if(refraction) fresRefl = 1;
 	newCol += (newRefl + finalDiffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;	
 	newCol.a = Alpha;
@@ -842,7 +840,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
-//					projectionColor *= saturate(1/(viewPosition.z*spotFade));
 					
 					if(useShadow[i]){
 						projectionColor *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
@@ -919,8 +916,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 
 				}	
 			
-				newCol  /=2;
-				ambient /=2;
 				
 			break;
 			
@@ -929,15 +924,12 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 	}
 	
+	newCol  /=2;
+//	ambient /=numLights;
+	
 	float4 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
 	float4 finalDiffuse = saturate(saturate(newCol) + saturate(ambient) + reflColorNorm * reflective.y);
 
-//	newCol += newRefl;
-//	if(refraction) fresRefl = 1;
-//	newCol += finalDiffuse*(1 - reflective.x * fresRefl );	
-//	newCol.a *= Alpha;
-//    return (newCol + Color.rgba) * texCol;
-	
 	if(refraction) fresRefl = 1;
 	newCol += (newRefl + finalDiffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;	
 	newCol.a = Alpha;
