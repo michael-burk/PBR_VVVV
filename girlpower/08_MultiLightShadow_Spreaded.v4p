@@ -198,26 +198,6 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
-   <NODE systemname="Timing (Debug)" nodename="Timing (Debug)" componentmode="Hidden" id="1116">
-   <BOUNDS type="Node" left="9105" top="10140" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="frames per second" visible="1">
-   </PIN>
-   </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1117" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="9105" top="10605" width="795" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="9105" top="10605" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Integer">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1116" srcpinname="frames per second" dstnodeid="1117" dstpinname="Y Input Value">
-   </LINK>
    <NODE systemname="FXAA11 (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\FXAA11.tfx" nodename="FXAA11 (DX11.TextureFX)" componentmode="Hidden" id="1118">
    <BOUNDS type="Node" left="4200" top="10860" width="100" height="100">
    </BOUNDS>
@@ -298,16 +278,6 @@
    </LINK>
    <LINK srcnodeid="1" srcpinname="Projection" dstnodeid="928" dstpinname="Projection">
    </LINK>
-   <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
-   <BOUNDS type="Node" left="9105" top="11460" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Time Mode" slicecount="1" values="Filtered">
-   </PIN>
-   <PIN pinname="Maximum Foreground FPS" slicecount="1" visible="1" values="25">
-   </PIN>
-   <PIN pinname="Maximum Background FPS" visible="1" slicecount="1" values="5">
-   </PIN>
-   </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1140" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="5820" top="1245" width="465" height="240">
    </BOUNDS>
@@ -343,24 +313,6 @@
    <LINK srcnodeid="1140" srcpinname="Y Output Value" dstnodeid="1126" dstpinname="Resolution X">
    </LINK>
    <LINK srcnodeid="1140" srcpinname="Y Output Value" dstnodeid="1126" dstpinname="Resolution Y">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1160" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="9105" top="11055" width="795" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="9105" top="11055" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="120">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Integer">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1160" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Foreground FPS">
    </LINK>
    <NODE systemname="Sampler (DX11 Advanced)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sampler (DX11 Advanced)" componentmode="Hidden" id="1162">
    <BOUNDS type="Node" left="12000" top="7560" width="100" height="100">
@@ -631,8 +583,6 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1105" srcpinname="Geometry Out" dstnodeid="1164" dstpinname="Input 1">
-   </LINK>
-   <LINK srcnodeid="1160" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Background FPS">
    </LINK>
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (Spreads)" componentmode="Hidden" id="1173">
    <BOUNDS type="Node" left="5520" top="4170" width="100" height="100">
