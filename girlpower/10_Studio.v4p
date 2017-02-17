@@ -173,7 +173,7 @@
    </PIN>
    <PIN pinname="Fresnel Rim/Refl Min XY" visible="1" slicecount="4" values="0,0,0,1">
    </PIN>
-   <PIN pinname="Color Overlay" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|" visible="1">
+   <PIN pinname="Color Overlay" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
    <PIN pinname="Reflective/DiffuseXY" visible="1" slicecount="4" values="1,0,0,0">
    </PIN>
@@ -365,7 +365,17 @@
    </PIN>
    <PIN pinname="Camera Position Instant" visible="1">
    </PIN>
-   <PIN pinname="Initial Distance" slicecount="1" values="2">
+   <PIN pinname="Initial Distance" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Target Initial Position" visible="1">
+   </PIN>
+   <PIN pinname="Initial Yaw" slicecount="1" values="-0.81">
+   </PIN>
+   <PIN pinname="Roll" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Initial Pitch" slicecount="1" values="0.07">
+   </PIN>
+   <PIN pinname="FilterTime" slicecount="1" values="3">
    </PIN>
    </NODE>
    <LINK srcnodeid="1105" srcpinname="View" dstnodeid="928" dstpinname="View">
@@ -390,16 +400,6 @@
    </NODE>
    <LINK srcnodeid="1106" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique">
    </LINK>
-   <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
-   <BOUNDS type="Node" left="8100" top="9405" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Maximum Foreground FPS" visible="1">
-   </PIN>
-   <PIN pinname="Maximum Background FPS" visible="1">
-   </PIN>
-   <PIN pinname="Time Mode" slicecount="1" values="Filtered">
-   </PIN>
-   </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1112">
    <BOUNDS type="Box" left="4050" top="2205" width="795" height="480">
    </BOUNDS>
@@ -571,7 +571,7 @@
    </PIN>
    <PIN pinname="Res²" slicecount="1" values="512">
    </PIN>
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.35">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.18">
    </PIN>
    <PIN pinname="LightViewProjection" visible="1">
    </PIN>
@@ -587,7 +587,7 @@
    </PIN>
    <PIN pinname="Example Lightness" slicecount="1" values="0.35">
    </PIN>
-   <PIN pinname="Shadow" slicecount="3" values="1,1,1" visible="1">
+   <PIN pinname="Shadow" slicecount="3" visible="1" values="1,1,1">
    </PIN>
    <PIN pinname="DirectionalLight Count" slicecount="1" values="0">
    </PIN>
@@ -801,7 +801,7 @@
    </BOUNDS>
    <PIN pinname="XY" visible="1">
    </PIN>
-   <PIN pinname="X" slicecount="1" values="1" visible="1">
+   <PIN pinname="X" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Y" slicecount="1" values="0">
    </PIN>
@@ -863,7 +863,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8865" top="855" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.34071,0.38467,0.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.28296,0.35959,0.00000|">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Rim Color|">
    </PIN>
@@ -1043,5 +1043,23 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1171" srcpinname="Output" dstnodeid="1116" dstpinname="Input 1">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1172">
+   <BOUNDS type="Box" left="4410" top="7920" width="795" height="720">
+   </BOUNDS>
+   <BOUNDS type="Node" left="4410" top="7920" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,1.84,0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="3">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1172" srcpinname="Y Output Value" dstnodeid="1105" dstpinname="Target Initial Position">
    </LINK>
    </PATCH>

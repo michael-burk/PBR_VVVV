@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="2640" scrolly="1905" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="1110" scrolly="8790" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="13200" width="100" height="100">
    </BOUNDS>
@@ -231,7 +231,7 @@
    </PIN>
    </NODE>
    <NODE systemname="HSL (Color Join)" nodename="HSL (COLOR JOIN)" componentmode="Hidden" id="41">
-   <BOUNDS type="Node" left="14200" top="9315" width="100" height="100">
+   <BOUNDS type="Node" left="14200" top="9765" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -243,7 +243,7 @@
    </PIN>
    </NODE>
    <NODE systemname="LinearSpread (Spreads)" nodename="LINEARSPREAD (SPREADS)" componentmode="Hidden" id="42">
-   <BOUNDS type="Node" left="14200" top="8520" width="100" height="100">
+   <BOUNDS type="Node" left="14200" top="9270" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -394,10 +394,10 @@
    <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <LINK srcnodeid="42" srcpinname="Output" dstnodeid="41" dstpinname="Hue" linkstyle="Bezier">
-   <LINKPOINT x="14235" y="8978">
+   <LINK srcnodeid="42" srcpinname="Output" dstnodeid="41" dstpinname="Hue" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="14235" y="9653">
    </LINKPOINT>
-   <LINKPOINT x="14235" y="9128">
+   <LINKPOINT x="14235" y="9653">
    </LINKPOINT>
    </LINK>
    <NODE id="61" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)" hiddenwhenlocked="0">
@@ -410,7 +410,7 @@
    <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="615" top="1440" width="19275" height="13575">
+   <BOUNDS type="Window" left="825" top="5985" width="24015" height="14370">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -1065,9 +1065,9 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="295" srcpinname="Output" dstnodeid="246" dstpinname="Data" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="10920" y="10555">
+   <LINKPOINT x="10920" y="10553">
    </LINKPOINT>
-   <LINKPOINT x="26220" y="10655">
+   <LINKPOINT x="26220" y="10553">
    </LINKPOINT>
    </LINK>
    <NODE systemname="DynamicBuffer (DX11.Buffer Color)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER COLOR)" componentmode="Hidden" id="297" hiddenwhenlocked="0">
@@ -1129,23 +1129,23 @@
    </LINKPOINT>
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="MULTIPLY (COLOR)" componentmode="Hidden" id="301">
-   <BOUNDS type="Node" left="14190" top="10230" width="100" height="100">
+   <BOUNDS type="Node" left="14190" top="10380" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Color" visible="1">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Scalar" slicecount="1" values="0.35">
+   <PIN pinname="Scalar" slicecount="1" values="0.15">
    </PIN>
    </NODE>
-   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="301" dstpinname="Color" linkstyle="Bezier">
-   <LINKPOINT x="14220" y="9920">
+   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="301" dstpinname="Color" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="14220" y="10208">
    </LINKPOINT>
-   <LINKPOINT x="14220" y="9895">
+   <LINKPOINT x="14220" y="10208">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="MULTIPLY (COLOR)" componentmode="Hidden" id="302">
-   <BOUNDS type="Node" left="18165" top="10395" width="100" height="100">
+   <BOUNDS type="Node" left="18165" top="10545" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Color" visible="1">
    </PIN>
@@ -1154,10 +1154,10 @@
    <PIN pinname="Scalar" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="302" dstpinname="Color" linkstyle="Bezier">
-   <LINKPOINT x="14245" y="9993">
+   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="302" dstpinname="Color" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="14265" y="10275">
    </LINKPOINT>
-   <LINKPOINT x="18185" y="9958">
+   <LINKPOINT x="18165" y="10275">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="120" srcpinname="Y Output Value" dstnodeid="2" dstpinname="Data" linkstyle="Bezier">
@@ -1923,7 +1923,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15360" top="4230" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.2">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1971,7 +1971,7 @@
    </PIN>
    <PIN pinname="Minimum" slicecount="1" pintype="Configuration" values="0">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" pintype="Input" values="0.25">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" pintype="Input" values="0">
    </PIN>
    <BOUNDS type="Box" left="15360" top="4755" width="825" height="240">
    </BOUNDS>
@@ -2133,15 +2133,15 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="82" srcpinname="Output Node" dstnodeid="80" dstpinname="Geometry" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="17535" y="8063">
+   <LINKPOINT x="17535" y="7995">
    </LINKPOINT>
-   <LINKPOINT x="20910" y="7943">
+   <LINKPOINT x="20910" y="7995">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="83" srcpinname="Output Node" dstnodeid="80" dstpinname="Transform In" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="17550" y="8308">
+   <LINKPOINT x="17550" y="8250">
    </LINKPOINT>
-   <LINKPOINT x="21225" y="8208">
+   <LINKPOINT x="21225" y="8250">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="234" srcpinname="LightVP - Shadow Selection" dstnodeid="80" dstpinname="View" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -2189,15 +2189,15 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="408" srcpinname="Output Node" dstnodeid="80" dstpinname="Alpha Tex" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="17580" y="8600">
+   <LINKPOINT x="17580" y="8543">
    </LINKPOINT>
-   <LINKPOINT x="22500" y="8500">
+   <LINKPOINT x="22500" y="8543">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="409" srcpinname="Output Enum" dstnodeid="80" dstpinname="Technique" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="17580" y="8885">
+   <LINKPOINT x="17580" y="8828">
    </LINKPOINT>
-   <LINKPOINT x="22815" y="8785">
+   <LINKPOINT x="22815" y="8828">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="175" srcpinname="Y Output Value" dstnodeid="210" dstpinname="Input" hiddenwhenlocked="1" linkstyle="Bezier">
@@ -2227,7 +2227,7 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="Y Input Value" visible="1" slicecount="1" values="0">
+   <PIN pinname="Y Input Value" visible="1" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|PointLight Count|">
    </PIN>
@@ -2261,7 +2261,7 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="Y Input Value" visible="1" slicecount="1" values="0">
+   <PIN pinname="Y Input Value" visible="1" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|SpotLight Count|">
    </PIN>
@@ -2295,7 +2295,7 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="Y Input Value" visible="1" slicecount="1" values="0">
+   <PIN pinname="Y Input Value" visible="1" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|DirectionalLight Count|">
    </PIN>
@@ -2445,7 +2445,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="1125" top="3345" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2491,7 +2491,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="20235" top="2850" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.4">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.15">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2501,9 +2501,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="430" srcpinname="Y Output Value" dstnodeid="41" dstpinname="Lightness" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="23305" y="5723">
+   <LINKPOINT x="20220" y="6420">
    </LINKPOINT>
-   <LINKPOINT x="11555" y="6653">
+   <LINKPOINT x="14625" y="6420">
    </LINKPOINT>
    </LINK>
    <NODE systemname="AvoidNIL (Node)" filename="%VVVV%\lib\nodes\modules\Node\AvoidNIL (Node).v4p" nodename="AvoidNIL (Node)" componentmode="Hidden" id="431">
@@ -2658,14 +2658,18 @@
    </LINK>
    <LINK srcnodeid="301" srcpinname="Output" dstnodeid="299" dstpinname="Color Input">
    </LINK>
-   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="45" dstpinname="Color Input" linkstyle="Bezier">
-   <LINKPOINT x="14265" y="10200">
+   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="45" dstpinname="Color Input" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="14265" y="10425">
    </LINKPOINT>
-   <LINKPOINT x="16185" y="10200">
+   <LINKPOINT x="16185" y="10425">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="302" srcpinname="Output" dstnodeid="300" dstpinname="Color Input">
    </LINK>
-   <LINK srcnodeid="234" srcpinname="LightCount" dstnodeid="42" dstpinname="Spread Count">
+   <LINK srcnodeid="234" srcpinname="LightCount" dstnodeid="42" dstpinname="Spread Count" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="4905" y="9038">
+   </LINKPOINT>
+   <LINKPOINT x="15105" y="9038">
+   </LINKPOINT>
    </LINK>
    </PATCH>

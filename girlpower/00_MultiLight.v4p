@@ -4,18 +4,6 @@
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
-   <NODE systemname="Mesh (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="Mesh (DX11.Geometry Assimp)" componentmode="Hidden" id="67">
-   <BOUNDS type="Node" left="3585" top="6030" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Output" visible="1">
-   </PIN>
-   <PIN pinname="Scene" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Mesh Index" slicecount="1" values="-1">
-   </PIN>
-   <BOUNDS type="Box" left="3585" top="6030">
-   </BOUNDS>
-   </NODE>
    <NODE systemname="Sampler (DX11 Advanced)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sampler (DX11 Advanced)" componentmode="Hidden" id="242">
    <BOUNDS type="Node" left="11775" top="6600" width="100" height="100">
    </BOUNDS>
@@ -75,7 +63,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="0.019">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Transform In" visible="1">
    </PIN>
@@ -143,7 +131,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="10">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="15">
    </PIN>
    </NODE>
    <PACK Name="VVVV.Packs" Version="0.2.0">
@@ -174,18 +162,6 @@
    <PIN pinname="Mode" slicecount="1" values="BackCullSimple">
    </PIN>
    </NODE>
-   <NODE systemname="SceneFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="SceneFile (DX11.Geometry Assimp)" componentmode="Hidden" id="960">
-   <BOUNDS type="Node" left="3600" top="5445" width="100" height="100">
-   </BOUNDS>
-   <BOUNDS type="Box" left="3600" top="5445">
-   </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\teapot.obj">
-   </PIN>
-   <PIN pinname="Scene" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="960" srcpinname="Scene" dstnodeid="67" dstpinname="Scene">
-   </LINK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="1076">
    <BOUNDS type="Node" left="9825" top="6285" width="100" height="100">
    </BOUNDS>
@@ -221,7 +197,7 @@
    </PIN>
    <PIN pinname="AA Samples per Pixel" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.29222,0.24671,0.32345,1.00000|">
+   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Show Cursor" slicecount="1" values="1">
    </PIN>
@@ -266,20 +242,6 @@
    <BOUNDS type="Box" left="10635" top="4290" width="990" height="270">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|Look inside!|">
-   </PIN>
-   <PIN pinname="Output String" visible="0">
-   </PIN>
-   <PIN pinname="Show Grid" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="String Type" slicecount="1" values="MultiLine">
-   </PIN>
-   </NODE>
-   <NODE nodename="IOBox (String)" componentmode="InABox" id="1095" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="465" top="1425" width="285" height="270">
-   </BOUNDS>
-   <BOUNDS type="Box" left="465" top="1425" width="2715" height="4545">
-   </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="|1. There a LOT of hidden pins. See girlpower for different use cases&cr;&lf;&cr;&lf;2. Bump Mapping Technique needs a mesh with Binormals and Tangents&cr;&lf;&cr;&lf;3. Rotate Transformations of the mesh have to be applied to normals&cr;&lf;&cr;&lf;4. Altered Orbit Camera, which outputs an instant position.|">
    </PIN>
    <PIN pinname="Output String" visible="0">
    </PIN>
@@ -335,7 +297,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="7110" top="8220" width="285" height="270">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="5.">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="4.">
    </PIN>
    <PIN pinname="Output String" visible="0">
    </PIN>
@@ -381,7 +343,7 @@
    </PIN>
    <PIN pinname="Fresnel Rim/Refl Min XY" visible="-1" slicecount="2" pintype="Input" values="0,0">
    </PIN>
-   <PIN pinname="Color Overlay" slicecount="1" values="|0.00000,0.46061,0.23379,1.00000|" visible="1">
+   <PIN pinname="Color Overlay" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Reflective/DiffuseXY" visible="-1" slicecount="2" pintype="Input" values="0,0">
    </PIN>
@@ -429,7 +391,7 @@
    </PIN>
    <PIN pinname="lAtt2" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="lPos" slicecount="1" values="||" visible="1">
+   <PIN pinname="lPos" slicecount="1" visible="1" values="||">
    </PIN>
    <PIN pinname="lightCount" slicecount="1" values="5">
    </PIN>
@@ -486,8 +448,6 @@
    </LINK>
    <LINK srcnodeid="422" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique" linkstyle="PolyLine">
    </LINK>
-   <LINK srcnodeid="67" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
-   </LINK>
    <LINK srcnodeid="956" srcpinname="Render State" dstnodeid="934" dstpinname="Render State">
    </LINK>
    <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Bumpiness">
@@ -541,7 +501,7 @@
    </PIN>
    <PIN pinname="AmbientColor" visible="1">
    </PIN>
-   <PIN pinname="Shadow Geometry" visible="1">
+   <PIN pinname="Shadow Geometry" visible="1" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Shadow Transform" visible="1">
    </PIN>
@@ -559,23 +519,17 @@
    </PIN>
    <PIN pinname="lPos" visible="1">
    </PIN>
-   <PIN pinname="DirectionalLight Count" slicecount="1" values="0" visible="1">
+   <PIN pinname="DirectionalLight Count" slicecount="1" visible="1" values="0">
    </PIN>
-   <PIN pinname="SpotLight Count" slicecount="1" values="1" visible="1">
+   <PIN pinname="SpotLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="PointLight Count" slicecount="1" values="1" visible="1">
+   <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Shadow" visible="1" slicecount="3" values="0,0,0">
    </PIN>
    <PIN pinname="Shadow Technique" slicecount="1" values="VSM">
    </PIN>
    </NODE>
-   <LINK srcnodeid="67" srcpinname="Output" dstnodeid="1091" dstpinname="Shadow Geometry" linkstyle="Bezier">
-   <LINKPOINT x="3810" y="5280">
-   </LINKPOINT>
-   <LINKPOINT x="9450" y="5280">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Transform" linkstyle="Bezier">
    <LINKPOINT x="4930" y="4383">
    </LINKPOINT>
@@ -818,18 +772,6 @@
    </LINK>
    <LINK srcnodeid="1102" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
    </LINK>
-   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1107">
-   <BOUNDS type="Box" left="6105" top="3555" width="1740" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="6105" top="3555" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.48350,0.54772,1.00000|">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|Color Overlay|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1107" srcpinname="Color Output" dstnodeid="934" dstpinname="Color Overlay">
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1108">
    <BOUNDS type="Box" left="7890" top="2445" width="795" height="240">
    </BOUNDS>
@@ -906,4 +848,28 @@
    </NODE>
    <LINK srcnodeid="1111" srcpinname="Y Output Value" dstnodeid="1091" dstpinname="Helper">
    </LINK>
+   <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1112">
+   <BOUNDS type="Node" left="3945" top="5670" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Filename" slicecount="1" values="Assets\teapot.fbx">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1112" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
+   </LINK>
+   <NODE id="1095" nodename="IOBox (String)" componentmode="InABox" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="465" top="1425" width="285" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="465" top="1425" width="2715" height="4545">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|1. There a LOT of hidden pins. See girlpower for different use cases&cr;&lf;&cr;&lf;2. Bump Mapping Technique needs a mesh with Binormals and Tangents&cr;&lf;&cr;&lf;3. Rotate Transformations of the mesh have to be applied to normals&cr;&lf;&cr;&lf;4. Altered Orbit Camera, which outputs an instant position.|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
    </PATCH>

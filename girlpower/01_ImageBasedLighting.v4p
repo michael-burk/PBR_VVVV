@@ -14,18 +14,6 @@
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
-   <NODE systemname="Mesh (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="Mesh (DX11.Geometry Assimp)" componentmode="Hidden" id="67">
-   <BOUNDS type="Node" left="3495" top="6525" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Output" visible="1">
-   </PIN>
-   <PIN pinname="Scene" visible="1" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Mesh Index" slicecount="1" values="-1">
-   </PIN>
-   <BOUNDS type="Box" left="3495" top="6525">
-   </BOUNDS>
-   </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="369" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="7780" top="6680" width="540" height="240">
    </BOUNDS>
@@ -67,7 +55,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="0.1">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Transform In" visible="1">
    </PIN>
@@ -87,7 +75,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5100" top="4485" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,-3,0">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -191,18 +179,6 @@
    </BOUNDS>
    </NODE>
    <LINK srcnodeid="574" srcpinname="Y Output Value" dstnodeid="473" dstpinname="Translate XYZ">
-   </LINK>
-   <NODE systemname="SceneFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="SceneFile (DX11.Geometry Assimp)" componentmode="Hidden" id="960">
-   <BOUNDS type="Node" left="3510" top="5925" width="100" height="100">
-   </BOUNDS>
-   <BOUNDS type="Box" left="3510" top="5925">
-   </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\teapot.obj">
-   </PIN>
-   <PIN pinname="Scene" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="960" srcpinname="Scene" dstnodeid="67" dstpinname="Scene">
    </LINK>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
    <BOUNDS type="Node" left="2890" top="10165" width="100" height="100">
@@ -610,12 +586,6 @@
    <LINKPOINT x="11495" y="5910">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="67" srcpinname="Output" dstnodeid="934" dstpinname="Geometry" linkstyle="VHV">
-   <LINKPOINT x="4500" y="7080">
-   </LINKPOINT>
-   <LINKPOINT x="4605" y="7080">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
    </LINK>
    <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Bumpiness">
@@ -636,6 +606,8 @@
    <PIN pinname="View" visible="1">
    </PIN>
    <PIN pinname="Projection" visible="1">
+   </PIN>
+   <PIN pinname="Initial Distance" slicecount="1" values="5">
    </PIN>
    </NODE>
    <LINK srcnodeid="1095" srcpinname="View" dstnodeid="928" dstpinname="View">
@@ -769,5 +741,15 @@
    </LINKPOINT>
    <LINKPOINT x="6510" y="5738">
    </LINKPOINT>
+   </LINK>
+   <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1103">
+   <BOUNDS type="Node" left="4080" top="6765" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Filename" slicecount="1" values="Assets\teapot.fbx">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1103" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
    </LINK>
    </PATCH>

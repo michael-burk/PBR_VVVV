@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="3150" scrolly="990" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="12930" scrolly="3555" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="13200" width="100" height="100">
    </BOUNDS>
@@ -265,7 +265,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="2" values="|0.99074,0.53345,0.64065,1.00000|,|0.27063,0.14571,0.23698,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="2" values="|0.83691,0.45062,0.51702,1.00000|,|0.26323,0.14174,0.22369,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)" hiddenwhenlocked="0">
@@ -1173,7 +1173,7 @@
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Scalar" slicecount="1" values="0.15">
+   <PIN pinname="Scalar" slicecount="1" values="0.13">
    </PIN>
    </NODE>
    <NODE systemname="Multiply (Color)" nodename="MULTIPLY (COLOR)" componentmode="Hidden" id="302">
@@ -1183,7 +1183,7 @@
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Scalar" slicecount="1" values="0.5">
+   <PIN pinname="Scalar" slicecount="1" values="0.2">
    </PIN>
    </NODE>
    <LINK srcnodeid="41" srcpinname="Output" dstnodeid="302" dstpinname="Color" linkstyle="Bezier">
@@ -1941,7 +1941,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15360" top="4230" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.25">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.35">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>

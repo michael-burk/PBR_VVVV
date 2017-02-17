@@ -389,7 +389,7 @@
    </PIN>
    <PIN pinname="SpotLight Fading" visible="1" slicecount="1" values="0.25">
    </PIN>
-   <PIN pinname="Bumpiness" visible="1" slicecount="1" values="0.96" pintype="Input">
+   <PIN pinname="Bumpiness" visible="1" slicecount="1" pintype="Input" values="0.96">
    </PIN>
    <PIN pinname="Normal Rotation" visible="1">
    </PIN>
@@ -513,7 +513,7 @@
    </PIN>
    <PIN pinname="Shadow Technique" slicecount="1" values="VSM">
    </PIN>
-   <PIN pinname="Example Lightness" slicecount="1" values="0.2">
+   <PIN pinname="Example Lightness" slicecount="1" values="0.15">
    </PIN>
    <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0.25">
    </PIN>

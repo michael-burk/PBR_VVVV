@@ -335,7 +335,7 @@
    </PIN>
    <PIN pinname="Radius" slicecount="1" values="0.4">
    </PIN>
-   <PIN pinname="Thickness" slicecount="1" values="0.09">
+   <PIN pinname="Thickness" slicecount="1" values="0.24">
    </PIN>
    <PIN pinname="SizeXYZ" slicecount="3" values="0.31,0.31,0.31">
    </PIN>
@@ -465,7 +465,7 @@
    </PIN>
    <PIN pinname="lAtt2" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="lPos" slicecount="1" values="||" visible="1">
+   <PIN pinname="lPos" slicecount="1" visible="1" values="||">
    </PIN>
    <PIN pinname="lightCount" slicecount="1" values="5">
    </PIN>
@@ -1005,7 +1005,7 @@
    </PIN>
    <PIN pinname="Light Range" visible="1">
    </PIN>
-   <PIN pinname="Res²" slicecount="1" values="256" visible="1">
+   <PIN pinname="Res²" slicecount="1" visible="1" values="256">
    </PIN>
    <PIN pinname="Shadow Blur Width" slicecount="1" values="0.1">
    </PIN>
