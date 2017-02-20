@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="12930" scrolly="3555" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="1710" scrolly="3285" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="13200" width="100" height="100">
    </BOUNDS>
@@ -201,7 +201,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="11865" top="12600" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.33">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -217,7 +217,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10650" top="12600" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.33">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -265,7 +265,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="2" values="|0.83691,0.45062,0.51702,1.00000|,|0.26323,0.14174,0.22369,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="1" values="|0.19611,0.45876,0.00000,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)" hiddenwhenlocked="0">
@@ -693,19 +693,13 @@
    <NODE systemname="Select (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="SELECT (VALUE)" componentmode="Hidden" id="186" hiddenwhenlocked="1">
    <BOUNDS type="Node" left="7800" top="11640" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Input" visible="1">
+   <PIN pinname="Input" visible="1" slicecount="1" values="14.92">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
    <PIN pinname="Select" slicecount="1" visible="1" values="2">
    </PIN>
    </NODE>
-   <LINK srcnodeid="174" srcpinname="Y Output Value" dstnodeid="186" dstpinname="Input" hiddenwhenlocked="1" linkstyle="Bezier">
-   <LINKPOINT x="7815" y="11550">
-   </LINKPOINT>
-   <LINKPOINT x="7815" y="11550">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="186" srcpinname="Output" dstnodeid="121" dstpinname="Input 3" linkstyle="Bezier" hiddenwhenlocked="1">
    <LINKPOINT x="7815" y="11978">
    </LINKPOINT>
@@ -1139,7 +1133,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="3" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="299" srcpinname="Color Output" dstnodeid="297" dstpinname="Data" linkstyle="Bezier">
@@ -1149,33 +1143,23 @@
    </LINKPOINT>
    </LINK>
    <NODE nodename="IOBOX (COLOR)" componentmode="InABox" id="300" systemname="IOBox (Color)">
-   <BOUNDS type="Box" left="18195" top="10845" width="1890" height="1125">
+   <BOUNDS type="Box" left="18360" top="10890" width="1890" height="1125">
    </BOUNDS>
-   <BOUNDS type="Node" left="18195" top="10845" width="0" height="0">
+   <BOUNDS type="Node" left="18360" top="10890" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Rows" slicecount="1" values="5">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="3" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="1" values="|0.00000,1.00000,0.11664,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="300" srcpinname="Color Output" dstnodeid="14" dstpinname="Data" linkstyle="Bezier">
-   <LINKPOINT x="18195" y="12540">
+   <LINKPOINT x="18305" y="12570">
    </LINKPOINT>
-   <LINKPOINT x="16920" y="12540">
+   <LINKPOINT x="16975" y="12555">
    </LINKPOINT>
    </LINK>
-   <NODE systemname="Multiply (Color)" nodename="MULTIPLY (COLOR)" componentmode="Hidden" id="301">
-   <BOUNDS type="Node" left="14190" top="10305" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Color" visible="1">
-   </PIN>
-   <PIN pinname="Output" visible="1">
-   </PIN>
-   <PIN pinname="Scalar" slicecount="1" values="0.13">
-   </PIN>
-   </NODE>
    <NODE systemname="Multiply (Color)" nodename="MULTIPLY (COLOR)" componentmode="Hidden" id="302">
    <BOUNDS type="Node" left="18165" top="10260" width="100" height="100">
    </BOUNDS>
@@ -1199,7 +1183,7 @@
    </LINKPOINT>
    </LINK>
    <NODE id="120" nodename="IOBOX (VALUE ADVANCED)" componentmode="InABox" systemname="IOBox (Value Advanced)">
-   <PIN pinname="Y Input Value" slicecount="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" values="0.33">
    </PIN>
    <BOUNDS type="Box" left="13080" top="12600" width="795" height="240">
    </BOUNDS>
@@ -1941,7 +1925,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15360" top="4230" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.08">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.13">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2230,18 +2214,6 @@
    </LINK>
    <LINK srcnodeid="70" srcpinname="Texture Out" dstnodeid="71" dstpinname="Input Node">
    </LINK>
-   <LINK srcnodeid="301" srcpinname="Output" dstnodeid="299" dstpinname="Color Input" linkstyle="Bezier">
-   <LINKPOINT x="14220" y="10710">
-   </LINKPOINT>
-   <LINKPOINT x="14220" y="10710">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="302" srcpinname="Output" dstnodeid="300" dstpinname="Color Input" linkstyle="Bezier">
-   <LINKPOINT x="18200" y="10640">
-   </LINKPOINT>
-   <LINKPOINT x="18205" y="10720">
-   </LINKPOINT>
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="411" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="12705" top="4035" width="795" height="240">
    </BOUNDS>
@@ -2289,7 +2261,7 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="Y Input Value" visible="1" slicecount="1" values="1">
+   <PIN pinname="Y Input Value" visible="1" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|SpotLight Count|">
    </PIN>
@@ -2526,6 +2498,20 @@
    <LINKPOINT x="5865" y="2348">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="45" srcpinname="Color Output" dstnodeid="301" dstpinname="Color">
+   <LINK srcnodeid="174" srcpinname="Y Output Value" dstnodeid="186" dstpinname="Input">
    </LINK>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="441">
+   <BOUNDS type="Node" left="8565" top="11115" width="2055" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="8565" top="11115" width="2205" height="330">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|&lt; -- vielleicht ausbrennen?|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
    </PATCH>

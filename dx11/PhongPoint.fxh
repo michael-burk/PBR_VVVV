@@ -1,25 +1,15 @@
 
 float lPower <String uiname="Power"; float uimin=0.0;> = 100.0;     //shininess of specular highlight
 
-
 //phong point function
-float4 PhongPoint(float lightToObject, float3 NormV, float3 ViewDirV, float3 LightDirV, float3 lightPos, float lAtt0,
-				  float lAtt1, float lAtt2, float4 lDiff, float4 lSpec, float4 specIntensity, float lRange)
+lightStruct PhongPoint(float lightToObject, float3 NormV, float3 ViewDirV, float3 LightDirV, float3 lightPos, float lAtt0,
+				  float lAtt1, float lAtt2, float4 lDiff, float4 lSpec, float4 specIntensity, float lRange, float4 sF)
 {
-	
-		float4 result;
 
 			
-		
-		   // float d = distance(PosW, lightPos);
-		    float atten = 0;
-		    
-		
-		    //compute attenuation only if vertex within lightrange
-		   // if (lightToObject<lRange)
-		   // {
-		       atten = 1/(saturate(lAtt0) + saturate(lAtt1) * lightToObject + saturate(lAtt2) * pow(lightToObject, 2));
-		   // }
+		 	lightStruct result;
+
+		    float atten = 1/(saturate(lAtt0) + saturate(lAtt1) * lightToObject + saturate(lAtt2) * pow(lightToObject, 2));
 		
 		    //halfvector
 		    float3 H = normalize(ViewDirV + LightDirV);
@@ -41,12 +31,9 @@ float4 PhongPoint(float lightToObject, float3 NormV, float3 ViewDirV, float3 Lig
 			
 		    spec *= specIntensity;
 			
-			diff += spec;
-			result =  saturate(diff * (lRange-lightToObject));
-
-		   // result =  saturate(diff * (lRange-lightToObject)) + spec;
-		
-	
-			 return result;
+			result.diffuse = saturate(diff * (lRange-lightToObject)) * sF;
+			result.reflection = saturate(spec * (lRange-lightToObject)) * sF;
+				
+			return result;
 	
 }

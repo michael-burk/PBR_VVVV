@@ -3,9 +3,16 @@
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
 
+struct lightStruct
+{
+	float4 diffuse : COLOR0;
+    float4 reflection : COLOR0;
+};
+
 #include "dx11/PhongPoint.fxh"
 #include "dx11/PhongPointSpot.fxh"
 #include "dx11/PhongDirectional.fxh"
+
 
 cbuffer cbPerRender : register( b0 )
 {
@@ -38,7 +45,7 @@ cbuffer cbPerObject : register (b1)
 	bool refraction <bool visible=false; String uiname="Refraction";> = false;
 	bool BPCM <bool visible= false; String uiname="Box Projected Cube Map";>;
 	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
-	int diffuseMode <bool visible=false;string uiname="DiffuseAffect: Reflection/Specular/Both"; int uimin=0.0; int uimax=2.0;> = 2;
+	//int diffuseMode <bool visible=false;string uiname="DiffuseAffect: Reflection/Specular/Both"; int uimin=0.0; int uimax=2.0;> = 2;
 	bool useIridescence = false;
 	
 	static const float minVariance = 0;	
@@ -265,13 +272,21 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	float2 reflectTexCoord;
 	float4 reflectionColor;
 
+	float4 diffuse = float4(0,0,0,0);
+	float4 reflection = float4(0,0,0,0);
+	
+	lightStruct light;
+	light.diffuse = float4(0,0,0,0);
+	light.reflection = float4(0,0,0,0);
+	
+	float4 ambient = float4(0,0,0,0);
 	
 	uint tX,tY,m;
 
 	
 	float4 texCol = float4(1,1,1,1);
 	float4 specIntensity = float4(1,1,1,1);
-	float4 diffuse = float4(1,1,1,1);
+	float4 diffuseT = float4(1,1,1,1);
 	
 	texture2d.GetDimensions(tX,tY);
 	if(tX+tY > 0) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,tColor).xy);
@@ -280,15 +295,14 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	if(tX+tY > 0) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,tSpec).xy);
 	
 	diffuseTex.GetDimensions(tX,tY);
-	if(tX+tY > 0) diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
+	if(tX+tY > 0) diffuseT = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
 
-	{
-	if(diffuseMode == 1 || diffuseMode == 2)
-		specIntensity *= saturate(length(diffuse.rgb));
-	}
 	
-	float4 newCol = float4(0,0,0,0);
-	float4 ambient = float4(0,0,0,0);
+
+	
+
+	
+	
 	float4 Nn = normalize(In.NormW);
 	
 //  BumpMap
@@ -376,35 +390,28 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	float fresRefl = KrMin.y + (Kr.y-KrMin.y) * pow(1-abs(vdn),FresExp.y);
 	float4 reflColor = float4(0,0,0,0);
 	float4 reflColorNorm = float4(0,0,0,0);
-	float4 refrColor = float4(0,0,0,0);
-	
-		cubeTexRefl.GetDimensions(tX,tY);
-		if(tX+tY > 0)	
-		reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
-	
-		cubeTexIrradiance.GetDimensions(tX,tY);
-		if(tX+tY > 0)
-		reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
-		
-		if(refraction){
-				float3 refrVect;
-			    for(int r=0; r<3; r++) {
-			    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
-			    	refrColor += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
-				}
-		}
-		
-	
-		reflColor = lerp(refrColor,reflColor,fresRefl);
 
-		float inverseDotView = 1.0 - max(dot(Nb,Vn),0.0);
-		float4 iridescenceColor = float4(0,0,0,0);
-		if (useIridescence) iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*fresRefl;
-		
 	
-	if(diffuseMode == 0 || diffuseMode ==2){
-			reflColor *= saturate(length(diffuse.rgb));
-			reflColorNorm *= saturate(length(diffuse.rgb));			
+	cubeTexRefl.GetDimensions(tX,tY);
+	if(tX+tY > 0)	
+	reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
+
+	cubeTexIrradiance.GetDimensions(tX,tY);
+	if(tX+tY > 0) reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
+	
+	if(refraction){
+			float3 refrVect;
+		    for(int r=0; r<3; r++) {
+		    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
+		    	diffuse += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
+			}
+	}
+
+
+	float4 iridescenceColor = float4(0,0,0,0);
+	if (useIridescence){
+		float inverseDotView = 1.0 - max(dot(Nb,Vn),0.0);
+		iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*fresRefl;
 	} 
 	
 
@@ -447,7 +454,11 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	int pL = 0;
 	int shadowCounter = 0;
 	int lightCounter = 0;
-
+	
+	lightStruct lightResult;
+	lightResult.diffuse = float4(1,1,1,1);
+	lightResult.reflection = float4(0,0,0,0);
+	
 	for(uint i = 0; i< numLights; i++){
 		
 		
@@ -476,13 +487,13 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		
 					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-						newCol.rgb += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist).rgb;
-						newCol.rgb *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1).rgb);					
+						diffuse.rgb += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist).rgb;
+						diffuse.rgb *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1).rgb);					
 					} else {
-						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
+						diffuse += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
 					}
 				} else {
-					newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
+					diffuse += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
 				}
 				ambient += saturate(lAmbient[i%numlAmb]);
 				
@@ -511,7 +522,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 						projectionColor *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
 					}
 					
-			  		newCol += PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
+			  		diffuse += PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange]);
 						
@@ -566,40 +577,49 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 					}
 		
 					ambient += (lAmbient[i%numlAmb]*falloff);
-		  			newCol += PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
+		  			lightResult = PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
 									 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-									 lightRange[i%numLighRange]) * saturate(shadow);
+									 lightRange[i%numLighRange],saturate(shadow));
+					
+					light.diffuse += lightResult.diffuse;
+					light.reflection += lightResult.reflection;
 	
 			
 				} else {
 					ambient += (lAmbient[i%numlAmb]*falloff);
-		  			newCol += PhongPoint(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-						  			 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
+		  			lightResult = PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
+									 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-									 lightRange[i%numLighRange]);
-
+									 lightRange[i%numLighRange],1);
+					
+					light.diffuse += lightResult.diffuse;
+					light.reflection += lightResult.reflection;
+					
 				}	
 			
 			break;
 			
 		}
 		
-		
+
 		
 	}
+			
 	
-	newCol  /=2;
-//	ambient /=numLights;
+	light.reflection = (light.reflection + reflColor + iridescenceColor ) * reflective.x + RimColor * fresRim;
+	light.diffuse = saturate(saturate(light.diffuse) + saturate(ambient) + reflColorNorm * reflective.y);
 	
-	float4 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
-	float4 finalDiffuse = saturate(saturate(newCol) + saturate(ambient) + reflColorNorm * reflective.y);
-
 	if(refraction) fresRefl = 1;
-	newCol += (newRefl + finalDiffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;	
-	newCol.a *= Alpha;
 	
-	return newCol;
+	light.diffuse = lerp(light.diffuse,saturate(light.reflection+ saturate(ambient)),fresRefl*specIntensity);
+	
+//	diffuse += (finalReflection + finalDiffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;	
+//	diffuse.a *= Alpha;
+	
+	//return light.diffuse;
+//	return (light.reflection + light.diffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;
+	return light.diffuse;
 
 }
 
@@ -626,7 +646,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	float4 texCol = float4(1,1,1,1);
 	float4 specIntensity = float4(1,1,1,1);
-	float4 diffuse = float4(1,1,1,1);
+	float4 diffuseT = float4(1,1,1,1);
 	
 	uint tX,tY,m;
 	
@@ -637,16 +657,16 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	if(tX+tY > 2) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,tSpec).xy);
 	
 	diffuseTex.GetDimensions(tX,tY);
-	if(tX+tY > 2) diffuse = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
+	if(tX+tY > 2) diffuseT = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
 	
 	
 	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
 	
-	if(diffuseMode == 1 || diffuseMode == 2){
-		specIntensity *= saturate(length(diffuse.rgb));
-	}
-	
-	
+//	if(diffuseMode == 1 || diffuseMode == 2){
+//		specIntensity *= saturate(length(diffuse.rgb));
+//	}
+//	
+//	
 	float4 newCol = float4(0,0,0,0);
 	float4 ambient = float4(0,0,0,0);
 
@@ -737,10 +757,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 
 	
 	
-	if(diffuseMode == 0 || diffuseMode == 2){
-			reflColor *= saturate(length(diffuse.rgb));
-			reflColorNorm *= saturate(length(diffuse.rgb));	
-	} 
+//	if(diffuseMode == 0 || diffuseMode == 2){
+//			reflColor *= saturate(length(diffuse.rgb));
+//			reflColorNorm *= saturate(length(diffuse.rgb));	
+//	} 
 	
 	
 
@@ -904,7 +924,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		  			newCol += PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
 									 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-									 lightRange[i%numLighRange]) * saturate(shadow);
+									 lightRange[i%numLighRange],saturate(shadow)).diffuse;
 	
 			
 				} else {
@@ -912,7 +932,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		  			newCol += PhongPoint(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
 						  			 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-									 lightRange[i%numLighRange]);
+									 lightRange[i%numLighRange],saturate(shadow)).diffuse;
 
 				}	
 			
