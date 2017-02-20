@@ -29,7 +29,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2775" top="2625" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Input Enum" slicecount="1" visible="1" values="BackCullSimple">
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="NoCullSimple">
    </PIN>
    </NODE>
    <LINK srcnodeid="12" srcpinname="Output Enum" dstnodeid="4" dstpinname="Mode" linkstyle="PolyLine">

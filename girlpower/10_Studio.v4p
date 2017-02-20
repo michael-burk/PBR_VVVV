@@ -111,6 +111,8 @@
    </PIN>
    <PIN pinname="Layer 3" visible="1" slicecount="1" values="||">
    </PIN>
+   <PIN pinname="Layer 1" visible="1" slicecount="1" values="||">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1074" srcpinname="Layer Out" dstnodeid="2" dstpinname="Layer In" linkstyle="VHV">
    <LINKPOINT x="2490" y="9130">
@@ -235,7 +237,7 @@
    </PIN>
    <PIN pinname="Technique" slicecount="1" visible="1" values="Superphong">
    </PIN>
-   <PIN pinname="Bumpiness" visible="1" slicecount="1" values="1">
+   <PIN pinname="Bumpiness" visible="1" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Camera PositionXYZ" visible="1" slicecount="3" values="0,0,0">
    </PIN>
@@ -294,12 +296,6 @@
    <LINKPOINT x="12335" y="6525">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="1074" dstpinname="Layer 1" linkstyle="Bezier">
-   <LINKPOINT x="2625" y="7920">
-   </LINKPOINT>
-   <LINKPOINT x="2625" y="7920">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation" linkstyle="Bezier">
    <LINKPOINT x="3945" y="6713">
    </LINKPOINT>
@@ -307,11 +303,11 @@
    </LINKPOINT>
    </LINK>
    <NODE id="539" nodename="IOBox (Value Advanced)" componentmode="InABox" systemname="IOBox (Value Advanced)">
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0.125,0">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
    </PIN>
    <PIN pinname="X Input Value" slicecount="3" values="0,0,0">
    </PIN>
-   <BOUNDS type="Box" left="4510" top="4905" width="285" height="240">
+   <BOUNDS type="Box" left="4510" top="4905" width="585" height="945">
    </BOUNDS>
    <BOUNDS type="Node" left="4510" top="4905" width="0" height="0">
    </BOUNDS>
@@ -376,6 +372,8 @@
    <PIN pinname="Initial Pitch" slicecount="1" values="0.07">
    </PIN>
    <PIN pinname="FilterTime" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Reset" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="1105" srcpinname="View" dstnodeid="928" dstpinname="View">
@@ -470,8 +468,6 @@
    <PIN pinname="Input 2" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1116" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
-   </LINK>
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1118">
    <BOUNDS type="Node" left="2370" top="4020" width="100" height="100">
    </BOUNDS>
@@ -488,6 +484,8 @@
    <BOUNDS type="Node" left="2235" top="6075" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Render State" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Mode" slicecount="1" values="BackCullSimple">
    </PIN>
    </NODE>
    <LINK srcnodeid="1120" srcpinname="Render State" dstnodeid="934" dstpinname="Render State">
@@ -571,7 +569,7 @@
    </PIN>
    <PIN pinname="Res²" slicecount="1" values="512">
    </PIN>
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.18">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.05">
    </PIN>
    <PIN pinname="LightViewProjection" visible="1">
    </PIN>
@@ -594,6 +592,8 @@
    <PIN pinname="PointLight Count" slicecount="1" values="1">
    </PIN>
    <PIN pinname="SpotLight Count" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Shadow Map" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1096" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="934" dstpinname="Directional/Point/Spot" linkstyle="Bezier">
@@ -745,7 +745,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5145" top="4965" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,5">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.0012,5">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1035,15 +1035,13 @@
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1171">
    <BOUNDS type="Node" left="1920" top="3195" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\teapot.fbx">
+   <PIN pinname="Filename" slicecount="1" values="|..\..\..\ThreeD Scans\Le_Transi_De_Rene_De_Chalon.fbx|">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
    <PIN pinname="Reload" slicecount="1" values="0">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1171" srcpinname="Output" dstnodeid="1116" dstpinname="Input 1">
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1172">
    <BOUNDS type="Box" left="4410" top="7920" width="795" height="720">
    </BOUNDS>
@@ -1061,5 +1059,15 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1172" srcpinname="Y Output Value" dstnodeid="1105" dstpinname="Target Initial Position">
+   </LINK>
+   <LINK srcnodeid="1116" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
+   <LINKPOINT x="3075" y="6735">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1171" srcpinname="Output" dstnodeid="1116" dstpinname="Input 1">
+   <LINKPOINT x="2415" y="3420">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="1074" dstpinname="Layer 1">
    </LINK>
    </PATCH>
