@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="810" scrolly="0" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="13425" top="1710" width="14775" height="12540">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="1575" scrolly="0" bgcolor="15329769" locked="0">
+   <BOUNDS type="Window" left="13785" top="1320" width="13605" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -23,7 +23,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6445" top="6125" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.47">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -131,7 +131,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="15">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="10">
    </PIN>
    </NODE>
    <PACK Name="VVVV.Packs" Version="0.2.0">
@@ -197,7 +197,7 @@
    </PIN>
    <PIN pinname="AA Samples per Pixel" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Background Color" slicecount="1" visible="1" values="|1.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Show Cursor" slicecount="1" values="1">
    </PIN>
@@ -205,7 +205,7 @@
    </PIN>
    <PIN pinname="Texture SizeXY" slicecount="2" values="800,800">
    </PIN>
-   <PIN pinname="Target Format" slicecount="1" values="R16G16B16A16_Float">
+   <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
    <PIN pinname="View" slicecount="1" values="||">
    </PIN>
@@ -325,7 +325,7 @@
    </PIN>
    <PIN pinname="refractionIndex" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="25">
+   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="120">
    </PIN>
    <PIN pinname="colors Bin Size" visible="-1" pintype="Input" slicecount="1" values="3">
    </PIN>
@@ -337,7 +337,7 @@
    </PIN>
    <PIN pinname="Render State" slicecount="1" visible="1" values="||">
    </PIN>
-   <PIN pinname="Rim Color" slicecount="1" visible="-1" pintype="Input" values="|0.00000,0.00000,0.00000,0.00000|">
+   <PIN pinname="Rim Color" slicecount="1" visible="-1" pintype="Input" values="|1.00000,1.00000,1.00000,0.00000|">
    </PIN>
    <PIN pinname="LightRange" visible="1" slicecount="1" values="||">
    </PIN>
@@ -447,6 +447,20 @@
    </PIN>
    <PIN pinname="Technique Valid" visible="1">
    </PIN>
+   <PIN pinname="Reflection Color" visible="1">
+   </PIN>
+   <PIN pinname="Global Reflection Color" slicecount="1" visible="1" pintype="Input" values="|0.99367,1.00000,0.00000,1.00000|">
+   </PIN>
+   <PIN pinname="MIN Fresnel" visible="1">
+   </PIN>
+   <PIN pinname="MAX Fresnel" visible="1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="EXP Fresnel" visible="1" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Material Color" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
+   </PIN>
+   <PIN pinname="SpecularMap" visible="1" slicecount="1" values="||">
+   </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
    </LINK>
@@ -467,7 +481,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="2325" top="2220" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="6435" top="2010" width="20430" height="14835">
+   <BOUNDS type="Window" left="17100" top="345" width="15780" height="14835">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>
@@ -533,9 +547,13 @@
    </PIN>
    <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="Shadow" visible="1" slicecount="3" values="0,0,0">
+   <PIN pinname="Shadow" visible="1" slicecount="3" values="0,1,1">
    </PIN>
    <PIN pinname="Shadow Technique" slicecount="1" values="VSM">
+   </PIN>
+   <PIN pinname="Reflection Color" visible="1">
+   </PIN>
+   <PIN pinname="Shadow Geometry Transform" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Transform" linkstyle="Bezier">
@@ -694,12 +712,6 @@
    <LINKPOINT x="5385" y="10025">
    </LINKPOINT>
    <LINKPOINT x="5415" y="4960">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="Camera Position" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
-   <LINKPOINT x="6675" y="9470">
-   </LINKPOINT>
-   <LINKPOINT x="6420" y="6160">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Shadow Map" dstnodeid="934" dstpinname="ShadowMap" linkstyle="Bezier">
@@ -865,7 +877,7 @@
    <NODE id="1095" nodename="IOBox (String)" componentmode="InABox" systemname="IOBox (String)">
    <BOUNDS type="Node" left="465" top="1425" width="285" height="270">
    </BOUNDS>
-   <BOUNDS type="Box" left="465" top="1425" width="2715" height="4545">
+   <BOUNDS type="Box" left="465" top="1425" width="2640" height="2790">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|1. There a LOT of hidden pins. See girlpower for different use cases&cr;&lf;&cr;&lf;2. Bump Mapping Technique needs a mesh with Binormals and Tangents&cr;&lf;&cr;&lf;3. Rotate Transformations of the mesh have to be applied to normals&cr;&lf;&cr;&lf;4. Altered Orbit Camera, which outputs an instant position.|">
    </PIN>
@@ -876,84 +888,114 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
+   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ">
+   <LINKPOINT x="6675" y="8925">
+   </LINKPOINT>
+   <LINKPOINT x="6315" y="6720">
+   </LINKPOINT>
+   </LINK>
+   <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
+   <BOUNDS type="Node" left="8550" top="10275" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Maximum Foreground FPS" slicecount="1" visible="1" values="30">
+   </PIN>
+   <PIN pinname="Maximum Background FPS" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1117">
+   <BOUNDS type="Box" left="8655" top="9630" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="8655" top="9630" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="120">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1117" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Foreground FPS">
+   </LINK>
+   <LINK srcnodeid="1117" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Background FPS">
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="Reflection Color" dstnodeid="934" dstpinname="Reflection Color" linkstyle="Bezier">
+   <LINKPOINT x="9735" y="5918">
+   </LINKPOINT>
+   <LINKPOINT x="9825" y="5918">
+   </LINKPOINT>
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1119">
+   <BOUNDS type="Box" left="9795" top="1755" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="9795" top="1755" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|MIN Fresnel|">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0.0020000000949949">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1119" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MIN Fresnel">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1120">
+   <BOUNDS type="Box" left="10905" top="2100" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="10905" top="2100" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.53">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel|">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0.5">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1120" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1121">
+   <BOUNDS type="Box" left="12060" top="2895" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="12060" top="2895" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|EXP Fresnel|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1121" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel">
+   </LINK>
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1122">
+   <BOUNDS type="Box" left="1305" top="6855" width="2250" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="1305" top="6855" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.38165,1.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Color Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1122" srcpinname="Color Output" dstnodeid="928" dstpinname="Background Color">
+   </LINK>
+   <LINK srcnodeid="1122" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Reflection Color">
+   </LINK>
+   <LINK srcnodeid="1076" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
+   </LINK>
    <LINK srcnodeid="882" srcpinname="Texture Out" dstnodeid="934" dstpinname="NormalMap">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1113">
-   <BOUNDS type="Box" left="10965" top="1485" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="10965" top="1485" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,0.0020000000949949">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|MIN Fresnel Rim / Fresnel ReflXY|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1113" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MIN Fresnel Rim / Fresnel ReflXY">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1114">
-   <BOUNDS type="Box" left="11310" top="2055" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="11310" top="2055" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.52,0.5">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel Rim / Fresnel ReflXY|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1114" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel Rim / Fresnel ReflXY">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1115">
-   <BOUNDS type="Box" left="11580" top="2730" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="11580" top="2730" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.4,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|EXP Fresnel Rim / Fresnel Refl XY|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1115" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel Rim / Fresnel Refl XY">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1116">
-   <BOUNDS type="Box" left="9180" top="8160" width="480" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="9180" top="8160" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Boolean">
-   </PIN>
-   <PIN pinname="Behavior" slicecount="1" values="Toggle">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="934" srcpinname="Technique Valid" dstnodeid="1116" dstpinname="Y Input Value">
    </LINK>
    </PATCH>

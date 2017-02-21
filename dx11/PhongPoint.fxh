@@ -31,8 +31,8 @@ lightStruct PhongPoint(float lightToObject, float3 NormV, float3 ViewDirV, float
 			
 		    spec *= specIntensity;
 			
-			result.diffuse = saturate(diff * (lRange-lightToObject)) * sF;
-			result.reflection = saturate(spec * (lRange-lightToObject)) * sF;
+			result.diffuse = saturate(diff * saturate(lRange-lightToObject)) * sF;
+			result.reflection = saturate(spec * saturate(lRange-lightToObject)) * sF;
 				
 			return result;
 	

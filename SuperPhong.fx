@@ -31,12 +31,12 @@ cbuffer cbPerObject : register (b1)
 	
 
 	float4x4 NormalTransform <string uiname="Normal Rotation";>;
-	float2 KrMin <String uiname="MIN Fresnel Rim / Fresnel Refl";float uimin=0.0; float uimax=1;> = 0.002 ;
-	float2 Kr <String uiname="MAX Fresnel Rim / Fresnel Refl";float uimin=0.0; float uimax=6.0;> = 0.5 ;
-	float2 FresExp <String uiname="EXP Fresnel Rim / Fresnel Refl ";float ufimin=0.0; float uimax=30;> = 1 ;
+	float KrMin <String uiname="MIN Fresnel";float uimin=0.0; float uimax=1;> = 0 ;
+	float Kr <String uiname="MAX Fresnel";float uimin=0.0; float uimax=1.0;> = 1 ;
+	float FresExp <String uiname="EXP Fresnel";float uimin=0.0; float uimax=2;> = 1 ;
 	float3 camPos <string uiname="Camera Position";> ;
-	float4 RimColor <bool color = true; string uiname="Rim Color";>  = { 0.0f,0.0f,0.0f,0.0f };
-	float4 Color <bool color = true; string uiname="Color Overlay";>  = { 1.0f,1.0f,1.0f,1.0f };
+	float4 ReflectionColor <bool color = true; string uiname="Global Reflection Color";>  = { 0.0f,0.0f,0.0f,0.0f };
+	float4 Color <bool color = true; string uiname="Material Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
 	
 	//float spotFade <string uiname="SpotLight Fading";> = 1 ;
@@ -74,6 +74,7 @@ cbuffer cbPerObject : register (b1)
 	StructuredBuffer <float4> lAmbient <string uiname="Ambient Color";>;
 	StructuredBuffer <float4> lDiff <string uiname="Diffuse Color";>;
 	StructuredBuffer <float4> lSpec <string uiname="Specular Color";>;
+	
 
 	Texture2D texture2d <string uiname="Texture"; >;
 	Texture2D specTex <string uiname="SpecularMap"; >;
@@ -270,7 +271,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	float2 projectTexCoord;
 	float4 projectionColor;
 	float2 reflectTexCoord;
-	float4 reflectionColor;
+//	float4 reflectionColor;
 
 	float4 diffuse = float4(0,0,0,0);
 	float4 reflection = float4(0,0,0,0);
@@ -386,8 +387,8 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	
 	
 	float vdn = -saturate(dot(reflVect,In.NormW.xyz));
-   	float fresRim = KrMin.x + (Kr.x-KrMin.x) * pow(1-abs(vdn),FresExp.x);
-	float fresRefl = KrMin.y + (Kr.y-KrMin.y) * pow(1-abs(vdn),FresExp.y);
+//   	float fresRim = KrMin.x + (Kr.x-KrMin.x) * pow(1-abs(vdn),FresExp.x);
+	float fresRefl = KrMin + (Kr-KrMin) * pow(1-abs(vdn),FresExp);
 	float4 reflColor = float4(0,0,0,0);
 	float4 reflColorNorm = float4(0,0,0,0);
 
@@ -399,15 +400,8 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	cubeTexIrradiance.GetDimensions(tX,tY);
 	if(tX+tY > 0) reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
 	
-	if(refraction){
-			float3 refrVect;
-		    for(int r=0; r<3; r++) {
-		    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
-		    	diffuse += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
-			}
-	}
 
-
+	
 	float4 iridescenceColor = float4(0,0,0,0);
 	if (useIridescence){
 		float inverseDotView = 1.0 - max(dot(Nb,Vn),0.0);
@@ -464,7 +458,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		
 		float4 lightToObject = float4(lPos[i],1) - In.PosW;
 		float lightDist = length(lightToObject);
-		float falloff = lightRange[i%numLighRange]-length(lightToObject);
+		float falloff = saturate(lightRange[i%numLighRange]-length(lightToObject));
 		float projectTexCoordZ;
 		LightDirW = normalize(lightToObject);
 		LightDirV = mul(LightDirW, tV);
@@ -587,7 +581,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	
 			
 				} else {
-					ambient += (lAmbient[i%numlAmb]*falloff);
+					ambient += saturate(lAmbient[i%numlAmb]*falloff);
 		  			lightResult = PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
 									 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
@@ -605,20 +599,26 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 
 		
 	}
-			
 	
-	light.reflection = (light.reflection + reflColor + iridescenceColor ) * reflective.x + RimColor * fresRim;
-	light.diffuse = saturate(saturate(light.diffuse) + saturate(ambient) + reflColorNorm * reflective.y);
+//	light.reflection = max( max( max(light.reflection, reflColor), iridescenceColor), ReflectionColor);
+//	light.diffuse = max(max(max(light.diffuse, ambient),  reflColorNorm),Color);
 	
-	if(refraction) fresRefl = 1;
+	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + saturate(ReflectionColor) );
+	light.diffuse = saturate(saturate(light.diffuse) +  saturate(ambient) +  saturate(reflColorNorm) + saturate(Color)) * texCol;
 	
-	light.diffuse = lerp(light.diffuse,saturate(light.reflection+ saturate(ambient)),fresRefl*specIntensity);
+	if(refraction){
+			float3 refrVect;
+		    for(int r=0; r<3; r++) {
+		    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
+		    	light.diffuse += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
+		    	
+			}
+	}
 	
-//	diffuse += (finalReflection + finalDiffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;	
-//	diffuse.a *= Alpha;
+	light.diffuse = lerp(light.diffuse,saturate(light.reflection ),fresRefl*specIntensity);
+	light.diffuse.a *= Alpha;
 	
-	//return light.diffuse;
-//	return (light.reflection + light.diffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;
+
 	return light.diffuse;
 
 }
@@ -662,11 +662,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
 	
-//	if(diffuseMode == 1 || diffuseMode == 2){
-//		specIntensity *= saturate(length(diffuse.rgb));
-//	}
-//	
-//	
 	float4 newCol = float4(0,0,0,0);
 	float4 ambient = float4(0,0,0,0);
 
@@ -679,8 +674,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 
 	float vdn = -saturate(dot(Vn,In.NormW.xyz));
 
-   	float4 fresRim = KrMin.x + (Kr.x-KrMin.x) * (pow(1-abs(vdn),FresExp.x));
-	float4 fresRefl = KrMin.y + (Kr.y-KrMin.y) * (pow(1-abs(vdn),FresExp.y));
+//   	float4 fresRim = KrMin.x + (Kr.x-KrMin.x) * (pow(1-abs(vdn),FresExp.x));
+	float4 fresRefl = KrMin + (Kr-KrMin) * (pow(1-abs(vdn),FresExp));
 	
 	float3 reflVect = -reflect(Vn,Nn.xyz);
 	float3 reflVecNorm = Nn.xyz;
@@ -754,15 +749,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		float inverseDotView = 1.0 - max(dot(Nn.xyz,Vn),0.0);
 		float4 iridescenceColor = float4(0,0,0,0);
 		if (useIridescence) iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*fresRefl;
-
-	
-	
-//	if(diffuseMode == 0 || diffuseMode == 2){
-//			reflColor *= saturate(length(diffuse.rgb));
-//			reflColorNorm *= saturate(length(diffuse.rgb));	
-//	} 
-	
-	
 
 
 	uint d,textureCount;
@@ -915,7 +901,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 						projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 						
-							shadow += (calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+						shadow += (calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
 
 						} 
 					}
@@ -933,6 +919,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 						  			 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
 									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
 									 lightRange[i%numLighRange],saturate(shadow)).diffuse;
+				
 
 				}	
 			
@@ -944,13 +931,12 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 	}
 	
-	newCol  /=2;
-//	ambient /=numLights;
-	
-	float4 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + RimColor * fresRim;
+
+	float4 newRefl = (reflColor+iridescenceColor)*reflective.x*saturate(specIntensity) + ReflectionColor;
 	float4 finalDiffuse = saturate(saturate(newCol) + saturate(ambient) + reflColorNorm * reflective.y);
 
 	if(refraction) fresRefl = 1;
+	
 	newCol += (newRefl + finalDiffuse*(1 - reflective.x * fresRefl )+ Color.rgba) * texCol;	
 	newCol.a *= Alpha;
 	
