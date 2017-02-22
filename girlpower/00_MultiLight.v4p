@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="1575" scrolly="0" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="13785" top="1320" width="13605" height="12540">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
+   <BOUNDS type="Window" left="13260" top="2445" width="13605" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -23,7 +23,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6445" top="6125" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.47">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -63,7 +63,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="1">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="0.001">
    </PIN>
    <PIN pinname="Transform In" visible="1">
    </PIN>
@@ -179,7 +179,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="1200" top="1710" width="12240" height="12585">
+   <BOUNDS type="Window" left="270" top="465" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -197,7 +197,7 @@
    </PIN>
    <PIN pinname="AA Samples per Pixel" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Background Color" slicecount="1" visible="1" values="|1.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Show Cursor" slicecount="1" values="1">
    </PIN>
@@ -325,7 +325,7 @@
    </PIN>
    <PIN pinname="refractionIndex" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="120">
+   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="25">
    </PIN>
    <PIN pinname="colors Bin Size" visible="-1" pintype="Input" slicecount="1" values="3">
    </PIN>
@@ -457,9 +457,13 @@
    </PIN>
    <PIN pinname="EXP Fresnel" visible="1" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Material Color" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
+   <PIN pinname="Material Color" slicecount="1" visible="1" values="|0.22408,1.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="SpecularMap" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Global Diffuse Color" visible="1" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Light Bleeding Limit" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
@@ -476,12 +480,12 @@
    </LINK>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
    </LINK>
-   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="0">
+   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0">
    <BOUNDS type="Node" left="7683" top="4288" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="2325" top="2220" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="17100" top="345" width="15780" height="14835">
+   <BOUNDS type="Window" left="14850" top="840" width="14610" height="15855">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>
@@ -547,13 +551,19 @@
    </PIN>
    <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="Shadow" visible="1" slicecount="3" values="0,1,1">
+   <PIN pinname="Shadow" visible="1" slicecount="3" values="0,0,0">
    </PIN>
    <PIN pinname="Shadow Technique" slicecount="1" values="VSM">
    </PIN>
    <PIN pinname="Reflection Color" visible="1">
    </PIN>
    <PIN pinname="Shadow Geometry Transform" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.24">
+   </PIN>
+   <PIN pinname="Shadow Res²" slicecount="1" values="1024">
    </PIN>
    </NODE>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Transform" linkstyle="Bezier">
@@ -867,7 +877,7 @@
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1112">
    <BOUNDS type="Node" left="3945" top="5670" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\teapot.fbx">
+   <PIN pinname="Filename" slicecount="1" values="|..\..\..\ThreeD Scans\Le_Transi_De_Rene_De_Chalon.fbx|">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -951,7 +961,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10905" top="2100" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.53">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -981,21 +991,47 @@
    <LINK srcnodeid="1121" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel">
    </LINK>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="1122">
-   <BOUNDS type="Box" left="1305" top="6855" width="2250" height="480">
+   <BOUNDS type="Box" left="1425" top="4695" width="2325" height="810">
    </BOUNDS>
-   <BOUNDS type="Node" left="1305" top="6855" width="0" height="0">
+   <BOUNDS type="Node" left="1425" top="4695" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.38165,1.00000,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.31493,1.00000,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Global Reflection Color|">
+   </PIN>
    </NODE>
-   <LINK srcnodeid="1122" srcpinname="Color Output" dstnodeid="928" dstpinname="Background Color">
-   </LINK>
    <LINK srcnodeid="1122" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Reflection Color">
    </LINK>
-   <LINK srcnodeid="1076" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1124">
+   <BOUNDS type="Box" left="9270" top="8115" width="2250" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="9270" top="8115" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Material Color|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1124" srcpinname="Color Output" dstnodeid="934" dstpinname="Material Color">
    </LINK>
-   <LINK srcnodeid="882" srcpinname="Texture Out" dstnodeid="934" dstpinname="NormalMap">
+   <LINK srcnodeid="1122" srcpinname="Color Output" dstnodeid="928" dstpinname="Background Color">
+   </LINK>
+   <LINK srcnodeid="1122" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Diffuse Color">
+   </LINK>
+   <NODE systemname="PhongPoint (DX11.Effect)" filename="%VVVV%\packs\dx11\nodes\dx11\PhongPoint.fx" nodename="PhongPoint (DX11.Effect)" componentmode="Hidden" id="1127">
+   <BOUNDS type="Node" left="1335" top="9795" width="100" height="100">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="1112" srcpinname="Output" dstnodeid="1091" dstpinname="Shadow Geometry">
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="LightBleedingLimit" dstnodeid="934" dstpinname="Light Bleeding Limit" linkstyle="Bezier">
+   <LINKPOINT x="10215" y="5910">
+   </LINKPOINT>
+   <LINKPOINT x="11445" y="5910">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Geometry Transform">
    </LINK>
    </PATCH>
