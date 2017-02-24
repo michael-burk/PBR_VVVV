@@ -1,6 +1,4 @@
 
-float lPower <String uiname="Power"; float uimin=0.0;> = 25.0;     //shininess of specular highlight
-
 //phong point function
 lightStruct PhongPoint(float lightToObject, float3 NormV, float3 ViewDirV, float3 LightDirV, float3 lightPos, float lAtt0,
 				  float lAtt1, float lAtt2, float4 lAmb, float4 lDiff, float4 lSpec, float4 specIntensity, float lRange, float4 sF, lightStruct li)
@@ -18,7 +16,7 @@ lightStruct PhongPoint(float lightToObject, float3 NormV, float3 ViewDirV, float
 		    float3 H = normalize(ViewDirV + LightDirV);
 		
 		    //compute blinn lighting
-		    float4 shades = lit(dot(NormV, LightDirV), dot(NormV, H), lPower);
+		    float4 shades = lit(dot(NormV, LightDirV)*1, dot(NormV, H), lPower);
 		
 		    float4 diff = lDiff * shades.y * atten;
 		    diff.a = 1;
@@ -34,10 +32,11 @@ lightStruct PhongPoint(float lightToObject, float3 NormV, float3 ViewDirV, float
 			
 		    spec *= specIntensity;
 			
-			li.diffuse += saturate(diff * saturate(lRange-lightToObject)) * sF;
-			li.reflection += saturate(spec * saturate(lRange-lightToObject)) * sF;
-			li.ambient += saturate(amb * saturate(lRange-lightToObject)) * sF;	
-	
+			li.ambient +=saturate(lerp(0, amb,saturate(lRange-lightToObject)));
+			li.diffuse += saturate(lerp(0, diff,saturate(lRange-lightToObject))) * sF;
+			li.reflection += saturate(lerp(0, spec,saturate(lRange-lightToObject))) * sF;
+
+			
 			return li;
 	
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
    <BOUNDS type="Window" left="13260" top="2445" width="13605" height="12540">
    </BOUNDS>
@@ -63,7 +63,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="0.001">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Transform In" visible="1">
    </PIN>
@@ -325,7 +325,7 @@
    </PIN>
    <PIN pinname="refractionIndex" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="25">
+   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="0.19">
    </PIN>
    <PIN pinname="colors Bin Size" visible="-1" pintype="Input" slicecount="1" values="3">
    </PIN>
@@ -796,8 +796,6 @@
    </NODE>
    <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1102" dstpinname="Texture In">
    </LINK>
-   <LINK srcnodeid="1102" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1108">
    <BOUNDS type="Box" left="7890" top="2445" width="795" height="240">
    </BOUNDS>
@@ -882,8 +880,6 @@
    <PIN pinname="Output" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1112" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
-   </LINK>
    <NODE id="1095" nodename="IOBox (String)" componentmode="InABox" systemname="IOBox (String)">
    <BOUNDS type="Node" left="465" top="1425" width="285" height="270">
    </BOUNDS>
@@ -991,11 +987,11 @@
    <LINK srcnodeid="1121" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel">
    </LINK>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="1122">
-   <BOUNDS type="Box" left="1425" top="4695" width="2325" height="810">
+   <BOUNDS type="Box" left="1320" top="4755" width="2325" height="810">
    </BOUNDS>
-   <BOUNDS type="Node" left="1425" top="4695" width="0" height="0">
+   <BOUNDS type="Node" left="1320" top="4755" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.31493,1.00000,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.65714,0.00000,1.00000,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
@@ -1020,18 +1016,30 @@
    </LINK>
    <LINK srcnodeid="1122" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Diffuse Color">
    </LINK>
-   <NODE systemname="PhongPoint (DX11.Effect)" filename="%VVVV%\packs\dx11\nodes\dx11\PhongPoint.fx" nodename="PhongPoint (DX11.Effect)" componentmode="Hidden" id="1127">
-   <BOUNDS type="Node" left="1335" top="9795" width="100" height="100">
-   </BOUNDS>
-   </NODE>
-   <LINK srcnodeid="1112" srcpinname="Output" dstnodeid="1091" dstpinname="Shadow Geometry">
-   </LINK>
    <LINK srcnodeid="1091" srcpinname="LightBleedingLimit" dstnodeid="934" dstpinname="Light Bleeding Limit" linkstyle="Bezier">
    <LINKPOINT x="10215" y="5910">
    </LINKPOINT>
    <LINKPOINT x="11445" y="5910">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Geometry Transform">
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1129">
+   <BOUNDS type="Box" left="5805" top="4575" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5805" top="4575" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.001">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1112" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
+   </LINK>
+   <LINK srcnodeid="1129" srcpinname="Y Output Value" dstnodeid="499" dstpinname="XYZ">
+   </LINK>
+   <LINK srcnodeid="1102" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
    </LINK>
    </PATCH>

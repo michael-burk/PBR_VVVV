@@ -1,15 +1,8 @@
-//light properties
-//float3 lDir <string uiname="Light Direction";> = {0, -5, 2};        //light direction in world space
-//float4 lAmb  <bool color=true; String uiname="Ambient Color";>  = {0.15, 0.15, 0.15, 1};
-//float4 lDiff <bool color=true; String uiname="Diffuse Color";>  = {0.85, 0.85, 0.85, 1};
-//float4 lSpec <bool color=true; String uiname="Specular Color";> = {0.35, 0.35, 0.35, 1};
-//float lPower <String uiname="Power"; float uimin=0.0;> = 25.0;     //shininess of specular highlight
 
 //phong directional function
-float4 PhongDirectional(float3 NormV, float3 ViewDirV, float3 LightDirV, float4 lDiff, float4 lSpec, float4 specIntensity,float lRange,float lightToObject)
+lightStruct PhongDirectional(float3 NormV, float3 ViewDirV, float3 LightDirV, float4 lAmb, float4 lDiff,
+						float4 lSpec, float4 specIntensity, float4 sF, lightStruct li)
 {
-    //In.TexCd = In.TexCd / In.TexCd.w; // for perpective texture projections (e.g. shadow maps) ps_2_0
-
     //halfvector
     float3 H = normalize(ViewDirV + LightDirV);
 
@@ -29,6 +22,11 @@ float4 PhongDirectional(float3 NormV, float3 ViewDirV, float3 LightDirV, float4 
     float4 spec = pow(max(dot(R, V),0), lPower*.2) * lSpec;
 
     spec = spec * specIntensity;
-	diff += spec;
-    return saturate(diff * (lRange-lightToObject));
+	
+	li.ambient += lAmb;
+	li.diffuse += diff * sF;
+	li.reflection += spec * sF;
+
+	
+    return li;
 }
