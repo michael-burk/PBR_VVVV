@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\01_ImageBasedLighting.v4p" systemname="01_ImageBasedLighting" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\01_ImageBasedLighting.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="3065" top="9715" width="100" height="100">
@@ -412,20 +412,6 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (String)" componentmode="InABox" id="1084" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="6360" top="1965" width="285" height="270">
-   </BOUNDS>
-   <BOUNDS type="Box" left="6360" top="1965" width="285" height="270">
-   </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="3.">
-   </PIN>
-   <PIN pinname="Output String" visible="0">
-   </PIN>
-   <PIN pinname="Show Grid" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="String Type" slicecount="1" values="MultiLine">
-   </PIN>
-   </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1085" systemname="IOBox (String)">
    <BOUNDS type="Node" left="7755" top="5085" width="285" height="270">
    </BOUNDS>
@@ -575,6 +561,12 @@
    </PIN>
    <PIN pinname="EXP Fresnel Rim / Fresnel Refl XY" visible="1">
    </PIN>
+   <PIN pinname="MIN Fresnel" visible="1">
+   </PIN>
+   <PIN pinname="MAX Fresnel" visible="1">
+   </PIN>
+   <PIN pinname="EXP Fresnel" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In">
    </LINK>
@@ -623,7 +615,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="12330" top="6900" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Input Enum" slicecount="1" visible="1" values="Superphong_Bump">
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="Superphong">
    </PIN>
    </NODE>
    <LINK srcnodeid="1096" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique">
@@ -670,78 +662,6 @@
    </LINK>
    <LINK srcnodeid="1099" srcpinname="Texture Out" dstnodeid="877" dstpinname="Texture In" linkstyle="PolyLine">
    </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1100">
-   <BOUNDS type="Box" left="6795" top="2055" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="6795" top="2055" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,0">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|MIN Fresnel Rim / Fresnel ReflXY|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1100" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MIN Fresnel Rim / Fresnel ReflXY" linkstyle="Bezier">
-   <LINKPOINT x="6810" y="4943">
-   </LINKPOINT>
-   <LINKPOINT x="5865" y="4943">
-   </LINKPOINT>
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1101">
-   <BOUNDS type="Box" left="6795" top="2835" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="6795" top="2835" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel Rim / Fresnel ReflXY|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1101" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel Rim / Fresnel ReflXY" linkstyle="Bezier">
-   <LINKPOINT x="6810" y="5333">
-   </LINKPOINT>
-   <LINKPOINT x="6195" y="5333">
-   </LINKPOINT>
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1102">
-   <BOUNDS type="Box" left="6795" top="3630" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="6795" top="3630" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|EXP Fresnel Rim / Fresnel Refl XY|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1102" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel Rim / Fresnel Refl XY" linkstyle="Bezier">
-   <LINKPOINT x="6810" y="5738">
-   </LINKPOINT>
-   <LINKPOINT x="6510" y="5738">
-   </LINKPOINT>
-   </LINK>
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1103">
    <BOUNDS type="Node" left="4080" top="6765" width="100" height="100">
    </BOUNDS>
@@ -751,5 +671,67 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1103" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
+   </LINK>
+   <NODE id="1084" nodename="IOBox (String)" componentmode="InABox" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="6360" top="1965" width="285" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="6360" top="1965" width="285" height="270">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="3.">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1104">
+   <BOUNDS type="Box" left="6900" top="2745" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6900" top="2745" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|MIN Fresnel|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1104" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MIN Fresnel">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1105">
+   <BOUNDS type="Box" left="7215" top="3240" width="750" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7215" top="3240" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1105" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1106">
+   <BOUNDS type="Box" left="7440" top="3765" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7440" top="3765" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|EXP Fresnel|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1106" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel">
    </LINK>
    </PATCH>

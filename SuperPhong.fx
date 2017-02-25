@@ -577,7 +577,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		
 	}
 	
-	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + max(saturate(GlobalReflectionColor), saturate(light.ambient)) ); 
+	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + saturate(GlobalReflectionColor) ); 
 	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * texCol * saturate(Color); 
 	
 	if(refraction){
@@ -891,7 +891,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 	}
 	
-	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + max(saturate(GlobalReflectionColor), saturate(light.ambient)) ); 
+	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + saturate(GlobalReflectionColor) ); 
 	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * texCol * saturate(Color); 
 	
 	if(refraction){
@@ -903,7 +903,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			}
 	}
 	
-	light.diffuse = lerp(light.diffuse,saturate(light.reflection),fresRefl*specIntensity);
+	light.diffuse = lerp(light.diffuse,max(light.diffuse,saturate(light.reflection)),fresRefl*specIntensity);
 	light.diffuse.a *= Alpha;
 	
 

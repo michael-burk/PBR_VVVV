@@ -533,7 +533,7 @@
    </PIN>
    <PIN pinname="Light Bleeding Limit" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Global Diffuse Color" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|" visible="1">
+   <PIN pinname="Global Diffuse Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Global Reflection Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
@@ -541,9 +541,11 @@
    </PIN>
    <PIN pinname="Material Color" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
-   <PIN pinname="MAX Fresnel" slicecount="1" values="1" visible="1">
+   <PIN pinname="MAX Fresnel" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="MIN Fresnel" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="EXP Fresnel" slicecount="1" values="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
@@ -703,7 +705,7 @@
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Input 2" visible="1" slicecount="2" values="0.672492314842384,0.672492314842384">
+   <PIN pinname="Input 2" visible="1" slicecount="1" values="0.33120842713397">
    </PIN>
    <PIN pinname="Input 1" slicecount="1" values="0">
    </PIN>
@@ -713,8 +715,6 @@
    </LINKPOINT>
    <LINKPOINT x="5940" y="4425">
    </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1171" srcpinname="Output" dstnodeid="1172" dstpinname="Input 2">
    </LINK>
    <LINK srcnodeid="1168" srcpinname="Y Output Value" dstnodeid="499" dstpinname="XYZ" linkstyle="Bezier">
    <LINKPOINT x="6000" y="6195">
@@ -861,7 +861,7 @@
    </PIN>
    <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="Example Lightness" slicecount="1" values="0.25">
+   <PIN pinname="Example Lightness" slicecount="1" values="0.5">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -1043,7 +1043,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2415" top="7110" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.32714,0.39871,0.60334,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>

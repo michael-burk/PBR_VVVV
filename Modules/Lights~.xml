@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="3990" scrolly="3555" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="Lights" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" scrollx="6840" scrolly="405" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="13200" width="100" height="100">
    </BOUNDS>
@@ -1527,7 +1527,7 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="357">
    <BOUNDS type="Node" left="8325" top="1935" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="1.16">
+   <PIN pinname="Y" slicecount="1" values="0.45">
    </PIN>
    <PIN pinname="X" slicecount="1" visible="1" values="1.63">
    </PIN>
@@ -1857,7 +1857,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15345" top="3720" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1024">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="256">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2459,7 +2459,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="20235" top="2850" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.25">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.5">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2630,18 +2630,6 @@
    <LINKPOINT x="15105" y="9038">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="45" dstpinname="Color Input" linkstyle="Bezier">
-   <LINKPOINT x="14265" y="10740">
-   </LINKPOINT>
-   <LINKPOINT x="16485" y="10740">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="300" dstpinname="Color Input" linkstyle="Bezier">
-   <LINKPOINT x="14265" y="10725">
-   </LINKPOINT>
-   <LINKPOINT x="18195" y="10725">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="70" srcpinname="Texture Out" dstnodeid="71" dstpinname="Input Node">
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="Multiply (Color)" componentmode="Hidden" id="442">
@@ -2651,11 +2639,41 @@
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Scalar" slicecount="1" values="0.33">
+   <PIN pinname="Scalar" slicecount="1" values="0.15">
    </PIN>
    </NODE>
    <LINK srcnodeid="41" srcpinname="Output" dstnodeid="442" dstpinname="Color">
    </LINK>
    <LINK srcnodeid="442" srcpinname="Output" dstnodeid="299" dstpinname="Color Input">
+   </LINK>
+   <NODE systemname="Multiply (Color)" nodename="Multiply (Color)" componentmode="Hidden" id="443">
+   <BOUNDS type="Node" left="17730" top="10335" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Color" visible="1" slicecount="1" values="|1.00000,0.00000,0.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Scalar" slicecount="1" values="2">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="443" dstpinname="Color">
+   </LINK>
+   <LINK srcnodeid="443" srcpinname="Output" dstnodeid="300" dstpinname="Color Input">
+   </LINK>
+   <NODE systemname="Multiply (Color)" nodename="Multiply (Color)" componentmode="Hidden" id="444">
+   <BOUNDS type="Node" left="16110" top="10425" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Color" visible="1" slicecount="1" values="|1.00000,0.00000,0.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Scalar" slicecount="1" values="0.29">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="41" srcpinname="Output" dstnodeid="444" dstpinname="Color">
+   <LINKPOINT x="16215" y="10395">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="444" srcpinname="Output" dstnodeid="45" dstpinname="Color Input">
    </LINK>
    </PATCH>
