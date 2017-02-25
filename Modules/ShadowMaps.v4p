@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="1830" locked="0">
-   <BOUNDS type="Window" left="16260" top="3615" width="10890" height="11790">
+   <BOUNDS type="Window" left="8445" top="2235" width="10890" height="11790">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -145,7 +145,7 @@
    </PIN>
    <PIN pinname="Transform In" visible="1" slicecount="8" values=",,,,,,,">
    </PIN>
-   <PIN pinname="depthOffset" slicecount="1" values="0.001">
+   <PIN pinname="depthOffset" slicecount="1" values="0">
    </PIN>
    <PIN pinname="c" visible="1">
    </PIN>

@@ -32,22 +32,17 @@ cbuffer cbPerObject : register (b1)
 	float4 GlobalReflectionColor <bool color = true; string uiname="Global Reflection Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 GlobalDiffuseColor <bool color = true; string uiname="Global Diffuse Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	
+	float4 Color <bool color = true; string uiname="Material Color";>  = { 1.0f,1.0f,1.0f,1.0f };
+	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
 	float lPower <String uiname="Power"; float uimin=0.0;> = 25.0;     //shininess of specular highlight
 
-	float4 Color <bool color = true; string uiname="Material Color";>  = { 0.0f,0.0f,0.0f,0.0f };
-	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
-	
-	//float spotFade <string uiname="SpotLight Fading";> = 1 ;
+
 	float bumpy <string uiname="Bumpiness";> = 1 ;
-	//float2 reflective <String uiname="Reflective/Diffuse";float2 uimin=0.0; float uimax=1;> = 1 ;
 	bool refraction <bool visible=false; String uiname="Refraction";> = false;
 	bool BPCM <bool visible= false; String uiname="Box Projected Cube Map";>;
 	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
-	//int diffuseMode <bool visible=false;string uiname="DiffuseAffect: Reflection/Specular/Both"; int uimin=0.0; int uimax=2.0;> = 2;
 	bool useIridescence = false;
 		
-	
-	
 	static const float minVariance = 0;	
 	
 	float4x4 tColor;
@@ -60,7 +55,6 @@ cbuffer cbPerObject : register (b1)
 StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
 StructuredBuffer <float> refractionIndex <bool visible=false; String uiname="Refraction Index";>;
 
-//StructuredBuffer <float4x4> texTransforms <string uiname="tColor,tSpec,tDiffuse,tNormal";>;
 StructuredBuffer <float4x4> LightVP <string uiname="LightViewProjection";>;
 StructuredBuffer <float4x4> LightV <string uiname="LightView";>;
 StructuredBuffer <float4x4> LightP <string uiname="LightProjection";>;
@@ -277,8 +271,6 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	float2 projectTexCoord;
 	float4 projectionColor;
 	float2 reflectTexCoord;
-
-
 	
 	lightStruct light;
 	light.diffuse = float4(0,0,0,0);
@@ -585,7 +577,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		
 	}
 	
-	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + saturate(GlobalReflectionColor) ); 
+	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + max(saturate(GlobalReflectionColor), saturate(light.ambient)) ); 
 	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * texCol * saturate(Color); 
 	
 	if(refraction){
@@ -624,7 +616,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float2 reflectTexCoord;
     float4 reflectionColor;
 	
-
+		
+	lightStruct light;
+	light.diffuse = float4(0,0,0,0);
+	light.reflection = float4(0,0,0,0);
+	light.ambient = float4(0,0,0,0);
 	
 	float4 texCol = float4(1,1,1,1);
 	float4 specIntensity = float4(1,1,1,1);
@@ -644,8 +640,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
 	
-	float4 newCol = float4(0,0,0,0);
-	float4 ambient = float4(0,0,0,0);
 
 	float3 Nn = normalize(In.NormW.xyz);
 	
@@ -656,9 +650,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 
 	float vdn = -saturate(dot(Vn,In.NormW.xyz));
 
-//   	float4 fresRim = KrMin.x + (Kr.x-KrMin.x) * (pow(1-abs(vdn),FresExp.x));
 	float4 fresRefl = KrMin + (Kr-KrMin) * (pow(1-abs(vdn),FresExp));
-	
 	float3 reflVect = -reflect(Vn,Nn.xyz);
 	float3 reflVecNorm = Nn.xyz;
 	float3 refrVect = refract(-Vn, Nn.xyz , refractionIndex[0]);
@@ -713,24 +705,15 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float4 reflColorNorm = float4(0,0,0,0);
 	float4 refrColor = float4(0,0,0,0);
 	
-		cubeTexRefl.GetDimensions(tX,tY);
-		if(tX+tY > 2) reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
-		
-		cubeTexIrradiance.GetDimensions(tX,tY);
-		if(tX+tY > 2) reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
-		if(refraction){
-				float3 refrVect;
-			    for(int r=0; r<3; r++) {
-			    	refrVect = refract(-Vn, Nn.xyz , refractionIndex[r]);
-			    	refrColor += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
-				}
-		}
-		reflColor = lerp(refrColor,reflColor,fresRefl);
-		
+	cubeTexRefl.GetDimensions(tX,tY);
+	if(tX+tY > 2) reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
 	
-		float inverseDotView = 1.0 - max(dot(Nn.xyz,Vn),0.0);
-		float4 iridescenceColor = float4(0,0,0,0);
-		if (useIridescence) iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*fresRefl;
+	cubeTexIrradiance.GetDimensions(tX,tY);
+	if(tX+tY > 2) reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
+
+	float inverseDotView = 1.0 - max(dot(Nn.xyz,Vn),0.0);
+	float4 iridescenceColor = float4(0,0,0,0);
+	if (useIridescence) iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*fresRefl;
 
 
 	uint d,textureCount;
@@ -768,22 +751,24 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	uint numLighRange,lightRangeCount;
 	lightRange.GetDimensions(numLighRange,lightRangeCount);
 	
-
 	int pL = 0;
 	int shadowCounter = 0;
 	int lightCounter = 0;
-
+	float4 shadow = 0;
+	
 	for(uint i = 0; i< numLights; i++){
+		
 		float4 lightToObject = float4(lPos[i],1) - In.PosW;
 		float lightDist = length(lightToObject);
-		float falloff = lightRange[i%numLighRange]-length(lightToObject);
+		float falloff = saturate(lightRange[i%numLighRange]-length(lightToObject));
 		float projectTexCoordZ;
 		LightDirW = normalize(lightToObject);
 		LightDirV = mul(LightDirW, tV);
-
+			
 		switch (lightType[i]){
-		
+			
 			case 0:
+			
 				lightCounter ++;
 
 				if(useShadow[i] == 1){
@@ -798,20 +783,22 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-//						newCol.rgb += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist).rgb;
-//						newCol.rgb *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1).rgb);					
+						
+						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
+						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,saturate(shadow),light);
+
 					} else {
-//						newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
+						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light);
 					}
 				} else {
-//					newCol += PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,lightRange[i%numLighRange],lightDist);
+						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light);
 				}
-				ambient += saturate(lAmbient[i%numlAmb]);
 			
 				break;
 	
-			case 1:
 			
+			case 1:
+				
 				lightCounter ++;
 				
 				if(useShadow[i]  == 1){
@@ -828,19 +815,19 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
-					
 					if(useShadow[i]){
-						projectionColor *= saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
-					}
+						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
 					
-//			  		newCol.rgb += PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-//							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff],
-//							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange]).rgb;
-						
-				} 
+			  			light = PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
+							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lDiff[i%numlDiff],
+							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],saturate(shadow),light);
+					} else {
+						light = PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
+							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lDiff[i%numlDiff],
+							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],1,light);
+					}
+				}
 			
-			
-				ambient += saturate(lAmbient[i%numlAmb]*falloff);
 				
 				break;
 	
@@ -850,7 +837,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				bool shadowed = false;
 			
 				lightCounter+=6;
-				float4 shadow = 0;
+				shadow = 0;
 				float pZ;
 				
 				if(useShadow[i]){
@@ -859,7 +846,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					for(int p = 0; p < 6; p++){
 						
 						float4x4 LightPcropp = LightP[p + lightCounter-6];
-										
+				
 						LightPcropp._m00 = 1;
 						LightPcropp._m11 = 1;
 						
@@ -880,46 +867,47 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 						projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 						
-						shadow += (calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+						shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
 
 						} 
 					}
-		
-					ambient += (lAmbient[i%numlAmb]*falloff);
-//		  			newCol += PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-//									 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
-//									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-//									 lightRange[i%numLighRange],saturate(shadow)).diffuse;
-	
-			
+		  			light = PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
+									 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
+									 lAmbient[i%numlAmb],lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
+									 lightRange[i%numLighRange],saturate(shadow),light);							
 				} else {
-					ambient += (lAmbient[i%numlAmb]*falloff);
-//		  			newCol += PhongPoint(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-//						  			 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
-//									 lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-//									 lightRange[i%numLighRange],saturate(shadow)).diffuse;
-//				
 
+		  			light = PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
+									 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
+									 lAmbient[i%numlAmb], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
+									 lightRange[i%numLighRange],1,light);
 				}	
 			
-				
 			break;
 			
 		}
 		
+
 		
 	}
 	
-
-	float4 newRefl = (reflColor+iridescenceColor)*0*saturate(specIntensity) + GlobalReflectionColor;
-	float4 finalDiffuse = saturate(saturate(newCol) + saturate(ambient) + reflColorNorm * 1);
-
-	if(refraction) fresRefl = 1;
+	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + max(saturate(GlobalReflectionColor), saturate(light.ambient)) ); 
+	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * texCol * saturate(Color); 
 	
-	newCol += (newRefl + finalDiffuse*(1 - 1 * fresRefl )+ Color.rgba) * texCol;	
-	newCol.a *= Alpha;
+	if(refraction){
+			float3 refrVect;
+		    for(int r=0; r<3; r++) {
+		    	refrVect = refract(-Vn, Nn.xyz , refractionIndex[r]);
+		    	light.diffuse += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
+		    	
+			}
+	}
 	
-	return newCol;
+	light.diffuse = lerp(light.diffuse,saturate(light.reflection),fresRefl*specIntensity);
+	light.diffuse.a *= Alpha;
+	
+
+	return light.diffuse;
 }
 
 

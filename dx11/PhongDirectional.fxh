@@ -26,7 +26,6 @@ lightStruct PhongDirectional(float3 NormV, float3 ViewDirV, float3 LightDirV, fl
 	li.ambient += lAmb;
 	li.diffuse += diff * sF;
 	li.reflection += spec * sF;
-
 	
     return li;
 }

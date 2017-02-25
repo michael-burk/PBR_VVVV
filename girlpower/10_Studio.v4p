@@ -660,7 +660,7 @@
    </LINK>
    <LINK srcnodeid="1118" srcpinname="Output" dstnodeid="1116" dstpinname="Input 2">
    </LINK>
-   <NODE id="1096" componentmode="InAWindow" systemname="LightsStudioExample" filename="..\Modules\LightsStudioExample.v4p" nodename="..\Modules\LightsStudioExample.v4p">
+   <NODE id="1096" componentmode="Hidden" systemname="LightsStudioExample" filename="..\Modules\LightsStudioExample.v4p" nodename="..\Modules\LightsStudioExample.v4p">
    <PIN pinname="Shadow Blur Width" slicecount="1" values="0.08">
    </PIN>
    <BOUNDS type="Window" left="13545" top="1245" width="24345" height="13710">
