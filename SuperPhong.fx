@@ -37,7 +37,7 @@ cbuffer cbPerObject : register (b1)
 	float lPower <String uiname="Power"; float uimin=0.0;> = 25.0;     //shininess of specular highlight
 
 
-	float bumpy <string uiname="Bumpiness";> = 1 ;
+	float bumpy <string uiname="Bumpiness";> = 0 ;
 	bool refraction <bool visible=false; String uiname="Refraction";> = false;
 	bool BPCM <bool visible= false; String uiname="Box Projected Cube Map";>;
 	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
@@ -86,9 +86,7 @@ StructuredBuffer <float> lightBleedingLimit <string uiname="Light Bleeding Limit
 StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 
 
-#include "dx11/PhongPoint.fxh"
-#include "dx11/PhongPointSpot.fxh"
-#include "dx11/PhongDirectional.fxh"
+
 
 SamplerState g_samLinear
 {
@@ -104,6 +102,9 @@ SamplerState shadowSampler
     AddressV = Clamp;
 };
 
+#include "dx11/PhongPoint.fxh"
+#include "dx11/PhongPointSpot.fxh"
+#include "dx11/PhongDirectional.fxh"
 
 struct vs2psBump
 {
@@ -201,13 +202,6 @@ vs2ps VS(
 }
 
 
-
-
-float reduceLightBleeding(float p_max, float amount)
-{
-    return clamp((p_max-amount)/ (1.0-amount), 0.0, 1.0);
-}
-
 float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
 	
 	    float currentDistanceToLight = clamp((worldSpaceDistance - nearFarPlane[shadowCounter].x) 
@@ -243,7 +237,8 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
         float intensity = sigma2 / (sigma2 + pow(currentDistanceToLight - M1, 2));
 
         // reduce light bleeding
-        lightIntensity = reduceLightBleeding(intensity, lightBleedingLimit[shadowCounter]);
+        lightIntensity = clamp((intensity-lightBleedingLimit[shadowCounter])/ (1.0-lightBleedingLimit[shadowCounter]), 0.0, 1.0);
+    	
     	alpha +=  (1 - saturate(shadowCol.a));
     }
 
@@ -254,6 +249,8 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
 	return resultingColor+alpha;
 	
 }
+
+#include "dx11/SSS.fxh"
 
 float4 PS_SuperphongBump(vs2psBump In): SV_Target
 {	
@@ -502,15 +499,17 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
 					
 			  			light = PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lDiff[i%numlDiff],
+							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lAmbient[i%numlDiff], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],saturate(shadow),light);
 					} else {
 						light = PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lDiff[i%numlDiff],
+							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lAmbient[i%numlDiff], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],1,light);
 					}
+					
+					
 				}
-			
+
 				
 				break;
 	
@@ -594,6 +593,8 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	
 
 	return light.diffuse;
+	
+	
 
 }
 
@@ -814,18 +815,23 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					
+					
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
 					if(useShadow[i]){
 						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
 					
 			  			light = PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lDiff[i%numlDiff],
+							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lAmbient[i%numlDiff], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],saturate(shadow),light);
 					} else {
 						light = PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lDiff[i%numlDiff], lDiff[i%numlDiff],
+							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lAmbient[i%numlDiff], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],1,light);
 					}
+					
+					light.diffuse += exp(- ( length(viewPosition)-calcSSS(lightDist,projectTexCoord,shadowCounter-1)) *2)*lightRange[i%numLighRange]*projectionColor;
+				
+				
 				}
 			
 				
@@ -903,7 +909,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			}
 	}
 	
-	light.diffuse = lerp(light.diffuse,max(light.diffuse,saturate(light.reflection)),fresRefl*specIntensity);
+	light.diffuse = lerp(light.diffuse,saturate(light.reflection),fresRefl*specIntensity);
 	light.diffuse.a *= Alpha;
 	
 
