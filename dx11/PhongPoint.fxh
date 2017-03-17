@@ -32,10 +32,9 @@ lightStruct PhongPoint(float lightToObject, float3 NormV, float3 ViewDirV, float
 			
 		    spec *= specIntensity;
 			
-			li.ambient +=saturate(lerp(0, amb, (lRange-lightToObject)));
-			li.diffuse += saturate(lerp(0, diff, (lRange-lightToObject))) * sF;
-//			li.reflection += saturate(lerp(0, spec,saturate(lRange-lightToObject))) * sF;
-			li.reflection += spec * saturate(lerp(1, sF, (lRange-lightToObject)));
+			li.ambient +=saturate(lerp(0, amb, saturate(lRange-lightToObject)));
+			li.diffuse += saturate(lerp(0, diff, saturate(lRange-lightToObject))) * sF;
+			li.reflection += saturate(lerp(0, spec,saturate(lRange-lightToObject))) * sF;
 
 			
 			return li;

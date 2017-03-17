@@ -1,6 +1,6 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\08_MultiLightShadow_Spreaded.v4p" systemname="07_MultiLightShadow_Spreaded" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" scrollx="15" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="1800" top="795" width="14460" height="14235">
+   <BOUNDS type="Window" left="1515" top="795" width="14460" height="14235">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -67,7 +67,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="16590" top="780" width="12210" height="12585">
+   <BOUNDS type="Window" left="15960" top="825" width="12210" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -305,7 +305,7 @@
    </PIN>
    <PIN pinname="Radius" slicecount="1" values="0.4">
    </PIN>
-   <PIN pinname="Thickness" slicecount="1" values="0.24">
+   <PIN pinname="Thickness" slicecount="1" values="0.09">
    </PIN>
    <PIN pinname="SizeXYZ" slicecount="3" values="0.31,0.31,0.31">
    </PIN>
@@ -510,6 +510,10 @@
    <PIN pinname="tDiffuse" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
    <PIN pinname="tNormal" visible="-1" pintype="Input" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Global Reflection Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.00000|">
+   </PIN>
+   <PIN pinname="Global Diffuse Color" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
@@ -973,6 +977,12 @@
    </PIN>
    <PIN pinname="Shadow Geometry Transform" visible="1">
    </PIN>
+   <PIN pinname="DirectionalLight Count" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="SpotLight Count" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="PointLight Count" slicecount="1" values="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="0">
    <LINKPOINT x="8150" y="8978">
@@ -1171,5 +1181,23 @@
    <LINK srcnodeid="1192" srcpinname="Y Output Value" dstnodeid="1091" dstpinname="Shadow Res²">
    </LINK>
    <LINK srcnodeid="1184" srcpinname="Output" dstnodeid="1172" dstpinname="Input 2">
+   </LINK>
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1194">
+   <BOUNDS type="Box" left="2550" top="6345" width="1575" height="825">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2550" top="6345" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.25031,0.38369,0.00000|">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Global Reflection Color|">
+   </PIN>
+   <PIN pinname="Color Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1194" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Reflection Color">
+   </LINK>
+   <LINK srcnodeid="1194" srcpinname="Color Output" dstnodeid="928" dstpinname="Background Color">
+   </LINK>
+   <LINK srcnodeid="1194" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Diffuse Color">
    </LINK>
    </PATCH>

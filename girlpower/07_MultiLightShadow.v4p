@@ -861,7 +861,7 @@
    </PIN>
    <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="Example Lightness" slicecount="1" values="0.5">
+   <PIN pinname="Example Lightness" slicecount="1" values="0.7">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -1083,5 +1083,7 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1193" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel">
+   </LINK>
+   <LINK srcnodeid="1171" srcpinname="Output" dstnodeid="1172" dstpinname="Input 2">
    </LINK>
    </PATCH>

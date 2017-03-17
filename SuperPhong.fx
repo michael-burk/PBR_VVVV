@@ -468,13 +468,13 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 						
 						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,saturate(shadow),light);
+						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,saturate(shadow),light,lightRange[i%numLighRange],lightDist);
 
 					} else {
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,1,light);
+						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,1,light,lightRange[i%numLighRange],lightDist);
 					}
 				} else {
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light);
+						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
 				}
 			
 				break;
@@ -785,13 +785,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 						
 						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,saturate(shadow),light);
+						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,saturate(shadow),light,lightRange[i%numLighRange],lightDist);
 
 					} else {
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light);
+						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
 					}
 				} else {
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light);
+						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
 				}
 			
 				break;

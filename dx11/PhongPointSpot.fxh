@@ -42,8 +42,7 @@ lightStruct PhongPointSpot(float lightToObject, float3 NormV, float3 ViewDirV, f
 
 	li.ambient +=saturate(lerp(0, amb*projectionColor,saturate(lRange-lightToObject)));
 	li.diffuse += saturate(lerp(0, diff*projectionColor,saturate(lRange-lightToObject))) * sF;
-//	li.reflection += saturate(lerp(0, spec*projectionColor,saturate(lRange-lightToObject))) * sF;
-	li.reflection += spec*projectionColor * saturate(lerp(1, sF,saturate(lRange-lightToObject)));
+	li.reflection += saturate(lerp(0, spec*projectionColor,saturate(lRange-lightToObject))) * sF;
 			
 
     return li;

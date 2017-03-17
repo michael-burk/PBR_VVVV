@@ -1,7 +1,7 @@
 
 //phong directional function
 lightStruct PhongDirectional(float3 NormV, float3 ViewDirV, float3 LightDirV, float4 lAmb, float4 lDiff,
-						float4 lSpec, float4 specIntensity, float4 sF, lightStruct li)
+						float4 lSpec, float4 specIntensity, float4 sF, lightStruct li, float lRange, float lightToObject)
 {
     //halfvector
     float3 H = normalize(ViewDirV + LightDirV);
@@ -23,9 +23,10 @@ lightStruct PhongDirectional(float3 NormV, float3 ViewDirV, float3 LightDirV, fl
 
     spec = spec * specIntensity;
 	
-	li.ambient += lAmb;
-	li.diffuse += diff * sF;
-	li.reflection += spec * sF;
+	li.ambient +=saturate(lerp(0, lAmb, saturate(lRange-lightToObject)));
+	li.diffuse += saturate(lerp(0, diff, saturate(lRange-lightToObject))) * sF;
+	li.reflection += saturate(lerp(0, spec,saturate(lRange-lightToObject))) * sF;
+
 	
     return li;
 }
