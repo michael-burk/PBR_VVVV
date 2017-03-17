@@ -217,7 +217,7 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
 
     // get blured and blured squared distance to light
 	
-	float4 shadowCol = shadowMap.SampleLevel(shadowSampler, float3(projectTexCoord, shadowCounter), 0 );
+	float4 shadowCol = shadowMap.SampleLevel(shadowSampler, float3(projectTexCoord, shadowCounter), 0);
 	float2 depths = shadowCol.xy;
 	
     float M1 = depths.x;

@@ -629,11 +629,11 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="1183">
-   <BOUNDS type="Box" left="7545" top="1455" width="2250" height="480">
+   <BOUNDS type="Box" left="5940" top="840" width="2205" height="780">
    </BOUNDS>
-   <BOUNDS type="Node" left="7545" top="1455" width="0" height="0">
+   <BOUNDS type="Node" left="5940" top="840" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.43000,0.43000,0.43000,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.26503,0.26503,0.26503,1.00000|">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Global Diffuse Color|">
    </PIN>
@@ -663,7 +663,7 @@
    <NODE id="1096" componentmode="Hidden" systemname="LightsStudioExample" filename="..\Modules\LightsStudioExample.v4p" nodename="..\Modules\LightsStudioExample.v4p">
    <PIN pinname="Shadow Blur Width" slicecount="1" values="0.08">
    </PIN>
-   <BOUNDS type="Window" left="13545" top="1245" width="24345" height="13710">
+   <BOUNDS type="Window" left="14295" top="0" width="14610" height="15855">
    </BOUNDS>
    <PIN pinname="LightBleedingLimit" slicecount="1" visible="1" values="0.25">
    </PIN>
@@ -869,53 +869,5 @@
    </LINKPOINT>
    <LINKPOINT x="9425" y="6535">
    </LINKPOINT>
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1185">
-   <BOUNDS type="Box" left="4320" top="1635" width="795" height="720">
-   </BOUNDS>
-   <BOUNDS type="Node" left="4320" top="1635" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="1,1,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="3">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="3">
-   </PIN>
-   </NODE>
-   <NODE systemname="Vector (3d Join)" nodename="Vector (3d Join)" componentmode="Hidden" id="1186">
-   <BOUNDS type="Node" left="5835" top="2100" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="XYZ" visible="1">
-   </PIN>
-   <PIN pinname="Y" visible="1" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="X" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="Z" slicecount="1" values="1">
-   </PIN>
-   </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1187">
-   <BOUNDS type="Box" left="5880" top="840" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="5880" top="840" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,0.05">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Default" slicecount="1" values="|0, 0|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1187" srcpinname="Y Output Value" dstnodeid="1186" dstpinname="Y">
    </LINK>
    </PATCH>

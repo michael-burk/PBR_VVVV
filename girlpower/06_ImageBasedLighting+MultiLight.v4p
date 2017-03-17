@@ -19,7 +19,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="4780" top="5585" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.7">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.45">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -63,7 +63,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" visible="1" values="10">
+   <PIN pinname="XYZ" slicecount="1" visible="1" values="12">
    </PIN>
    </NODE>
    <PACK Name="VVVV.Packs" Version="0.2.0">
@@ -287,7 +287,7 @@
    </PIN>
    <PIN pinname="Brightness" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Saturation" slicecount="1" values="2">
+   <PIN pinname="Saturation" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
@@ -482,12 +482,6 @@
    <PIN pinname="Global Diffuse Color" slicecount="1" values="|0.00371,0.00371,0.00371,0.00000|">
    </PIN>
    </NODE>
-   <LINK srcnodeid="878" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Irradiance" linkstyle="Bezier" hiddenwhenlocked="0">
-   <LINKPOINT x="11655" y="5948">
-   </LINKPOINT>
-   <LINKPOINT x="10380" y="5948">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear" linkstyle="Bezier" hiddenwhenlocked="0">
    <LINKPOINT x="13365" y="5393">
    </LINKPOINT>
@@ -569,7 +563,7 @@
    </PIN>
    <PIN pinname="Spread Count" slicecount="1" values="4">
    </PIN>
-   <PIN pinname="Width" slicecount="1" values="2.5">
+   <PIN pinname="Width" slicecount="1" values="4.07">
    </PIN>
    </NODE>
    <LINK srcnodeid="1100" srcpinname="Output" dstnodeid="1098" dstpinname="X In">
@@ -577,11 +571,11 @@
    <LINK srcnodeid="1100" srcpinname="Output" dstnodeid="1098" dstpinname="Y In">
    </LINK>
    <NODE id="539" nodename="IOBox (Value Advanced)" componentmode="InABox" systemname="IOBox (Value Advanced)">
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0.125,0">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0.099,0">
    </PIN>
    <PIN pinname="X Input Value" slicecount="3" values="0,0,0">
    </PIN>
-   <BOUNDS type="Box" left="3970" top="3690" width="285" height="240">
+   <BOUNDS type="Box" left="3970" top="3690" width="480" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="3970" top="3690" width="0" height="0">
    </BOUNDS>
@@ -676,8 +670,6 @@
    <LINKPOINT x="5975" y="6675">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1069" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
-   </LINK>
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1112">
    <BOUNDS type="Node" left="1530" top="5310" width="100" height="100">
    </BOUNDS>
@@ -699,7 +691,7 @@
    </PIN>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="XYZ" slicecount="1" values="0.5">
+   <PIN pinname="XYZ" slicecount="1" values="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="473" srcpinname="Transform Out" dstnodeid="1113" dstpinname="Transform In">
@@ -791,7 +783,7 @@
    </PIN>
    <PIN pinname="Helper" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Example Lightness" slicecount="1" values="0.5">
+   <PIN pinname="Example Lightness" slicecount="1" values="0.75">
    </PIN>
    <PIN pinname="Shadow" slicecount="3" values="1,1,1">
    </PIN>
@@ -937,5 +929,9 @@
    <LINK srcnodeid="1113" srcpinname="Transform Out" dstnodeid="1096" dstpinname="Shadow Geometry Transform">
    </LINK>
    <LINK srcnodeid="1112" srcpinname="Output" dstnodeid="1096" dstpinname="Shadow Geometry">
+   </LINK>
+   <LINK srcnodeid="1069" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
+   </LINK>
+   <LINK srcnodeid="878" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Irradiance">
    </LINK>
    </PATCH>

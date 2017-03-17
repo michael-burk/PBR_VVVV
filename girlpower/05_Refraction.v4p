@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\05_Refraction.v4p" systemname="04_Refraction" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_Refraction.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <NODE systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden" id="2">
    <BOUNDS type="Node" left="3455" top="10060" width="100" height="100">
@@ -80,32 +80,6 @@
    </NODE>
    <PACK Name="VVVV.Packs" Version="0.2.0">
    </PACK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="806" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="7875" top="4695" width="810" height="510">
-   </BOUNDS>
-   <BOUNDS type="Node" left="7875" top="4695" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.01,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="Reflective/DiffuseXY">
-   </PIN>
-   <PIN pinname="X Input Value" slicecount="2" values="1,1">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   <PIN pinname="Minimum" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Maximum" slicecount="1" values="1">
-   </PIN>
-   </NODE>
    <NODE systemname="Blur (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\Blur.tfx" nodename="Blur (DX11.TextureFX)" componentmode="Hidden" id="877">
    <BOUNDS type="Node" left="12690" top="3945" width="100" height="100">
    </BOUNDS>
@@ -405,25 +379,11 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1083" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="480" top="2415" width="285" height="270">
+   <BOUNDS type="Node" left="435" top="2820" width="285" height="270">
    </BOUNDS>
-   <BOUNDS type="Box" left="480" top="2415" width="2970" height="4110">
+   <BOUNDS type="Box" left="435" top="2820" width="2970" height="4110">
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="|1. The Fresnel Term is used for reflections.&cr;&lf;Fresnel Rim/Refl Min:&cr;&lf;The minumim Reflection for Rim light (x) and CubeMap (y)&cr;&lf;&cr;&lf;Fresnel Rim/Refl Max:&cr;&lf;The maximum Reflection for Rim light (x) and CubeMap (y)&cr;&lf;&cr;&lf;Fresnel Rim/Refl Exp:&cr;&lf;The exponent of the fresnel term for Rim light (x) and CubeMap (y)&cr;&lf;&cr;&lf;2. Refraction index for RGB|">
-   </PIN>
-   <PIN pinname="Output String" visible="0">
-   </PIN>
-   <PIN pinname="Show Grid" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="String Type" slicecount="1" values="MultiLine">
-   </PIN>
-   </NODE>
-   <NODE nodename="IOBox (String)" componentmode="InABox" id="1085" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="6315" top="1230" width="285" height="270">
-   </BOUNDS>
-   <BOUNDS type="Box" left="6315" top="1230" width="285" height="270">
-   </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="1.">
    </PIN>
    <PIN pinname="Output String" visible="0">
    </PIN>
@@ -508,16 +468,6 @@
    </LINK>
    <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="877" dstpinname="Sampler">
    </LINK>
-   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1089" systemname="IOBox (Color)">
-   <BOUNDS type="Box" left="7245" top="6045" width="825" height="660">
-   </BOUNDS>
-   <BOUNDS type="Node" left="7245" top="6045" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|Color Overlay|">
-   </PIN>
-   </NODE>
    <NODE id="934" systemname="SuperPhong (DX11.Effect)" filename="..\SuperPhong.fx" nodename="SuperPhong (DX11.Effect)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
    <BOUNDS type="Node" left="4295" top="7660" width="8550" height="270">
    </BOUNDS>
@@ -611,7 +561,7 @@
    </PIN>
    <PIN pinname="g_samLinear" slicecount="1" visible="1" values="||">
    </PIN>
-   <PIN pinname="Technique" slicecount="1" values="Superphong_Bump" visible="1">
+   <PIN pinname="Technique" slicecount="1" visible="1" values="Superphong_Bump">
    </PIN>
    <PIN pinname="SpotLightDirXYZ" visible="-1" pintype="Input" slicecount="3" values="0,0,0">
    </PIN>
@@ -653,6 +603,12 @@
    </PIN>
    <PIN pinname="Directional/Spot/Point" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
+   <PIN pinname="MIN Fresnel" visible="1">
+   </PIN>
+   <PIN pinname="MAX Fresnel" visible="1">
+   </PIN>
+   <PIN pinname="EXP Fresnel" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
    </LINK>
@@ -692,8 +648,6 @@
    <LINKPOINT x="8835" y="5685">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1089" srcpinname="Color Output" dstnodeid="934" dstpinname="Color Overlay">
-   </LINK>
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1090">
    <BOUNDS type="Node" left="4425" top="6645" width="100" height="100">
    </BOUNDS>
@@ -718,78 +672,6 @@
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Transform Out" dstnodeid="934" dstpinname="tNormal">
    </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1092">
-   <BOUNDS type="Box" left="6795" top="1305" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="6795" top="1305" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,0">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|MIN Fresnel Rim / Fresnel ReflXY|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1092" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MIN Fresnel Rim / Fresnel ReflXY" linkstyle="Bezier">
-   <LINKPOINT x="6810" y="4725">
-   </LINKPOINT>
-   <LINKPOINT x="6075" y="4725">
-   </LINKPOINT>
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1093">
-   <BOUNDS type="Box" left="6930" top="2085" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="6930" top="2085" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel Rim / Fresnel ReflXY|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1093" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel Rim / Fresnel ReflXY" linkstyle="Bezier">
-   <LINKPOINT x="6945" y="5108">
-   </LINKPOINT>
-   <LINKPOINT x="6375" y="5108">
-   </LINKPOINT>
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1094">
-   <BOUNDS type="Box" left="7125" top="2925" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="7125" top="2925" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|EXP Fresnel Rim / Fresnel Refl XY|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1094" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel Rim / Fresnel Refl XY" linkstyle="Bezier">
-   <LINKPOINT x="7140" y="5520">
-   </LINKPOINT>
-   <LINKPOINT x="6660" y="5520">
-   </LINKPOINT>
-   </LINK>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="1095">
    <BOUNDS type="Box" left="12615" top="6435" width="1590" height="270">
    </BOUNDS>
@@ -807,13 +689,11 @@
    </BOUNDS>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <PIN pinname="Data" slicecount="1" values="1.72" visible="1">
+   <PIN pinname="Data" slicecount="1" visible="1" values="1.72">
    </PIN>
    <PIN pinname="Channel Count" slicecount="1" values="4">
    </PIN>
    </NODE>
-   <LINK srcnodeid="878" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Irradiance">
-   </LINK>
    <LINK srcnodeid="1062" srcpinname="Layer" dstnodeid="1074" dstpinname="Layer 2">
    </LINK>
    <LINK srcnodeid="1060" srcpinname="Texture Out" dstnodeid="1061" dstpinname="Texture In">
@@ -833,5 +713,59 @@
    <LINK srcnodeid="1098" srcpinname="Y Output Value" dstnodeid="1097" dstpinname="Data">
    </LINK>
    <LINK srcnodeid="877" srcpinname="Texture Out" dstnodeid="878" dstpinname="Texture In">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1099">
+   <BOUNDS type="Box" left="6570" top="3690" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6570" top="3690" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|MIN Fresnel|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1099" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MIN Fresnel">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1100">
+   <BOUNDS type="Box" left="6705" top="4305" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6705" top="4305" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1100" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1101">
+   <BOUNDS type="Box" left="7080" top="4830" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7080" top="4830" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="2">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|EXP Fresnel|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1101" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel">
+   </LINK>
+   <LINK srcnodeid="878" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Irradiance" linkstyle="Bezier">
+   <LINKPOINT x="12690" y="6203">
+   </LINKPOINT>
+   <LINKPOINT x="11700" y="6203">
+   </LINKPOINT>
    </LINK>
    </PATCH>

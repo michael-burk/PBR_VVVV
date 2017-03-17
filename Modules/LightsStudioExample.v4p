@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="6570" scrolly="120" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="6780" scrolly="3525" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="13200" width="100" height="100">
    </BOUNDS>
@@ -201,7 +201,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="11865" top="12600" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.2">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.333">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -217,7 +217,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10650" top="12600" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.41">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.333">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -265,7 +265,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="1" values="|0.43929,0.43929,0.43929,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="1" values="|0.26319,0.26319,0.26319,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)" hiddenwhenlocked="0">
@@ -430,7 +430,7 @@
    <LINKPOINT x="16890" y="13508">
    </LINKPOINT>
    </LINK>
-   <BOUNDS type="Window" left="13545" top="1245" width="24345" height="13710">
+   <BOUNDS type="Window" left="14295" top="0" width="14610" height="15855">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -1167,7 +1167,7 @@
    </LINKPOINT>
    </LINK>
    <NODE id="120" nodename="IOBOX (VALUE ADVANCED)" componentmode="InABox" systemname="IOBox (Value Advanced)">
-   <PIN pinname="Y Input Value" slicecount="1" values="0.34">
+   <PIN pinname="Y Input Value" slicecount="1" values="0.33">
    </PIN>
    <BOUNDS type="Box" left="13080" top="12600" width="795" height="240">
    </BOUNDS>

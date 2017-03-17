@@ -1,4 +1,4 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\09_MultiLightShadowTransparency.v4p" systemname="09_MultiLightShadowTransparency" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\09_MultiLightShadowTransparency.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <BOUNDS type="Window" left="2265" top="780" width="14220" height="14265">
    </BOUNDS>
@@ -196,22 +196,6 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
-   <NODE systemname="FXAA11 (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\FXAA11.tfx" nodename="FXAA11 (DX11.TextureFX)" componentmode="Hidden" id="1118">
-   <BOUNDS type="Node" left="4185" top="11295" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Texture In" visible="1">
-   </PIN>
-   <PIN pinname="Texture Out" visible="1">
-   </PIN>
-   <PIN pinname="Enabled" slicecount="1" values="1">
-   </PIN>
-   <BOUNDS type="Box" left="4185" top="11295">
-   </BOUNDS>
-   </NODE>
-   <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1118" dstpinname="Texture In">
-   </LINK>
-   <LINK srcnodeid="1118" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
-   </LINK>
    <NODE id="1" systemname="Camera (Transform Orbit Legacy) Instant Position" filename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden">
    <BOUNDS type="Node" left="5475" top="10215" width="100" height="100">
    </BOUNDS>
@@ -303,7 +287,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="6105" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="1245" top="375" width="24015" height="14370">
+   <BOUNDS type="Window" left="1245" top="375" width="10830" height="14370">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -377,6 +361,8 @@
    </PIN>
    <PIN pinname="Shadow" slicecount="3" visible="1" values="1,1,1">
    </PIN>
+   <PIN pinname="Shadow Res²" slicecount="1" values="256">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Helper" dstnodeid="3" dstpinname="Layer 5" linkstyle="VHV" hiddenwhenlocked="1">
    <LINKPOINT x="8150" y="8968">
@@ -417,7 +403,7 @@
    </PIN>
    <PIN pinname="refractionIndex" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="100">
+   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="25">
    </PIN>
    <PIN pinname="colors Bin Size" visible="-1" pintype="Input" slicecount="1" values="3">
    </PIN>
@@ -564,6 +550,12 @@
    <PIN pinname="Layer" visible="1">
    </PIN>
    <PIN pinname="Light Bleeding Limit" visible="1">
+   </PIN>
+   <PIN pinname="MAX Fresnel" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="EXP Fresnel" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="MIN Fresnel" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="UseShadow" dstnodeid="934" dstpinname="Shadow" linkstyle="VHV">
@@ -738,10 +730,6 @@
    <LINKPOINT x="8535" y="7495">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1162" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
-   </LINK>
-   <LINK srcnodeid="1162" srcpinname="Sampler" dstnodeid="934" dstpinname="shadowSampler">
-   </LINK>
    <LINK srcnodeid="1091" srcpinname="Shadow Map" dstnodeid="934" dstpinname="ShadowMap" linkstyle="VHV">
    <LINKPOINT x="10365" y="8618">
    </LINKPOINT>
@@ -839,7 +827,7 @@
    <LINK srcnodeid="934" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 1">
    </LINK>
    <NODE systemname="BubbleNoise (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Source\BubbleNoise.tfx" nodename="BubbleNoise (DX11.TextureFX)" componentmode="Hidden" id="1192">
-   <BOUNDS type="Node" left="10740" top="5625" width="100" height="100">
+   <BOUNDS type="Node" left="11310" top="5640" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -847,11 +835,11 @@
    </PIN>
    <PIN pinname="Bubble Color" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
-   <PIN pinname="Contrast" slicecount="1" values="0">
+   <PIN pinname="Contrast" slicecount="1" values="-0.61">
    </PIN>
    <PIN pinname="Time" slicecount="1" visible="1" values="-6.42">
    </PIN>
-   <PIN pinname="Frequency" slicecount="1" values="2">
+   <PIN pinname="Frequency" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Default SizeXY" slicecount="2" visible="1" pintype="Input" values="512,512">
    </PIN>
@@ -887,15 +875,15 @@
    <LINK srcnodeid="1196" srcpinname="Render State" dstnodeid="956" dstpinname="Render State">
    </LINK>
    <LINK srcnodeid="1192" srcpinname="Texture Out" dstnodeid="1091" dstpinname="Alpha Tex" linkstyle="Bezier">
-   <LINKPOINT x="10755" y="7028">
+   <LINKPOINT x="11135" y="7038">
    </LINKPOINT>
-   <LINKPOINT x="10365" y="7028">
+   <LINKPOINT x="10555" y="7033">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1192" srcpinname="Texture Out" dstnodeid="1193" dstpinname="Input 2">
    </LINK>
    <NODE systemname="Integrate (Differential)" nodename="Integrate (Differential)" componentmode="Hidden" id="1201">
-   <BOUNDS type="Node" left="11235" top="5130" width="100" height="100">
+   <BOUNDS type="Node" left="11805" top="5145" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Position Out" visible="1">
    </PIN>
@@ -913,8 +901,6 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1202" srcpinname="Output Enum" dstnodeid="1091" dstpinname="Shadow Technique">
-   </LINK>
-   <LINK srcnodeid="1194" srcpinname="Texture Out" dstnodeid="1193" dstpinname="Input 1">
    </LINK>
    <LINK srcnodeid="1105" srcpinname="Geometry Out" dstnodeid="1091" dstpinname="Shadow Geometry" linkstyle="Bezier">
    <LINKPOINT x="4845" y="5303">
@@ -936,6 +922,18 @@
    <LINKPOINT x="8150" y="8968">
    </LINKPOINT>
    <LINKPOINT x="5680" y="8913">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1039" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="1162" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
+   </LINK>
+   <LINK srcnodeid="1162" srcpinname="Sampler" dstnodeid="934" dstpinname="shadowSampler">
+   </LINK>
+   <LINK srcnodeid="1194" srcpinname="Texture Out" dstnodeid="1193" dstpinname="Input 1" linkstyle="VHV">
+   <LINKPOINT x="10320" y="5708">
+   </LINKPOINT>
+   <LINKPOINT x="10260" y="5708">
    </LINKPOINT>
    </LINK>
    </PATCH>
