@@ -829,9 +829,23 @@ float4 PS_Superphong(vs2ps In): SV_Target
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],1,light);
 					}
 					
-					light.diffuse += exp(- ( length(viewPosition)-calcSSS(lightDist,projectTexCoord,shadowCounter-1)) *2)*lightRange[i%numLighRange]*projectionColor;
+				float4 shadowCol = shadowMap.SampleLevel(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0);
+//				light.diffuse += exp( -( length(viewPosition)-(calcSSS(lightDist,projectTexCoord,shadowCounter-1))) *1)*projectionColor;
+//				light.diffuse += calcSSS(lightDist,projectTexCoord,shadowCounter-1)*1*;
+//				light.diffuse += exp( -( length(viewPosition)-(pow(shadowCol.r,8))) *2)*10*projectionColor;
 				
+				float4 sss = exp( -( length(viewPosition)-(pow(shadowCol.r,10)))*3)*200*falloff*projectionColor*(lDiff[i%numlDiff]);	
+//					sss *= 1-dot(LightDirV.xyz,NormV)*.9;
+//				light.diffuse += exp( -( length(viewPosition)-(pow(shadowCol.r,1))) *1)*2*projectionColor;	
+//				light.diffuse += pow(shadowCol.r,2)*10;
 				
+//				light.diffuse += lerp(0,sss, abs(dot(LightDirV.xyz,NormV)*1) );
+//				light.diffuse += lerp(.5,sss, pow(abs(dot(LightDirV.xyz,NormV)),1) );
+//				light.diffuse = saturate(lerp(sss,light.diffuse,dot(LightDirV.xyz,NormV)));
+//				light.diffuse = min(sss+light.diffuse,lDiff[i%numlDiff]);
+				light.diffuse = (sss+light.diffuse);
+//				light.diffuse = dot(LightDirV.xyz,NormV);
+					
 				}
 			
 				

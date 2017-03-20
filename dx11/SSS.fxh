@@ -37,13 +37,14 @@ float4 calcSSS(float worldSpaceDistance, float2 projectTexCoord, int shadowCount
         // reduce light bleeding
         lightIntensity = clamp((intensity-lightBleedingLimit[shadowCounter])/ (1.0-lightBleedingLimit[shadowCounter]), 0.0, 1.0);
     	alpha +=  (1 - saturate(shadowCol.a));
+    	return lightIntensity*depths.x;
     }
 
     /////////////////////////////////////////////////////////
 
     float4 resultingColor = float4(float3(lightIntensity,lightIntensity,lightIntensity),1);
 	
-//	return resultingColor+alpha;
-	return depths.x;
+	
+	return 1;
 	
 }
