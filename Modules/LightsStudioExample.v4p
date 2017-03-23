@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Projects\superphong\modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="0" scrolly="0" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Projects\superphong\modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="4635" scrolly="0" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="13200" width="100" height="100">
    </BOUNDS>
@@ -410,7 +410,7 @@
    <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="12735" top="555" width="13590" height="11325">
+   <BOUNDS type="Window" left="12735" top="555" width="13620" height="11325">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -1153,7 +1153,7 @@
    </BOUNDS>
    <PIN pinname="X" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Z" visible="1" slicecount="1" values="0.0072">
+   <PIN pinname="Z" visible="1" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Y" slicecount="1" values="0">
    </PIN>
@@ -1205,7 +1205,7 @@
    </BOUNDS>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
-   <PIN pinname="FOV" slicecount="1" visible="1" values="0.23">
+   <PIN pinname="FOV" slicecount="1" visible="1" values="0.2">
    </PIN>
    <PIN pinname="Roll" visible="1" slicecount="1" values="0">
    </PIN>
@@ -1515,7 +1515,7 @@
    </PIN>
    <PIN pinname="X" slicecount="1" visible="1" values="-0.4">
    </PIN>
-   <PIN pinname="Z" slicecount="1" values="-1.11">
+   <PIN pinname="Z" slicecount="1" values="-1.1">
    </PIN>
    <PIN pinname="XYZ" visible="1">
    </PIN>
@@ -1825,7 +1825,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15345" top="3720" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="512">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="256">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1861,13 +1861,15 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15360" top="4230" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.07">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.08">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Precision" slicecount="1" values="4">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Shadow Blur Width|">
+   </PIN>
+   <PIN pinname="Minimum" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="401" srcpinname="Y Output Value" dstnodeid="234" dstpinname="Shadow Blur Width" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -2025,7 +2027,7 @@
    </PIN>
    </NODE>
    <NODE id="80" stayontop="1" componentmode="Hidden" systemname="ShadowMaps" filename="ShadowMaps.v4p" nodename="ShadowMaps.v4p" debug="0" hiddenwhenlocked="0">
-   <BOUNDS type="Window" left="16590" top="1350" width="10890" height="11790">
+   <BOUNDS type="Window" left="13455" top="720" width="10890" height="11790">
    </BOUNDS>
    <BOUNDS type="Node" left="22965" top="12675" width="2625" height="270">
    </BOUNDS>
@@ -2665,9 +2667,9 @@
    <NODE id="448" systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden">
    <BOUNDS type="Node" left="6945" top="1950" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="-1.42">
+   <PIN pinname="Y" slicecount="1" values="-1.54">
    </PIN>
-   <PIN pinname="Z" slicecount="1" values="0.92">
+   <PIN pinname="Z" slicecount="1" values="0.32">
    </PIN>
    <PIN pinname="X" slicecount="1" values="-0.06">
    </PIN>

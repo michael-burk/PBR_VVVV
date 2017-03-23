@@ -10,7 +10,7 @@
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="12660" top="600" width="15195" height="12540">
+   <BOUNDS type="Window" left="13605" top="705" width="15195" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -604,7 +604,7 @@
    </LINK>
    <LINK srcnodeid="1118" srcpinname="Output" dstnodeid="1116" dstpinname="Input 2">
    </LINK>
-   <NODE id="1096" componentmode="Hidden" systemname="LightsStudioExample" filename="..\modules\LightsStudioExample.v4p" nodename="LightsStudioExample">
+   <NODE id="1096" componentmode="InAWindow" systemname="LightsStudioExample" filename="..\modules\LightsStudioExample.v4p" nodename="LightsStudioExample">
    <PIN pinname="Shadow Blur Width" slicecount="1" values="0.08">
    </PIN>
    <BOUNDS type="Window" left="12735" top="555" width="13620" height="11325">

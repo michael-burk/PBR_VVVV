@@ -200,7 +200,19 @@ vs2ps VS(
 	
     return Out;
 }
+float2 R : Targetsize;
+float4 getTexel( float3 p, Texture2DArray tex )
+{
+    p.xy = p.xy*R + 0.5;
 
+    float2 i = floor( p.xy);
+    float2 f =  p.xy - i;
+    f = f*f*f*(f*(f*6.0-15.0)+10.0);
+      p.xy.xy = i + f;
+
+     p.xy = ( p.xy - 0.5)/R;
+    return tex.SampleLevel(shadowSampler, p, 0);
+}
 
 float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
 	
@@ -828,23 +840,15 @@ float4 PS_Superphong(vs2ps In): SV_Target
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lAmbient[i%numlDiff], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],1,light);
 					}
-					
-				float4 shadowCol = shadowMap.SampleLevel(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0);
-//				light.diffuse += exp( -( length(viewPosition)-(calcSSS(lightDist,projectTexCoord,shadowCounter-1))) *1)*projectionColor;
-//				light.diffuse += calcSSS(lightDist,projectTexCoord,shadowCounter-1)*1*;
-//				light.diffuse += exp( -( length(viewPosition)-(pow(shadowCol.r,8))) *2)*10*projectionColor;
+
 				
-				float4 sss = exp( -( length(viewPosition)-(pow(shadowCol.r,10)))*3)*200*falloff*projectionColor*(lDiff[i%numlDiff]);	
-//					sss *= 1-dot(LightDirV.xyz,NormV)*.9;
-//				light.diffuse += exp( -( length(viewPosition)-(pow(shadowCol.r,1))) *1)*2*projectionColor;	
-//				light.diffuse += pow(shadowCol.r,2)*10;
-				
-//				light.diffuse += lerp(0,sss, abs(dot(LightDirV.xyz,NormV)*1) );
-//				light.diffuse += lerp(.5,sss, pow(abs(dot(LightDirV.xyz,NormV)),1) );
-//				light.diffuse = saturate(lerp(sss,light.diffuse,dot(LightDirV.xyz,NormV)));
-//				light.diffuse = min(sss+light.diffuse,lDiff[i%numlDiff]);
-				light.diffuse = (sss+light.diffuse);
-//				light.diffuse = dot(LightDirV.xyz,NormV);
+//				float4 shadowCol = shadowMap.SampleLevel(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0);		
+				float4 shadowCol = getTexel(float3(projectTexCoord, shadowCounter-1),shadowMap);
+//				float4 sss = exp( -( length(viewPosition)-(pow(shadowCol.r,1)))*3)*50*falloff*projectionColor*(lDiff[i%numlDiff]) * -(dot(NormV,LightDirV)) ;
+				float4 sss = exp( -( length(viewPosition)-(pow(shadowCol.r,1)))*3)*5*projectionColor*(lDiff[i%numlDiff]);
+//				light.diffuse = (saturate(sss)+light.diffuse);
+				light.diffuse = (pow(1-length(lightToObject)*.55,1));
+
 					
 				}
 			
