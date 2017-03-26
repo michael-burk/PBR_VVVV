@@ -2393,7 +2393,7 @@
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Scalar" slicecount="1" values="0.1">
+   <PIN pinname="Scalar" slicecount="1" values="0.5">
    </PIN>
    </NODE>
    <LINK srcnodeid="41" srcpinname="Output" dstnodeid="442" dstpinname="Color" linkstyle="Bezier">

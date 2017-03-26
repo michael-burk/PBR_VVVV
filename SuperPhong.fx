@@ -600,7 +600,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 			}
 	}
 	
-	light.diffuse = lerp(light.diffuse,saturate(light.reflection),fresRefl*specIntensity);
+	light.diffuse = lerp(light.diffuse,max(saturate(light.ambient),saturate(light.reflection)),fresRefl*specIntensity);
 	light.diffuse.a *= Alpha;
 	
 
@@ -919,7 +919,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			}
 	}
 	
-	light.diffuse = lerp(light.diffuse,saturate(light.reflection),fresRefl*specIntensity);
+	light.diffuse = lerp(light.diffuse,max(saturate(light.ambient),saturate(light.reflection)),fresRefl*specIntensity);
 	light.diffuse.a *= Alpha;
 	
 
