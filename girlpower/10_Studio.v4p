@@ -10,7 +10,7 @@
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="12675" top="1410" width="15195" height="12540">
+   <BOUNDS type="Window" left="12615" top="1470" width="15195" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -125,7 +125,7 @@
    <NODE id="1039" systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow">
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="180" top="600" width="12240" height="12585">
+   <BOUNDS type="Window" left="555" top="1395" width="12240" height="12585">
    </BOUNDS>
    <BOUNDS type="Node" left="3090" top="10710" width="100" height="100">
    </BOUNDS>
@@ -289,7 +289,7 @@
    </PIN>
    <PIN pinname="Layout Message" visible="1">
    </PIN>
-   <PIN pinname="Global Reflection Color" visible="1" slicecount="1" values="|0.00000,0.00000,0.00000,0.00000|">
+   <PIN pinname="Global Reflection Color" visible="1" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
    <PIN pinname="Material Color" slicecount="1" visible="1" values="|0.65987,0.65987,0.65987,0.00000|">
    </PIN>
@@ -297,9 +297,9 @@
    </PIN>
    <PIN pinname="EXP Fresnel" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="MIN Fresnel" visible="1" slicecount="1" values="0.2">
+   <PIN pinname="MIN Fresnel" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="MAX Fresnel" slicecount="1" values="0.8">
+   <PIN pinname="MAX Fresnel" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Shadow Near Plane / Far Plane" visible="1">
    </PIN>
@@ -524,26 +524,6 @@
    </NODE>
    <LINK srcnodeid="1158" srcpinname="Color Output" dstnodeid="934" dstpinname="Color Overlay">
    </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1170">
-   <BOUNDS type="Box" left="9270" top="4995" width="480" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="9270" top="4995" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Boolean">
-   </PIN>
-   <PIN pinname="Behavior" slicecount="1" values="Toggle">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   <PIN pinname="X Input Value" slicecount="1" values="1">
-   </PIN>
-   </NODE>
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1171">
    <BOUNDS type="Node" left="1920" top="3195" width="100" height="100">
    </BOUNDS>
@@ -585,7 +565,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5940" top="840" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.28174,0.28174,0.28174,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|1.00000,0.00000,0.96058,1.00000|">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Global Diffuse Color|">
    </PIN>
@@ -593,17 +573,15 @@
    </PIN>
    </NODE>
    <NODE systemname="Multiply (Color)" nodename="Multiply (Color)" componentmode="Hidden" id="1184">
-   <BOUNDS type="Node" left="5865" top="4050" width="100" height="100">
+   <BOUNDS type="Node" left="6150" top="4380" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Color" visible="1" slicecount="1" values="|0.41993,0.00000,0.62931,0.00000|">
+   <PIN pinname="Color" visible="1" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Scalar" slicecount="1" values="1">
+   <PIN pinname="Scalar" slicecount="1" values="0.3">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1183" srcpinname="Color Output" dstnodeid="1184" dstpinname="Color">
-   </LINK>
    <LINK srcnodeid="1118" srcpinname="Output" dstnodeid="1116" dstpinname="Input 2">
    </LINK>
    <LINK srcnodeid="1145" srcpinname="Output" dstnodeid="934" dstpinname="SpecularMap">
@@ -662,12 +640,10 @@
    <LINKPOINT x="12720" y="6525">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1184" srcpinname="Output" dstnodeid="934" dstpinname="Global Diffuse Color">
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1194">
-   <BOUNDS type="Box" left="4470" top="4515" width="795" height="720">
+   <BOUNDS type="Box" left="4680" top="3780" width="795" height="720">
    </BOUNDS>
-   <BOUNDS type="Node" left="4470" top="4515" width="0" height="0">
+   <BOUNDS type="Node" left="4680" top="3780" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
    </PIN>
@@ -688,12 +664,10 @@
    </LINK>
    <LINK srcnodeid="1194" srcpinname="Y Output Value" dstnodeid="537" dstpinname="XYZ">
    </LINK>
-   <LINK srcnodeid="1183" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Reflection Color">
-   </LINK>
    <LINK srcnodeid="1171" srcpinname="Output" dstnodeid="1116" dstpinname="Input 1">
    </LINK>
    <NODE id="1096" componentmode="Hidden" systemname="LightsStudioExample" filename="..\modules\LightsStudioExample.v4p" nodename="LightsStudioExample" stayontop="0">
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.15">
    </PIN>
    <BOUNDS type="Window" left="9645" top="2445" width="18450" height="11325">
    </BOUNDS>
@@ -775,9 +749,9 @@
    </PIN>
    <PIN pinname="Shadow Res²" slicecount="1" values="512">
    </PIN>
-   <PIN pinname="Helper" visible="1" slicecount="1" values="1">
+   <PIN pinname="Helper" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Example Lightness" slicecount="1" values="0.5">
+   <PIN pinname="Example Lightness" slicecount="1" values="0.75">
    </PIN>
    <PIN pinname="Shadow" slicecount="3" visible="1" values="1,1,1">
    </PIN>
@@ -907,5 +881,45 @@
    </LINKPOINT>
    <LINKPOINT x="11760" y="6495">
    </LINKPOINT>
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1195">
+   <BOUNDS type="Box" left="9180" top="4995" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="9180" top="4995" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="1,1,1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="Shadow">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1195" srcpinname="Y Output Value" dstnodeid="1096" dstpinname="Shadow">
+   </LINK>
+   <LINK srcnodeid="1183" srcpinname="Color Output" dstnodeid="1184" dstpinname="Color">
+   </LINK>
+   <LINK srcnodeid="1183" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Reflection Color">
+   </LINK>
+   <NODE systemname="Cons (Color)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (Color)" componentmode="Hidden" id="1196">
+   <BOUNDS type="Node" left="6135" top="4845" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 1" visible="1">
+   </PIN>
+   <PIN pinname="Input 2" visible="1" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1196" srcpinname="Output" dstnodeid="934" dstpinname="Global Diffuse Color">
+   </LINK>
+   <LINK srcnodeid="1184" srcpinname="Output" dstnodeid="1196" dstpinname="Input 1">
+   </LINK>
+   <LINK srcnodeid="1183" srcpinname="Color Output" dstnodeid="1196" dstpinname="Input 2">
    </LINK>
    </PATCH>
