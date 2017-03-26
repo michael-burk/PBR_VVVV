@@ -7,7 +7,6 @@ Texture2D inputTexture <string uiname="Alpha Tex";>;
 struct vsInput
 {
     float4 posObject : POSITION;
-	float4 norm: NORMAL;
 };
 
 struct psInput
@@ -21,9 +20,6 @@ struct vsInput_AT
 {
     float4 posObject : POSITION;
 	float4 uv: TEXCOORD0;
-	float4 norm: NORMAL;
-
-	
 };
 
 struct psInput_AT
@@ -65,7 +61,6 @@ cbuffer cbTextureData : register(b2)
 psInput VS(vsInput input)
 {
 	psInput output;
-//	input.posObject = input.posObject + (input.norm*.1);
 	output.posObject = mul(input.posObject,tW);
 	output.posScreen = mul(input.posObject,mul(tW,tVP));
 	return output;

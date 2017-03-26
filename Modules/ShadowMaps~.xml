@@ -1,6 +1,6 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.dtd" >
-   <PATCH nodename="C:\Projects\superphong\modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="660" scrolly="1125" locked="0">
-   <BOUNDS type="Window" left="16590" top="1350" width="10890" height="11790">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="885" locked="0">
+   <BOUNDS type="Window" left="13455" top="720" width="10890" height="11790">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -268,8 +268,6 @@
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="4" srcpinname="Render State" dstnodeid="79" dstpinname="Render State" linkstyle="PolyLine">
-   </LINK>
    <NODE systemname="Sampler (DX11 Advanced)" nodename="Sampler (DX11 Advanced)" componentmode="Hidden" id="165" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll">
    <BOUNDS type="Node" left="1545" top="8430" width="1500" height="270">
    </BOUNDS>
@@ -641,5 +639,7 @@
    <LINK srcnodeid="213" srcpinname="Texture Out" dstnodeid="186" dstpinname="Texture In">
    </LINK>
    <LINK srcnodeid="72" srcpinname="Texture Out" dstnodeid="213" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="4" srcpinname="Render State" dstnodeid="79" dstpinname="Render State">
    </LINK>
    </PATCH>

@@ -81,7 +81,7 @@ TextureCube cubeTexRefl <string uiname="CubeMap Refl"; >;
 TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
 Texture2DArray lightMap <string uiname="SpotTex"; >;
 Texture2DArray shadowMap <string uiname="ShadowMap"; >;
-StructuredBuffer <float2> nearFarPlane <string uiname="Near Plane / Far Plane"; >;
+StructuredBuffer <float2> nearFarPlane <string uiname="Shadow Near Plane / Far Plane"; >;
 StructuredBuffer <float> lightBleedingLimit <string uiname="Light Bleeding Limit";>;
 StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 
@@ -262,7 +262,7 @@ float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shado
 	
 }
 
-#include "dx11/SSS.fxh"
+
 
 float4 PS_SuperphongBump(vs2psBump In): SV_Target
 {	
@@ -840,15 +840,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lAmbient[i%numlDiff], lDiff[i%numlDiff],
 							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],1,light);
 					}
-
-				
-//				float4 shadowCol = shadowMap.SampleLevel(shadowSampler, float3(projectTexCoord, shadowCounter-1), 0);		
-				float4 shadowCol = getTexel(float3(projectTexCoord, shadowCounter-1),shadowMap);
-//				float4 sss = exp( -( length(viewPosition)-(pow(shadowCol.r,1)))*3)*50*falloff*projectionColor*(lDiff[i%numlDiff]) * -(dot(NormV,LightDirV)) ;
-				float4 sss = exp( -( length(viewPosition)-(pow(shadowCol.r,1)))*3)*5*projectionColor*(lDiff[i%numlDiff]);
-//				light.diffuse = (saturate(sss)+light.diffuse);
-				light.diffuse = (pow(1-length(lightToObject)*.55,1));
-
+					
 					
 				}
 			
