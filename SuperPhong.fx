@@ -588,8 +588,9 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		
 	}
 	
+	float4 material = texCol * saturate(Color);
 	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + saturate(GlobalReflectionColor) ); 
-	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * texCol * saturate(Color); 
+	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * material; 
 	
 	if(refraction){
 			float3 refrVect;
@@ -600,11 +601,13 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 			}
 	}
 	
-	light.diffuse = lerp(light.diffuse,max(saturate(light.ambient),saturate(light.reflection)),fresRefl*specIntensity);
+	light.diffuse = lerp(light.diffuse,max(saturate(light.ambient)*material,saturate(light.reflection)),fresRefl*specIntensity);
 	light.diffuse.a *= Alpha;
 	
 
 	return light.diffuse;
+	
+	
 	
 	
 
@@ -907,8 +910,9 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 	}
 	
-	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + saturate(GlobalReflectionColor) ); 
-	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * texCol * saturate(Color); 
+	float4 material = texCol * saturate(Color);
+	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + saturate(GlobalReflectionColor) ) ; 
+	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * material; 
 	
 	if(refraction){
 			float3 refrVect;
@@ -919,7 +923,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			}
 	}
 	
-	light.diffuse = lerp(light.diffuse,max(saturate(light.ambient),saturate(light.reflection)),fresRefl*specIntensity);
+	light.diffuse = lerp(light.diffuse,max(saturate(light.ambient)* material,saturate(light.reflection)),fresRefl*specIntensity);
 	light.diffuse.a *= Alpha;
 	
 

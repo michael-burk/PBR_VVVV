@@ -257,7 +257,7 @@
    </PIN>
    <PIN pinname="Contrast" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Brightness" slicecount="1" values="1">
+   <PIN pinname="Brightness" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Saturation" slicecount="1" values="2">
    </PIN>
@@ -565,7 +565,7 @@
    </PIN>
    <PIN pinname="SpotLightDirXYZ" visible="-1" pintype="Input" slicecount="3" values="0,0,0">
    </PIN>
-   <PIN pinname="Camera PositionXYZ" visible="1" slicecount="3" values="-8.41801834106445,9.60625076293945,15.3123245239258">
+   <PIN pinname="Camera PositionXYZ" visible="1" slicecount="3" values="0,0,-19.9401702880859">
    </PIN>
    <PIN pinname="Bumpiness" visible="1">
    </PIN>
@@ -640,12 +640,6 @@
    <LINKPOINT x="5740" y="7373">
    </LINKPOINT>
    <LINKPOINT x="5675" y="7373">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
-   <LINKPOINT x="8415" y="11835">
-   </LINKPOINT>
-   <LINKPOINT x="8835" y="5685">
    </LINKPOINT>
    </LINK>
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1090">
@@ -762,10 +756,10 @@
    </NODE>
    <LINK srcnodeid="1101" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel">
    </LINK>
-   <LINK srcnodeid="878" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Irradiance" linkstyle="Bezier">
-   <LINKPOINT x="12690" y="6203">
+   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
+   <LINKPOINT x="8415" y="11835">
    </LINKPOINT>
-   <LINKPOINT x="11700" y="6203">
+   <LINKPOINT x="8835" y="5685">
    </LINKPOINT>
    </LINK>
    </PATCH>

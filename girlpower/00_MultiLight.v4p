@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="165" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="13260" top="2445" width="13605" height="12540">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
+   <BOUNDS type="Window" left="13425" top="1155" width="14535" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -167,7 +167,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="270" top="465" width="12240" height="12585">
+   <BOUNDS type="Window" left="1215" top="1035" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -445,7 +445,7 @@
    </PIN>
    <PIN pinname="EXP Fresnel" visible="1" slicecount="1" values="2">
    </PIN>
-   <PIN pinname="Material Color" slicecount="1" visible="1" values="|0.22408,1.00000,0.00000,1.00000|">
+   <PIN pinname="Material Color" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
    <PIN pinname="SpecularMap" visible="1" slicecount="1" values="||">
    </PIN>
@@ -454,6 +454,8 @@
    <PIN pinname="Light Bleeding Limit" visible="1">
    </PIN>
    <PIN pinname="Transform In" visible="1">
+   </PIN>
+   <PIN pinname="Shadow Near Plane / Far Plane" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
@@ -539,7 +541,7 @@
    </PIN>
    <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="Shadow" visible="1" slicecount="3" values="1,1,1">
+   <PIN pinname="Shadow" visible="1" slicecount="3" values="0,0,0">
    </PIN>
    <PIN pinname="Shadow Technique" slicecount="1" values="VSM">
    </PIN>
@@ -551,9 +553,9 @@
    </PIN>
    <PIN pinname="Shadow Blur Width" slicecount="1" values="0.09">
    </PIN>
-   <PIN pinname="Shadow Res²" slicecount="1" values="1024">
+   <PIN pinname="Shadow Res²" slicecount="1" values="256">
    </PIN>
-   <PIN pinname="Example Lightness" slicecount="1" values="0.25">
+   <PIN pinname="Example Lightness" slicecount="1" values="0.4">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="lAtt0" dstnodeid="934" dstpinname="lAtt0" linkstyle="Bezier">
@@ -864,34 +866,6 @@
    <LINKPOINT x="7200" y="5970">
    </LINKPOINT>
    </LINK>
-   <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
-   <BOUNDS type="Node" left="8550" top="10275" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Maximum Foreground FPS" slicecount="1" visible="1" values="30">
-   </PIN>
-   <PIN pinname="Maximum Background FPS" visible="1">
-   </PIN>
-   </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1117">
-   <BOUNDS type="Box" left="8655" top="9630" width="795" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="8655" top="9630" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="120">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Integer">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1117" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Foreground FPS">
-   </LINK>
-   <LINK srcnodeid="1117" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Background FPS">
-   </LINK>
    <LINK srcnodeid="1091" srcpinname="Reflection Color" dstnodeid="934" dstpinname="Reflection Color" linkstyle="Bezier">
    <LINKPOINT x="9735" y="5918">
    </LINKPOINT>
@@ -903,7 +877,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10545" top="2070" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00842,0.36052,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.35588,0.35588,0.35588,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
@@ -915,18 +889,6 @@
    </LINKPOINT>
    <LINKPOINT x="5820" y="5063">
    </LINKPOINT>
-   </LINK>
-   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1124">
-   <BOUNDS type="Box" left="9270" top="8115" width="2250" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="9270" top="8115" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|Material Color|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1124" srcpinname="Color Output" dstnodeid="934" dstpinname="Material Color">
    </LINK>
    <LINK srcnodeid="1122" srcpinname="Color Output" dstnodeid="928" dstpinname="Background Color" linkstyle="Bezier">
    <LINKPOINT x="10545" y="5813">
@@ -967,5 +929,13 @@
    <LINK srcnodeid="473" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In">
    </LINK>
    <LINK srcnodeid="473" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Geometry Transform">
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="Shadow Near Plane / Far Plane" linkstyle="Bezier">
+   <LINKPOINT x="10050" y="5910">
+   </LINKPOINT>
+   <LINKPOINT x="11250" y="5910">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1076" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
    </LINK>
    </PATCH>

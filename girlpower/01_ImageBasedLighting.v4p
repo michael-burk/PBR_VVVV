@@ -10,14 +10,14 @@
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="0" top="1980" width="14580" height="12540">
+   <BOUNDS type="Window" left="660" top="2190" width="14580" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="369" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="8275" top="6110" width="540" height="240">
+   <BOUNDS type="Box" left="8095" top="6275" width="540" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="8275" top="6110" width="0" height="0">
+   <BOUNDS type="Node" left="8095" top="6275" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.3">
    </PIN>
@@ -95,7 +95,7 @@
    </PIN>
    </NODE>
    <NODE systemname="UniformScale (Transform)" nodename="UniformScale (Transform)" componentmode="Hidden" id="745">
-   <BOUNDS type="Node" left="8595" top="6735" width="100" height="100">
+   <BOUNDS type="Node" left="8445" top="6750" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
@@ -143,13 +143,13 @@
    <LINK srcnodeid="877" srcpinname="Texture Out" dstnodeid="878" dstpinname="Texture In" linkstyle="PolyLine">
    </LINK>
    <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="882">
-   <BOUNDS type="Node" left="10710" top="6825" width="100" height="100">
+   <BOUNDS type="Node" left="10530" top="6870" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Filename" slicecount="1" values="Assets\stone_normal\Pink_marble_pxr128_normal.tif">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="10710" top="6825">
+   <BOUNDS type="Box" left="10530" top="6870">
    </BOUNDS>
    </NODE>
    <LINK srcnodeid="574" srcpinname="Y Output Value" dstnodeid="473" dstpinname="Translate XYZ">
@@ -661,7 +661,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6630" top="5520" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1.1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1.3">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -689,13 +689,15 @@
    <LINK srcnodeid="1106" srcpinname="Y Output Value" dstnodeid="934" dstpinname="EXP Fresnel">
    </LINK>
    <NODE id="1069" systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden">
-   <BOUNDS type="Node" left="10080" top="6405" width="100" height="100">
+   <BOUNDS type="Node" left="9945" top="6540" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Filename" slicecount="1" values="Assets\stone_color\Pink_marble_pxr128.tif">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="10080" top="6405">
+   <BOUNDS type="Box" left="9945" top="6540">
    </BOUNDS>
    </NODE>
+   <LINK srcnodeid="1069" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
+   </LINK>
    </PATCH>

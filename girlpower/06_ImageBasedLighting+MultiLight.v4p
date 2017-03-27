@@ -471,7 +471,7 @@
    </PIN>
    <PIN pinname="EXP Fresnel" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="MAX Fresnel" slicecount="1" values="1">
+   <PIN pinname="MAX Fresnel" slicecount="1" values="1.2">
    </PIN>
    <PIN pinname="Material Color" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
@@ -480,6 +480,8 @@
    <PIN pinname="Global Reflection Color" slicecount="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
    <PIN pinname="Global Diffuse Color" slicecount="1" values="|0.00371,0.00371,0.00371,0.00000|">
+   </PIN>
+   <PIN pinname="Shadow Near Plane / Far Plane" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1072" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear" linkstyle="Bezier" hiddenwhenlocked="0">
@@ -516,12 +518,6 @@
    <LINKPOINT x="9615" y="6143">
    </LINKPOINT>
    <LINKPOINT x="9615" y="6293">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1061" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Refl" linkstyle="Bezier" hiddenwhenlocked="0">
-   <LINKPOINT x="10440" y="5955">
-   </LINKPOINT>
-   <LINKPOINT x="10110" y="5955">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Cross (2d)" nodename="Cross (2d)" componentmode="Hidden" id="1098">
@@ -633,7 +629,13 @@
    </PIN>
    <PIN pinname="Camera Position Instant" visible="1">
    </PIN>
-   <PIN pinname="Initial Distance" slicecount="1" values="2">
+   <PIN pinname="Initial Distance" slicecount="1" values="7">
+   </PIN>
+   <PIN pinname="Roll" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Initial Yaw" slicecount="1" values="-0.4">
+   </PIN>
+   <PIN pinname="Initial Pitch" slicecount="1" values="0.09">
    </PIN>
    </NODE>
    <LINK srcnodeid="1105" srcpinname="View" dstnodeid="928" dstpinname="View">
@@ -783,9 +785,11 @@
    </PIN>
    <PIN pinname="Helper" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Example Lightness" slicecount="1" values="0.75">
+   <PIN pinname="Example Lightness" slicecount="1" values="0.5">
    </PIN>
    <PIN pinname="Shadow" slicecount="3" values="1,1,1">
+   </PIN>
+   <PIN pinname="DirectionalLight Count" slicecount="1" values="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1096" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="934" dstpinname="Directional/Point/Spot" linkstyle="Bezier">
@@ -933,5 +937,17 @@
    <LINK srcnodeid="1069" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
    </LINK>
    <LINK srcnodeid="878" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Irradiance">
+   </LINK>
+   <LINK srcnodeid="1061" srcpinname="Texture Out" dstnodeid="934" dstpinname="CubeMap Refl" linkstyle="Bezier" hiddenwhenlocked="0">
+   <LINKPOINT x="10440" y="5955">
+   </LINKPOINT>
+   <LINKPOINT x="10110" y="5955">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1096" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="Shadow Near Plane / Far Plane" linkstyle="Bezier" hiddenwhenlocked="1">
+   <LINKPOINT x="9930" y="6600">
+   </LINKPOINT>
+   <LINKPOINT x="11070" y="6600">
+   </LINKPOINT>
    </LINK>
    </PATCH>

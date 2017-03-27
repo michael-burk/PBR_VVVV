@@ -547,6 +547,8 @@
    </PIN>
    <PIN pinname="EXP Fresnel" slicecount="1" values="1">
    </PIN>
+   <PIN pinname="Shadow Near Plane / Far Plane" visible="1" slicecount="1" values="||">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
    <LINKPOINT x="6135" y="9735">
@@ -623,7 +625,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5970" top="5565" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="5,1">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="3,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -778,6 +780,60 @@
    </LINK>
    <LINK srcnodeid="1126" srcpinname="Geometry Out" dstnodeid="1164" dstpinname="Input 2">
    </LINK>
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1192">
+   <BOUNDS type="Box" left="2415" top="7110" width="2250" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="2415" top="7110" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.35400,0.00000,0.30761,1.00000|">
+   </PIN>
+   <PIN pinname="Color Output" visible="1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Background Color - Global Reflection Color|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="928" dstpinname="Background Color" linkstyle="Bezier">
+   <LINKPOINT x="2475" y="9263">
+   </LINKPOINT>
+   <LINKPOINT x="4335" y="9263">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Reflection Color" linkstyle="Bezier">
+   <LINKPOINT x="2475" y="8198">
+   </LINKPOINT>
+   <LINKPOINT x="6090" y="8198">
+   </LINKPOINT>
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1193">
+   <BOUNDS type="Box" left="6765" top="7635" width="795" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6765" top="7635" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="|0, 0|">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1193" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel">
+   </LINK>
+   <LINK srcnodeid="1171" srcpinname="Output" dstnodeid="1172" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Diffuse Color" linkstyle="Bezier">
+   <LINKPOINT x="2475" y="8198">
+   </LINKPOINT>
+   <LINKPOINT x="6285" y="8198">
+   </LINKPOINT>
+   </LINK>
    <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0" debug="0">
    <BOUNDS type="Node" left="8133" top="7483" width="0" height="0">
    </BOUNDS>
@@ -861,7 +917,7 @@
    </PIN>
    <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="Example Lightness" slicecount="1" values="0.7">
+   <PIN pinname="Example Lightness" slicecount="1" values="0.5">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -1038,52 +1094,10 @@
    <LINKPOINT x="10110" y="7035">
    </LINKPOINT>
    </LINK>
-   <NODE nodename="IOBox (Color)" componentmode="InABox" id="1192">
-   <BOUNDS type="Box" left="2415" top="7110" width="2250" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="2415" top="7110" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
-   </PIN>
-   <PIN pinname="Color Output" visible="1">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|Background Color - Global Reflection Color|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="928" dstpinname="Background Color" linkstyle="Bezier">
-   <LINKPOINT x="2475" y="9263">
+   <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="934" dstpinname="Shadow Near Plane / Far Plane" linkstyle="Bezier">
+   <LINKPOINT x="10515" y="8288">
    </LINKPOINT>
-   <LINKPOINT x="4335" y="9263">
+   <LINKPOINT x="11565" y="8288">
    </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Reflection Color" linkstyle="Bezier">
-   <LINKPOINT x="2475" y="8198">
-   </LINKPOINT>
-   <LINKPOINT x="6090" y="8198">
-   </LINKPOINT>
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1193">
-   <BOUNDS type="Box" left="6765" top="7635" width="795" height="480">
-   </BOUNDS>
-   <BOUNDS type="Node" left="6765" top="7635" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="2">
-   </PIN>
-   <PIN pinname="Default" slicecount="1" values="|0, 0|">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1193" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel">
-   </LINK>
-   <LINK srcnodeid="1171" srcpinname="Output" dstnodeid="1172" dstpinname="Input 2">
    </LINK>
    </PATCH>

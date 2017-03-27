@@ -429,8 +429,6 @@
    </PIN>
    <PIN pinname="Global Reflection Color" slicecount="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
-   <PIN pinname="MAX Fresnel" slicecount="1" values="1">
-   </PIN>
    </NODE>
    <LINK srcnodeid="94" srcpinname="Transform Out" dstnodeid="78" dstpinname="NormalRotation">
    </LINK>
@@ -800,6 +798,8 @@
    <LINKPOINT x="12285" y="5475">
    </LINKPOINT>
    </LINK>
+   <LINK srcnodeid="87" srcpinname="Texture Out" dstnodeid="78" dstpinname="Texture">
+   </LINK>
    <NODE id="76" systemname="Camera (Transform Orbit Legacy) Instant Position" filename="modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden">
    <BOUNDS type="Node" left="6300" top="7785" width="100" height="100">
    </BOUNDS>
@@ -855,7 +855,5 @@
    </LINKPOINT>
    <LINKPOINT x="7050" y="6300">
    </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="87" srcpinname="Texture Out" dstnodeid="78" dstpinname="Texture">
    </LINK>
    </PATCH>

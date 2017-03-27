@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\08_MultiLightShadow_Spreaded.v4p" systemname="07_MultiLightShadow_Spreaded" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" scrollx="15" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\08_MultiLightShadow_Spreaded.v4p" systemname="07_MultiLightShadow_Spreaded" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\girlpower\07_MultiLightShadow_Spreaded.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <BOUNDS type="Window" left="1515" top="795" width="14460" height="14235">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -351,7 +351,7 @@
    </PIN>
    <PIN pinname="refractionIndex" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="100">
+   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="25">
    </PIN>
    <PIN pinname="colors Bin Size" visible="-1" pintype="Input" slicecount="1" values="3">
    </PIN>
@@ -513,15 +513,19 @@
    </PIN>
    <PIN pinname="Global Reflection Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
-   <PIN pinname="Global Diffuse Color" visible="1" slicecount="1" values="|0.45412,0.45412,0.45412,0.00000|">
+   <PIN pinname="Global Diffuse Color" visible="1" slicecount="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
    <PIN pinname="Shadow Near Plane / Far Plane" visible="1">
    </PIN>
-   <PIN pinname="EXP Fresnel" slicecount="1" values="2">
+   <PIN pinname="EXP Fresnel" slicecount="1" values="1">
    </PIN>
    <PIN pinname="MAX Fresnel" slicecount="1" values="1">
    </PIN>
    <PIN pinname="DiffuseMap" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="MIN Fresnel" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Material Color" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
@@ -909,7 +913,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="6015" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="0" top="2085" width="16590" height="13665">
+   <BOUNDS type="Window" left="1020" top="465" width="24795" height="13665">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -1179,9 +1183,9 @@
    </LINKPOINT>
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1192">
-   <BOUNDS type="Box" left="9330" top="7380" width="795" height="240">
+   <BOUNDS type="Box" left="9015" top="7620" width="795" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="9330" top="7380" width="0" height="0">
+   <BOUNDS type="Node" left="9015" top="7620" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="512">
    </PIN>
@@ -1201,7 +1205,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2550" top="6345" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.04642,0.00000,0.45042,0.00000|">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Global Reflection Color|">
    </PIN>
@@ -1227,7 +1231,7 @@
    </LINKPOINT>
    </LINK>
    <NODE systemname="DynamicTexture (DX11.Texture 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicTexture (DX11.Texture 2d)" componentmode="Hidden" id="1195">
-   <BOUNDS type="Node" left="11610" top="5325" width="100" height="100">
+   <BOUNDS type="Node" left="10425" top="5160" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Width" slicecount="1" values="5">
    </PIN>
@@ -1241,7 +1245,7 @@
    </PIN>
    </NODE>
    <NODE systemname="Cons (DX11.Texture 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Cons (DX11.Texture 2d)" componentmode="Hidden" id="1196">
-   <BOUNDS type="Node" left="11610" top="6480" width="100" height="100">
+   <BOUNDS type="Node" left="10425" top="6315" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input 1" visible="1">
    </PIN>
@@ -1251,7 +1255,7 @@
    </PIN>
    </NODE>
    <NODE systemname="DynamicTexture (DX11.Texture 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DynamicTexture (DX11.Texture 2d)" componentmode="Hidden" id="1197">
-   <BOUNDS type="Node" left="12105" top="5775" width="100" height="100">
+   <BOUNDS type="Node" left="10920" top="5610" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Width" slicecount="1" values="5">
    </PIN>
@@ -1267,7 +1271,7 @@
    <LINK srcnodeid="1196" srcpinname="Output" dstnodeid="934" dstpinname="SpecularMap">
    </LINK>
    <NODE systemname="Select (Node)" filename="%VVVV%\lib\nodes\modules\Node\Select (Node).v4p" nodename="Select (Node)" componentmode="Hidden" id="1198">
-   <BOUNDS type="Node" left="12075" top="6120" width="100" height="100">
+   <BOUNDS type="Node" left="10890" top="5955" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Select" visible="1">
    </PIN>
@@ -1275,13 +1279,13 @@
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <BOUNDS type="Box" left="12075" top="6120">
+   <BOUNDS type="Box" left="10890" top="5955">
    </BOUNDS>
    </NODE>
    <LINK srcnodeid="1179" srcpinname="Y Output Value" dstnodeid="1198" dstpinname="Select" linkstyle="Bezier">
-   <LINKPOINT x="10860" y="3705">
+   <LINKPOINT x="10465" y="3650">
    </LINKPOINT>
-   <LINKPOINT x="12765" y="3705">
+   <LINKPOINT x="11975" y="3595">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1195" srcpinname="Texture Out" dstnodeid="1196" dstpinname="Input 1">
