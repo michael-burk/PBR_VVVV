@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="0" scrolly="0" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\modules\LightsStudioExample.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="2085" scrolly="4110" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="13200" width="100" height="100">
    </BOUNDS>
@@ -239,7 +239,7 @@
    </PIN>
    </NODE>
    <NODE systemname="HSL (Color Join)" nodename="HSL (COLOR JOIN)" componentmode="Hidden" id="41">
-   <BOUNDS type="Node" left="14215" top="9105" width="100" height="100">
+   <BOUNDS type="Node" left="14200" top="9765" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -251,7 +251,7 @@
    </PIN>
    </NODE>
    <NODE systemname="LinearSpread (Spreads)" nodename="LINEARSPREAD (SPREADS)" componentmode="Hidden" id="42">
-   <BOUNDS type="Node" left="14215" top="8610" width="100" height="100">
+   <BOUNDS type="Node" left="14200" top="9270" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -403,9 +403,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="42" srcpinname="Output" dstnodeid="41" dstpinname="Hue" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="14250" y="8993">
+   <LINKPOINT x="14235" y="9653">
    </LINKPOINT>
-   <LINKPOINT x="14250" y="8993">
+   <LINKPOINT x="14235" y="9653">
    </LINKPOINT>
    </LINK>
    <NODE id="61" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)" hiddenwhenlocked="0">
@@ -2227,9 +2227,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="430" srcpinname="Y Output Value" dstnodeid="41" dstpinname="Lightness" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="20225" y="6200">
+   <LINKPOINT x="20220" y="6420">
    </LINKPOINT>
-   <LINKPOINT x="14635" y="5980">
+   <LINKPOINT x="14625" y="6420">
    </LINKPOINT>
    </LINK>
    <NODE systemname="AvoidNIL (Node)" filename="%VVVV%\lib\nodes\modules\Node\AvoidNIL (Node).v4p" nodename="AvoidNIL (Node)" componentmode="Hidden" id="431">
@@ -2381,9 +2381,9 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="234" srcpinname="LightCount" dstnodeid="42" dstpinname="Spread Count" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="4910" y="8818">
+   <LINKPOINT x="4905" y="9038">
    </LINKPOINT>
-   <LINKPOINT x="15115" y="8598">
+   <LINKPOINT x="15105" y="9038">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="Multiply (Color)" componentmode="Hidden" id="442">
@@ -2397,9 +2397,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="41" srcpinname="Output" dstnodeid="442" dstpinname="Color" linkstyle="Bezier">
-   <LINKPOINT x="14245" y="9678">
+   <LINKPOINT x="14235" y="10118">
    </LINKPOINT>
-   <LINKPOINT x="14240" y="9898">
+   <LINKPOINT x="14235" y="10118">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="Multiply (Color)" componentmode="Hidden" id="443">
@@ -2413,9 +2413,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="41" srcpinname="Output" dstnodeid="443" dstpinname="Color" linkstyle="Bezier">
-   <LINKPOINT x="14275" y="9663">
+   <LINKPOINT x="14265" y="10103">
    </LINKPOINT>
-   <LINKPOINT x="17780" y="9883">
+   <LINKPOINT x="17775" y="10103">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="Multiply (Color)" componentmode="Hidden" id="444">
@@ -2429,9 +2429,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="41" srcpinname="Output" dstnodeid="444" dstpinname="Color" linkstyle="Bezier">
-   <LINKPOINT x="14275" y="9663">
+   <LINKPOINT x="14265" y="10103">
    </LINKPOINT>
-   <LINKPOINT x="15980" y="9883">
+   <LINKPOINT x="15975" y="10103">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="70" srcpinname="Texture Out" dstnodeid="71" dstpinname="Input Node">

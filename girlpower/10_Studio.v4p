@@ -10,7 +10,7 @@
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="12615" top="1470" width="15195" height="12540">
+   <BOUNDS type="Window" left="12675" top="1440" width="15195" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -349,7 +349,7 @@
    </PIN>
    <PIN pinname="Target Initial Position" visible="1">
    </PIN>
-   <PIN pinname="Initial Yaw" slicecount="1" values="-0.81">
+   <PIN pinname="Initial Yaw" slicecount="1" values="-0.94">
    </PIN>
    <PIN pinname="Roll" slicecount="1" values="0">
    </PIN>
@@ -521,9 +521,9 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1172">
-   <BOUNDS type="Box" left="4290" top="8565" width="795" height="720">
+   <BOUNDS type="Box" left="4395" top="8325" width="795" height="720">
    </BOUNDS>
-   <BOUNDS type="Node" left="4290" top="8565" width="0" height="0">
+   <BOUNDS type="Node" left="4395" top="8325" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,1.84,0">
    </PIN>
