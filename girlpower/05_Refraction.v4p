@@ -15,9 +15,9 @@
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="369" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="7780" top="7025" width="540" height="240">
+   <BOUNDS type="Box" left="8020" top="6485" width="540" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="7780" top="7025" width="0" height="0">
+   <BOUNDS type="Node" left="8020" top="6485" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.1">
    </PIN>
@@ -347,9 +347,9 @@
    <LINK srcnodeid="1081" srcpinname="Y Output Value" dstnodeid="1080" dstpinname="Data">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1082" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="8385" top="6210" width="480" height="480">
+   <BOUNDS type="Box" left="8295" top="5715" width="480" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="8385" top="6210" width="0" height="0">
+   <BOUNDS type="Node" left="8295" top="5715" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
@@ -609,6 +609,8 @@
    </PIN>
    <PIN pinname="EXP Fresnel" visible="1">
    </PIN>
+   <PIN pinname="noTile" slicecount="1" values="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
    </LINK>
@@ -653,7 +655,7 @@
    <LINK srcnodeid="1090" srcpinname="Output" dstnodeid="934" dstpinname="Geometry">
    </LINK>
    <NODE systemname="UniformScale (Transform)" nodename="UniformScale (Transform)" componentmode="Hidden" id="1091">
-   <BOUNDS type="Node" left="8685" top="7020" width="100" height="100">
+   <BOUNDS type="Node" left="8550" top="7110" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
@@ -729,7 +731,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6705" top="4305" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1.2">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>

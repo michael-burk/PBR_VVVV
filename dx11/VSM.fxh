@@ -1,5 +1,4 @@
-
-float4 calcSSS(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
+float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
 	
 	    float currentDistanceToLight = clamp((worldSpaceDistance - nearFarPlane[shadowCounter].x) 
         / (nearFarPlane[shadowCounter].y - nearFarPlane[shadowCounter].x), 0, 1);
@@ -18,7 +17,6 @@ float4 calcSSS(float worldSpaceDistance, float2 projectTexCoord, int shadowCount
     float p = 0.0;
     float lightIntensity = 1;
 	float alpha = 0;
-	float intensity;
     if(currentDistanceToLight >= M1)
     {
         // standard deviation
@@ -32,19 +30,18 @@ float4 calcSSS(float worldSpaceDistance, float2 projectTexCoord, int shadowCount
 
         // chebyshev inequality - upper bound on the 
         // probability that fragment is occluded
-        intensity = sigma2 / (sigma2 + pow(currentDistanceToLight - M1, 2));
+        float intensity = sigma2 / (sigma2 + pow(currentDistanceToLight - M1, 2));
 
         // reduce light bleeding
         lightIntensity = clamp((intensity-lightBleedingLimit[shadowCounter])/ (1.0-lightBleedingLimit[shadowCounter]), 0.0, 1.0);
+    	
     	alpha +=  (1 - saturate(shadowCol.a));
-    	return lightIntensity*depths.x;
     }
 
     /////////////////////////////////////////////////////////
 
     float4 resultingColor = float4(float3(lightIntensity,lightIntensity,lightIntensity),1);
 	
-	
-	return 1;
+	return resultingColor+alpha;
 	
 }

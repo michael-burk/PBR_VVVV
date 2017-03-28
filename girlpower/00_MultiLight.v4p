@@ -11,29 +11,11 @@
    </PIN>
    <PIN pinname="Filter Mode" slicecount="1" visible="1" values="Anisotropic">
    </PIN>
-   <PIN pinname="Maximum Anisotropy" slicecount="1" values="16">
+   <PIN pinname="Maximum Anisotropy" slicecount="1" values="8">
    </PIN>
    <BOUNDS type="Box" left="11775" top="6600">
    </BOUNDS>
    <PIN pinname="Address W" slicecount="1" values="Clamp">
-   </PIN>
-   </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="369" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="6745" top="6095" width="540" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="6745" top="6095" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="bumpy">
-   </PIN>
-   <PIN pinname="X Input Value" slicecount="1" values="1">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="422" systemname="IOBox (Enumerations)">
@@ -124,16 +106,6 @@
    </NODE>
    <PACK Name="VVVV.Packs" Version="0.2.0">
    </PACK>
-   <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="882">
-   <BOUNDS type="Node" left="10440" top="6735" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="Assets\stone_normal\Pink_marble_pxr128_normal.tif">
-   </PIN>
-   <PIN pinname="Texture Out" visible="1">
-   </PIN>
-   <BOUNDS type="Box" left="10440" top="6735">
-   </BOUNDS>
-   </NODE>
    <LINK srcnodeid="539" srcpinname="Y Output Value" dstnodeid="537" dstpinname="XYZ" linkstyle="Bezier">
    <LINKPOINT x="5185" y="5238">
    </LINKPOINT>
@@ -397,7 +369,7 @@
    </PIN>
    <PIN pinname="SpotLight Fading" visible="1" slicecount="1" values="0.25">
    </PIN>
-   <PIN pinname="Bumpiness" visible="1">
+   <PIN pinname="Bumpiness" visible="1" slicecount="1" values="0.6">
    </PIN>
    <PIN pinname="Normal Rotation" visible="1">
    </PIN>
@@ -457,16 +429,14 @@
    </PIN>
    <PIN pinname="Shadow Near Plane / Far Plane" visible="1">
    </PIN>
+   <PIN pinname="noTile" slicecount="1" visible="1" values="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="NormalRotation">
-   </LINK>
-   <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="bumpy" linkstyle="PolyLine">
    </LINK>
    <LINK srcnodeid="422" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique" linkstyle="PolyLine">
    </LINK>
    <LINK srcnodeid="956" srcpinname="Render State" dstnodeid="934" dstpinname="Render State">
-   </LINK>
-   <LINK srcnodeid="369" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Bumpiness">
    </LINK>
    <LINK srcnodeid="537" srcpinname="Transform Out" dstnodeid="934" dstpinname="Normal Rotation">
    </LINK>
@@ -722,8 +692,6 @@
    <LINKPOINT x="6775" y="5565">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="242" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
-   </LINK>
    <NODE systemname="Group (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Group (DX11.Layer)" componentmode="Hidden" id="1101">
    <BOUNDS type="Node" left="3885" top="7785" width="100" height="100">
    </BOUNDS>
@@ -937,5 +905,9 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1076" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
+   </LINK>
+   <LINK srcnodeid="242" srcpinname="Sampler" dstnodeid="934" dstpinname="g_samLinear">
+   </LINK>
+   <LINK srcnodeid="242" srcpinname="Sampler" dstnodeid="934" dstpinname="shadowSampler">
    </LINK>
    </PATCH>

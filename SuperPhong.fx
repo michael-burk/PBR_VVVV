@@ -50,6 +50,8 @@ cbuffer cbPerObject : register (b1)
 	float4x4 tDiffuse;
 	float4x4 tNormal;
 	
+	bool noTile = false;
+	
 };
 
 StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
@@ -105,6 +107,8 @@ SamplerState shadowSampler
 #include "dx11/PhongPoint.fxh"
 #include "dx11/PhongPointSpot.fxh"
 #include "dx11/PhongDirectional.fxh"
+#include "dx11/VSM.fxh"
+#include "dx11/NoTile.fxh"
 
 struct vs2psBump
 {
@@ -214,55 +218,6 @@ float4 getTexel( float3 p, Texture2DArray tex )
     return tex.SampleLevel(shadowSampler, p, 0);
 }
 
-float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
-	
-	    float currentDistanceToLight = clamp((worldSpaceDistance - nearFarPlane[shadowCounter].x) 
-        / (nearFarPlane[shadowCounter].y - nearFarPlane[shadowCounter].x), 0, 1);
-
-    /////////////////////////////////////////////////////////
-
-    // get blured and blured squared distance to light
-	
-	float4 shadowCol = shadowMap.SampleLevel(shadowSampler, float3(projectTexCoord, shadowCounter), 0);
-	float2 depths = shadowCol.xy;
-	
-    float M1 = depths.x;
-    float M2 = depths.y;
-    float M12 = M1 * M1;
-
-    float p = 0.0;
-    float lightIntensity = 1;
-	float alpha = 0;
-    if(currentDistanceToLight >= M1)
-    {
-        // standard deviation
-        float sigma2 = M2 - M12;
-
-        // when standard deviation is smaller than epsilon
-        if(sigma2 < minVariance)
-        {
-            sigma2 = minVariance;
-        }
-
-        // chebyshev inequality - upper bound on the 
-        // probability that fragment is occluded
-        float intensity = sigma2 / (sigma2 + pow(currentDistanceToLight - M1, 2));
-
-        // reduce light bleeding
-        lightIntensity = clamp((intensity-lightBleedingLimit[shadowCounter])/ (1.0-lightBleedingLimit[shadowCounter]), 0.0, 1.0);
-    	
-    	alpha +=  (1 - saturate(shadowCol.a));
-    }
-
-    /////////////////////////////////////////////////////////
-
-    float4 resultingColor = float4(float3(lightIntensity,lightIntensity,lightIntensity),1);
-	
-	return resultingColor+alpha;
-	
-}
-
-
 
 float4 PS_SuperphongBump(vs2psBump In): SV_Target
 {	
@@ -294,13 +249,16 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	float4 diffuseT = float4(1,1,1,1);
 	
 	texture2d.GetDimensions(tX,tY);
-	if(tX+tY > 0) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,tColor).xy);
-
+	if(tX+tY > 2 && !noTile) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,tColor).xy);
+	else if(tX+tY > 2 && noTile) texCol = textureNoTile(texture2d,mul(In.TexCd,tColor).xy);
+	
 	specTex.GetDimensions(tX,tY);
-	if(tX+tY > 0) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,tSpec).xy);
+	if(tX+tY > 2 && !noTile) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,tSpec).xy);
+	else if(tX+tY > 2 && noTile) specIntensity = textureNoTile(specTex,mul(In.TexCd,tSpec).xy);
 	
 	diffuseTex.GetDimensions(tX,tY);
-	if(tX+tY > 0) diffuseT = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
+	if(tX+tY > 2 && !noTile) diffuseT = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
+	else if(tX+tY > 2 && noTile) diffuseT = textureNoTile(diffuseTex,mul(In.TexCd,tDiffuse).xy);
 
 	float4 Nn = normalize(In.NormW);
 	
@@ -309,7 +267,8 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	float4 bumpMap = float4(0,0,0,0);
 	
 	normalTex.GetDimensions(tX,tY);
-	if(tX+tY > 0) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tNormal).xy);;
+	if(tX+tY > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tNormal).xy);
+	else if(tX+tY > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tNormal).xy);
 	
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
@@ -645,13 +604,16 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	uint tX,tY,m;
 	
 	texture2d.GetDimensions(tX,tY);
-	if(tX+tY > 2) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,tColor).xy);
+	if(tX+tY > 2 && !noTile) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,tColor).xy);
+	else if(tX+tY > 2 && noTile) texCol = textureNoTile(texture2d,mul(In.TexCd,tColor).xy);
 	
 	specTex.GetDimensions(tX,tY);
-	if(tX+tY > 2) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,tSpec).xy);
+	if(tX+tY > 2 && !noTile) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,tSpec).xy);
+	else if(tX+tY > 2 && noTile) specIntensity = textureNoTile(specTex,mul(In.TexCd,tSpec).xy);
 	
 	diffuseTex.GetDimensions(tX,tY);
-	if(tX+tY > 2) diffuseT = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
+	if(tX+tY > 2 && !noTile) diffuseT = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
+	else if(tX+tY > 2 && noTile) diffuseT = textureNoTile(diffuseTex,mul(In.TexCd,tDiffuse).xy);
 	
 	
 	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
@@ -726,7 +688,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	cubeTexIrradiance.GetDimensions(tX,tY);
 	if(tX+tY > 2) reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
-
+	
 	float inverseDotView = 1.0 - max(dot(Nn.xyz,Vn),0.0);
 	float4 iridescenceColor = float4(0,0,0,0);
 	if (useIridescence) iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*fresRefl;
