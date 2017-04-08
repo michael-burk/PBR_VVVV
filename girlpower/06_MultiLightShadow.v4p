@@ -921,6 +921,8 @@
    </PIN>
    <PIN pinname="DirectionalLight" slicecount="1" values="1">
    </PIN>
+   <PIN pinname="SpotLight" slicecount="1" values="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
    <LINKPOINT x="8130" y="8678">

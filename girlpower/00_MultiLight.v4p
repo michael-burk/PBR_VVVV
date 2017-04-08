@@ -527,6 +527,10 @@
    </PIN>
    <PIN pinname="Example Lightness" slicecount="1" values="0.4">
    </PIN>
+   <PIN pinname="DirectionalLight" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="SpotLight" slicecount="1" values="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="lAtt0" dstnodeid="934" dstpinname="lAtt0" linkstyle="Bezier">
    <LINKPOINT x="8790" y="5910">
@@ -737,60 +741,6 @@
    <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="934" dstpinname="tColor">
    </LINK>
    <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="934" dstpinname="tNormal">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1108">
-   <BOUNDS type="Box" left="7890" top="2445" width="795" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="7890" top="2445" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Integer">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|DirectionalLight Count|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1108" srcpinname="Y Output Value" dstnodeid="1091" dstpinname="DirectionalLight Count">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1109">
-   <BOUNDS type="Box" left="8115" top="2970" width="795" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="8115" top="2970" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Integer">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|SpotLight Count|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1109" srcpinname="Y Output Value" dstnodeid="1091" dstpinname="SpotLight Count">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1110">
-   <BOUNDS type="Box" left="8310" top="3510" width="795" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="8310" top="3510" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Value Type" slicecount="1" values="Integer">
-   </PIN>
-   <PIN pinname="Descriptive Name" slicecount="1" values="|PointLight Count|">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="1110" srcpinname="Y Output Value" dstnodeid="1091" dstpinname="PointLight Count">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1111">
    <BOUNDS type="Box" left="7665" top="1305" width="480" height="480">
