@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="0" scrolly="0" bgcolor="15132390" locked="1">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="870" scrolly="30" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="11400" width="100" height="100">
    </BOUNDS>
@@ -426,7 +426,7 @@
    <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="12150" top="3270" width="24345" height="13710">
+   <BOUNDS type="Window" left="-105" top="0" width="14610" height="15855">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -901,9 +901,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="234" srcpinname="LightVP" dstnodeid="15" dstpinname="Data" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="7545" y="10973">
+   <LINKPOINT x="7575" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="2355" y="10223">
+   <LINKPOINT x="2355" y="10598">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Select (Value)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="SELECT (VALUE)" componentmode="Hidden" id="294" hiddenwhenlocked="1">
@@ -941,9 +941,9 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="295" srcpinname="Output" dstnodeid="246" dstpinname="Data" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="10635" y="10433">
+   <LINKPOINT x="11355" y="9983">
    </LINKPOINT>
-   <LINKPOINT x="26730" y="9653">
+   <LINKPOINT x="26010" y="9983">
    </LINKPOINT>
    </LINK>
    <NODE systemname="DynamicBuffer (DX11.Buffer Color)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER COLOR)" componentmode="Hidden" id="297" hiddenwhenlocked="0">
@@ -1269,9 +1269,9 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="234" srcpinname="LightProjection" dstnodeid="88" dstpinname="Data" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="7275" y="10988">
+   <LINKPOINT x="7290" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="5220" y="10238">
+   <LINKPOINT x="5235" y="10598">
    </LINKPOINT>
    </LINK>
    <NODE nodename="IOBOX (NODE)" componentmode="InABox" id="347" systemname="IOBox (Node)" hiddenwhenlocked="0">
@@ -1299,9 +1299,9 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="234" srcpinname="LightView" dstnodeid="346" dstpinname="Data" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="6990" y="10980">
+   <LINKPOINT x="7005" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="3885" y="10230">
+   <LINKPOINT x="3885" y="10598">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="21" srcpinname="View" dstnodeid="234" dstpinname="View - Spot" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -1609,7 +1609,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15360" top="4680" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1647,9 +1647,9 @@
    <LINK srcnodeid="402" srcpinname="Buffer" dstnodeid="405" dstpinname="Input Node">
    </LINK>
    <LINK srcnodeid="234" srcpinname="LightBleedingLimit" dstnodeid="402" dstpinname="Data" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="9030" y="11013">
+   <LINKPOINT x="10170" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="25365" y="10303">
+   <LINKPOINT x="24390" y="10598">
    </LINKPOINT>
    </LINK>
    <NODE id="407" nodename="IOBox (Value Advanced)" componentmode="InABox" systemname="IOBox (Value Advanced)" hiddenwhenlocked="0" managers="">
@@ -1659,7 +1659,7 @@
    </PIN>
    <PIN pinname="Minimum" slicecount="1" pintype="Configuration" values="0">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" pintype="Input" values="0.25">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" pintype="Input" values="0">
    </PIN>
    <BOUNDS type="Box" left="15360" top="5205" width="825" height="240">
    </BOUNDS>
@@ -1833,17 +1833,17 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="234" srcpinname="LightVP - Shadow Selection" dstnodeid="80" dstpinname="View" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="6885" y="10900">
+   <LINKPOINT x="7920" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="21330" y="10340">
+   <LINKPOINT x="20355" y="10598">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="80" srcpinname="Depth Out" dstnodeid="119" dstpinname="Input Node">
    </LINK>
    <LINK srcnodeid="234" srcpinname="LightPos - Shadow Selection" dstnodeid="80" dstpinname="lightPosXYZ" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="7425" y="10900">
+   <LINKPOINT x="8475" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="22290" y="10340">
+   <LINKPOINT x="21315" y="10598">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="234" srcpinname="LightType - ShadowSelection" dstnodeid="80" dstpinname="LightType - ShadowSelection" linkstyle="Bezier">
@@ -1853,21 +1853,21 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="234" srcpinname="nearFarPlaneXY - Shadow Selection" dstnodeid="80" dstpinname="nearFarPlaneXY" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="7965" y="10900">
+   <LINKPOINT x="9045" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="22620" y="10340">
+   <LINKPOINT x="21645" y="10598">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="234" srcpinname="Resolution - Shadow Selection" dstnodeid="80" dstpinname="SizeXY" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="8220" y="10900">
+   <LINKPOINT x="9330" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="21015" y="10340">
+   <LINKPOINT x="20040" y="10598">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="234" srcpinname="Shadow Blur Width" dstnodeid="80" dstpinname="Shadow Blur Width" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="8490" y="10900">
+   <LINKPOINT x="9600" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="23265" y="10340">
+   <LINKPOINT x="22290" y="10598">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="408" srcpinname="Output Node" dstnodeid="80" dstpinname="Alpha Tex" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -1937,7 +1937,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="20235" top="3300" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.5">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.56">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2095,15 +2095,15 @@
    <LINK srcnodeid="440" srcpinname="Output" dstnodeid="247" dstpinname="Input Node">
    </LINK>
    <LINK srcnodeid="234" srcpinname="LightType" dstnodeid="6" dstpinname="Data" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="8085" y="10980">
+   <LINKPOINT x="8145" y="10590">
    </LINKPOINT>
-   <LINKPOINT x="7785" y="10230">
+   <LINKPOINT x="7785" y="10590">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="234" srcpinname="LightCount" dstnodeid="42" dstpinname="Spread Count" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="8760" y="12510">
+   <LINKPOINT x="8760" y="8843">
    </LINKPOINT>
-   <LINKPOINT x="14850" y="5850">
+   <LINKPOINT x="15135" y="8843">
    </LINKPOINT>
    </LINK>
    <NODE systemname="Multiply (Color)" nodename="Multiply (Color)" componentmode="Hidden" id="442" hiddenwhenlocked="1">
@@ -2157,9 +2157,9 @@
    <LINK srcnodeid="25" srcpinname="XYZ Transformed" dstnodeid="21" dstpinname="Initial Interest">
    </LINK>
    <LINK srcnodeid="234" srcpinname="nearFarPlaneXY - Shadow Selection" dstnodeid="369" dstpinname="DataXY" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="7965" y="11013">
+   <LINKPOINT x="9045" y="10598">
    </LINKPOINT>
-   <LINKPOINT x="23970" y="10303">
+   <LINKPOINT x="22995" y="10598">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="246" srcpinname="Buffer" dstnodeid="440" dstpinname="Input">
@@ -2481,7 +2481,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="13185" top="3300" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
