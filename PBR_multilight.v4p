@@ -409,7 +409,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5970" top="5565" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="3,1">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="10,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -529,7 +529,7 @@
    </PIN>
    <PIN pinname="Rows" slicecount="1" values="2">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="2" values="0.25,0">
+   <PIN pinname="Y Input Value" slicecount="2" values="0.24,0">
    </PIN>
    <PIN pinname="Vector Size" slicecount="1" values="2">
    </PIN>
@@ -584,7 +584,7 @@
    <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel|">
    </PIN>
    </NODE>
-   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="0" debug="0">
+   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0" debug="0">
    <BOUNDS type="Node" left="8133" top="7483" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="5415" width="11510" height="16150">
