@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="15" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
    <BOUNDS type="Window" left="405" top="1440" width="14460" height="14310">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -551,7 +551,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2415" top="7110" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|1.00000,0.00000,0.06989,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
@@ -911,11 +911,13 @@
    </PIN>
    <PIN pinname="metallic" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="roughness" slicecount="1" values="0.22">
+   <PIN pinname="roughness" slicecount="1" values="0.23">
    </PIN>
    <PIN pinname="ao" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Color(Albedo)" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
+   </PIN>
+   <PIN pinname="FXYZ" visible="1" slicecount="3" values="0.0399999991059303,0.0399999991059303,0.0399999991059303">
    </PIN>
    </NODE>
    <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
@@ -979,12 +981,6 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1193" srcpinname="Y Output Value" dstnodeid="934" dstpinname="MAX Fresnel">
-   </LINK>
-   <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Diffuse Color" linkstyle="Bezier">
-   <LINKPOINT x="2475" y="8198">
-   </LINKPOINT>
-   <LINKPOINT x="6285" y="8198">
-   </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="UseShadow" dstnodeid="934" dstpinname="Shadow" linkstyle="Bezier">
    <LINKPOINT x="10830" y="8273">
@@ -1152,4 +1148,34 @@
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
    </NODE>
+   <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
+   <BOUNDS type="Node" left="8700" top="11085" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Maximum Foreground FPS" visible="1">
+   </PIN>
+   <PIN pinname="Maximum Background FPS" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1199">
+   <BOUNDS type="Box" left="8685" top="10020" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="8685" top="10020" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="30">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1199" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Foreground FPS">
+   </LINK>
+   <LINK srcnodeid="1199" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Background FPS">
+   </LINK>
+   <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Diffuse Color">
+   </LINK>
    </PATCH>

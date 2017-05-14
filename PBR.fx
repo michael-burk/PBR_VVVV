@@ -55,7 +55,7 @@ cbuffer cbPerObject : register (b1)
 	float metallic;
 	float roughness;
 	float ao;
-	
+	float3 F = { 0.04,0.04,0.04 };
 };
 
 StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
@@ -779,19 +779,20 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	int lightCounter = 0;
 	float4 shadow = 0;
 	float4 albedo = texCol * saturate(Color);
+	float3 V = normalize(camPos - In.PosW);
+    float3 F0 = lerp(F, albedo, metallic);
 	
 	for(uint i = 0; i< numLights; i++){
 		
 		float4 lightToObject = float4(lPos[i],1) - In.PosW;
 		float4 L = normalize(float4(lPos[i],1) - In.PosW);
 		float lightDist = length(lightToObject);
-		float falloff = saturate(lightRange[i%numLighRange]-length(lightToObject));
+		float falloff = pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
 		float projectTexCoordZ;
-		float3 V = normalize(camPos - In.PosW);
+		
 		LightDirW = normalize(lightToObject);
 		LightDirV = mul(LightDirW, tV);
-		float3 F0 = float3(0.04,0.04,0.04); 
-    	F0 = lerp(F0, albedo, metallic);
+
 			
 		switch (lightType[i]){
 			
@@ -904,11 +905,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					}
 					  // calculate per-light radiance
 					        float3 H = normalize(V + L.xyz);
-//					     	float distance    = length(lPos[i] - WorldPos);
-//					        float attenuation = 1.0 / (lightDist * lightDist);
-							float attenuation = 1.0 / (lightDist * lightDist) * pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
+							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]) * falloff;
 					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation * saturate(shadow).xyz;
-//					        radiance += .1;
 					        // cook-torrance brdf
 					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
 					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
@@ -925,14 +923,15 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					        // add to outgoing radiance Lo
 					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
 					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
-							finalLight.xyz += saturate(GlobalReflectionColor) * fresnelSchlick(max(dot(Nn, V), 0.0), F0); 
+							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff;
+	
 
 
 				} else {
 
 					  // calculate per-light radiance
 					        float3 H = normalize(V + L.xyz);
-						    float attenuation = 1.0 / (lightDist * lightDist) * pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
+						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]) * falloff;
 					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation;
 						
 					        // cook-torrance brdf
@@ -951,7 +950,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 						    // add to outgoing radiance
 					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
 					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
-							finalLight.xyz += saturate(GlobalReflectionColor) * fresnelSchlick(max(dot(Nn, V), 0.0), F0); 
+							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff;
 				}	
 			
 			break;
@@ -979,11 +978,18 @@ float4 PS_Superphong(vs2ps In): SV_Target
 //	light.diffuse.a *= Alpha;
 //	
 //	
-	
+
 //	light.diffuse = light.reflection
-	finalLight = finalLight / (finalLight + float4(1.0,1.0,1.0,1.0));
-    finalLight = pow(finalLight, float4(1.0/2.2,1.0/2.2,1.0/2.2,1.0/2.2)); 
 	
+
+	finalLight.xyz += (GlobalReflectionColor) * fresnelSchlick(max(dot(Nn, V), 0.0), F0);
+	finalLight.xyz += (GlobalDiffuseColor);
+	
+//	// Gamma Correction
+	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
+    finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
+//	
+
 	return finalLight;
 }
 
