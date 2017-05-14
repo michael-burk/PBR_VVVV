@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\Modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="13290" scrolly="3450">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\modules\LightSelect.v4p" systemname="LightSelect" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightSelect.v4p" scrollx="9645" scrolly="2700">
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Cons (Spreads)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="12330" top="3705" width="1520" height="270">
    </BOUNDS>
@@ -1894,8 +1894,8 @@
    </NODE>
    <LINK srcnodeid="204" srcpinname="Output" dstnodeid="203" dstpinname="Y Input Value">
    </LINK>
-   <LINK srcnodeid="77" srcpinname="Output" dstnodeid="204" dstpinname="Select">
-   </LINK>
    <LINK srcnodeid="201" srcpinname="Output 2" dstnodeid="204" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="38" srcpinname="Output" dstnodeid="204" dstpinname="Select">
    </LINK>
    </PATCH>

@@ -906,9 +906,9 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					        float3 H = normalize(V + L.xyz);
 //					     	float distance    = length(lPos[i] - WorldPos);
 //					        float attenuation = 1.0 / (lightDist * lightDist);
-//							attenuation = saturate(lightRange[i%numLighRange]-lightDist);
-					        float3 radiance   = lDiff[i%numlDiff].xyz * saturate(lightRange[i%numLighRange]-lightDist) * saturate(shadow);        
-					        
+							float attenuation = 1.0 / (lightDist * lightDist) * pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
+					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation * saturate(shadow).xyz;
+//					        radiance += .1;
 					        // cook-torrance brdf
 					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
 					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
@@ -920,37 +920,38 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					        
 					        float3 nominator    = NDF * G * F;
 					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-					        float3 specular     = nominator / denominator;
+					        float3 specular   = nominator / denominator;
 					            
 					        // add to outgoing radiance Lo
 					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 	
+					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
+							finalLight.xyz += saturate(GlobalReflectionColor) * fresnelSchlick(max(dot(Nn, V), 0.0), F0); 
+
 
 				} else {
 
 					  // calculate per-light radiance
 					        float3 H = normalize(V + L.xyz);
-//					     	float distance    = length(lPos[i] - WorldPos);
-//					        float attenuation = 1.0 / (lightDist * lightDist);
-//							attenuation = saturate(lightRange[i%numLighRange]-lightDist);
-					        float3 radiance   = lDiff[i%numlDiff].xyz * saturate(lightRange[i%numLighRange]-lightDist);        
-					        
+						    float attenuation = 1.0 / (lightDist * lightDist) * pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
+					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation;
+						
 					        // cook-torrance brdf
-					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
-					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-					        float3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       
-					        
-					        float3 kS = F;
+					        float  NDF = DistributionGGX(Nn.xyz, H, roughness);        
+					        float  G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
+					        float3 F   = fresnelSchlick(max(dot(H, V), 0.0), F0);       
+					       
+							float3 kS = F;
 					        float3 kD = float3(1.0,1.0,1.0) - kS;
 					        kD *= 1.0 - metallic;	  
 					        
 					        float3 nominator    = NDF * G * F;
 					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-					        float3 specular     = nominator / denominator;
-					            
-					        // add to outgoing radiance Lo
+					        float3 specular   = nominator / denominator;
+					       
+						    // add to outgoing radiance
 					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
 					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
+							finalLight.xyz += saturate(GlobalReflectionColor) * fresnelSchlick(max(dot(Nn, V), 0.0), F0); 
 				}	
 			
 			break;
