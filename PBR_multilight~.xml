@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
    <PATCH nodename="C:\Projects\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="-360" bgcolor="15329769">
-   <BOUNDS type="Window" left="405" top="1440" width="13560" height="14310">
+   <BOUNDS type="Window" left="13530" top="1305" width="15270" height="14310">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -584,12 +584,12 @@
    <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel|">
    </PIN>
    </NODE>
-   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0" debug="0">
+   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="0" debug="0">
    <BOUNDS type="Node" left="8133" top="7483" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="5415" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="1830" top="300" width="11820" height="14835">
+   <BOUNDS type="Window" left="1830" top="300" width="22350" height="14835">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -603,7 +603,7 @@
    </PIN>
    <PIN pinname="SpotLightTex" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0.5625,1.0625,0.125,0.90625,0.46875,1.15625,0.59375,1.3125,0.28125,0.9375">
+   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0,0,0.09375,2,0.3125,2,0.90625,1.09375,1.375,1.59375">
    </PIN>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
@@ -913,7 +913,7 @@
    </PIN>
    <PIN pinname="metallic" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="roughness" slicecount="1" values="0.2">
+   <PIN pinname="roughness" slicecount="1" values="0.14">
    </PIN>
    <PIN pinname="ao" slicecount="1" values="1">
    </PIN>

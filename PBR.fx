@@ -616,7 +616,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 
 }
 float3 cookTorrance(float3 V, float3 LightDirW, float3 N, float3 albedo, float3 lDiff,
-					float3 lAmb, float shadow, float falloff, float albedoMul, float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0, float attenuation){				
+					float3 lAmb, float shadow, float3 albedoMul, float falloff, float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0, float attenuation){				
     float3 H = normalize(V + LightDirW);
     float3 radiance   = lDiff * attenuation * shadow;
     // cook-torrance brdf
@@ -632,7 +632,7 @@ float3 cookTorrance(float3 V, float3 LightDirW, float3 N, float3 albedo, float3 
 	specular *= lPower;
     // add to outgoing radiance Lo
     float NdotL = max(dot(N, LightDirW), 0.0);                
-    float3 returnLight = (kD * albedo.xyz  / PI + specular) * radiance * NdotL; 
+    float3 returnLight = (kD * albedo.xyz * albedoMul / PI + specular) * radiance * NdotL; 
 	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
 }
 
@@ -651,7 +651,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float4 LightDirV;
 	float4 viewPosition;
 	float2 projectTexCoord;
-	float4 projectionColor;
+	float3 projectionColor;
 	float2 reflectTexCoord;
     float4 reflectionColor;
 	
@@ -788,8 +788,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	int lightCounter = 0;
 	float4 shadow = 0;
 	float4 albedo = texCol * saturate(Color) * ao;
-	float3 V = normalize(camPos - In.PosW);
-    float3 F0 = lerp(F, albedo, metallic);
+	float3 V = normalize(camPos - In.PosW.xyz);
+    float3 F0 = lerp(F, albedo.xyz, metallic);
 	
 	for(uint i = 0; i< numLights; i++){
 		
@@ -827,16 +827,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 						if(useShadow[i]){
 							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-										 lerp(1,saturate(shadow),falloff), 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1);
+											  lerp(1.0,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0);
 					} else {
-					        finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff],
-										 	  1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1);
+					       	finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+											  1.0, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0);
 					}
-
-			
 				break;
-	
-			
+				
 			case 1:
 				
 				lightCounter ++;
@@ -853,75 +850,32 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
+					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).rgb;
 					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
 				} else {
 					shadow = 1;
+				}		
+				if(useShadow[i]){
+						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
+						finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+						lerp(1.0,saturate(shadow),falloff).x, projectionColor, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
+				} else {
+						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
+						finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+						1.0, projectionColor, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 				}
-					
-						if(useShadow[i]){
-								
-					  // calculate per-light radiance
-//					        float3 H = normalize(V + L.xyz);
-							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-//					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation * lerp(1,saturate(shadow),falloff);
-//					        // cook-torrance brdf
-//					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
-//					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-//					        float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-//					        float3 kS = F;
-//					        float3 kD = float3(1.0,1.0,1.0) - kS;
-//					        kD *= 1.0 - metallic;	  					        
-//					        float3 nominator    = NDF * G * F;
-//					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-//					        float3 specular   = nominator / denominator;
-//							specular *= lPower;
-//							//specular *= saturate(dot(-LightDirV,In.ViewDirV));
-//					        // add to outgoing radiance Lo
-//					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-//					        finalLight.xyz += (kD * albedo.xyz * projectionColor  / PI + specular) * radiance * NdotL; 
-//							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
-							
-							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							lerp(1,saturate(shadow),falloff), projectionColor, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
-//						}
-						
-					} else {
-//					        float3 H = normalize(V + L.xyz);
-							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-//					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation;
-//					        // cook-torrance brdf
-//					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
-//					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-//					        float3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-//					        float3 kS = F;
-//					        float3 kD = float3(1.0,1.0,1.0) - kS;
-//					        kD *= 1.0 - metallic;	  					        
-//					        float3 nominator    = NDF * G * F;
-//					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-//					        float3 specular   = nominator / denominator;
-//							specular *= lPower;
-//					        // add to outgoing radiance Lo
-//					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-//					        finalLight.xyz += (kD * albedo.xyz  * projectionColor / PI + specular) * radiance * NdotL; 
-//							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
-							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							1, projectionColor, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
-					}
-				
+	
 				break;
 	
 			
 			case 2:
 				
 				bool shadowed = false;
-			
 				lightCounter+=6;
 				shadow = 0;
 				float pZ;
-				
 				if(useShadow[i]){
-						
+					
 					shadowCounter+=6;
 					for(int p = 0; p < 6; p++){
 						
@@ -941,61 +895,21 @@ float4 PS_Superphong(vs2ps In): SV_Target
 						if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 						&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 							
-						viewPosition = mul(In.PosW, LightVP[p + lightCounter-6]);
+							viewPosition = mul(In.PosW, LightVP[p + lightCounter-6]);
 
-						projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
-			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
-						projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-						
-						shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+							projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+				   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+							projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 							
-						
+							shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
 
-						} 
+						}
 					}
-					  // calculate per-light radiance
-//					        float3 H = normalize(V + L.xyz);
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-//					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation * lerp(1,saturate(shadow).xyz,falloff);
-//					        // cook-torrance brdf
-//					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
-//					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-//					        float3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-//					        float3 kS = F;
-//					        float3 kD = float3(1.0,1.0,1.0) - kS;
-//					        kD *= 1.0 - metallic;	  					        
-//					        float3 nominator    = NDF * G * F;
-//					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-//					        float3 specular   = nominator / denominator;
-//							specular *= lPower;
-//					        // add to outgoing radiance Lo
-//					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-//					        finalLight.xyz += (kD * albedo.xyz  / PI + specular) * radiance * NdotL; 
-//							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
-							
 							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							lerp(1,saturate(shadow),falloff), 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
+							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 				} else {
-					 	 // calculate per-light radiance
-//					        float3 H = normalize(V + L.xyz);
 						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-//					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation;
-//					        // cook-torrance brdf
-//					        float  NDF = DistributionGGX(Nn.xyz, H, roughness);        
-//					        float  G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-//					        float3 F   = fresnelSchlick(max(dot(H, V), 0.0), F0);       					 
-//							float3 kS = F;
-//					        float3 kD = float3(1.0,1.0,1.0) - kS;
-//					        kD *= 1.0 - metallic;	  		
-//					        float3 nominator    = NDF * G * F;
-//					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-//					        float3 specular   = nominator / denominator;
-//							specular *= lPower;
-//						    // add to outgoing radiance
-//					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-//					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
-//							// Ambient Light
-//							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
 							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 				}				
@@ -1003,14 +917,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		}	
 	}
 
-	finalLight.xyz += (GlobalReflectionColor) * fresnelSchlick(max(dot(Nn, V), 0.0), F0);
-	finalLight.xyz += (GlobalDiffuseColor) * ao;
+	finalLight.xyz += GlobalReflectionColor.xyz * fresnelSchlick(max(dot(Nn, V), 0.0), F0);
+	finalLight.xyz += GlobalDiffuseColor.xyz * ao;
 	
-//	// Gamma Correction
+//	Gamma Correction
 	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
     finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
-//	
-
+	finalLight.a = Alpha;
 	return finalLight;
 }
 
