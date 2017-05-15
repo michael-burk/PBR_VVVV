@@ -551,7 +551,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2415" top="7110" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.14527,0.06929,0.18602,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
@@ -671,11 +671,11 @@
    </PIN>
    <PIN pinname="DirectionalLight" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="SpotLight" slicecount="1" values="0">
+   <PIN pinname="SpotLight" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="512">
    </PIN>
-   <PIN pinname="PointLight" slicecount="1" values="0">
+   <PIN pinname="PointLight" slicecount="1" values="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">

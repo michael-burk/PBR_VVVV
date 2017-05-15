@@ -615,6 +615,26 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	
 
 }
+float3 cookTorrance(float3 V, float3 LightDirW, float3 N, float3 albedo, float3 lDiff,
+					float3 lAmb, float shadow, float falloff, float albedoMul, float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0, float attenuation){				
+    float3 H = normalize(V + LightDirW);
+    float3 radiance   = lDiff * attenuation * shadow;
+    // cook-torrance brdf
+    float NDF = DistributionGGX(N, H, roughness);        
+    float G   = GeometrySmith(N, V, LightDirW.xyz, roughness);      
+    float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
+    float3 kS = F;
+    float3 kD = float3(1.0,1.0,1.0) - kS;
+    kD *= 1.0 - metallic;	  					        
+    float3 nominator    = NDF * G * F;
+    float denominator = 4 * max(dot(N, V), 0.0) * max(dot(N, LightDirW), 0.0) + 0.001; 
+    float3 specular   = nominator / denominator;
+	specular *= lPower;
+    // add to outgoing radiance Lo
+    float NdotL = max(dot(N, LightDirW), 0.0);                
+    float3 returnLight = (kD * albedo.xyz  / PI + specular) * radiance * NdotL; 
+	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
+}
 
 
 float4 PS_Superphong(vs2ps In): SV_Target
@@ -642,8 +662,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	light.ambient = float4(0,0,0,0);
 	
 	float4 finalLight = float4(0.0,0.0,0.0,0.0);
-//	float4 reflectance;
-//	float4
 	
 	float4 texCol = float4(1,1,1,1);
 	float4 specIntensity = float4(1,1,1,1);
@@ -779,40 +797,15 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		float4 L = normalize(float4(lPos[i],1) - In.PosW);
 		float lightDist = length(lightToObject);
 		float falloff = pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
+//		float falloff = pow(saturate(1 - pow((lightDist/lightRange[i%numLighRange]),4)),2/pow(lightDist,2)+1 );
 		float projectTexCoordZ;
 		
 		LightDirW = normalize(lightToObject);
-		LightDirV = mul(LightDirW, tV);
 
 			
 		switch (lightType[i]){
 			
 			case 0:
-			
-//				lightCounter ++;
-//
-//				if(useShadow[i] == 1){
-//					
-//					shadowCounter++;
-//				
-//					viewPosition = mul(In.PosW, LightVP[i]);
-//					
-//					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
-//		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
-//					projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-//		
-//					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
-//					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-//						
-//						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
-//						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,saturate(shadow),light,lightRange[i%numLighRange],lightDist);
-//
-//					} else {
-//						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
-//					}
-//				} else {
-//						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
-//				}
 				lightCounter ++;
 				
 				if(useShadow[i]  == 1){
@@ -827,59 +820,19 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-//					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
 					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
 				} else {
 					shadow = 1;
 				}
 					
 						if(useShadow[i]){
-								
-				
-					  // calculate per-light radiance
-					        float3 H = normalize(V + LightDirW.xyz);
-					        float3 radiance   = lDiff[i%numlDiff].xyz * lerp(1,saturate(shadow),falloff);
-					        // cook-torrance brdf
-					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
-					        float G   = GeometrySmith(Nn.xyz, V, LightDirW.xyz, roughness);      
-					        float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-					        float3 kS = F;
-					        float3 kD = float3(1.0,1.0,1.0) - kS;
-					        kD *= 1.0 - metallic;	  					        
-					        float3 nominator    = NDF * G * F;
-					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, LightDirW.xyz), 0.0) + 0.001; 
-					        float3 specular   = nominator / denominator;
-							specular *= lPower;
-							//specular *= saturate(dot(-LightDirV,In.ViewDirV));
-					        // add to outgoing radiance Lo
-					        float NdotL = max(dot(Nn.xyz, LightDirW.xyz), 0.0);                
-					        finalLight.xyz += (kD * albedo.xyz  / PI + specular) * radiance * NdotL; 
-							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
-						
+							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+										 lerp(1,saturate(shadow),falloff), 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1);
 					} else {
-					        float3 H = normalize(V + L.xyz);
-//							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-					        float3 radiance   = lDiff[i%numlDiff].xyz;
-					        // cook-torrance brdf
-					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
-					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-					        float3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-					        float3 kS = F;
-					        float3 kD = float3(1.0,1.0,1.0) - kS;
-					        kD *= 1.0 - metallic;	  					        
-					        float3 nominator    = NDF * G * F;
-					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-					        float3 specular   = nominator / denominator;
-							specular *= lPower;
-					        // add to outgoing radiance Lo
-					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
-							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+					        finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff],
+										 	  1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1);
 					}
-					
-					
-//			}
-				
+
 			
 				break;
 	
@@ -908,51 +861,53 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					
 						if(useShadow[i]){
 								
-				
 					  // calculate per-light radiance
-					        float3 H = normalize(V + L.xyz);
+//					        float3 H = normalize(V + L.xyz);
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation * lerp(1,saturate(shadow),falloff);
-					        // cook-torrance brdf
-					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
-					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-					        float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-					        float3 kS = F;
-					        float3 kD = float3(1.0,1.0,1.0) - kS;
-					        kD *= 1.0 - metallic;	  					        
-					        float3 nominator    = NDF * G * F;
-					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-					        float3 specular   = nominator / denominator;
-							specular *= lPower;
-							//specular *= saturate(dot(-LightDirV,In.ViewDirV));
-					        // add to outgoing radiance Lo
-					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-					        finalLight.xyz += (kD * albedo.xyz * projectionColor  / PI + specular) * radiance * NdotL; 
-							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+//					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation * lerp(1,saturate(shadow),falloff);
+//					        // cook-torrance brdf
+//					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
+//					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
+//					        float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
+//					        float3 kS = F;
+//					        float3 kD = float3(1.0,1.0,1.0) - kS;
+//					        kD *= 1.0 - metallic;	  					        
+//					        float3 nominator    = NDF * G * F;
+//					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
+//					        float3 specular   = nominator / denominator;
+//							specular *= lPower;
+//							//specular *= saturate(dot(-LightDirV,In.ViewDirV));
+//					        // add to outgoing radiance Lo
+//					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
+//					        finalLight.xyz += (kD * albedo.xyz * projectionColor  / PI + specular) * radiance * NdotL; 
+//							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+							
+							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							lerp(1,saturate(shadow),falloff), projectionColor, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
+//						}
 						
 					} else {
-					        float3 H = normalize(V + L.xyz);
+//					        float3 H = normalize(V + L.xyz);
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation;
-					        // cook-torrance brdf
-					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
-					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-					        float3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-					        float3 kS = F;
-					        float3 kD = float3(1.0,1.0,1.0) - kS;
-					        kD *= 1.0 - metallic;	  					        
-					        float3 nominator    = NDF * G * F;
-					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-					        float3 specular   = nominator / denominator;
-							specular *= lPower;
-					        // add to outgoing radiance Lo
-					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-					        finalLight.xyz += (kD * albedo.xyz  * projectionColor / PI + specular) * radiance * NdotL; 
-							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+//					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation;
+//					        // cook-torrance brdf
+//					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
+//					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
+//					        float3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
+//					        float3 kS = F;
+//					        float3 kD = float3(1.0,1.0,1.0) - kS;
+//					        kD *= 1.0 - metallic;	  					        
+//					        float3 nominator    = NDF * G * F;
+//					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
+//					        float3 specular   = nominator / denominator;
+//							specular *= lPower;
+//					        // add to outgoing radiance Lo
+//					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
+//					        finalLight.xyz += (kD * albedo.xyz  * projectionColor / PI + specular) * radiance * NdotL; 
+//							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							1, projectionColor, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 					}
-					
-					
-//			}
 				
 				break;
 	
@@ -993,74 +948,60 @@ float4 PS_Superphong(vs2ps In): SV_Target
 						projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 						
 						shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+							
+						
 
 						} 
 					}
 					  // calculate per-light radiance
-					        float3 H = normalize(V + L.xyz);
+//					        float3 H = normalize(V + L.xyz);
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation * lerp(1,saturate(shadow).xyz,falloff) ;
-					        // cook-torrance brdf
-					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
-					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-					        float3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-					        float3 kS = F;
-					        float3 kD = float3(1.0,1.0,1.0) - kS;
-					        kD *= 1.0 - metallic;	  					        
-					        float3 nominator    = NDF * G * F;
-					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-					        float3 specular   = nominator / denominator;
-							specular *= lPower;
-					        // add to outgoing radiance Lo
-					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-					        finalLight.xyz += (kD * albedo.xyz  / PI + specular) * radiance * NdotL; 
-							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+//					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation * lerp(1,saturate(shadow).xyz,falloff);
+//					        // cook-torrance brdf
+//					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
+//					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
+//					        float3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
+//					        float3 kS = F;
+//					        float3 kD = float3(1.0,1.0,1.0) - kS;
+//					        kD *= 1.0 - metallic;	  					        
+//					        float3 nominator    = NDF * G * F;
+//					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
+//					        float3 specular   = nominator / denominator;
+//							specular *= lPower;
+//					        // add to outgoing radiance Lo
+//					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
+//					        finalLight.xyz += (kD * albedo.xyz  / PI + specular) * radiance * NdotL; 
+//							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+							
+							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							lerp(1,saturate(shadow),falloff), 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 				} else {
 					 	 // calculate per-light radiance
-					        float3 H = normalize(V + L.xyz);
+//					        float3 H = normalize(V + L.xyz);
 						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation;
-					        // cook-torrance brdf
-					        float  NDF = DistributionGGX(Nn.xyz, H, roughness);        
-					        float  G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
-					        float3 F   = fresnelSchlick(max(dot(H, V), 0.0), F0);       					 
-							float3 kS = F;
-					        float3 kD = float3(1.0,1.0,1.0) - kS;
-					        kD *= 1.0 - metallic;	  		
-					        float3 nominator    = NDF * G * F;
-					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
-					        float3 specular   = nominator / denominator;
-							specular *= lPower;
-						    // add to outgoing radiance
-					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
-					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
-							// Ambient Light
-							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+//					        float3 radiance   = lDiff[i%numlDiff].xyz * attenuation;
+//					        // cook-torrance brdf
+//					        float  NDF = DistributionGGX(Nn.xyz, H, roughness);        
+//					        float  G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
+//					        float3 F   = fresnelSchlick(max(dot(H, V), 0.0), F0);       					 
+//							float3 kS = F;
+//					        float3 kD = float3(1.0,1.0,1.0) - kS;
+//					        kD *= 1.0 - metallic;	  		
+//					        float3 nominator    = NDF * G * F;
+//					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
+//					        float3 specular   = nominator / denominator;
+//							specular *= lPower;
+//						    // add to outgoing radiance
+//					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
+//					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
+//							// Ambient Light
+//							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 				}				
 			break;			
 		}	
 	}
-	
-
-//	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + saturate(GlobalReflectionColor) ) ; 
-//	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * material; 
-//	
-//	if(refraction){
-//			float3 refrVect;
-//		    for(int r=0; r<3; r++) {
-//		    	refrVect = refract(-Vn, Nn.xyz , refractionIndex[r]);
-//		    	light.diffuse += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
-//		    	
-//			}
-//	}
-//	
-//	light.diffuse = lerp(light.diffuse,max(saturate(light.ambient)* material,saturate(light.reflection)),fresRefl*specIntensity);
-//	light.diffuse.a *= Alpha;
-//	
-//	
-
-//	light.diffuse = light.reflection
-	
 
 	finalLight.xyz += (GlobalReflectionColor) * fresnelSchlick(max(dot(Nn, V), 0.0), F0);
 	finalLight.xyz += (GlobalDiffuseColor) * ao;
