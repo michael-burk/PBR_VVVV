@@ -41,11 +41,11 @@ cbuffer cbPerObject : register (b1)
 		
 	static const float minVariance = 0;	
 	
-	float4x4 tColor;
-	float4x4 tNormal;
-	float4x4 tRoughness;
-	float4x4 tMetallic;
-	float4x4 tAO;
+	float4x4 tColor <bool uvspace=true;>;
+	float4x4 tNormal <bool uvspace=true;>;
+	float4x4 tRoughness <bool uvspace=true;>;
+	float4x4 tMetallic <bool uvspace=true;>;
+	float4x4 tAO <bool uvspace=true;>;
 	
 	float2 iblIntensity <bool visible=true; String uiname="IBL Intensity";> = float2(1,1);
 	
@@ -120,8 +120,8 @@ struct vs2psBump
     float4 TexCd : TEXCOORD0;
 	float4 PosW: TEXCOORD1;
 	float3 NormW : TEXCOORD2;
-	float4 tangent : TEXCOORD3;
-	float4 binormal : TEXCOORD4;
+	float3 tangent : TEXCOORD3;
+	float3 binormal : TEXCOORD4;
 };
 
 
@@ -142,8 +142,8 @@ vs2psBump VS_Bump(
     float4 PosO: POSITION,
     float3 NormO: NORMAL,
     float4 TexCd : TEXCOORD0,
-	float4 tangent : TANGENT,
-    float4 binormal : BINORMAL
+	float3 tangent : TANGENT,
+    float3 binormal : BINORMAL
 )
 {
     //inititalize all fields of output struct with 0
@@ -392,7 +392,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	aoT *= ao;
 	metallicT *= metallic;
 	
-    float3 F0 = lerp(F, albedo.xyz, metallic);
+    float3 F0 = lerp(F, albedo.xyz, metallicT);
 	texRoughness *= roughness;
 	
 	uint tX1,tY1,m2;
@@ -406,7 +406,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		
 		float3 kS = fresnelSchlickRoughness(max(dot(Nb, V), 0.0), F,texRoughness);
 		float3 kD = 1.0 - kS;
-		kD *= 1.0 - metallic;
+		kD *= 1.0 - metallicT;
 		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
 		IBL  = IBL * albedo.xyz;
 	
@@ -581,10 +581,11 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	finalLight.xyz += IBL.xyz;
 //	Gamma Correction
 	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
-    finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
+//    finalLight.xyz = pow(abs(finalLight.xyz), 1.0/1.8);
+	finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
 	finalLight.a = Alpha;
 	return finalLight;
-	
+//	return metallicT;
 	
 	
 
