@@ -47,7 +47,7 @@ cbuffer cbPerObject : register (b1)
 	float4x4 tMetallic;
 	float4x4 tAO;
 	
-	float2 iblIntensity = float2(1,1);
+	float2 iblIntensity <bool visible=true; String uiname="IBL Intensity";> = float2(1,1);
 	
 	
 	bool noTile = false;
@@ -55,7 +55,7 @@ cbuffer cbPerObject : register (b1)
 	float metallic;
 	float roughness;
 	float ao;
-	float3 F = { 0.04,0.04,0.04 };
+	float3 F <bool visible=false; String uiname="FresnelF0";> = { 0.04,0.04,0.04 };
 };
 
 StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
@@ -118,13 +118,10 @@ struct vs2psBump
 {
     float4 PosWVP: SV_POSITION;
     float4 TexCd : TEXCOORD0;
-	float4 PosO: TEXCOORD1;
-//	float4 ViewDirV: TEXCOORD2;
-	float4 PosW: TEXCOORD3;
-	float4 NormW : TEXCOORD4;
-	float4 NormO : TEXCOORD5;
-	float4 tangent : TEXCOORD6;
-	float4 binormal : TEXCOORD7;
+	float4 PosW: TEXCOORD1;
+	float4 NormW : TEXCOORD2;
+	float4 tangent : TEXCOORD3;
+	float4 binormal : TEXCOORD4;
 };
 
 
@@ -132,11 +129,9 @@ struct vs2ps
 {
     float4 PosWVP: SV_POSITION;
     float4 TexCd : TEXCOORD0;
-	float4 PosO: TEXCOORD1;
 	float4 ViewDirV: TEXCOORD2;
 	float4 PosW: TEXCOORD3;
 	float4 NormW : TEXCOORD4;
-//	float4 NormO : TEXCOORD5;
 };
 
 // -----------------------------------------------------------------------------
@@ -155,11 +150,10 @@ vs2psBump VS_Bump(
     vs2psBump Out = (vs2psBump)0;
 
     Out.PosW = mul(PosO, tW);
-	Out.PosO = PosO;
 //	Out.NormO = NormO;
 	
 	Out.NormW = mul(NormO, NormalTransform);
-
+	
 //  BumpMap
 ///////////////////////////////////////
 	// Calculate the tangent vector against the world matrix only and then normalize the final value.
@@ -173,10 +167,7 @@ vs2psBump VS_Bump(
 
 //	position (projected)
     Out.PosWVP  = mul(PosO, tWVP);
-
-	
 	Out.TexCd = TexCd;
-//    Out.ViewDirV = -normalize(mul(PosO, tWV));
 	
 	
     return Out;
@@ -193,10 +184,8 @@ vs2ps VS(
     vs2ps Out = (vs2ps)0;
 	
     Out.PosW = mul(PosO, tW);
-	Out.PosO = PosO;
-//	Out.NormO = NormO;
 	//NormalTransform
-	Out.NormW = mul(NormO, tW);
+	Out.NormW = mul(NormO, NormalTransform);
 
 //	position (projected)
     Out.PosWVP  = mul(PosO, tWVP);
@@ -330,8 +319,6 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 
 	float4 Nn = normalize(In.NormW);
 	
-//  BumpMap
-///////////////////////////////////////
 	float4 bumpMap = float4(0,0,0,0);
 	
 	normalTex.GetDimensions(tX,tY);
@@ -340,34 +327,23 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
-//    float4 bumpNormal = (bumpMap.x * In.tangent) + (bumpMap.y * In.binormal) + (bumpMap.z * In.NormO);
-
-//	In.NormO += normalize(-bumpNormal)*bumpy;
-	
-//	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
-   
 	float3 Tn = normalize(In.tangent).xyz;
     float3 Bn = normalize(In.binormal.xyz);
 	float3 Nb = normalize(Nn.xyz + (-bumpMap.x * Tn + -bumpMap.y * Bn)*bumpy);
-///////////////////////////////////////
-	
-// Reflection and RimLight
+
 	float3 V = normalize(camPos - In.PosW.xyz);
 	
-//BumpMap
-///////////////////////////////////////
+
 	float3 reflVect = -reflect(V,Nb);
 	float3 reflVecNorm = Nn.xyz-reflect(Nn.xyz,Nb);
 	float3 refrVect = refract(-V, Nb , refractionIndex[0]);
-	
-///////////////////////////////////////
+
 
 
 	// Box Projected CubeMap
 	////////////////////////////////////////////////////
 	
 	if(BPCM){
-		
 		
 		float3 rbmax = (cubeMapBoxBounds[0] - (In.PosW.xyz))/reflVect;
 		float3 rbmin = (cubeMapBoxBounds[1] - (In.PosW.xyz))/reflVect;
@@ -410,9 +386,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	
 	////////////////////////////////////////////////////
 	
-	
-	float vdn = -saturate(dot(reflVect,In.NormW.xyz));
-//	float fresRefl = KrMin + (Kr-KrMin) * pow(1-abs(vdn),FresExp);
+
 	float3 reflColor = float3(0,0,0);
 	float3 IBL = float3(0,0,0);
 
@@ -429,6 +403,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	cubeTexIrradiance.GetDimensions(tX1,tY1);
 	
 	if(tX+tY > 2 || tX1+tY1 > 2){
+		
 		reflColor = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),0).rgb;
 		
 		float3 kS = fresnelSchlickRoughness(max(dot(Nb, V), 0.0), F,texRoughness);
