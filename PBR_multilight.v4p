@@ -584,7 +584,7 @@
    <PIN pinname="Descriptive Name" slicecount="1" values="|MAX Fresnel|">
    </PIN>
    </NODE>
-   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="0" debug="0">
+   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0" debug="0">
    <BOUNDS type="Node" left="8133" top="7483" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="5415" width="11510" height="16150">
@@ -655,7 +655,7 @@
    </PIN>
    <PIN pinname="lPos" visible="1">
    </PIN>
-   <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0">
+   <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0.02">
    </PIN>
    <PIN pinname="Shadow" slicecount="3" visible="1" values="1,1,1">
    </PIN>
@@ -747,7 +747,7 @@
    </PIN>
    <PIN pinname="refractionIndex" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="25">
+   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="10">
    </PIN>
    <PIN pinname="colors Bin Size" visible="-1" pintype="Input" slicecount="1" values="3">
    </PIN>
@@ -895,7 +895,7 @@
    </PIN>
    <PIN pinname="Light Bleeding Limit" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Global Diffuse Color" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
+   <PIN pinname="Global Diffuse Color" slicecount="1" visible="1" values="|0.43744,0.43744,0.43744,1.00000|">
    </PIN>
    <PIN pinname="Global Reflection Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
@@ -913,7 +913,7 @@
    </PIN>
    <PIN pinname="metallic" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="roughness" slicecount="1" values="0.29">
+   <PIN pinname="roughness" slicecount="1" values="0.2">
    </PIN>
    <PIN pinname="ao" slicecount="1" values="1">
    </PIN>
@@ -1139,7 +1139,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8685" top="10020" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="30">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="120">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1189,7 +1189,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="11385" top="2265" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="64">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="128">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1210,10 +1210,6 @@
    <LINKPOINT x="5910" y="8198">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Diffuse Color" linkstyle="Bezier">
-   <LINKPOINT x="2475" y="8198">
-   </LINKPOINT>
-   <LINKPOINT x="6090" y="8198">
-   </LINKPOINT>
+   <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="934" dstpinname="Global Diffuse Color">
    </LINK>
    </PATCH>
