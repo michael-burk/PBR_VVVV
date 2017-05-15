@@ -25,9 +25,6 @@ cbuffer cbPerObject : register (b1)
 	float4x4 tWIT: WORLDINVERSETRANSPOSE;
 
 	float4x4 NormalTransform <string uiname="Normal Rotation";>;
-	float KrMin <String uiname="MIN Fresnel";float uimin=0.0; float uimax=1;> = 0 ;
-	float Kr <String uiname="MAX Fresnel";float uimin=0.0; float uimax=1.0;> = 1 ;
-	float FresExp <String uiname="EXP Fresnel";float uimin=0.0; float uimax=2;> = 1 ;
 	float3 camPos <string uiname="Camera Position";> ;
 	float4 GlobalReflectionColor <bool color = true; string uiname="Global Reflection Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 GlobalDiffuseColor <bool color = true; string uiname="Global Diffuse Color";>  = { 0.0f,0.0f,0.0f,0.0f };
@@ -35,7 +32,6 @@ cbuffer cbPerObject : register (b1)
 	float4 Color <bool color = true; string uiname="Color(Albedo)";>  = { 1.0f,1.0f,1.0f,1.0f };
 	float Alpha <float uimin=0.0; float uimax=1.0;> = 1;
 	float lPower <String uiname="Power"; float uimin=0.0;> = 25.0;     //shininess of specular highlight
-
 
 	float bumpy <string uiname="Bumpiness";> = 0 ;
 	bool refraction <bool visible=false; String uiname="Refraction";> = false;
@@ -46,9 +42,11 @@ cbuffer cbPerObject : register (b1)
 	static const float minVariance = 0;	
 	
 	float4x4 tColor;
-	float4x4 tSpec;
-	float4x4 tDiffuse;
 	float4x4 tNormal;
+	float4x4 tRoughness;
+	float4x4 tMetallic;
+	float4x4 tAO;
+	
 	
 	bool noTile = false;
 	
@@ -78,9 +76,10 @@ StructuredBuffer <float4> lSpec <string uiname="Specular Color";>;
 
 
 Texture2D texture2d <string uiname="Texture"; >;
-Texture2D specTex <string uiname="SpecularMap"; >;
 Texture2D normalTex <string uiname="NormalMap"; >;
-Texture2D diffuseTex <string uiname="DiffuseMap"; >;
+Texture2D roughTex <string uiname="RoughnessMap"; >;
+Texture2D metallTex <string uiname="MetallicMap"; >;
+Texture2D aoTex <string uiname="AOMap"; >;
 
 Texture2D iridescence <string uiname="Iridescence"; >;
 TextureCube cubeTexRefl <string uiname="CubeMap Refl"; >;
@@ -228,6 +227,11 @@ float3 fresnelSchlick(float cosTheta, float3 F0)
     return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }  
 
+float3 fresnelSchlickRoughness(float cosTheta, float3 F0, float roughness)
+{
+    return F0 + (max(float3(1.0 - roughness,1.0 - roughness,1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
+}   
+
 float DistributionGGX(float3 N, float3 H, float roughness)
 {
     float a      = roughness*roughness;
@@ -263,6 +267,27 @@ float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
     return ggx1 * ggx2;
 }
 
+float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
+					float3 lAmb, float shadow, float3 projectionColor, float falloff, float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0, float attenuation, float roughness, float metallic){				
+    float3 H = normalize(V + L);
+    float3 radiance   = lDiff * attenuation * shadow * projectionColor;
+    // cook-torrance brdf
+    float NDF = DistributionGGX(N, H, roughness);        
+    float G   = GeometrySmith(N, V, L, roughness);      
+    float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
+    float3 kS = F;
+    float3 kD = float3(1.0,1.0,1.0) - kS;
+    kD *= 1.0 - metallic;	  					        
+    float3 nominator    = NDF * G * F;
+    float denominator = 4 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.001; 
+    float3 specular   = nominator / denominator;
+	specular *= lPower;
+    // add to outgoing radiance Lo
+    float NdotL = max(dot(N, L), 0.0);                
+    float3 returnLight = (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
+	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
+}
+
 float4 PS_SuperphongBump(vs2psBump In): SV_Target
 {	
 	// wavelength colors
@@ -273,36 +298,35 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
     	{ 0, 0, 1, 1 },
 	};
 	
-	float4 LightDirW;
-	float4 LightDirV;
+	float3 LightDirW;
+//	float4 LightDirV;
 	float4 viewPosition;
 	float2 projectTexCoord;
-	float4 projectionColor;
+	float3 projectionColor;
 	float2 reflectTexCoord;
-	
-	lightStruct light;
-	light.diffuse = float4(0,0,0,0);
-	light.reflection = float4(0,0,0,0);
-	light.ambient = float4(0,0,0,0);
+	float4 finalLight = float4(0.0,0.0,0.0,0.0);
 	
 	uint tX,tY,m;
-
-	
 	float4 texCol = float4(1,1,1,1);
-	float4 specIntensity = float4(1,1,1,1);
-	float4 diffuseT = float4(1,1,1,1);
+	float texRoughness = 1;
+	float aoT = 1;
+	float metallicT = 0;
 	
 	texture2d.GetDimensions(tX,tY);
 	if(tX+tY > 2 && !noTile) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,tColor).xy);
 	else if(tX+tY > 2 && noTile) texCol = textureNoTile(texture2d,mul(In.TexCd,tColor).xy);
 	
-	specTex.GetDimensions(tX,tY);
-	if(tX+tY > 2 && !noTile) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,tSpec).xy);
-	else if(tX+tY > 2 && noTile) specIntensity = textureNoTile(specTex,mul(In.TexCd,tSpec).xy);
+	roughTex.GetDimensions(tX,tY);
+	if(tX+tY > 2 && !noTile) texRoughness = roughTex.Sample(g_samLinear, mul(In.TexCd,tRoughness).xy).r;
+	else if(tX+tY > 2 && noTile) texRoughness = textureNoTile(roughTex,mul(In.TexCd,tRoughness).xy).r;
 	
-	diffuseTex.GetDimensions(tX,tY);
-	if(tX+tY > 2 && !noTile) diffuseT = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
-	else if(tX+tY > 2 && noTile) diffuseT = textureNoTile(diffuseTex,mul(In.TexCd,tDiffuse).xy);
+	aoTex.GetDimensions(tX,tY);
+	if(tX+tY > 2 && !noTile) aoT = aoTex.Sample(g_samLinear, mul(In.TexCd,tAO).xy).r;
+	else if(tX+tY > 2 && noTile) aoT = textureNoTile(aoTex,mul(In.TexCd,tAO).xy).r;
+	
+	metallTex.GetDimensions(tX,tY);
+	if(tX+tY > 2 && !noTile) metallicT = metallTex.Sample(g_samLinear, mul(In.TexCd,tMetallic).xy).r;
+	else if(tX+tY > 2 && noTile) metallicT = textureNoTile(metallTex,mul(In.TexCd,tMetallic).xy).r;
 
 	float4 Nn = normalize(In.NormW);
 	
@@ -328,13 +352,13 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 ///////////////////////////////////////
 	
 // Reflection and RimLight
-	float3 Vn = normalize(camPos - In.PosW.xyz);
+	float3 V = normalize(camPos - In.PosW.xyz);
 	
 //BumpMap
 ///////////////////////////////////////
-	float3 reflVect = -reflect(Vn,Nb);
+	float3 reflVect = -reflect(V,Nb);
 	float3 reflVecNorm = Nn.xyz-reflect(Nn.xyz,Nb);
-	float3 refrVect = refract(-Vn, Nb , refractionIndex[0]);
+	float3 refrVect = refract(-V, Nb , refractionIndex[0]);
 	
 ///////////////////////////////////////
 
@@ -388,112 +412,80 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	
 	
 	float vdn = -saturate(dot(reflVect,In.NormW.xyz));
-	float fresRefl = KrMin + (Kr-KrMin) * pow(1-abs(vdn),FresExp);
-	float4 reflColor = float4(0,0,0,0);
-	float4 reflColorNorm = float4(0,0,0,0);
+//	float fresRefl = KrMin + (Kr-KrMin) * pow(1-abs(vdn),FresExp);
+	float3 reflColor = float3(0,0,0);
+	float3 IBL = float3(0,0,0);
 
+	float4 albedo = texCol * saturate(Color) * aoT;
+	aoT *= ao;
+	metallicT *= metallic;
+	
+    float3 F0 = lerp(F, albedo.xyz, metallic);
+	texRoughness *= roughness;
+	
+	uint tX1,tY1,m2;
 	
 	cubeTexRefl.GetDimensions(tX,tY);
-	if(tX+tY > 0)	
-	reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
-
-	cubeTexIrradiance.GetDimensions(tX,tY);
-	if(tX+tY > 0) reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
+	cubeTexIrradiance.GetDimensions(tX1,tY1);
+	
+	if(tX+tY > 2 || tX1+tY1 > 2){
+		reflColor = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),0).rgb;
+		
+		float3 kS = fresnelSchlickRoughness(max(dot(Nn, V), 0.0), F,texRoughness);
+		float3 kD = 1.0 - kS;
+		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
+		IBL  = IBL * albedo.xyz;
+	
+		const float MAX_REFLECTION_LOD = 4.0;
+		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),texRoughness*MAX_REFLECTION_LOD).rgb;
+//		float3 envBRDF  = texture(brdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
+//		vec3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
+		
+		
+		IBL  = (kD * IBL + refl) * aoT;
+	} 
 	
 
 	
 	float4 iridescenceColor = float4(0,0,0,0);
 	if (useIridescence){
-		float inverseDotView = 1.0 - max(dot(Nb,Vn),0.0);
-		iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*fresRefl;
+		float inverseDotView = 1.0 - max(dot(Nb,V),0.0);
+		iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*1;
 	} 
 	
 
-	uint d,textureCount;
-	lightMap.GetDimensions(d,d,textureCount);
-	
-	uint dP,textureCountDepth;
-	shadowMap.GetDimensions(dP,dP,textureCountDepth);
-	
-	uint numSpotRange, dummySpot;
-    lightRange.GetDimensions(numSpotRange, dummySpot);
-	
-	uint numlAmb, dummyAmb;
-    lAmbient.GetDimensions(numlAmb, dummyAmb);
-	uint numlDiff, dummyDiff;
-    lDiff.GetDimensions(numlDiff, dummyDiff);
-	
-	uint numlSpec, dummySpec;
-    lSpec.GetDimensions(numlSpec, dummySpec);
-	
-	uint numlAtt0, dummylAtt0;
-    lAtt0.GetDimensions(numlAtt0, dummylAtt0);
-	
-	uint numlAtt1, dummylAtt1;
-    lAtt1.GetDimensions(numlAtt1, dummylAtt1);
-	
-	uint numlAtt2, dummylAtt2;
-    lAtt2.GetDimensions(numlAtt2, dummylAtt2);
-	
-	uint numLVP, dummyLVP;
-    LightVP.GetDimensions(numLVP, dummyLVP);
-	
-	uint numLights,lightCount;
-	lightType.GetDimensions(numLights,lightCount);
-	
-	uint numLighRange,lightRangeCount;
-	lightRange.GetDimensions(numLighRange,lightRangeCount);
+	uint d,textureCount;lightMap.GetDimensions(d,d,textureCount);uint dP,textureCountDepth;
+	shadowMap.GetDimensions(dP,dP,textureCountDepth); uint numSpotRange, dummySpot; lightRange.GetDimensions(numSpotRange, dummySpot);
+	uint numlAmb, dummyAmb;lAmbient.GetDimensions(numlAmb, dummyAmb);uint numlDiff, dummyDiff;lDiff.GetDimensions(numlDiff, dummyDiff);
+	uint numlSpec, dummySpec;lSpec.GetDimensions(numlSpec, dummySpec);uint numlAtt0, dummylAtt0;lAtt0.GetDimensions(numlAtt0, dummylAtt0);
+	uint numlAtt1, dummylAtt1;lAtt1.GetDimensions(numlAtt1, dummylAtt1);uint numlAtt2, dummylAtt2;lAtt2.GetDimensions(numlAtt2, dummylAtt2);
+	uint numLVP, dummyLVP;LightVP.GetDimensions(numLVP, dummyLVP);uint numLights,lightCount;lightType.GetDimensions(numLights,lightCount);
+	uint numLighRange,lightRangeCount;lightRange.GetDimensions(numLighRange,lightRangeCount);
 	
 	int pL = 0;
 	int shadowCounter = 0;
 	int lightCounter = 0;
 	float4 shadow = 0;
+
+	
 	
 	for(uint i = 0; i< numLights; i++){
 		
-		
-		float4 lightToObject = float4(lPos[i],1) - In.PosW;
+		float3 lightToObject = float4(lPos[i],1) - In.PosW.xyz;
+		float3 L = normalize(float4(lPos[i],1) - In.PosW.xyz);
 		float lightDist = length(lightToObject);
-		float falloff = saturate(lightRange[i%numLighRange]-length(lightToObject));
+		float falloff = pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
+//		float falloff = pow(saturate(1 - pow((lightDist/lightRange[i%numLighRange]),4)),2/pow(lightDist,2)+1 );
 		float projectTexCoordZ;
+		
 		LightDirW = normalize(lightToObject);
-		LightDirV = mul(LightDirW, tV);
-		
-		
+
+			
 		switch (lightType[i]){
 			
+			
+			//DIRECTIONAL
 			case 0:
-			
-				lightCounter ++;
-
-				if(useShadow[i] == 1){
-					
-					shadowCounter++;
-				
-					viewPosition = mul(In.PosW, LightVP[i]);
-					
-					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
-		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
-					projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-		
-					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
-					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-						
-						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,saturate(shadow),light,lightRange[i%numLighRange],lightDist);
-
-					} else {
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,1,light,lightRange[i%numLighRange],lightDist);
-					}
-				} else {
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
-				}
-			
-				break;
-	
-			
-			case 1:
-				
 				lightCounter ++;
 				
 				if(useShadow[i]  == 1){
@@ -508,51 +500,72 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 			
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-					
-					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
-					if(useShadow[i]){
-						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));			
-					
-			  			light = PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lAmbient[i%numlDiff], lDiff[i%numlDiff],
-							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],saturate(shadow),light);
-					} else {
-						light = PhongPointSpot(lightDist, NormV, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-							  lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2], lAmbient[i%numlDiff], lDiff[i%numlDiff],
-							  lSpec[i%numlSpec],specIntensity, projectTexCoord,projectionColor,lightRange[i%numLighRange],1,light);
-					}
-					
-					
+					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
+				} else {
+					shadow = 1;
 				}
-
+						if(useShadow[i]){
+							finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
+					} else {
+					       	finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+											  1.0, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
+					}
+				break;
+			
+			//SPOT
+			case 1:
 				
+				lightCounter ++;
+				
+				if(useShadow[i]  == 1){
+					shadowCounter++;
+				} 
+
+				viewPosition = mul(In.PosW, LightVP[i]);
+					
+				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
+				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
+				
+				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
+				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
+					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).rgb;
+					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
+				}
+			
+				if(useShadow[i]){
+						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
+						finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+						lerp(1.0,saturate(shadow),falloff).x, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+				} else {
+						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
+						finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+						1.0, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+				}
+	
 				break;
 	
-			
+			//POINT
 			case 2:
 				
 				bool shadowed = false;
-			
 				lightCounter+=6;
 				shadow = 0;
 				float pZ;
-				
 				if(useShadow[i]){
-						
+					
 					shadowCounter+=6;
 					for(int p = 0; p < 6; p++){
 						
 						float4x4 LightPcropp = LightP[p + lightCounter-6];
 				
-						
 						LightPcropp._m00 = 1;
 						LightPcropp._m11 = 1;
-						
 						
 						float4x4 LightVPNew = mul(LightV[p + lightCounter-6],LightPcropp);
 						
 						viewPosition = mul(In.PosW, LightVPNew);
-						
 						
 						projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
@@ -561,80 +574,53 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 						if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 						&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 							
-						viewPosition = mul(In.PosW, LightVP[p + lightCounter-6]);
+							viewPosition = mul(In.PosW, LightVP[p + lightCounter-6]);
 
-						projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
-			   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
-						projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-						
-						shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+							projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+				   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+							projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
+							
+							shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
 
-						} 
+						}
 					}
-		  			light = PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-									 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
-									 lAmbient[i%numlAmb],lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-									 lightRange[i%numLighRange],saturate(shadow),light);							
+							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
+							finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				} else {
-
-		  			light = PhongPoint(lightDist, NormV.xyz, In.ViewDirV.xyz, LightDirV.xyz, lPos[i],
-									 lAtt0[i%numlAtt0],lAtt1[i%numlAtt1],lAtt2[i%numlAtt2],
-									 lAmbient[i%numlAmb], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,
-									 lightRange[i%numLighRange],1,light);
-				}	
-			
-			break;
-			
-		}
-		
-
-		
+						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
+							finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+				}				
+			break;			
+		}	
 	}
-	
-	float4 material = texCol * saturate(Color);
-	light.reflection = saturate( saturate(light.reflection) + saturate(reflColor) + saturate(iridescenceColor) + saturate(GlobalReflectionColor) ); 
-	light.diffuse = saturate(saturate(light.diffuse) +  saturate(light.ambient) +  saturate(reflColorNorm) + saturate(GlobalDiffuseColor)) * material; 
-	
-	if(refraction){
-			float3 refrVect;
-		    for(int r=0; r<3; r++) {
-		    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
-		    	light.diffuse += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
-		    	
-			}
-	}
-	
-	light.diffuse = lerp(light.diffuse,max(saturate(light.ambient)*material,saturate(light.reflection)),fresRefl*specIntensity);
-	light.diffuse.a *= Alpha;
-	
 
-	return light.diffuse;
+	finalLight.xyz += GlobalReflectionColor.xyz * fresnelSchlick(max(dot(Nb, V), 0.0), F0);
+	finalLight.xyz += GlobalDiffuseColor.xyz * ao;
 	
+	
+//		if(refraction){
+//			float3 refrVect;
+//		    for(int r=0; r<3; r++) {
+//		    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
+//		    	light.diffuse += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
+//		    	
+//			}
+//	}
+	
+	finalLight.xyz += IBL.xyz;
+//	Gamma Correction
+	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
+    finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
+	finalLight.a = Alpha;
+	return finalLight;
 	
 	
 	
 
 }
-float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
-					float3 lAmb, float shadow, float3 projectionColor, float falloff, float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0, float attenuation){				
-    float3 H = normalize(V + L);
-    float3 radiance   = lDiff * attenuation * shadow * projectionColor;
-    // cook-torrance brdf
-    float NDF = DistributionGGX(N, H, roughness);        
-    float G   = GeometrySmith(N, V, L, roughness);      
-    float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-    float3 kS = F;
-    float3 kD = float3(1.0,1.0,1.0) - kS;
-    kD *= 1.0 - metallic;	  					        
-    float3 nominator    = NDF * G * F;
-    float denominator = 4 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.001; 
-    float3 specular   = nominator / denominator;
-	specular *= lPower;
-    // add to outgoing radiance Lo
-    float NdotL = max(dot(N, L), 0.0);                
-    float3 returnLight = (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
-	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
-}
+
 
 
 float4 PS_Superphong(vs2ps In): SV_Target
@@ -654,18 +640,14 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	float3 projectionColor;
 	float2 reflectTexCoord;
     float4 reflectionColor;
-	
 		
-	lightStruct light;
-	light.diffuse = float4(0,0,0,0);
-	light.reflection = float4(0,0,0,0);
-	light.ambient = float4(0,0,0,0);
 	
 	float4 finalLight = float4(0.0,0.0,0.0,0.0);
 	
 	float4 texCol = float4(1,1,1,1);
-	float4 specIntensity = float4(1,1,1,1);
-	float4 diffuseT = float4(1,1,1,1);
+	float texRoughness = 1;
+	float aoT = 1;
+	float metallicT = 0;
 	
 	uint tX,tY,m;
 	
@@ -673,13 +655,18 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	if(tX+tY > 2 && !noTile) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,tColor).xy);
 	else if(tX+tY > 2 && noTile) texCol = textureNoTile(texture2d,mul(In.TexCd,tColor).xy);
 	
-	specTex.GetDimensions(tX,tY);
-	if(tX+tY > 2 && !noTile) specIntensity = specTex.Sample(g_samLinear, mul(In.TexCd,tSpec).xy);
-	else if(tX+tY > 2 && noTile) specIntensity = textureNoTile(specTex,mul(In.TexCd,tSpec).xy);
+	roughTex.GetDimensions(tX,tY);
+	if(tX+tY > 2 && !noTile) texRoughness = roughTex.Sample(g_samLinear, mul(In.TexCd,tRoughness).xy).r;
+	else if(tX+tY > 2 && noTile) texRoughness = textureNoTile(roughTex,mul(In.TexCd,tRoughness).xy).r;
 	
-	diffuseTex.GetDimensions(tX,tY);
-	if(tX+tY > 2 && !noTile) diffuseT = diffuseTex.Sample(g_samLinear, mul(In.TexCd,tDiffuse).xy);
-	else if(tX+tY > 2 && noTile) diffuseT = textureNoTile(diffuseTex,mul(In.TexCd,tDiffuse).xy);
+	metallTex.GetDimensions(tX,tY);
+	if(tX+tY > 2 && !noTile) metallicT = metallTex.Sample(g_samLinear, mul(In.TexCd,tMetallic).xy);
+	else if(tX+tY > 2 && noTile) metallicT = textureNoTile(metallTex,mul(In.TexCd,tMetallic).xy);
+
+	
+	aoTex.GetDimensions(tX,tY);
+	if(tX+tY > 2 && !noTile) aoT = aoTex.Sample(g_samLinear, mul(In.TexCd,tAO).xy).r;
+	else if(tX+tY > 2 && noTile) aoT = textureNoTile(aoTex,mul(In.TexCd,tAO).xy).r;
 	
 	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
 	float3 Nn = normalize(In.NormW.xyz);
@@ -687,14 +674,14 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 // Reflection and RimLight
 
-	float3 Vn = normalize(camPos - In.PosW.xyz);
+	float3 V = normalize(camPos - In.PosW.xyz);
 
-	float vdn = -saturate(dot(Vn,In.NormW.xyz));
+	float vdn = -saturate(dot(V,In.NormW.xyz));
 
-	float4 fresRefl = KrMin + (Kr-KrMin) * (pow(1-abs(vdn),FresExp));
-	float3 reflVect = -reflect(Vn,Nn.xyz);
+//	float4 fresRefl = KrMin + (Kr-KrMin) * (pow(1-abs(vdn),FresExp));
+	float3 reflVect = -reflect(V,Nn.xyz);
 	float3 reflVecNorm = Nn.xyz;
-	float3 refrVect = refract(-Vn, Nn.xyz , refractionIndex[0]);
+	float3 refrVect = refract(-V, Nn.xyz , refractionIndex[0]);
 	
 	
 // Box Projected CubeMap
@@ -742,25 +729,47 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 ////////////////////////////////////////////////////
 	
-	float4 reflColor = float4(0,0,0,0);
-	float4 reflColorNorm = float4(0,0,0,0);
-	float4 refrColor = float4(0,0,0,0);
+	float3 reflColor = float3(0,0,0);
+//	float3 reflColorNorm = float3(0,0,0);
+	float3 refrColor = float3(0,0,0);
+	
+	float3 IBL = float3(0,0,0);
+	
+	aoT *= ao;
+	metallicT *= metallic;
+	float4 albedo =  texCol * saturate(Color) * aoT;
+    float3 F0 = lerp(F, albedo.xyz, metallic);
+	texRoughness *=roughness;
+	
+	
+	uint tX1,tY1,m2;
 	
 	cubeTexRefl.GetDimensions(tX,tY);
-	if(tX+tY > 2) reflColor = cubeTexRefl.Sample(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z));
+	cubeTexIrradiance.GetDimensions(tX1,tY1);
 	
-	cubeTexIrradiance.GetDimensions(tX,tY);
-	if(tX+tY > 2) reflColorNorm =  cubeTexIrradiance.Sample(g_samLinear,reflVecNorm);
+	if(tX+tY > 2 || tX1+tY1 > 2){
+		reflColor = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),0).rgb;
+		
+		float3 kS = fresnelSchlickRoughness(max(dot(Nn, V), 0.0), F,texRoughness);
+		float3 kD = 1.0 - kS;
+		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
+		IBL  = IBL * albedo.xyz;
 	
-	float inverseDotView = 1.0 - max(dot(Nn.xyz,Vn),0.0);
+		const float MAX_REFLECTION_LOD = 4.0;
+		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),texRoughness*MAX_REFLECTION_LOD).rgb;
+//		float3 envBRDF  = texture(brdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
+//		vec3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
+		
+		
+		IBL  = (kD * IBL + refl) * aoT;
+	} 
+	
+	float inverseDotView = 1.0 - max(dot(Nn.xyz,V),0.0);
 	float4 iridescenceColor = float4(0,0,0,0);
-	if (useIridescence) iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*fresRefl;
+	if (useIridescence) iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*1;
 
 
-	uint d,textureCount;
-	lightMap.GetDimensions(d,d,textureCount);
-	
-	uint dP,textureCountDepth;
+	uint d,textureCount;lightMap.GetDimensions(d,d,textureCount);uint dP,textureCountDepth;
 	shadowMap.GetDimensions(dP,dP,textureCountDepth); uint numSpotRange, dummySpot; lightRange.GetDimensions(numSpotRange, dummySpot);
 	uint numlAmb, dummyAmb;lAmbient.GetDimensions(numlAmb, dummyAmb);uint numlDiff, dummyDiff;lDiff.GetDimensions(numlDiff, dummyDiff);
 	uint numlSpec, dummySpec;lSpec.GetDimensions(numlSpec, dummySpec);uint numlAtt0, dummylAtt0;lAtt0.GetDimensions(numlAtt0, dummylAtt0);
@@ -772,9 +781,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	int shadowCounter = 0;
 	int lightCounter = 0;
 	float4 shadow = 0;
-	float4 albedo = texCol * saturate(Color) * ao;
-	float3 V = normalize(camPos - In.PosW.xyz);
-    float3 F0 = lerp(F, albedo.xyz, metallic);
+
 	
 	for(uint i = 0; i< numLights; i++){
 		
@@ -813,10 +820,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				}
 						if(useShadow[i]){
 							finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0);
+											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
 					} else {
 					       	finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  1.0, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0);
+											  1.0, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
 					}
 				break;
 			
@@ -844,11 +851,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				if(useShadow[i]){
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						lerp(1.0,saturate(shadow),falloff).x, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
+						lerp(1.0,saturate(shadow),falloff).x, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				} else {
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						1.0, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
+						1.0, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				}
 	
 				break;
@@ -893,11 +900,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					}
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 							finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
+							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				} else {
 						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 							finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
+							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				}				
 			break;			
 		}	
@@ -916,10 +923,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 //			}
 //	}
 	
+	
+	finalLight.xyz += IBL.xyz;
 //	Gamma Correction
 	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
     finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
 	finalLight.a = Alpha;
+//	finalLight *= texCol;
 	return finalLight;
 }
 
