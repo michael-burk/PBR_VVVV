@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
    <PATCH nodename="C:\Projects\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="330" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="12960" top="1080" width="15270" height="14310">
+   <BOUNDS type="Window" left="6555" top="1380" width="15270" height="14310">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -162,20 +162,6 @@
    <PIN pinname="Size" slicecount="1" visible="1" values="14">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="||">
-   </PIN>
-   </NODE>
-   <NODE nodename="IOBox (String)" componentmode="InABox" id="1093" systemname="IOBox (String)">
-   <BOUNDS type="Node" left="11040" top="7530" width="990" height="270">
-   </BOUNDS>
-   <BOUNDS type="Box" left="11040" top="7530" width="990" height="270">
-   </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="|Look inside!|">
-   </PIN>
-   <PIN pinname="Output String" visible="0">
-   </PIN>
-   <PIN pinname="Show Grid" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1095" systemname="IOBox (String)">
@@ -511,7 +497,7 @@
    </PIN>
    <PIN pinname="Rows" slicecount="1" values="2">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="2" values="1.41,0.15">
+   <PIN pinname="Y Input Value" slicecount="2" values="1.4,0">
    </PIN>
    <PIN pinname="Vector Size" slicecount="1" values="2">
    </PIN>
@@ -817,7 +803,7 @@
    </PIN>
    <PIN pinname="SpotLight Fading" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Bumpiness" visible="1" slicecount="1" values="1.54">
+   <PIN pinname="Bumpiness" visible="1" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Normal Rotation" visible="1" slicecount="1" values="||">
    </PIN>
@@ -1121,11 +1107,11 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1199">
-   <BOUNDS type="Box" left="8700" top="10335" width="795" height="240">
+   <BOUNDS type="Box" left="8700" top="10335" width="780" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="8700" top="10335" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="120">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="500">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1371,9 +1357,9 @@
    <LINK srcnodeid="1202" srcpinname="Transform Out" dstnodeid="934" dstpinname="tNormal">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1236">
-   <BOUNDS type="Box" left="3450" top="2745" width="795" height="480">
+   <BOUNDS type="Box" left="5205" top="2370" width="795" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="3450" top="2745" width="0" height="0">
+   <BOUNDS type="Node" left="5205" top="2370" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,0">
    </PIN>
@@ -1393,9 +1379,9 @@
    <LINK srcnodeid="1236" srcpinname="Y Output Value" dstnodeid="1106" dstpinname="X">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1237">
-   <BOUNDS type="Box" left="7665" top="3660" width="795" height="480">
+   <BOUNDS type="Box" left="6555" top="4230" width="795" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="7665" top="3660" width="0" height="0">
+   <BOUNDS type="Node" left="6555" top="4230" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,0">
    </PIN>
@@ -1412,7 +1398,11 @@
    <PIN pinname="X Input Value" slicecount="2" values="0,0">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1237" srcpinname="Y Output Value" dstnodeid="1165" dstpinname="Z">
+   <LINK srcnodeid="1237" srcpinname="Y Output Value" dstnodeid="1165" dstpinname="Z" linkstyle="VHV">
+   <LINKPOINT x="6555" y="4800">
+   </LINKPOINT>
+   <LINKPOINT x="6225" y="4800">
+   </LINKPOINT>
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1238">
    <BOUNDS type="Box" left="7860" top="5985" width="795" height="480">

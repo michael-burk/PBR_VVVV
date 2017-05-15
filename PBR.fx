@@ -119,7 +119,7 @@ struct vs2psBump
     float4 PosWVP: SV_POSITION;
     float4 TexCd : TEXCOORD0;
 	float4 PosW: TEXCOORD1;
-	float4 NormW : TEXCOORD2;
+	float3 NormW : TEXCOORD2;
 	float4 tangent : TEXCOORD3;
 	float4 binormal : TEXCOORD4;
 };
@@ -131,7 +131,7 @@ struct vs2ps
     float4 TexCd : TEXCOORD0;
 	float4 ViewDirV: TEXCOORD2;
 	float4 PosW: TEXCOORD3;
-	float4 NormW : TEXCOORD4;
+	float3 NormW : TEXCOORD4;
 };
 
 // -----------------------------------------------------------------------------
@@ -140,7 +140,7 @@ struct vs2ps
 
 vs2psBump VS_Bump(
     float4 PosO: POSITION,
-    float4 NormO: NORMAL,
+    float3 NormO: NORMAL,
     float4 TexCd : TEXCOORD0,
 	float4 tangent : TANGENT,
     float4 binormal : BINORMAL
@@ -149,9 +149,7 @@ vs2psBump VS_Bump(
     //inititalize all fields of output struct with 0
     vs2psBump Out = (vs2psBump)0;
 
-    Out.PosW = mul(PosO, tW);
-//	Out.NormO = NormO;
-	
+    Out.PosW = mul(PosO, tW);	
 	Out.NormW = mul(NormO, NormalTransform);
 	
 //  BumpMap
@@ -175,7 +173,7 @@ vs2psBump VS_Bump(
 
 vs2ps VS(
     float4 PosO: POSITION,
-    float4 NormO: NORMAL,
+    float3 NormO: NORMAL,
     float4 TexCd : TEXCOORD0
 
 )
@@ -317,7 +315,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	if(tX+tY > 2 && !noTile) metallicT = metallTex.Sample(g_samLinear, mul(In.TexCd,tMetallic).xy).r;
 	else if(tX+tY > 2 && noTile) metallicT = textureNoTile(metallTex,mul(In.TexCd,tMetallic).xy).r;
 
-	float4 Nn = normalize(In.NormW);
+	float3 Nn = normalize(In.NormW);
 	
 	float4 bumpMap = float4(0,0,0,0);
 	
@@ -420,8 +418,6 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		IBL  = (kD * IBL *iblIntensity.x + refl*iblIntensity.y) * aoT;
 	} 
 	
-
-	
 	float4 iridescenceColor = float4(0,0,0,0);
 	if (useIridescence){
 		float inverseDotView = 1.0 - max(dot(Nb,V),0.0);
@@ -442,8 +438,6 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	int lightCounter = 0;
 	float4 shadow = 0;
 
-	
-	
 	for(uint i = 0; i< numLights; i++){
 		
 		float3 lightToObject = float4(lPos[i],1) - In.PosW.xyz;
@@ -643,14 +637,14 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	else if(tX+tY > 2 && noTile) aoT = textureNoTile(aoTex,mul(In.TexCd,tAO).xy).r;
 	
 //	float3 NormV =  normalize(mul(mul(In.Norm.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
-	float3 Nn = normalize(In.NormW.xyz);
+	float3 Nn = normalize(In.NormW);
 	
 	
 // Reflection and RimLight
 
 	float3 V = normalize(camPos - In.PosW.xyz);
 
-	float vdn = -saturate(dot(V,In.NormW.xyz));
+	float vdn = -saturate(dot(V,In.NormW));
 
 //	float4 fresRefl = KrMin + (Kr-KrMin) * (pow(1-abs(vdn),FresExp));
 	float3 reflVect = -reflect(V,Nn.xyz);
