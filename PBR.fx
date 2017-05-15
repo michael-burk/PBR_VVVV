@@ -47,6 +47,8 @@ cbuffer cbPerObject : register (b1)
 	float4x4 tMetallic;
 	float4x4 tAO;
 	
+	float2 iblIntensity = float2(1,1);
+	
 	
 	bool noTile = false;
 	
@@ -72,14 +74,13 @@ StructuredBuffer <float> lAtt2 <string uiname="lAtt2";>;
 
 StructuredBuffer <float4> lAmbient <string uiname="Ambient Color";>;
 StructuredBuffer <float4> lDiff <string uiname="Diffuse Color";>;
-StructuredBuffer <float4> lSpec <string uiname="Specular Color";>;
-
 
 Texture2D texture2d <string uiname="Texture"; >;
 Texture2D normalTex <string uiname="NormalMap"; >;
 Texture2D roughTex <string uiname="RoughnessMap"; >;
 Texture2D metallTex <string uiname="MetallicMap"; >;
 Texture2D aoTex <string uiname="AOMap"; >;
+Texture2D brdfLUT <string uiname="brdfLUT"; >;
 
 Texture2D iridescence <string uiname="Iridescence"; >;
 TextureCube cubeTexRefl <string uiname="CubeMap Refl"; >;
@@ -118,7 +119,7 @@ struct vs2psBump
     float4 PosWVP: SV_POSITION;
     float4 TexCd : TEXCOORD0;
 	float4 PosO: TEXCOORD1;
-	float4 ViewDirV: TEXCOORD2;
+//	float4 ViewDirV: TEXCOORD2;
 	float4 PosW: TEXCOORD3;
 	float4 NormW : TEXCOORD4;
 	float4 NormO : TEXCOORD5;
@@ -135,7 +136,7 @@ struct vs2ps
 	float4 ViewDirV: TEXCOORD2;
 	float4 PosW: TEXCOORD3;
 	float4 NormW : TEXCOORD4;
-	float4 NormO : TEXCOORD5;
+//	float4 NormO : TEXCOORD5;
 };
 
 // -----------------------------------------------------------------------------
@@ -155,7 +156,7 @@ vs2psBump VS_Bump(
 
     Out.PosW = mul(PosO, tW);
 	Out.PosO = PosO;
-	Out.NormO = NormO;
+//	Out.NormO = NormO;
 	
 	Out.NormW = mul(NormO, NormalTransform);
 
@@ -175,7 +176,7 @@ vs2psBump VS_Bump(
 
 	
 	Out.TexCd = TexCd;
-    Out.ViewDirV = -normalize(mul(PosO, tWV));
+//    Out.ViewDirV = -normalize(mul(PosO, tWV));
 	
 	
     return Out;
@@ -193,9 +194,9 @@ vs2ps VS(
 	
     Out.PosW = mul(PosO, tW);
 	Out.PosO = PosO;
-	Out.NormO = NormO;
-	
-	Out.NormW = mul(NormO, NormalTransform);
+//	Out.NormO = NormO;
+	//NormalTransform
+	Out.NormW = mul(NormO, tW);
 
 //	position (projected)
     Out.PosWVP  = mul(PosO, tWVP);
@@ -299,7 +300,6 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	};
 	
 	float3 LightDirW;
-//	float4 LightDirV;
 	float4 viewPosition;
 	float2 projectTexCoord;
 	float3 projectionColor;
@@ -340,15 +340,15 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
-    float4 bumpNormal = (bumpMap.x * In.tangent) + (bumpMap.y * In.binormal) + (bumpMap.z * In.NormO);
+//    float4 bumpNormal = (bumpMap.x * In.tangent) + (bumpMap.y * In.binormal) + (bumpMap.z * In.NormO);
 
-	In.NormO += normalize(-bumpNormal)*bumpy;
+//	In.NormO += normalize(-bumpNormal)*bumpy;
 	
-	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
+//	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
    
 	float3 Tn = normalize(In.tangent).xyz;
     float3 Bn = normalize(In.binormal.xyz);
-	float3 Nb = normalize(Nn.xyz + (bumpMap.x * Tn + bumpMap.y * Bn)*bumpy);
+	float3 Nb = normalize(Nn.xyz + (-bumpMap.x * Tn + -bumpMap.y * Bn)*bumpy);
 ///////////////////////////////////////
 	
 // Reflection and RimLight
@@ -431,18 +431,18 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	if(tX+tY > 2 || tX1+tY1 > 2){
 		reflColor = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),0).rgb;
 		
-		float3 kS = fresnelSchlickRoughness(max(dot(Nn, V), 0.0), F,texRoughness);
+		float3 kS = fresnelSchlickRoughness(max(dot(Nb, V), 0.0), F,texRoughness);
 		float3 kD = 1.0 - kS;
+		kD *= 1.0 - metallic;
 		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
 		IBL  = IBL * albedo.xyz;
 	
-		const float MAX_REFLECTION_LOD = 4.0;
+		const float MAX_REFLECTION_LOD = 9.0;
 		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),texRoughness*MAX_REFLECTION_LOD).rgb;
-//		float3 envBRDF  = texture(brdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
-//		vec3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
+		float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(Nb, V), 0.0), texRoughness)).rb;
+		refl = refl * (F * envBRDF.x + envBRDF.y);
 		
-		
-		IBL  = (kD * IBL + refl) * aoT;
+		IBL  = (kD * IBL *iblIntensity.x + refl*iblIntensity.y) * aoT;
 	} 
 	
 
@@ -457,7 +457,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	uint d,textureCount;lightMap.GetDimensions(d,d,textureCount);uint dP,textureCountDepth;
 	shadowMap.GetDimensions(dP,dP,textureCountDepth); uint numSpotRange, dummySpot; lightRange.GetDimensions(numSpotRange, dummySpot);
 	uint numlAmb, dummyAmb;lAmbient.GetDimensions(numlAmb, dummyAmb);uint numlDiff, dummyDiff;lDiff.GetDimensions(numlDiff, dummyDiff);
-	uint numlSpec, dummySpec;lSpec.GetDimensions(numlSpec, dummySpec);uint numlAtt0, dummylAtt0;lAtt0.GetDimensions(numlAtt0, dummylAtt0);
+	uint numlAtt0, dummylAtt0;lAtt0.GetDimensions(numlAtt0, dummylAtt0);
 	uint numlAtt1, dummylAtt1;lAtt1.GetDimensions(numlAtt1, dummylAtt1);uint numlAtt2, dummylAtt2;lAtt2.GetDimensions(numlAtt2, dummylAtt2);
 	uint numLVP, dummyLVP;LightVP.GetDimensions(numLVP, dummyLVP);uint numLights,lightCount;lightType.GetDimensions(numLights,lightCount);
 	uint numLighRange,lightRangeCount;lightRange.GetDimensions(numLighRange,lightRangeCount);
@@ -634,7 +634,6 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	};
 	
 	float3 LightDirW;
-//	float4 LightDirV;
 	float4 viewPosition;
 	float2 projectTexCoord;
 	float3 projectionColor;
@@ -668,7 +667,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	if(tX+tY > 2 && !noTile) aoT = aoTex.Sample(g_samLinear, mul(In.TexCd,tAO).xy).r;
 	else if(tX+tY > 2 && noTile) aoT = textureNoTile(aoTex,mul(In.TexCd,tAO).xy).r;
 	
-	float3 NormV =  normalize(mul(mul(In.NormO.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
+//	float3 NormV =  normalize(mul(mul(In.Norm.xyz, (float3x3)tWIT),(float3x3)tV).xyz);
 	float3 Nn = normalize(In.NormW.xyz);
 	
 	
@@ -752,16 +751,16 @@ float4 PS_Superphong(vs2ps In): SV_Target
 		
 		float3 kS = fresnelSchlickRoughness(max(dot(Nn, V), 0.0), F,texRoughness);
 		float3 kD = 1.0 - kS;
+		kD *= 1.0 - metallic;
 		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
 		IBL  = IBL * albedo.xyz;
 	
-		const float MAX_REFLECTION_LOD = 4.0;
+	const float MAX_REFLECTION_LOD = 9.0;
 		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),texRoughness*MAX_REFLECTION_LOD).rgb;
-//		float3 envBRDF  = texture(brdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
-//		vec3 specular = prefilteredColor * (F * envBRDF.x + envBRDF.y);
-		
-		
-		IBL  = (kD * IBL + refl) * aoT;
+		float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(Nn, V), 0.0), texRoughness)).rb;
+		refl = refl * (F * envBRDF.x + envBRDF.y);
+			
+		IBL  = (kD * IBL *iblIntensity.x + refl*iblIntensity.y) * aoT;
 	} 
 	
 	float inverseDotView = 1.0 - max(dot(Nn.xyz,V),0.0);
@@ -772,7 +771,7 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	uint d,textureCount;lightMap.GetDimensions(d,d,textureCount);uint dP,textureCountDepth;
 	shadowMap.GetDimensions(dP,dP,textureCountDepth); uint numSpotRange, dummySpot; lightRange.GetDimensions(numSpotRange, dummySpot);
 	uint numlAmb, dummyAmb;lAmbient.GetDimensions(numlAmb, dummyAmb);uint numlDiff, dummyDiff;lDiff.GetDimensions(numlDiff, dummyDiff);
-	uint numlSpec, dummySpec;lSpec.GetDimensions(numlSpec, dummySpec);uint numlAtt0, dummylAtt0;lAtt0.GetDimensions(numlAtt0, dummylAtt0);
+	uint numlAtt0, dummylAtt0;lAtt0.GetDimensions(numlAtt0, dummylAtt0);
 	uint numlAtt1, dummylAtt1;lAtt1.GetDimensions(numlAtt1, dummylAtt1);uint numlAtt2, dummylAtt2;lAtt2.GetDimensions(numlAtt2, dummylAtt2);
 	uint numLVP, dummyLVP;LightVP.GetDimensions(numLVP, dummyLVP);uint numLights,lightCount;lightType.GetDimensions(numLights,lightCount);
 	uint numLighRange,lightRangeCount;lightRange.GetDimensions(numLighRange,lightRangeCount);
