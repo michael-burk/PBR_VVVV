@@ -1129,7 +1129,7 @@
    </BOUNDS>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
-   <PIN pinname="FOV" slicecount="1" values="0.2">
+   <PIN pinname="FOV" slicecount="1" values="0.16">
    </PIN>
    <PIN pinname="Roll" visible="1" slicecount="1" values="0">
    </PIN>
@@ -1299,7 +1299,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="3750" top="4740" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="22">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="14">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1379,7 +1379,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6915" top="4830" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="6">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="8">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1837,7 +1837,7 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="X Input Value" slicecount="1" values="1">
+   <PIN pinname="X Input Value" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="429" srcpinname="Y Output Value" dstnodeid="224" dstpinname="Enabled" linkstyle="PolyLine" hiddenwhenlocked="1">
@@ -2159,7 +2159,7 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="486">
    <BOUNDS type="Node" left="3795" top="2520" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="13.28">
+   <PIN pinname="Y" slicecount="1" values="6.09">
    </PIN>
    </NODE>
    <LINK srcnodeid="486" srcpinname="XYZ" dstnodeid="218" dstpinname="XYZ UnTransformed">
@@ -2369,7 +2369,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="13185" top="3300" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2391,7 +2391,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="13395" top="4125" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2811,7 +2811,7 @@
    </PIN>
    <PIN pinname="Default" slicecount="1" values="2">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" values="1.14">
+   <PIN pinname="Y Input Value" slicecount="1" values="2">
    </PIN>
    <PIN pinname="X Input Value" slicecount="1" values="2">
    </PIN>

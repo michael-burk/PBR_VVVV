@@ -615,24 +615,24 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	
 
 }
-float3 cookTorrance(float3 V, float3 LightDirW, float3 N, float3 albedo, float3 lDiff,
-					float3 lAmb, float shadow, float3 albedoMul, float falloff, float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0, float attenuation){				
-    float3 H = normalize(V + LightDirW);
-    float3 radiance   = lDiff * attenuation * shadow;
+float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
+					float3 lAmb, float shadow, float3 projectionColor, float falloff, float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0, float attenuation){				
+    float3 H = normalize(V + L);
+    float3 radiance   = lDiff * attenuation * shadow * projectionColor;
     // cook-torrance brdf
     float NDF = DistributionGGX(N, H, roughness);        
-    float G   = GeometrySmith(N, V, LightDirW.xyz, roughness);      
+    float G   = GeometrySmith(N, V, L, roughness);      
     float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
     float3 kS = F;
     float3 kD = float3(1.0,1.0,1.0) - kS;
     kD *= 1.0 - metallic;	  					        
     float3 nominator    = NDF * G * F;
-    float denominator = 4 * max(dot(N, V), 0.0) * max(dot(N, LightDirW), 0.0) + 0.001; 
+    float denominator = 4 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.001; 
     float3 specular   = nominator / denominator;
 	specular *= lPower;
     // add to outgoing radiance Lo
-    float NdotL = max(dot(N, LightDirW), 0.0);                
-    float3 returnLight = (kD * albedo.xyz * albedoMul / PI + specular) * radiance * NdotL; 
+    float NdotL = max(dot(N, L), 0.0);                
+    float3 returnLight = (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
 	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
 }
 
@@ -647,8 +647,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
     	{ 0, 0, 1, 1 },
 	};
 	
-	float4 LightDirW;
-	float4 LightDirV;
+	float3 LightDirW;
+//	float4 LightDirV;
 	float4 viewPosition;
 	float2 projectTexCoord;
 	float3 projectionColor;
@@ -761,27 +761,12 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	lightMap.GetDimensions(d,d,textureCount);
 	
 	uint dP,textureCountDepth;
-	shadowMap.GetDimensions(dP,dP,textureCountDepth);
-	uint numSpotRange, dummySpot;
-    lightRange.GetDimensions(numSpotRange, dummySpot);
-	uint numlAmb, dummyAmb;
-    lAmbient.GetDimensions(numlAmb, dummyAmb);
-	uint numlDiff, dummyDiff;
-    lDiff.GetDimensions(numlDiff, dummyDiff);
-	uint numlSpec, dummySpec;
-    lSpec.GetDimensions(numlSpec, dummySpec);	
-	uint numlAtt0, dummylAtt0;
-    lAtt0.GetDimensions(numlAtt0, dummylAtt0);	
-	uint numlAtt1, dummylAtt1;
-    lAtt1.GetDimensions(numlAtt1, dummylAtt1);	
-	uint numlAtt2, dummylAtt2;
-    lAtt2.GetDimensions(numlAtt2, dummylAtt2);	
-	uint numLVP, dummyLVP;
-    LightVP.GetDimensions(numLVP, dummyLVP);	
-	uint numLights,lightCount;
-	lightType.GetDimensions(numLights,lightCount);	
-	uint numLighRange,lightRangeCount;
-	lightRange.GetDimensions(numLighRange,lightRangeCount);
+	shadowMap.GetDimensions(dP,dP,textureCountDepth); uint numSpotRange, dummySpot; lightRange.GetDimensions(numSpotRange, dummySpot);
+	uint numlAmb, dummyAmb;lAmbient.GetDimensions(numlAmb, dummyAmb);uint numlDiff, dummyDiff;lDiff.GetDimensions(numlDiff, dummyDiff);
+	uint numlSpec, dummySpec;lSpec.GetDimensions(numlSpec, dummySpec);uint numlAtt0, dummylAtt0;lAtt0.GetDimensions(numlAtt0, dummylAtt0);
+	uint numlAtt1, dummylAtt1;lAtt1.GetDimensions(numlAtt1, dummylAtt1);uint numlAtt2, dummylAtt2;lAtt2.GetDimensions(numlAtt2, dummylAtt2);
+	uint numLVP, dummyLVP;LightVP.GetDimensions(numLVP, dummyLVP);uint numLights,lightCount;lightType.GetDimensions(numLights,lightCount);
+	uint numLighRange,lightRangeCount;lightRange.GetDimensions(numLighRange,lightRangeCount);
 	
 	int pL = 0;
 	int shadowCounter = 0;
@@ -793,8 +778,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	for(uint i = 0; i< numLights; i++){
 		
-		float4 lightToObject = float4(lPos[i],1) - In.PosW;
-		float4 L = normalize(float4(lPos[i],1) - In.PosW);
+		float3 lightToObject = float4(lPos[i],1) - In.PosW.xyz;
+		float3 L = normalize(float4(lPos[i],1) - In.PosW.xyz);
 		float lightDist = length(lightToObject);
 		float falloff = pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
 //		float falloff = pow(saturate(1 - pow((lightDist/lightRange[i%numLighRange]),4)),2/pow(lightDist,2)+1 );
@@ -805,6 +790,8 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 		switch (lightType[i]){
 			
+			
+			//DIRECTIONAL
 			case 0:
 				lightCounter ++;
 				
@@ -824,16 +811,16 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				} else {
 					shadow = 1;
 				}
-					
 						if(useShadow[i]){
-							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  lerp(1.0,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0);
+							finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0);
 					} else {
-					       	finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  1.0, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0);
+					       	finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+											  1.0, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0);
 					}
 				break;
-				
+			
+			//SPOT
 			case 1:
 				
 				lightCounter ++;
@@ -847,27 +834,26 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-			
+				
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).rgb;
 					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
-				} else {
-					shadow = 1;
-				}		
+				}
+			
 				if(useShadow[i]){
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-						finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						lerp(1.0,saturate(shadow),falloff).x, projectionColor, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
+						finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+						lerp(1.0,saturate(shadow),falloff).x, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 				} else {
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-						finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						1.0, projectionColor, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
+						finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+						1.0, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 				}
 	
 				break;
 	
-			
+			//POINT
 			case 2:
 				
 				bool shadowed = false;
@@ -906,11 +892,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 						}
 					}
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 				} else {
 						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-							finalLight.xyz += cookTorrance(V, LightDirW.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation);
 				}				
 			break;			
@@ -919,6 +905,16 @@ float4 PS_Superphong(vs2ps In): SV_Target
 
 	finalLight.xyz += GlobalReflectionColor.xyz * fresnelSchlick(max(dot(Nn, V), 0.0), F0);
 	finalLight.xyz += GlobalDiffuseColor.xyz * ao;
+	
+	
+//		if(refraction){
+//			float3 refrVect;
+//		    for(int r=0; r<3; r++) {
+//		    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
+//		    	light.diffuse += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
+//		    	
+//			}
+//	}
 	
 //	Gamma Correction
 	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
