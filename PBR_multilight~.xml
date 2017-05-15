@@ -1,5 +1,5 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
+   <PATCH nodename="C:\Projects\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="-360" bgcolor="15329769">
    <BOUNDS type="Window" left="405" top="1440" width="13560" height="14310">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -62,14 +62,14 @@
    <PIN pinname="Mode" slicecount="1" visible="1" values="BackCullSimple">
    </PIN>
    </NODE>
-   <NODE id="1039" systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow" stayontop="0">
+   <NODE id="1039" systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow" stayontop="0" border="0">
    <BOUNDS type="Node" left="4125" top="11910" width="100" height="100">
    </BOUNDS>
    <BOUNDS type="Box" left="4125" top="11910" width="6000" height="4500">
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="15870" top="705" width="12930" height="13530">
+   <BOUNDS type="Window" left="-17940" top="690" width="15240" height="15585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -93,7 +93,7 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
-   <PIN pinname="Texture SizeXY" slicecount="2" values="800,800">
+   <PIN pinname="Texture SizeXY" slicecount="2" values="1024,1024">
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
@@ -551,7 +551,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2415" top="7110" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.14527,0.06929,0.18602,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
@@ -669,13 +669,13 @@
    </PIN>
    <PIN pinname="Example Lightness" slicecount="1" values="0.5">
    </PIN>
-   <PIN pinname="DirectionalLight" slicecount="1" values="0">
+   <PIN pinname="DirectionalLight" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="SpotLight" slicecount="1" values="1">
+   <PIN pinname="SpotLight" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="512">
    </PIN>
-   <PIN pinname="PointLight" slicecount="1" values="1">
+   <PIN pinname="PointLight" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -747,7 +747,7 @@
    </PIN>
    <PIN pinname="refractionIndex" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="25">
+   <PIN pinname="Power" visible="1" pintype="Input" slicecount="1" values="1">
    </PIN>
    <PIN pinname="colors Bin Size" visible="-1" pintype="Input" slicecount="1" values="3">
    </PIN>
@@ -913,7 +913,7 @@
    </PIN>
    <PIN pinname="metallic" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="roughness" slicecount="1" values="0.42">
+   <PIN pinname="roughness" slicecount="1" values="0.2">
    </PIN>
    <PIN pinname="ao" slicecount="1" values="1">
    </PIN>

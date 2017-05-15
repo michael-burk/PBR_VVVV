@@ -789,30 +789,97 @@ float4 PS_Superphong(vs2ps In): SV_Target
 			
 			case 0:
 			
+//				lightCounter ++;
+//
+//				if(useShadow[i] == 1){
+//					
+//					shadowCounter++;
+//				
+//					viewPosition = mul(In.PosW, LightVP[i]);
+//					
+//					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+//		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
+//					projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
+//		
+//					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
+//					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
+//						
+//						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
+//						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,saturate(shadow),light,lightRange[i%numLighRange],lightDist);
+//
+//					} else {
+//						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
+//					}
+//				} else {
+//						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
+//				}
 				lightCounter ++;
-
-				if(useShadow[i] == 1){
-					
-					shadowCounter++;
 				
-					viewPosition = mul(In.PosW, LightVP[i]);
-					
-					projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
-		   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
-					projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-		
-					if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
-					&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-						
-						shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity,saturate(shadow),light,lightRange[i%numLighRange],lightDist);
+				if(useShadow[i]  == 1){
+					shadowCounter++;
+				} 
 
-					} else {
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
-					}
+				viewPosition = mul(In.PosW, LightVP[i]);
+					
+				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
+		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
+				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
+			
+				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
+				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
+//					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 );
+					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
 				} else {
-						light = PhongDirectional(NormV, In.ViewDirV.xyz, LightDirV.xyz, lAmbient[i%numlDiff], lDiff[i%numlDiff], lSpec[i%numlSpec],specIntensity, 1,light,lightRange[i%numLighRange],lightDist);
+					shadow = 1;
 				}
+					
+						if(useShadow[i]){
+								
+				
+					  // calculate per-light radiance
+					        float3 H = normalize(V + LightDirW.xyz);
+					        float3 radiance   = lDiff[i%numlDiff].xyz * lerp(1,saturate(shadow),falloff);
+					        // cook-torrance brdf
+					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
+					        float G   = GeometrySmith(Nn.xyz, V, LightDirW.xyz, roughness);      
+					        float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
+					        float3 kS = F;
+					        float3 kD = float3(1.0,1.0,1.0) - kS;
+					        kD *= 1.0 - metallic;	  					        
+					        float3 nominator    = NDF * G * F;
+					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, LightDirW.xyz), 0.0) + 0.001; 
+					        float3 specular   = nominator / denominator;
+							specular *= lPower;
+							//specular *= saturate(dot(-LightDirV,In.ViewDirV));
+					        // add to outgoing radiance Lo
+					        float NdotL = max(dot(Nn.xyz, LightDirW.xyz), 0.0);                
+					        finalLight.xyz += (kD * albedo.xyz  / PI + specular) * radiance * NdotL; 
+							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+						
+					} else {
+					        float3 H = normalize(V + L.xyz);
+//							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
+					        float3 radiance   = lDiff[i%numlDiff].xyz;
+					        // cook-torrance brdf
+					        float NDF = DistributionGGX(Nn.xyz, H, roughness);        
+					        float G   = GeometrySmith(Nn.xyz, V, L.xyz, roughness);      
+					        float3 F    = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
+					        float3 kS = F;
+					        float3 kD = float3(1.0,1.0,1.0) - kS;
+					        kD *= 1.0 - metallic;	  					        
+					        float3 nominator    = NDF * G * F;
+					        float denominator = 4 * max(dot(Nn.xyz, V), 0.0) * max(dot(Nn.xyz, L.xyz), 0.0) + 0.001; 
+					        float3 specular   = nominator / denominator;
+							specular *= lPower;
+					        // add to outgoing radiance Lo
+					        float NdotL = max(dot(Nn.xyz, L.xyz), 0.0);                
+					        finalLight.xyz += (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
+							finalLight.xyz += lAmbient[i%numlDiff] * lAtt0[i%numlAtt0] / pow(lightDist,lAtt2[i%numlAtt2]) * falloff * ao;
+					}
+					
+					
+//			}
+				
 			
 				break;
 	
