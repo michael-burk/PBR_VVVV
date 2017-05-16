@@ -276,6 +276,44 @@ float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
 	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
 }
 
+// sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
+static const float3x3 ACESInputMat =
+{
+    {0.59719, 0.35458, 0.04823},
+    {0.07600, 0.90834, 0.01566},
+    {0.02840, 0.13383, 0.83777}
+};
+
+// ODT_SAT => XYZ => D60_2_D65 => sRGB
+static const float3x3 ACESOutputMat =
+{
+    { 1.60475, -0.53108, -0.07367},
+    {-0.10208,  1.10813, -0.00605},
+    {-0.00327, -0.07276,  1.07602}
+};
+
+float3 RRTAndODTFit(float3 v)
+{
+    float3 a = v * (v + 0.0245786f) - 0.000090537f;
+    float3 b = v * (0.983729f * v + 0.4329510f) + 0.238081f;
+    return a / b;
+}
+
+float3 ACESFitted(float3 color)
+{
+    color = mul(ACESInputMat, color);
+
+    // Apply RRT and ODT
+    color = RRTAndODTFit(color);
+
+    color = mul(ACESOutputMat, color);
+
+    // Clamp to [0, 1]
+    color = saturate(color);
+
+    return color;
+}
+
 float4 PS_SuperphongBump(vs2psBump In): SV_Target
 {	
 	// wavelength colors
@@ -297,7 +335,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	float4 texCol = float4(1,1,1,1);
 	float texRoughness = 1;
 	float aoT = 1;
-	float metallicT = 0;
+	float metallicT = 1;
 	
 	texture2d.GetDimensions(tX,tY);
 	if(tX+tY > 2 && !noTile) texCol = texture2d.Sample(g_samLinear, mul(In.TexCd,tColor).xy);
@@ -444,7 +482,6 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 		float3 L = normalize(float4(lPos[i],1) - In.PosW.xyz);
 		float lightDist = length(lightToObject);
 		float falloff = pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
-//		float falloff = pow(saturate(1 - pow((lightDist/lightRange[i%numLighRange]),4)),2/pow(lightDist,2)+1 );
 		float projectTexCoordZ;
 		
 		LightDirW = normalize(lightToObject);
@@ -475,10 +512,10 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 				}
 						if(useShadow[i]){
 							finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
+											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
 					} else {
 					       	finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  1.0, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
+											  1.0, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
 					}
 				break;
 			
@@ -506,11 +543,11 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 				if(useShadow[i]){
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						lerp(1.0,saturate(shadow),falloff).x, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+						lerp(1.0,saturate(shadow),falloff).x, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				} else {
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						1.0, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+						1.0, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				}
 	
 				break;
@@ -555,11 +592,11 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 					}
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 							finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				} else {
 						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 							finalLight.xyz += cookTorrance(V, L.xyz, Nb.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				}				
 			break;			
 		}	
@@ -579,10 +616,12 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 //	}
 	
 	finalLight.xyz += IBL.xyz;
+	
 //	Gamma Correction
-	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
-//    finalLight.xyz = pow(abs(finalLight.xyz), 1.0/1.8);
-	finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
+//	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
+//	finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
+	
+	finalLight.rgb = ACESFitted(finalLight.rgb);
 	finalLight.a = Alpha;
 	return finalLight;
 //	return metallicT;
@@ -789,10 +828,10 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				}
 						if(useShadow[i]){
 							finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
+											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
 					} else {
 					       	finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  1.0, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
+											  1.0, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, 1.0, texRoughness, metallicT);
 					}
 				break;
 			
@@ -820,11 +859,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 				if(useShadow[i]){
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						lerp(1.0,saturate(shadow),falloff).x, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+						lerp(1.0,saturate(shadow),falloff).x, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				} else {
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						1.0, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+						1.0, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				}
 	
 				break;
@@ -869,11 +908,11 @@ float4 PS_Superphong(vs2ps In): SV_Target
 					}
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 							finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				} else {
 						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 							finalLight.xyz += cookTorrance(V, L.xyz, Nn.xyz, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt0[i%numlAtt1], lAtt0[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
+							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT);
 				}				
 			break;			
 		}	
@@ -894,9 +933,13 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	
 	
 	finalLight.xyz += IBL.xyz;
-//	Gamma Correction
-	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
-    finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
+	
+	
+	//	Gamma Correction
+//	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
+//  finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
+	
+	finalLight.rgb = ACESFitted(finalLight.rgb);
 	finalLight.a = Alpha;
 //	finalLight *= texCol;
 	return finalLight;
