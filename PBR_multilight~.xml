@@ -1,6 +1,6 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="6555" top="1380" width="21705" height="14310">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="30" scrolly="495" bgcolor="15329769">
+   <BOUNDS type="Window" left="8895" top="540" width="21705" height="14310">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -62,14 +62,14 @@
    <PIN pinname="Mode" slicecount="1" visible="1" values="BackCullSimple">
    </PIN>
    </NODE>
-   <NODE id="1039" systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow" stayontop="0" border="0">
+   <NODE id="1039" systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow" stayontop="0" border="1">
    <BOUNDS type="Node" left="4125" top="11910" width="100" height="100">
    </BOUNDS>
    <BOUNDS type="Box" left="4125" top="11910" width="6000" height="4500">
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="-17940" top="690" width="15240" height="15585">
+   <BOUNDS type="Window" left="390" top="705" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -93,7 +93,7 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
-   <PIN pinname="Texture SizeXY" slicecount="2" values="2048,2048">
+   <PIN pinname="Texture SizeXY" slicecount="2" values="800,800">
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
@@ -789,7 +789,7 @@
    </PIN>
    <PIN pinname="SpotLight Fading" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Bumpiness" visible="1" slicecount="1" values="1">
+   <PIN pinname="Bumpiness" visible="1" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Normal Rotation" visible="1" slicecount="1" values="||">
    </PIN>
@@ -1445,7 +1445,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="14940" top="4395" width="5895" height="270">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="C:\Projects\PBR_VVVV\girlpower\Assets\Concrete\concrete_spotted_Normal.png">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="girlpower\Assets\Concrete\concrete_spotted_Normal.png">
    </PIN>
    <PIN pinname="Output String" visible="1">
    </PIN>
@@ -1459,7 +1459,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="14940" top="4020" width="6135" height="270">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="C:\Projects\PBR_VVVV\girlpower\Assets\Concrete\concrete_spotted_Base_Color.png">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="girlpower\Assets\Concrete\concrete_spotted_Base_Color.png">
    </PIN>
    <PIN pinname="Output String" visible="1">
    </PIN>
@@ -1473,7 +1473,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="14940" top="5235" width="5910" height="270">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="C:\Projects\PBR_VVVV\girlpower\Assets\Concrete\concrete_spotted_Metallic.png">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="girlpower\Assets\Concrete\concrete_spotted_Metallic.png">
    </PIN>
    <PIN pinname="Output String" visible="1">
    </PIN>
