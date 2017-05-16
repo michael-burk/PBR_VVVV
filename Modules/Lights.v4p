@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="8010" scrolly="765" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Projects\PBR_VVVV\modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="0" scrolly="0" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="11400" width="100" height="100">
    </BOUNDS>
@@ -1979,7 +1979,7 @@
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Scalar" slicecount="1" values="1">
+   <PIN pinname="Scalar" slicecount="1" values="2.46">
    </PIN>
    </NODE>
    <LINK srcnodeid="25" srcpinname="XYZ Transformed" dstnodeid="21" dstpinname="Initial Interest">
@@ -1997,7 +1997,7 @@
    <NODE id="448" systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden">
    <BOUNDS type="Node" left="6945" top="2400" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="1.89">
+   <PIN pinname="Y" slicecount="1" values="0.14">
    </PIN>
    <PIN pinname="Z" slicecount="1" values="-1.11">
    </PIN>
@@ -2095,7 +2095,7 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="486">
    <BOUNDS type="Node" left="3795" top="2520" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="6.09">
+   <PIN pinname="Y" slicecount="1" values="6.28">
    </PIN>
    </NODE>
    <LINK srcnodeid="486" srcpinname="XYZ" dstnodeid="218" dstpinname="XYZ UnTransformed">
@@ -2467,7 +2467,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10650" top="10755" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" values="3.56">
    </PIN>
    <PIN pinname="X Input Value" slicecount="1" values="1">
    </PIN>
@@ -2583,7 +2583,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="11865" top="10800" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" values="1.14">
    </PIN>
    <PIN pinname="X Input Value" slicecount="1" values="0">
    </PIN>

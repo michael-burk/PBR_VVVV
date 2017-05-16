@@ -1969,7 +1969,7 @@
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Scalar" slicecount="1" values="0.2">
+   <PIN pinname="Scalar" slicecount="1" values="0">
    </PIN>
    </NODE>
    <NODE systemname="Multiply (Color)" nodename="Multiply (Color)" componentmode="Hidden" id="444" hiddenwhenlocked="1">
