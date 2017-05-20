@@ -298,16 +298,17 @@ float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
 	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
 }
 
+// wavelength colors
+	static const half3 wavelength[3] =
+    {
+    	{ 1, 0, 0},
+    	{ 0, 1, 0},
+    	{ 0, 0, 1},
+	};
 
 float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
-	// wavelength colors
-	const half4 colors[3] =
-        {
-    	{ 1, 0, 0, 1 },
-    	{ 0, 1, 0, 1 },
-    	{ 0, 0, 1, 1 },
-	};
+
 	
 	float3 LightDirW;
 	float4 viewPosition;
@@ -350,7 +351,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 
 	float3 reflVect = -reflect(V,N);
 	float3 reflVecNorm = N;
-	float3 refrVect = refract(-V, N , refractionIndex[0]);
+//	float3 refrVect = refract(-V, N , refractionIndex[0]);
 
 	// Box Projected CubeMap
 	////////////////////////////////////////////////////
@@ -379,26 +380,40 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		}		
 	}
 	
-	
 	uint tX1,tY1,m1;
 	cubeTexRefl.GetDimensions(tX,tY);
 	cubeTexIrradiance.GetDimensions(tX1,tY1);
 	
-	if(tX+tY > 2 || tX1+tY1 > 2){
-		reflColor = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),0).rgb;
+	float3 refrColor = 0;
+	
+	if(tX+tY > 4 || tX1+tY1 > 4){
+		
+		const float MAX_REFLECTION_LOD = 9.0;
 		
 		float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
 		float3 kD = 1.0 - kS;
-		kD *= 1.0 - metallicT;
-		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
+//		kD *= 1.0 - metallicT;
+		
+		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm,texRoughness*MAX_REFLECTION_LOD).rgb;
 		IBL  = IBL * albedo.xyz;
 	
-		const float MAX_REFLECTION_LOD = 9.0;
-		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,float3(reflVect.x, reflVect.y, reflVect.z),texRoughness*MAX_REFLECTION_LOD).rgb;
+		
+		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,reflVect,texRoughness*MAX_REFLECTION_LOD).rgb;
 		float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
 		refl = refl * (F * envBRDF.x + envBRDF.y);
 		
-		IBL  = (kD * IBL *iblIntensity.x + refl*iblIntensity.y) * aoT;
+		if(refraction){
+			
+		
+			float3 refrVect;
+		    for(int r=0; r<3; r++) {
+		    	refrVect = refract(-V, N , refractionIndex[r]);
+		    	refrColor += cubeTexRefl.SampleLevel(g_samLinear,refrVect,texRoughness*MAX_REFLECTION_LOD).rgb * wavelength[r];
+			}
+			refrColor = refrColor * (F * envBRDF.x + envBRDF.y);
+		
+		}
+		IBL  = ( ((IBL *iblIntensity.x*(kD*(1-metallic))) + refrColor*kD) + refl * iblIntensity.y) * aoT;
 	} 
 	
 	float4 iridescenceColor = float4(0,0,0,0);
@@ -486,7 +501,6 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 					lightMap.GetDimensions(mS,tXS,tYS);
 					if(tXS+tYS > 4) falloffSpot = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).r;
 					else if(tXS+tYS < 4) falloffSpot = lerp(1,0,saturate(length(.5-projectTexCoord.xy)*2));
-//					falloffSpot = lerp(falloffSpot,0,saturate(length(.5-projectTexCoord.xy)*2));
 					
 					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
 				}
@@ -555,16 +569,6 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 
 	finalLight.xyz += GlobalReflectionColor.xyz * fresnelSchlick(max(dot(N, V), 0.0), F0);
 	finalLight.xyz += GlobalDiffuseColor.xyz * aoT;
-	
-	
-//		if(refraction){
-//			float3 refrVect;
-//		    for(int r=0; r<3; r++) {
-//		    	refrVect = refract(-Vn, Nb , refractionIndex[r]);
-//		    	light.diffuse += cubeTexRefl.Sample(g_samLinear,refrVect)* colors[r];
-//		    	
-//			}
-//	}
 	
 	finalLight.xyz += IBL.xyz;
 	
