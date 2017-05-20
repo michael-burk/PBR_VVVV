@@ -236,7 +236,9 @@ float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
 }
 
 float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
-					float3 lAmb, float shadow, float3 projectionColor, float falloff, float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0, float attenuation, float roughness, float metallic, float ao){				
+					float3 lAmb, float shadow, float3 projectionColor, float falloff,
+					float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0,
+					float attenuation, float roughness, float metallic, float ao){
     float3 H = normalize(V + L);
     float3 radiance   = lDiff * attenuation * shadow * projectionColor;
     // cook-torrance brdf
@@ -252,7 +254,7 @@ float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
 	specular *= lPower;
     // add to outgoing radiance Lo
     float NdotL = max(dot(N, L), 0.0);                
-    float3 returnLight = (kD * albedo.xyz / PI + specular) * radiance * NdotL; 
+    float3 returnLight = (kD * albedo.xyz / PI + specular) * radiance * NdotL;		
 	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
 }
 
@@ -318,20 +320,20 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	float metallicT = 1;
 	
 	texture2d.GetDimensions(tX,tY);
-	if(tX+tY > 2 && !noTile) texCol = texture2d.Sample(g_samLinear, mul(TexCd,tColor).xy);
-	else if(tX+tY > 2 && noTile) texCol = textureNoTile(texture2d,mul(TexCd,tColor).xy);
+	if(tX+tY > 4 && !noTile) texCol = texture2d.Sample(g_samLinear, mul(TexCd,tColor).xy);
+	else if(tX+tY > 4 && noTile) texCol = textureNoTile(texture2d,mul(TexCd,tColor).xy);
 	
 	roughTex.GetDimensions(tX,tY);
-	if(tX+tY > 2 && !noTile) texRoughness = roughTex.Sample(g_samLinear, mul(TexCd,tRoughness).xy).r;
-	else if(tX+tY > 2 && noTile) texRoughness = textureNoTile(roughTex,mul(TexCd,tRoughness).xy).r;
+	if(tX+tY > 4 && !noTile) texRoughness = roughTex.Sample(g_samLinear, mul(TexCd,tRoughness).xy).r;
+	else if(tX+tY > 4 && noTile) texRoughness = textureNoTile(roughTex,mul(TexCd,tRoughness).xy).r;
 	
 	aoTex.GetDimensions(tX,tY);
-	if(tX+tY > 2 && !noTile) aoT = aoTex.Sample(g_samLinear, mul(TexCd,tAO).xy).r;
-	else if(tX+tY > 2 && noTile) aoT = textureNoTile(aoTex,mul(TexCd,tAO).xy).r;
+	if(tX+tY > 4 && !noTile) aoT = aoTex.Sample(g_samLinear, mul(TexCd,tAO).xy).r;
+	else if(tX+tY > 4 && noTile) aoT = textureNoTile(aoTex,mul(TexCd,tAO).xy).r;
 	
 	metallTex.GetDimensions(tX,tY);
-	if(tX+tY > 2 && !noTile) metallicT = metallTex.Sample(g_samLinear, mul(TexCd,tMetallic).xy).r;
-	else if(tX+tY > 2 && noTile) metallicT = textureNoTile(metallTex,mul(TexCd,tMetallic).xy).r;
+	if(tX+tY > 4 && !noTile) metallicT = metallTex.Sample(g_samLinear, mul(TexCd,tMetallic).xy).r;
+	else if(tX+tY > 4 && noTile) metallicT = textureNoTile(metallTex,mul(TexCd,tMetallic).xy).r;
 	
 
 	float3 reflColor = float3(0,0,0);
@@ -450,12 +452,12 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				} else {
 					shadow = 1;
 				}
-						if(useShadow[i]){
-							finalLight.xyz += cookTorrance(V, L.xyz, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, 1.0, texRoughness, metallicT, aoT);
+					if(useShadow[i]){
+							finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, lAtt0[i%numlAtt0], texRoughness, metallicT, aoT);
 					} else {
-					       	finalLight.xyz += cookTorrance(V, L.xyz, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  1.0, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, 1.0, texRoughness, metallicT, aoT);
+					       	finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+											  1.0, 1.0, 1.0, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, lAtt0[i%numlAtt0], texRoughness, metallicT, aoT);
 					}
 				break;
 			
@@ -473,21 +475,25 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-				
+				float falloffSpot = falloff;
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-					projectionColor = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).rgb;
+					
+					uint tX,tY,m;
+					lightMap.GetDimensions(m,tX,tY);
+					if(tX+tY > 4) falloffSpot = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).r;
+					else if(tX+tY < 4) falloffSpot = lerp(falloffSpot,0,saturate(length(.5-projectTexCoord.xy)*2));
 					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
 				}
 			
 				if(useShadow[i]){
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-						finalLight.xyz += cookTorrance(V, L.xyz, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						lerp(1.0,saturate(shadow),falloff).x, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
+						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+						lerp(1.0,saturate(shadow),falloff).x, falloffSpot, falloffSpot, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
 				} else {
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-						finalLight.xyz += cookTorrance(V, L.xyz, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						1.0, projectionColor*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
+						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+						1.0, falloffSpot, falloffSpot, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
 				}
 	
 				break;
@@ -531,11 +537,11 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 						}
 					}
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-							finalLight.xyz += cookTorrance(V, L.xyz, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
 				} else {
 						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
-							finalLight.xyz += cookTorrance(V, L.xyz, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
+							finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
 				}				
 			break;			

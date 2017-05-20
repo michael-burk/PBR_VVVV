@@ -1,13 +1,13 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="14550" top="405" width="13995" height="14310">
+   <BOUNDS type="Window" left="13875" top="405" width="14670" height="14310">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
    <NODE nodename="IOBox (Enumerations)" componentmode="InABox" id="422" systemname="IOBox (Enumerations)">
-   <BOUNDS type="Box" left="12450" top="8190" width="1620" height="240">
+   <BOUNDS type="Box" left="12540" top="8010" width="1620" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="12450" top="8190" width="0" height="0">
+   <BOUNDS type="Node" left="12540" top="8010" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Input Enum" slicecount="1" visible="1" values="PBR_Bump_AutoTNB">
    </PIN>
@@ -497,6 +497,10 @@
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Background Color - Global Reflection Color|">
    </PIN>
+   <PIN pinname="Rows" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="SliceCount Mode" slicecount="1" values="ColsRowsPages">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1192" srcpinname="Color Output" dstnodeid="928" dstpinname="Background Color" linkstyle="Bezier">
    <LINKPOINT x="2475" y="9263">
@@ -509,7 +513,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="5415" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="15165" top="915" width="22350" height="14835">
+   <BOUNDS type="Window" left="12465" top="840" width="22350" height="14295">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -567,9 +571,9 @@
    </PIN>
    <PIN pinname="Res²" slicecount="1" values="512">
    </PIN>
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.2">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.05">
    </PIN>
-   <PIN pinname="Helper" visible="1" slicecount="1" values="0">
+   <PIN pinname="Helper" visible="1" slicecount="1" values="1">
    </PIN>
    <PIN pinname="LightViewProjection" visible="1">
    </PIN>
@@ -589,13 +593,13 @@
    </PIN>
    <PIN pinname="Example Lightness" slicecount="1" values="0.5">
    </PIN>
-   <PIN pinname="DirectionalLight" slicecount="1" values="1">
+   <PIN pinname="DirectionalLight" slicecount="1" values="0" visible="1">
    </PIN>
    <PIN pinname="SpotLight" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="256">
    </PIN>
-   <PIN pinname="PointLight" slicecount="1" values="1">
+   <PIN pinname="PointLight" slicecount="1" values="0" visible="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -878,11 +882,7 @@
    <LINKPOINT x="4530" y="8678">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="422" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique" linkstyle="Bezier">
-   <LINKPOINT x="12535" y="8643">
-   </LINKPOINT>
-   <LINKPOINT x="12530" y="8623">
-   </LINKPOINT>
+   <LINK srcnodeid="422" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique" linkstyle="PolyLine">
    </LINK>
    <LINK srcnodeid="499" srcpinname="Transform Out" dstnodeid="934" dstpinname="Transform In" linkstyle="Bezier">
    <LINKPOINT x="5055" y="7725">
@@ -948,12 +948,6 @@
    <LINKPOINT x="10920" y="8280">
    </LINKPOINT>
    <LINKPOINT x="6255" y="8280">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1091" srcpinname="SpotLightTex" dstnodeid="934" dstpinname="SpotTex" linkstyle="Bezier">
-   <LINKPOINT x="10050" y="8280">
-   </LINKPOINT>
-   <LINKPOINT x="11355" y="8280">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Light Range" dstnodeid="934" dstpinname="LightRange" linkstyle="Bezier">
@@ -1049,7 +1043,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8700" top="10335" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="500">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="60">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1265,7 +1259,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7245" top="6150" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.33,0.33">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1370,26 +1364,6 @@
    <PIN pinname="Show Grid" slicecount="1" values="0">
    </PIN>
    <PIN pinname="String Type" slicecount="1" values="Filename">
-   </PIN>
-   </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1250">
-   <BOUNDS type="Box" left="7095" top="10890" width="795" height="960">
-   </BOUNDS>
-   <BOUNDS type="Node" left="7095" top="10890" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="4" visible="1" values="1,1,1,1">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Vector Size" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Rows" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="X Input Value" slicecount="4" values="1,1,1,1">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (String)" componentmode="InABox" id="1251">
@@ -1554,6 +1528,14 @@
    </LINK>
    <LINK srcnodeid="1270" srcpinname="Layer Out" dstnodeid="3" dstpinname="Layer 1">
    </LINK>
-   <LINK srcnodeid="1206" srcpinname="Output" dstnodeid="1164" dstpinname="Input 2">
+   <NODE systemname="Box (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Box (DX11.Geometry)" componentmode="Hidden" id="1277">
+   <BOUNDS type="Node" left="9060" top="2130" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Geometry Out" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1277" srcpinname="Geometry Out" dstnodeid="1164" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="SpotLightTex" dstnodeid="934" dstpinname="SpotTex">
    </LINK>
    </PATCH>
