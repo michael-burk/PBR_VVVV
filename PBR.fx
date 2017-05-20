@@ -576,10 +576,7 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tNormal).xy);
 	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tNormal).xy);
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
-	
-	float3 Tn = normalize(In.tangent).xyz;
-    float3 Bn = normalize(In.binormal.xyz);
-	float3 Nb = normalize(In.NormW.xyz + (-bumpMap.x * Tn + -bumpMap.y * Bn)*bumpy);
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + -bumpMap.y * normalize(In.binormal.xyz))*bumpy);
 //	float3 V = normalize(camPos - In.PosW.xyz);
 	return doLighting(In.PosW, Nb, In.V, In.TexCd);
 	
@@ -593,8 +590,42 @@ float4 PS_Superphong(vs2ps In): SV_Target
 	return doLighting(In.PosW, In.NormW, In.V, In.TexCd);
 }
 
+float4 PS_SuperphongAutoTNB(vs2ps In): SV_Target
+{	
+	
+// compute derivations of the world position
+	float3 p_dx = ddx(In.PosW);
+	float3 p_dy = ddy(In.PosW);
+	// compute derivations of the texture coordinate
+	float2 tc_dx = ddx(In.TexCd);
+	float2 tc_dy = ddy(In.TexCd);
+	// compute initial tangent and bi-tangent
+	float3 t = normalize( tc_dy.y * p_dx - tc_dx.y * p_dy );
+	float3 b = normalize( tc_dy.x * p_dx - tc_dx.x * p_dy ); // sign inversion
+	// get new tangent from a given mesh normal
+	float3 n = normalize(In.NormW);
+	float3 x = cross(n, t);
+	t = cross(x, n);
+	t = normalize(t);
+	// get updated bi-tangent
+	x = cross(b, n);
+	b = cross(n, x);
+	b = normalize(b);
+	
+	float4 bumpMap = float4(0,0,0,0);
+	
+	uint tX2,tY2,m2;
+	normalTex.GetDimensions(tX2,tY2);
+	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tNormal).xy);
+	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tNormal).xy);
+	bumpMap = (bumpMap * 2.0f) - 1.0f;
+	
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t) + -bumpMap.y * normalize(b))*bumpy);
+	
+	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+}
 
-technique10 Superphong
+technique10 PBR
 {
 	pass P0
 	{
@@ -602,11 +633,20 @@ technique10 Superphong
 		SetPixelShader( CompileShader( ps_5_0, PS_Superphong() ) );
 	}
 }
-technique10 Superphong_Bump
+technique10 PBR_Bump
 {
 	pass P0
 	{
 		SetVertexShader( CompileShader( vs_4_0, VS_Bump() ) );
 		SetPixelShader( CompileShader( ps_5_0, PS_SuperphongBump() ) );
+	}
+}
+
+technique10 PBR_Bump_AutoTNB
+{
+	pass P0
+	{
+		SetVertexShader( CompileShader( vs_4_0, VS() ) );
+		SetPixelShader( CompileShader( ps_5_0, PS_SuperphongAutoTNB() ) );
 	}
 }
