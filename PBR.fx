@@ -188,6 +188,46 @@ float4 getTexel( float3 p, Texture2DArray tex )
      p.xy = ( p.xy - 0.5)/R;
     return tex.SampleLevel(shadowSampler, p, 0);
 }
+
+
+// sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
+static const float3x3 ACESInputMat =
+{
+    {0.59719, 0.35458, 0.04823},
+    {0.07600, 0.90834, 0.01566},
+    {0.02840, 0.13383, 0.83777}
+};
+
+// ODT_SAT => XYZ => D60_2_D65 => sRGB
+static const float3x3 ACESOutputMat =
+{
+    { 1.60475, -0.53108, -0.07367},
+    {-0.10208,  1.10813, -0.00605},
+    {-0.00327, -0.07276,  1.07602}
+};
+
+float3 RRTAndODTFit(float3 v)
+{
+    float3 a = v * (v + 0.0245786f) - 0.000090537f;
+    float3 b = v * (0.983729f * v + 0.4329510f) + 0.238081f;
+    return a / b;
+}
+
+float3 ACESFitted(float3 color)
+{
+    color = mul(ACESInputMat, color);
+
+    // Apply RRT and ODT
+    color = RRTAndODTFit(color);
+
+    color = mul(ACESOutputMat, color);
+
+    // Clamp to [0, 1]
+    color = saturate(color);
+
+    return color;
+}
+
 static const float PI = 3.14159265359;
 
 float3 fresnelSchlick(float cosTheta, float3 F0)
@@ -258,43 +298,6 @@ float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
 	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
 }
 
-// sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
-static const float3x3 ACESInputMat =
-{
-    {0.59719, 0.35458, 0.04823},
-    {0.07600, 0.90834, 0.01566},
-    {0.02840, 0.13383, 0.83777}
-};
-
-// ODT_SAT => XYZ => D60_2_D65 => sRGB
-static const float3x3 ACESOutputMat =
-{
-    { 1.60475, -0.53108, -0.07367},
-    {-0.10208,  1.10813, -0.00605},
-    {-0.00327, -0.07276,  1.07602}
-};
-
-float3 RRTAndODTFit(float3 v)
-{
-    float3 a = v * (v + 0.0245786f) - 0.000090537f;
-    float3 b = v * (0.983729f * v + 0.4329510f) + 0.238081f;
-    return a / b;
-}
-
-float3 ACESFitted(float3 color)
-{
-    color = mul(ACESInputMat, color);
-
-    // Apply RRT and ODT
-    color = RRTAndODTFit(color);
-
-    color = mul(ACESOutputMat, color);
-
-    // Clamp to [0, 1]
-    color = saturate(color);
-
-    return color;
-}
 
 float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
@@ -465,7 +468,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 			case 1:
 				
 				lightCounter ++;
-				
+
 				if(useShadow[i]  == 1){
 					shadowCounter++;
 				} 
@@ -475,25 +478,27 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-				float falloffSpot = falloff;
+				float falloffSpot = 0;
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					
-					uint tX,tY,m;
-					lightMap.GetDimensions(m,tX,tY);
-					if(tX+tY > 4) falloffSpot = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).r;
-					else if(tX+tY < 4) falloffSpot = lerp(falloffSpot,0,saturate(length(.5-projectTexCoord.xy)*2));
-					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
+					uint tXS,tYS,mS;
+					lightMap.GetDimensions(mS,tXS,tYS);
+					if(tXS+tYS > 4) falloffSpot = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).r;
+					else if(tXS+tYS < 4) falloffSpot = lerp(1,0,saturate(length(.5-projectTexCoord.xy)*2));
+//					falloffSpot = lerp(falloffSpot,0,saturate(length(.5-projectTexCoord.xy)*2));
+					
+					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
 				}
 			
 				if(useShadow[i]){
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						lerp(1.0,saturate(shadow),falloff).x, falloffSpot, falloffSpot, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
+						lerp(1.0,saturate(shadow),falloff).x, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
 				} else {
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						1.0, falloffSpot, falloffSpot, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
+						1.0, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
 				}
 	
 				break;

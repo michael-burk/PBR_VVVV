@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="6960" scrolly="150" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="3375" scrolly="765" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="11400" width="100" height="100">
    </BOUNDS>
@@ -207,7 +207,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="3" values="|1.00000,1.00000,1.00000,1.00000|,|1.00000,1.00000,1.00000,1.00000|,|1.00000,1.00000,1.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="2" values="|0.00000,0.00000,0.00000,1.00000|,|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)" hiddenwhenlocked="0">
@@ -336,7 +336,7 @@
    <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="12465" top="840" width="22350" height="14295">
+   <BOUNDS type="Window" left="11625" top="0" width="22350" height="14295">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -345,7 +345,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="18495" top="11400">
    </BOUNDS>
-   <PIN pinname="Gamma" slicecount="1" visible="1" values="0.5">
+   <PIN pinname="Gamma" slicecount="1" visible="1" values="0.08">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -871,7 +871,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="3" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="2" values="|0.00000,0.00000,0.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    </NODE>
    <LINK srcnodeid="299" srcpinname="Color Output" dstnodeid="297" dstpinname="Data" linkstyle="Bezier">
@@ -921,7 +921,7 @@
    </BOUNDS>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
-   <PIN pinname="FOV" slicecount="1" visible="1" values="0.14">
+   <PIN pinname="FOV" slicecount="1" visible="1" values="0.11">
    </PIN>
    <PIN pinname="Roll" visible="1" slicecount="1" values="0">
    </PIN>
@@ -1339,7 +1339,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6915" top="4830" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="9">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="6">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1785,7 +1785,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="1650" top="1905" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2019,7 +2019,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="13080" top="10485" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" values="0.04,2.04,3">
+   <PIN pinname="Y Input Value" slicecount="3" values="3,3,3">
    </PIN>
    <PIN pinname="X Input Value" slicecount="3" values="3,3,3">
    </PIN>
@@ -2293,7 +2293,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="12885" top="2505" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2341,7 +2341,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="13395" top="4125" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2473,7 +2473,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10650" top="10485" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" values="5.84,4.22,1">
+   <PIN pinname="Y Input Value" slicecount="3" values="2,2,2">
    </PIN>
    <PIN pinname="X Input Value" slicecount="3" values="1,1,1">
    </PIN>
@@ -2589,7 +2589,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="11865" top="10485" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" values="0.21,1,2">
+   <PIN pinname="Y Input Value" slicecount="3" values="1.66,0.27,0.61">
    </PIN>
    <PIN pinname="X Input Value" slicecount="3" values="0,0,0">
    </PIN>
@@ -2612,10 +2612,8 @@
    <LINKPOINT x="26010" y="9983">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="444" srcpinname="Output" dstnodeid="45" dstpinname="Color Input">
-   </LINK>
    <LINK srcnodeid="442" srcpinname="Output" dstnodeid="299" dstpinname="Color Input">
    </LINK>
-   <LINK srcnodeid="70" srcpinname="Texture Out" dstnodeid="71" dstpinname="Input Node">
+   <LINK srcnodeid="444" srcpinname="Output" dstnodeid="45" dstpinname="Color Input">
    </LINK>
    </PATCH>
