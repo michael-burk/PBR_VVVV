@@ -278,7 +278,7 @@ float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
 float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
 					float3 lAmb, float shadow, float3 projectionColor, float falloff,
 					float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0,
-					float attenuation, float roughness, float metallic, float ao){
+					float attenuation, float roughness, float metallic, float ao,float3 iridescenceColor){
     float3 H = normalize(V + L);
     float3 radiance   = lDiff * attenuation * shadow * projectionColor;
     // cook-torrance brdf
@@ -292,9 +292,11 @@ float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
     float denominator = 4 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.001; 
     float3 specular   = nominator / denominator;
 	specular *= lPower;
+	specular *= iridescenceColor;
+//	specular = max(iridescenceColor,specular);
     // add to outgoing radiance Lo
     float NdotL = max(dot(N, L), 0.0);                
-    float3 returnLight = (kD * albedo.xyz / PI + specular) * radiance * NdotL;		
+    float3 returnLight = (kD * albedo.xyz / PI + specular) * radiance * NdotL;
 	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
 }
 
@@ -305,6 +307,8 @@ float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
     	{ 0, 1, 0},
     	{ 0, 0, 1},
 	};
+	
+	static const float MAX_REFLECTION_LOD = 9.0;
 
 float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
@@ -351,7 +355,6 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 
 	float3 reflVect = -reflect(V,N);
 	float3 reflVecNorm = N;
-//	float3 refrVect = refract(-V, N , refractionIndex[0]);
 
 	// Box Projected CubeMap
 	////////////////////////////////////////////////////
@@ -370,14 +373,14 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);	
 		posonbox = PosW + reflVecNorm*fa;
 		reflVecNorm = posonbox - cubeMapPos;	
-		if(refraction){
-			rbmax = (cubeMapBoxBounds[0] - (PosW))/refrVect;
-			rbmin = (cubeMapBoxBounds[1] - (PosW))/refrVect;
-			rbminmax = (refrVect>0.0f)?rbmax:rbmin;		
-			fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);			
-			posonbox = PosW + refrVect*fa;
-			refrVect = posonbox - cubeMapPos;
-		}		
+//		if(refraction){
+//			rbmax = (cubeMapBoxBounds[0] - (PosW))/refrVect;
+//			rbmin = (cubeMapBoxBounds[1] - (PosW))/refrVect;
+//			rbminmax = (refrVect>0.0f)?rbmax:rbmin;		
+//			fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);			
+//			posonbox = PosW + refrVect*fa;
+//			refrVect = posonbox - cubeMapPos;
+//		}		
 	}
 	
 	uint tX1,tY1,m1;
@@ -385,26 +388,36 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	cubeTexIrradiance.GetDimensions(tX1,tY1);
 	
 	float3 refrColor = 0;
+	float3 iridescenceColor = 0;
+	
+	if (useIridescence){
+		float inverseDotView = 1.0 - max(dot(N,V),0.0);
+		iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0));
+	} else {
+		iridescenceColor = 1;
+	}
 	
 	if(tX+tY > 4 || tX1+tY1 > 4){
 		
-		const float MAX_REFLECTION_LOD = 9.0;
+	
 		
 		float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
 		float3 kD = 1.0 - kS;
-//		kD *= 1.0 - metallicT;
 		
 		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm,texRoughness*MAX_REFLECTION_LOD).rgb;
 		IBL  = IBL * albedo.xyz;
 	
-		
 		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,reflVect,texRoughness*MAX_REFLECTION_LOD).rgb;
 		float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
-		refl = refl * (F * envBRDF.x + envBRDF.y);
+		
+		if(useIridescence){
+		  refl = max(refl,iridescenceColor) * (F * envBRDF.x + envBRDF.y);
+		} else {
+		  refl *= (F * envBRDF.x + envBRDF.y);
+		}
+		
 		
 		if(refraction){
-			
-		
 			float3 refrVect;
 		    for(int r=0; r<3; r++) {
 		    	refrVect = refract(-V, N , refractionIndex[r]);
@@ -414,13 +427,17 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		
 		}
 		IBL  = ( ((IBL *iblIntensity.x*(kD*(1-metallic))) + refrColor*kD) + refl * iblIntensity.y) * aoT;
-	} 
+		
+	} else if(useIridescence){
+			float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
+			float3 kD = 1.0 - kS;
+			float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
+			iridescenceColor *= (F * envBRDF.x + envBRDF.y);
+			IBL = iridescenceColor / kD;
+	}
 	
-	float4 iridescenceColor = float4(0,0,0,0);
-	if (useIridescence){
-		float inverseDotView = 1.0 - max(dot(N,V),0.0);
-		iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0))*1;
-	} 
+
+
 
 	uint d,textureCount;lightMap.GetDimensions(d,d,textureCount);uint dP,textureCountDepth;
 	shadowMap.GetDimensions(dP,dP,textureCountDepth); uint numSpotRange, dummySpot; lightRange.GetDimensions(numSpotRange, dummySpot);
@@ -472,10 +489,10 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				}
 					if(useShadow[i]){
 							finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, lAtt0[i%numlAtt0], texRoughness, metallicT, aoT);
+											  lerp(1.0,saturate(shadow),falloff).x, 1.0, 1, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, lAtt0[i%numlAtt0], texRoughness, metallicT, aoT,iridescenceColor);
 					} else {
 					       	finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-											  1.0, 1.0, 1.0, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, lAtt0[i%numlAtt0], texRoughness, metallicT, aoT);
+											  1.0, 1.0, 1.0, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, lAtt0[i%numlAtt0], texRoughness, metallicT, aoT,iridescenceColor);
 					}
 				break;
 			
@@ -508,11 +525,11 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				if(useShadow[i]){
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						lerp(1.0,saturate(shadow),falloff).x, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
+						lerp(1.0,saturate(shadow),falloff).x, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
 				} else {
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						1.0, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
+						1.0, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
 				}
 	
 				break;
@@ -557,18 +574,18 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 					}
 							float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 							finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
+							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
 				} else {
 						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 							finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT);
+							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
 				}				
 			break;			
 		}	
 	}
 
-	finalLight.xyz += GlobalReflectionColor.xyz * fresnelSchlick(max(dot(N, V), 0.0), F0);
-	finalLight.xyz += GlobalDiffuseColor.xyz * aoT;
+//	finalLight.xyz += GlobalReflectionColor.xyz * iridescenceColor * fresnelSchlick(max(dot(N, V), 0.0), F0);
+//	finalLight.xyz += GlobalDiffuseColor.xyz * aoT;
 	
 	finalLight.xyz += IBL.xyz;
 	
