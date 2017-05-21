@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="14190" top="645" width="14610" height="15105">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="3420" scrolly="0" bgcolor="15329769">
+   <BOUNDS type="Window" left="14190" top="225" width="14610" height="15105">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -61,7 +61,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="0" top="0" width="13740" height="14085">
+   <BOUNDS type="Window" left="0" top="0" width="13695" height="14085">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -889,6 +889,8 @@
    </PIN>
    <PIN pinname="tTex" visible="1">
    </PIN>
+   <PIN pinname="shadOff" slicecount="1" visible="1" values="0">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
    <LINKPOINT x="6135" y="9735">
@@ -1067,7 +1069,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8700" top="10335" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="20">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="120">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1504,8 +1506,6 @@
    <PIN pinname="Default" slicecount="1" values="|0, 0|">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1270" srcpinname="Layer Out" dstnodeid="3" dstpinname="Layer 1">
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1278">
    <BOUNDS type="Box" left="5655" top="6945" width="480" height="480">
    </BOUNDS>
@@ -1889,7 +1889,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="3015" top="4875" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="30">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="50">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1911,7 +1911,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="3615" top="5400" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="5">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1943,5 +1943,21 @@
    <LINK srcnodeid="1260" srcpinname="Texture Out" dstnodeid="934" dstpinname="Texture">
    </LINK>
    <LINK srcnodeid="1202" srcpinname="Transform Out" dstnodeid="934" dstpinname="tTex">
+   </LINK>
+   <LINK srcnodeid="1270" srcpinname="Layer Out" dstnodeid="3" dstpinname="Layer 1">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1301">
+   <BOUNDS type="Box" left="12675" top="6375" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="12675" top="6375" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="-1.51">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1301" srcpinname="Y Output Value" dstnodeid="934" dstpinname="shadOff">
    </LINK>
    </PATCH>

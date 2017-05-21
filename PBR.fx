@@ -215,10 +215,7 @@ float2 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
 	
 	
 	while ( nCurrSample < nNumSamples ){	
-		
-//			if(!noTile)  fCurrSampledHeight = heightMap.SampleGrad( g_samLinear, texcoord + vCurrOffset, dx, dy ).r;
-//		else if(noTile)  fCurrSampledHeight = textureNoTile( heightMap, texcoord + vCurrOffset).r;
-		
+				
 	  fCurrSampledHeight = heightMap.SampleGrad( g_samLinear, texcoord + vCurrOffset, dx, dy ).r;
 	  if ( fCurrSampledHeight > fCurrRayHeight ){
 	    float delta1 = fCurrSampledHeight - fCurrRayHeight;
@@ -241,7 +238,8 @@ float2 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
 	  }
 	
 	}
-	return texcoord + vCurrOffset;
+	
+	return texcoord + vCurrOffset;	
 }
 
 // sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
@@ -535,6 +533,9 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 			
+			//	In.TexCd.xy = parallaxOcclusionMapping(In.TexCd.xy, E, N);
+//				projectTexCoord.xy = parallaxOcclusionMapping(projectTexCoord.xy, V, N);
+					
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
@@ -564,6 +565,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
+			
 				float falloffSpot = 0;
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
@@ -669,16 +671,16 @@ float4 PS_PBR_Bump(vs2psBump In): SV_Target
 
 }
 
-
+//float shadOff = 0;
 float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
 {	
 	
 	
 	float3x3 tangentToWorldSpace;
 
-	tangentToWorldSpace[0] = mul( normalize( In.tangent ), -tW );
-	tangentToWorldSpace[1] = mul( normalize( In.binormal ), tW );
-	tangentToWorldSpace[2] = mul( normalize( In.NormW ), tW );
+	tangentToWorldSpace[0] = mul( normalize( In.tangent ), (float3x3)-tW );
+	tangentToWorldSpace[1] = mul( normalize( In.binormal ), (float3x3)tW );
+	tangentToWorldSpace[2] = mul( normalize( In.NormW ), (float3x3)tW );
 	
 	float3x3 worldToTangentSpace = transpose(tangentToWorldSpace);
 	
@@ -686,11 +688,10 @@ float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
 	float3 N = In.NormW.xyz;
 	E	= mul( E, worldToTangentSpace );
 	N = mul( In.NormW, worldToTangentSpace );
-//	output.light = mul( L, worldToTangentSpace );
 	
-//	In.TexCd.xy = parallaxOcclusionMapping(In.TexCd.xy, E, N);
-	In.TexCd.xy = parallaxOcclusionMapping(In.TexCd.xy, E, N);
-	
+//	float3 pom = parallaxOcclusionMapping(In.TexCd.xy, E, N);
+//	In.TexCd.xy = pom.xy;
+	In.TexCd.xy =  parallaxOcclusionMapping(In.TexCd.xy, E, N);
 	float4 bumpMap = float4(0,0,0,0);
 	
 	uint tX2,tY2,m2;
@@ -700,6 +701,14 @@ float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
 //	float3 V = normalize(camPos - In.PosW.xyz);
+
+//	float reliefDepth = shadOff;
+//	float offsetDepth = (reliefDepth * 0.2f + (reliefDepth * 0.8f) * dot( In.V, In.NormW ) * (1.0f-pom.z));
+//	float3 bottomPos = In.PosW - In.NormW * offsetDepth;
+//	float d1 = dot(In.NormW, bottomPos - In.PosW);
+//	float d2 = dot(In.V, In.NormW);
+//	In.PosW.xyz += In.V * (d1/d2);
+
 	return doLighting(In.PosW, Nb, In.V, In.TexCd);
 	
 
