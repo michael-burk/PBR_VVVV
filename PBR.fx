@@ -29,12 +29,14 @@ cbuffer cbPerObject : register (b0)
 	bool BPCM <bool visible= false; String uiname="Box Projected Cube Map";>;
 	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
 	bool useIridescence = false;	
-	
-	float4x4 tColor <bool uvspace=true;>;
-	float4x4 tNormal <bool uvspace=true;>;
-	float4x4 tRoughness <bool uvspace=true;>;
-	float4x4 tMetallic <bool uvspace=true;>;
-	float4x4 tAO <bool uvspace=true;>;
+//	
+//	float4x4 tColor <bool uvspace=true;>;
+//	float4x4 tNormal <bool uvspace=true;>;
+//	float4x4 tRoughness <bool uvspace=true;>;
+//	float4x4 tMetallic <bool uvspace=true;>;
+//	float4x4 tAO <bool uvspace=true;>;
+
+	float4x4 tTex <bool uvspace=true;>;
 	
 	float2 iblIntensity <bool visible=true; String uiname="IBL Intensity";> = float2(1,1);	
 	
@@ -65,6 +67,7 @@ StructuredBuffer <float4> lDiff <string uiname="Diffuse Color";>;
 
 Texture2D texture2d <string uiname="Texture"; >;
 Texture2D normalTex <string uiname="NormalMap"; >;
+Texture2D heightMap <string uiname="HeightMap"; >;
 Texture2D roughTex <string uiname="RoughnessMap"; >;
 Texture2D metallTex <string uiname="MetallicMap"; >;
 Texture2D aoTex <string uiname="AOMap"; >;
@@ -78,9 +81,6 @@ Texture2DArray shadowMap <string uiname="ShadowMap"; >;
 StructuredBuffer <float2> nearFarPlane <string uiname="Shadow Near Plane / Far Plane"; >;
 StructuredBuffer <float> lightBleedingLimit <string uiname="Light Bleeding Limit";>;
 StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
-
-
-
 
 SamplerState g_samLinear
 {
@@ -96,9 +96,6 @@ SamplerState shadowSampler
     AddressV = Clamp;
 };
 
-#include "dx11/PhongPoint.fxh"
-#include "dx11/PhongPointSpot.fxh"
-#include "dx11/PhongDirectional.fxh"
 #include "dx11/VSM.fxh"
 #include "dx11/NoTile.fxh"
 
@@ -148,7 +145,7 @@ vs2psBump VS_Bump(
     Out.binormal = mul(binormal, tW);
     Out.binormal = normalize(Out.binormal);
     Out.PosWVP  = mul(PosO, tWVP);
-	Out.TexCd = TexCd;
+	Out.TexCd = mul(TexCd,tTex);
 	Out.V = normalize(camPos - Out.PosW);
     return Out;
 }
@@ -168,7 +165,7 @@ vs2ps VS(
 	Out.NormW = mul(NormO, tW);
 	Out.NormW = normalize(Out.NormW);
     Out.PosWVP  = mul(PosO, tWVP);
-	Out.TexCd = TexCd;
+	Out.TexCd = mul(TexCd,tTex);
 	Out.V = normalize(camPos - Out.PosW);
     //Out.ViewDirV = -normalize(mul(PosO, tW));
 	
@@ -188,7 +185,64 @@ float4 getTexel( float3 p, Texture2DArray tex )
      p.xy = ( p.xy - 0.5)/R;
     return tex.SampleLevel(shadowSampler, p, 0);
 }
+float fHeightMapScale = .1;
+int nMaxSamples = 10;
+int nMinSamples = 1;
 
+float2 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
+	
+	float fParallaxLimit = -length( V.xy ) / V.z;
+	fParallaxLimit *= fHeightMapScale;	
+	
+	float2 vOffsetDir = normalize( V.xy );
+	float2 vMaxOffset = vOffsetDir * fParallaxLimit;
+	
+	int nNumSamples = (int)lerp( nMaxSamples, nMinSamples, saturate(-dot( V, N )) );
+//	nNumSamples = 20;
+	float fStepSize = 1.0 / (float)nNumSamples;
+	
+	float2 dx = ddx( texcoord );
+	float2 dy = ddy( texcoord );
+	
+	float fCurrRayHeight = 1.0;
+	float2 vCurrOffset = float2( 0, 0 );
+	float2 vLastOffset = float2( 0, 0 );
+	
+	float fLastSampledHeight = 1;
+	float fCurrSampledHeight = 1;
+
+	int nCurrSample = 0;
+	
+	
+	while ( nCurrSample < nNumSamples ){	
+		
+//			if(!noTile)  fCurrSampledHeight = heightMap.SampleGrad( g_samLinear, texcoord + vCurrOffset, dx, dy ).r;
+//		else if(noTile)  fCurrSampledHeight = textureNoTile( heightMap, texcoord + vCurrOffset).r;
+		
+	  fCurrSampledHeight = heightMap.SampleGrad( g_samLinear, texcoord + vCurrOffset, dx, dy ).r;
+	  if ( fCurrSampledHeight > fCurrRayHeight ){
+	    float delta1 = fCurrSampledHeight - fCurrRayHeight;
+	    float delta2 = ( fCurrRayHeight + fStepSize ) - fLastSampledHeight;
+	
+	    float ratio = delta1/(delta1+delta2);
+	
+	    vCurrOffset = (ratio) * vLastOffset + (1.0-ratio) * vCurrOffset;
+	
+	    nCurrSample = nNumSamples + 1;
+	  } else {
+	    nCurrSample++;
+	
+	    fCurrRayHeight -= fStepSize;
+	
+	    vLastOffset = vCurrOffset;
+	    vCurrOffset += fStepSize * vMaxOffset;
+	
+	    fLastSampledHeight = fCurrSampledHeight;
+	  }
+	
+	}
+	return texcoord + vCurrOffset;
+}
 
 // sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
 static const float3x3 ACESInputMat =
@@ -328,20 +382,20 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	float metallicT = 1;
 	
 	texture2d.GetDimensions(tX,tY);
-	if(tX+tY > 4 && !noTile) texCol = texture2d.Sample(g_samLinear, mul(TexCd,tColor).xy);
-	else if(tX+tY > 4 && noTile) texCol = textureNoTile(texture2d,mul(TexCd,tColor).xy);
+	if(tX+tY > 4 && !noTile) texCol = texture2d.Sample(g_samLinear, TexCd.xy);
+	else if(tX+tY > 4 && noTile) texCol = textureNoTile(texture2d,TexCd.xy);
 	
 	roughTex.GetDimensions(tX,tY);
-	if(tX+tY > 4 && !noTile) texRoughness = roughTex.Sample(g_samLinear, mul(TexCd,tRoughness).xy).r;
-	else if(tX+tY > 4 && noTile) texRoughness = textureNoTile(roughTex,mul(TexCd,tRoughness).xy).r;
+	if(tX+tY > 4 && !noTile) texRoughness = roughTex.Sample(g_samLinear, TexCd.xy).r;
+	else if(tX+tY > 4 && noTile) texRoughness = textureNoTile(roughTex,TexCd.xy).r;
 	
 	aoTex.GetDimensions(tX,tY);
-	if(tX+tY > 4 && !noTile) aoT = aoTex.Sample(g_samLinear, mul(TexCd,tAO).xy).r;
-	else if(tX+tY > 4 && noTile) aoT = textureNoTile(aoTex,mul(TexCd,tAO).xy).r;
+	if(tX+tY > 4 && !noTile) aoT = aoTex.Sample(g_samLinear, TexCd.xy).r;
+	else if(tX+tY > 4 && noTile) aoT = textureNoTile(aoTex,TexCd.xy).r;
 	
 	metallTex.GetDimensions(tX,tY);
-	if(tX+tY > 4 && !noTile) metallicT = metallTex.Sample(g_samLinear, mul(TexCd,tMetallic).xy).r;
-	else if(tX+tY > 4 && noTile) metallicT = textureNoTile(metallTex,mul(TexCd,tMetallic).xy).r;
+	if(tX+tY > 4 && !noTile) metallicT = metallTex.Sample(g_samLinear, TexCd.xy).r;
+	else if(tX+tY > 4 && noTile) metallicT = textureNoTile(metallTex, TexCd.xy).r;
 	
 
 	float3 reflColor = float3(0,0,0);
@@ -598,17 +652,17 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	return finalLight;
 }
 
-float4 PS_SuperphongBump(vs2psBump In): SV_Target
+float4 PS_PBR_Bump(vs2psBump In): SV_Target
 {	
 
 	float4 bumpMap = float4(0,0,0,0);
 	
 	uint tX2,tY2,m2;
 	normalTex.GetDimensions(tX2,tY2);
-	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tNormal).xy);
-	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tNormal).xy);
+	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tTex).xy);
+	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tTex).xy);
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
-	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + -bumpMap.y * normalize(In.binormal.xyz))*bumpy);
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
 //	float3 V = normalize(camPos - In.PosW.xyz);
 	return doLighting(In.PosW, Nb, In.V, In.TexCd);
 	
@@ -616,13 +670,47 @@ float4 PS_SuperphongBump(vs2psBump In): SV_Target
 }
 
 
+float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
+{	
+	
+	
+	float3x3 tangentToWorldSpace;
 
-float4 PS_Superphong(vs2ps In): SV_Target
+	tangentToWorldSpace[0] = mul( normalize( In.tangent ), -tW );
+	tangentToWorldSpace[1] = mul( normalize( In.binormal ), tW );
+	tangentToWorldSpace[2] = mul( normalize( In.NormW ), tW );
+	
+	float3x3 worldToTangentSpace = transpose(tangentToWorldSpace);
+	
+	float3 E = In.V;
+	float3 N = In.NormW.xyz;
+	E	= mul( E, worldToTangentSpace );
+	N = mul( In.NormW, worldToTangentSpace );
+//	output.light = mul( L, worldToTangentSpace );
+	
+//	In.TexCd.xy = parallaxOcclusionMapping(In.TexCd.xy, E, N);
+	In.TexCd.xy = parallaxOcclusionMapping(In.TexCd.xy, E, N);
+	
+	float4 bumpMap = float4(0,0,0,0);
+	
+	uint tX2,tY2,m2;
+	normalTex.GetDimensions(tX2,tY2);
+	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd);
+	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd);
+	bumpMap = (bumpMap * 2.0f) - 1.0f;
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
+//	float3 V = normalize(camPos - In.PosW.xyz);
+	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+	
+
+}
+
+float4 PS_PBR(vs2ps In): SV_Target
 {	
 	return doLighting(In.PosW, In.NormW, In.V, In.TexCd);
 }
 
-float4 PS_SuperphongAutoTNB(vs2ps In): SV_Target
+float4 PS_PBR_Bump_AutoTNB(vs2ps In): SV_Target
 {	
 	
 // compute derivations of the world position
@@ -645,14 +733,14 @@ float4 PS_SuperphongAutoTNB(vs2ps In): SV_Target
 	b = normalize(b);
 	
 	float4 bumpMap = float4(0,0,0,0);
-	
+
 	uint tX2,tY2,m2;
 	normalTex.GetDimensions(tX2,tY2);
-	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tNormal).xy);
-	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tNormal).xy);
+	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear,In.TexCd.xy);
+	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy);
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
-	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t) + -bumpMap.y * normalize(b))*bumpy);
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t) + bumpMap.y * normalize(b))*bumpy);
 	
 	return doLighting(In.PosW, Nb, In.V, In.TexCd);
 }
@@ -662,7 +750,7 @@ technique10 PBR
 	pass P0
 	{
 		SetVertexShader( CompileShader( vs_4_0, VS() ) );
-		SetPixelShader( CompileShader( ps_5_0, PS_Superphong() ) );
+		SetPixelShader( CompileShader( ps_5_0, PS_PBR() ) );
 	}
 }
 technique10 PBR_Bump
@@ -670,7 +758,7 @@ technique10 PBR_Bump
 	pass P0
 	{
 		SetVertexShader( CompileShader( vs_4_0, VS_Bump() ) );
-		SetPixelShader( CompileShader( ps_5_0, PS_SuperphongBump() ) );
+		SetPixelShader( CompileShader( ps_5_0, PS_PBR_Bump() ) );
 	}
 }
 
@@ -679,6 +767,15 @@ technique10 PBR_Bump_AutoTNB
 	pass P0
 	{
 		SetVertexShader( CompileShader( vs_4_0, VS() ) );
-		SetPixelShader( CompileShader( ps_5_0, PS_SuperphongAutoTNB() ) );
+		SetPixelShader( CompileShader( ps_5_0, PS_PBR_Bump_AutoTNB() ) );
+	}
+}
+
+technique10 PBR_Bump_ParallaxOcclusionMapping
+{
+	pass P0
+	{
+		SetVertexShader( CompileShader( vs_4_0, VS_Bump() ) );
+		SetPixelShader( CompileShader( ps_5_0, PS_PBR_ParallaxOcclusionMapping() ) );
 	}
 }
