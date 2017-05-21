@@ -599,9 +599,9 @@
    </PIN>
    <PIN pinname="Example Lightness" slicecount="1" values="0.5">
    </PIN>
-   <PIN pinname="DirectionalLight" slicecount="1" visible="1" values="1">
+   <PIN pinname="DirectionalLight" slicecount="1" visible="1" values="0">
    </PIN>
-   <PIN pinname="SpotLight" slicecount="1" values="0">
+   <PIN pinname="SpotLight" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="512">
    </PIN>
