@@ -3,6 +3,7 @@
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
 
+
 struct lightStruct
 {
 	float4 diffuse : COLOR0;
@@ -16,7 +17,10 @@ cbuffer cbPerObject : register (b0)
 	//transforms
 	float4x4 tW: WORLD;        //the models world matrix
 	float4x4 tWVP: WORLDVIEWPROJECTION;
-
+	float4x4 tVP: VIEWPROJECTION;
+//	float4x4 tP: PROJECTION;
+//	float4x4 tPI: PROJECTIONINVERSE;
+	
 	float3 camPos <string uiname="Camera Position";> ;
 	float4 GlobalReflectionColor <bool color = true; string uiname="Global Reflection Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 GlobalDiffuseColor <bool color = true; string uiname="Global Diffuse Color";>  = { 0.0f,0.0f,0.0f,0.0f };
@@ -29,12 +33,6 @@ cbuffer cbPerObject : register (b0)
 	bool BPCM <bool visible= false; String uiname="Box Projected Cube Map";>;
 	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
 	bool useIridescence = false;	
-//	
-//	float4x4 tColor <bool uvspace=true;>;
-//	float4x4 tNormal <bool uvspace=true;>;
-//	float4x4 tRoughness <bool uvspace=true;>;
-//	float4x4 tMetallic <bool uvspace=true;>;
-//	float4x4 tAO <bool uvspace=true;>;
 
 	float4x4 tTex <bool uvspace=true;>;
 	
@@ -138,18 +136,17 @@ vs2psBump VS_Bump(
     //inititalize all fields of output struct with 0
     vs2psBump Out = (vs2psBump)0;
     Out.PosW = mul(PosO, tW);	
-//	Out.NormW = mul(NormO, NormalTransform);
-	Out.NormW = mul(NormO, tW);
+	Out.NormW = mul(NormO, (float3x3)tW);
 	Out.NormW = normalize(Out.NormW);
 	// Calculate the tangent vector against the world matrix only and then normalize the final value.
-    Out.tangent = mul(tangent, tW);
+    Out.tangent = mul(tangent, (float3x3)tW);
     Out.tangent = normalize(Out.tangent);
     // Calculate the binormal vector against the world matrix only and then normalize the final value.
-    Out.binormal = mul(binormal, tW);
+    Out.binormal = mul(binormal, (float3x3)tW);
     Out.binormal = normalize(Out.binormal);
     Out.PosWVP  = mul(PosO, tWVP);
 	Out.TexCd = mul(TexCd,tTex);
-	Out.V = normalize(camPos - Out.PosW);
+	Out.V = normalize(camPos - Out.PosW.xyz);
     return Out;
 }
 
@@ -186,7 +183,7 @@ vs2ps VS(
 	
 	static const float MAX_REFLECTION_LOD = 9.0;
 
-float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
+float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd, float2 pomOffset){
 	
 
 	
@@ -350,24 +347,21 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				if(useShadow[i]  == 1){
 					shadowCounter++;
 				} 
-//				float pomOffset = heightMap.Sample(g_samLinear, TexCd).r;
-//				pomOffset = pomOffset*.1;
+//				float4 PosWOffset = float4(PosW.xyz * mul(N,pomOffset.x),1);
+//				float4 PosWOffset = float4(PosW.xyz + mul(N,pomOffset.x*-.1),1);
 				viewPosition = mul(PosW, LightVP[i]);
-					
+				
+//				viewPosition.xy += mul(float4(pomOffset,0,1), LightVP[i]);
+
 				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-//				projectTexCoord.xy = parallaxOcclusionMapping(projectTexCoord.xy,L,N);
+				
+//				projectTexCoord += mul(float4(pomOffset,0,1)*4, LightP[i]);
 			
-			//	In.TexCd.xy = parallaxOcclusionMapping(In.TexCd.xy, E, N);
-//				projectTexCoord.xy = parallaxOcclusionMapping(projectTexCoord.xy, V, N);
-//					float3 pomOffset = heightMap.Sample(g_samLinear, TexCd);
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-
-//					float lightDist_pomOffset = length(float4(lPos[i],1) - (PosW));
-//					projectTexCoordZ += pomOffset;
-					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1))+.2;	
+					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
 				} else {
 					shadow = 1;
 				}
@@ -495,12 +489,11 @@ float4 PS_PBR_Bump(vs2psBump In): SV_Target
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
 //	float3 V = normalize(camPos - In.PosW.xyz);
-	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+	return doLighting(In.PosW, Nb, In.V, In.TexCd,0);
 	
 
 }
 
-//float shadOff = 0;
 float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
 {	
 	
@@ -518,9 +511,9 @@ float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
 	E	= mul( E, worldToTangentSpace );
 	N = mul( In.NormW, worldToTangentSpace );
 	
-//	float3 pom = parallaxOcclusionMapping(In.TexCd.xy, E, N);
-//	In.TexCd.xy = pom.xy;
-	In.TexCd.xy =  parallaxOcclusionMapping(In.TexCd.xy, E, N);
+	float3 pom = parallaxOcclusionMapping(In.TexCd.xy, E, N);
+	In.TexCd.xy += pom.xy;
+//	In.TexCd.xy =  parallaxOcclusionMapping(In.TexCd.xy, E, N);
 	float4 bumpMap = float4(0,0,0,0);
 	
 	uint tX2,tY2,m2;
@@ -529,23 +522,15 @@ float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
 	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd);
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
-//	float3 V = normalize(camPos - In.PosW.xyz);
-
-//	float reliefDepth = shadOff;
-//	float offsetDepth = (reliefDepth * 0.2f + (reliefDepth * 0.8f) * dot( In.V, In.NormW ) * (1.0f-pom.z));
-//	float3 bottomPos = In.PosW - In.NormW * offsetDepth;
-//	float d1 = dot(In.NormW, bottomPos - In.PosW);
-//	float d2 = dot(In.V, In.NormW);
-//	In.PosW.xyz += In.V * (d1/d2);
-
-	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+//	In.PosW.xyz += pom.z * In.NormW * -.1;
+	return doLighting(In.PosW, Nb, In.V, In.TexCd, pom.z);
 	
 
 }
 
 float4 PS_PBR(vs2ps In): SV_Target
 {	
-	return doLighting(In.PosW, In.NormW, In.V, In.TexCd);
+	return doLighting(In.PosW, In.NormW, In.V, In.TexCd,0);
 }
 
 float4 PS_PBR_Bump_AutoTNB(vs2ps In): SV_Target
@@ -580,7 +565,7 @@ float4 PS_PBR_Bump_AutoTNB(vs2ps In): SV_Target
 	
 	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t) + bumpMap.y * normalize(b))*bumpy);
 	
-	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+	return doLighting(In.PosW, Nb, In.V, In.TexCd,0);
 }
 
 technique10 PBR

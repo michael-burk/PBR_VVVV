@@ -1,8 +1,8 @@
-float fHeightMapScale = .1;
+float fHeightMapScale = -.1;
 int nMaxSamples = 10;
 int nMinSamples = 1;
 
-float2 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
+float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
     
     float fParallaxLimit = -length( V.xy ) / V.z;
     fParallaxLimit *= fHeightMapScale;  
@@ -51,6 +51,6 @@ float2 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
       }
     
     }
-    
-    return texcoord + vCurrOffset;  
+//    return texcoord + vCurrOffset;  
+    return float3(vCurrOffset,fLastSampledHeight);  
 }

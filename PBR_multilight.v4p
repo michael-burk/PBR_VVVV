@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="135" bgcolor="15329769">
-   <BOUNDS type="Window" left="14190" top="225" width="14610" height="15105">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="3240" scrolly="0" bgcolor="15329769">
+   <BOUNDS type="Window" left="13590" top="180" width="15210" height="15105">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -61,7 +61,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="0" top="0" width="13695" height="14085">
+   <BOUNDS type="Window" left="0" top="0" width="13740" height="14085">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -453,7 +453,7 @@
    </PIN>
    <PIN pinname="Rows" slicecount="1" values="2">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="2" values="2.52,0.23">
+   <PIN pinname="Y Input Value" slicecount="2" values="2.7,0.23">
    </PIN>
    <PIN pinname="Vector Size" slicecount="1" values="2">
    </PIN>
@@ -514,12 +514,12 @@
    <LINKPOINT x="4335" y="9263">
    </LINKPOINT>
    </LINK>
-   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="0" debug="0">
+   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0" debug="0">
    <BOUNDS type="Node" left="8133" top="7483" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="5415" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="11325" top="600" width="22350" height="14295">
+   <BOUNDS type="Window" left="11340" top="1455" width="22350" height="14295">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -577,7 +577,7 @@
    </PIN>
    <PIN pinname="Res²" slicecount="1" values="512">
    </PIN>
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.04">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Helper" visible="1" slicecount="1" values="0">
    </PIN>
@@ -603,7 +603,7 @@
    </PIN>
    <PIN pinname="SpotLight" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="256">
+   <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="512">
    </PIN>
    <PIN pinname="PointLight" slicecount="1" visible="1" values="0">
    </PIN>
@@ -1273,7 +1273,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7245" top="6150" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,0">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1467,7 +1467,7 @@
    </PIN>
    </NODE>
    <NODE systemname="DepthOnly (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DepthOnly (DX11.Layer)" componentmode="Hidden" id="1270">
-   <BOUNDS type="Node" left="3915" top="9180" width="100" height="100">
+   <BOUNDS type="Node" left="4335" top="9210" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Layer In" visible="1">
    </PIN>
@@ -1656,8 +1656,6 @@
    <PIN pinname="Reverse" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1288" srcpinname="Texture Out" dstnodeid="934" dstpinname="Iridescence">
-   </LINK>
    <LINK srcnodeid="1261" srcpinname="Texture Out" dstnodeid="934" dstpinname="NormalMap" linkstyle="Bezier">
    <LINKPOINT x="11190" y="6045">
    </LINKPOINT>
@@ -1797,7 +1795,7 @@
    </BOUNDS>
    <PIN pinname="Input String" visible="0" slicecount="1" values="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\Assets\cratered_rock\cratered-rock-metalness.png">
    </PIN>
-   <PIN pinname="Output String" visible="0">
+   <PIN pinname="Output String" visible="1">
    </PIN>
    <PIN pinname="Show Grid" slicecount="1" values="0">
    </PIN>
@@ -1961,5 +1959,17 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="SpotLightTex" dstnodeid="934" dstpinname="SpotTex">
+   </LINK>
+   <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="1302">
+   <BOUNDS type="Node" left="13425" top="4605" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Filename" slicecount="1" visible="1" values="girlpower\Assets\testBrdf.dds">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1293" srcpinname="Output String" dstnodeid="1302" dstpinname="Filename">
+   </LINK>
+   <LINK srcnodeid="1302" srcpinname="Texture Out" dstnodeid="934" dstpinname="MetallicMap">
    </LINK>
    </PATCH>
