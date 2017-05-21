@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="0" bgcolor="15329769">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="135" bgcolor="15329769">
    <BOUNDS type="Window" left="14190" top="225" width="14610" height="15105">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -514,12 +514,12 @@
    <LINKPOINT x="4335" y="9263">
    </LINKPOINT>
    </LINK>
-   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0" debug="0">
+   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="0" debug="0">
    <BOUNDS type="Node" left="8133" top="7483" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="5415" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="11670" top="1875" width="22350" height="14295">
+   <BOUNDS type="Window" left="11325" top="600" width="22350" height="14295">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -533,7 +533,7 @@
    </PIN>
    <PIN pinname="SpotLightTex" visible="1" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0,0,0.09375,2,0.3125,2,0.90625,1.09375,1.375,1.59375">
+   <PIN pinname="Control" visible="-1" pintype="Input" slicecount="11" values="0,0.125,0,0,1.28125,0.53125,0.90625,2,0.6875,0.75,0.75">
    </PIN>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
@@ -577,7 +577,7 @@
    </PIN>
    <PIN pinname="Res²" slicecount="1" values="512">
    </PIN>
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.04">
    </PIN>
    <PIN pinname="Helper" visible="1" slicecount="1" values="0">
    </PIN>
@@ -599,13 +599,13 @@
    </PIN>
    <PIN pinname="Example Lightness" slicecount="1" values="0.5">
    </PIN>
-   <PIN pinname="DirectionalLight" slicecount="1" visible="1" values="0">
+   <PIN pinname="DirectionalLight" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="SpotLight" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="256">
    </PIN>
-   <PIN pinname="PointLight" slicecount="1" visible="1" values="1">
+   <PIN pinname="PointLight" slicecount="1" visible="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -1069,7 +1069,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8700" top="10335" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="120">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="15">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1273,7 +1273,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7245" top="6150" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.5,0.5">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0,0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1928,12 +1928,6 @@
    <LINKPOINT x="5250" y="7223">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1263" srcpinname="Texture Out" dstnodeid="934" dstpinname="HeightMap" linkstyle="Bezier">
-   <LINKPOINT x="11760" y="6473">
-   </LINKPOINT>
-   <LINKPOINT x="10320" y="6473">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="1291" srcpinname="Output String" dstnodeid="1264" dstpinname="Filename">
    </LINK>
    <LINK srcnodeid="1264" srcpinname="Texture Out" dstnodeid="934" dstpinname="AOMap">
@@ -1959,5 +1953,13 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="1301" srcpinname="Y Output Value" dstnodeid="934" dstpinname="shadOff">
+   </LINK>
+   <LINK srcnodeid="1263" srcpinname="Texture Out" dstnodeid="934" dstpinname="HeightMap" linkstyle="Bezier">
+   <LINKPOINT x="11760" y="6473">
+   </LINKPOINT>
+   <LINKPOINT x="10320" y="6473">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="SpotLightTex" dstnodeid="934" dstpinname="SpotTex">
    </LINK>
    </PATCH>

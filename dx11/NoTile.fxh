@@ -1,5 +1,6 @@
 // Shader code by Inigo Quilez
 //http://www.iquilezles.org/www/articles/texturerepetition/texturerepetition.htm
+float2 R : Targetsize;
 
 float4 hash4( float2 p ) { return frac(sin(float4( 1.0+dot(p,float2(37.0,17.0)), 
                                               		2.0+dot(p,float2(11.0,47.0)),
@@ -34,4 +35,17 @@ float4 textureNoTile(Texture2D tex, in float2 uv )
 	
     // normalization
     return va/wt;
+}
+
+float4 getTexel( float3 p, Texture2DArray tex )
+{
+    p.xy = p.xy*R + 0.5;
+
+    float2 i = floor( p.xy);
+    float2 f =  p.xy - i;
+    f = f*f*f*(f*(f*6.0-15.0)+10.0);
+      p.xy.xy = i + f;
+
+     p.xy = ( p.xy - 0.5)/R;
+    return tex.SampleLevel(shadowSampler, p, 0);
 }

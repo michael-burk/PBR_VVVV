@@ -98,6 +98,9 @@ SamplerState shadowSampler
 
 #include "dx11/VSM.fxh"
 #include "dx11/NoTile.fxh"
+#include "dx11/ParallaxOcclusionMapping.fxh"
+#include "dx11/ToneMapping.fxh"
+#include "dx11/CookTorrance.fxh"
 
 struct vs2psBump
 {
@@ -171,186 +174,7 @@ vs2ps VS(
 	
     return Out;
 }
-float2 R : Targetsize;
 
-float4 getTexel( float3 p, Texture2DArray tex )
-{
-    p.xy = p.xy*R + 0.5;
-
-    float2 i = floor( p.xy);
-    float2 f =  p.xy - i;
-    f = f*f*f*(f*(f*6.0-15.0)+10.0);
-      p.xy.xy = i + f;
-
-     p.xy = ( p.xy - 0.5)/R;
-    return tex.SampleLevel(shadowSampler, p, 0);
-}
-float fHeightMapScale = .1;
-int nMaxSamples = 10;
-int nMinSamples = 1;
-
-float2 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
-	
-	float fParallaxLimit = -length( V.xy ) / V.z;
-	fParallaxLimit *= fHeightMapScale;	
-	
-	float2 vOffsetDir = normalize( V.xy );
-	float2 vMaxOffset = vOffsetDir * fParallaxLimit;
-	
-	int nNumSamples = (int)lerp( nMaxSamples, nMinSamples, saturate(-dot( V, N )) );
-//	nNumSamples = 20;
-	float fStepSize = 1.0 / (float)nNumSamples;
-	
-	float2 dx = ddx( texcoord );
-	float2 dy = ddy( texcoord );
-	
-	float fCurrRayHeight = 1.0;
-	float2 vCurrOffset = float2( 0, 0 );
-	float2 vLastOffset = float2( 0, 0 );
-	
-	float fLastSampledHeight = 1;
-	float fCurrSampledHeight = 1;
-
-	int nCurrSample = 0;
-	
-	
-	while ( nCurrSample < nNumSamples ){	
-				
-	  fCurrSampledHeight = heightMap.SampleGrad( g_samLinear, texcoord + vCurrOffset, dx, dy ).r;
-	  if ( fCurrSampledHeight > fCurrRayHeight ){
-	    float delta1 = fCurrSampledHeight - fCurrRayHeight;
-	    float delta2 = ( fCurrRayHeight + fStepSize ) - fLastSampledHeight;
-	
-	    float ratio = delta1/(delta1+delta2);
-	
-	    vCurrOffset = (ratio) * vLastOffset + (1.0-ratio) * vCurrOffset;
-	
-	    nCurrSample = nNumSamples + 1;
-	  } else {
-	    nCurrSample++;
-	
-	    fCurrRayHeight -= fStepSize;
-	
-	    vLastOffset = vCurrOffset;
-	    vCurrOffset += fStepSize * vMaxOffset;
-	
-	    fLastSampledHeight = fCurrSampledHeight;
-	  }
-	
-	}
-	
-	return texcoord + vCurrOffset;	
-}
-
-// sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
-static const float3x3 ACESInputMat =
-{
-    {0.59719, 0.35458, 0.04823},
-    {0.07600, 0.90834, 0.01566},
-    {0.02840, 0.13383, 0.83777}
-};
-
-// ODT_SAT => XYZ => D60_2_D65 => sRGB
-static const float3x3 ACESOutputMat =
-{
-    { 1.60475, -0.53108, -0.07367},
-    {-0.10208,  1.10813, -0.00605},
-    {-0.00327, -0.07276,  1.07602}
-};
-
-float3 RRTAndODTFit(float3 v)
-{
-    float3 a = v * (v + 0.0245786f) - 0.000090537f;
-    float3 b = v * (0.983729f * v + 0.4329510f) + 0.238081f;
-    return a / b;
-}
-
-float3 ACESFitted(float3 color)
-{
-    color = mul(ACESInputMat, color);
-
-    // Apply RRT and ODT
-    color = RRTAndODTFit(color);
-
-    color = mul(ACESOutputMat, color);
-
-    // Clamp to [0, 1]
-    color = saturate(color);
-
-    return color;
-}
-
-static const float PI = 3.14159265359;
-
-float3 fresnelSchlick(float cosTheta, float3 F0)
-{
-    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
-}  
-
-float3 fresnelSchlickRoughness(float cosTheta, float3 F0, float roughness)
-{
-    return F0 + (max(float3(1.0 - roughness,1.0 - roughness,1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
-}   
-
-float DistributionGGX(float3 N, float3 H, float roughness)
-{
-    float a      = roughness*roughness;
-    float a2     = a*a;
-    float NdotH  = max(dot(N, H), 0.0);
-    float NdotH2 = NdotH*NdotH;
-	
-    float nom   = a2;
-    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
-    denom = PI * denom * denom;
-	
-    return nom / denom;
-}
-
-float GeometrySchlickGGX(float NdotV, float roughness)
-{
-    float r = (roughness + 1.0);
-    float k = (r*r) / 8.0;
-
-    float nom   = NdotV;
-    float denom = NdotV * (1.0 - k) + k;
-	
-    return nom / denom;
-}
-
-float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
-{
-    float NdotV = max(dot(N, V), 0.0);
-    float NdotL = max(dot(N, L), 0.0);
-    float ggx2  = GeometrySchlickGGX(NdotV, roughness);
-    float ggx1  = GeometrySchlickGGX(NdotL, roughness);
-	
-    return ggx1 * ggx2;
-}
-
-float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
-					float3 lAmb, float shadow, float3 projectionColor, float falloff,
-					float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0,
-					float attenuation, float roughness, float metallic, float ao,float3 iridescenceColor){
-    float3 H = normalize(V + L);
-    float3 radiance   = lDiff * attenuation * shadow * projectionColor;
-    // cook-torrance brdf
-    float NDF = DistributionGGX(N, H, roughness);        
-    float G   = GeometrySmith(N, V, L, roughness);      
-    float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);       					        
-    float3 kS = F;
-    float3 kD = float3(1.0,1.0,1.0) - kS;
-    kD *= 1.0 - metallic;	  					        
-    float3 nominator    = NDF * G * F;
-    float denominator = 4 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.001; 
-    float3 specular   = nominator / denominator;
-	specular *= lPower;
-	specular *= iridescenceColor;
-//	specular = max(iridescenceColor,specular);
-    // add to outgoing radiance Lo
-    float NdotL = max(dot(N, L), 0.0);                
-    float3 returnLight = (kD * albedo.xyz / PI + specular) * radiance * NdotL;
-	return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;
-}
 
 // wavelength colors
 	static const half3 wavelength[3] =
@@ -508,7 +332,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	for(uint i = 0; i< numLights; i++){
 		
 		float3 lightToObject = float4(lPos[i],1) - PosW;
-		float3 L = normalize(float4(lPos[i],1) - PosW);
+		float3 L = normalize(lightToObject);
 		float lightDist = length(lightToObject);
 		float falloff = pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
 		float projectTexCoordZ;
@@ -526,19 +350,24 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				if(useShadow[i]  == 1){
 					shadowCounter++;
 				} 
-
+//				float pomOffset = heightMap.Sample(g_samLinear, TexCd).r;
+//				pomOffset = pomOffset*.1;
 				viewPosition = mul(PosW, LightVP[i]);
 					
 				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
+//				projectTexCoord.xy = parallaxOcclusionMapping(projectTexCoord.xy,L,N);
 			
 			//	In.TexCd.xy = parallaxOcclusionMapping(In.TexCd.xy, E, N);
 //				projectTexCoord.xy = parallaxOcclusionMapping(projectTexCoord.xy, V, N);
-					
+//					float3 pomOffset = heightMap.Sample(g_samLinear, TexCd);
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
+
+//					float lightDist_pomOffset = length(float4(lPos[i],1) - (PosW));
+//					projectTexCoordZ += pomOffset;
+					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1))+.2;	
 				} else {
 					shadow = 1;
 				}
