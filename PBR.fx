@@ -19,7 +19,7 @@ cbuffer cbPerObject : register (b0)
 	float4x4 tWVP: WORLDVIEWPROJECTION;
 	float4x4 tVP: VIEWPROJECTION;
 	float4x4 tP: PROJECTION;
-//	float4x4 tPI: PROJECTIONINVERSE;
+	float4x4 tV: VIEW;
 	
 	float3 camPos <string uiname="Camera Position";> ;
 	float4 GlobalReflectionColor <bool color = true; string uiname="Global Reflection Color";>  = { 0.0f,0.0f,0.0f,0.0f };
@@ -511,16 +511,25 @@ float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
 	float3 pom = parallaxOcclusionMapping(In.TexCd.xy, E, N);
 	In.TexCd.xy += pom.xy;
 //	In.TexCd.xy =  parallaxOcclusionMapping(In.TexCd.xy, E, N);
-	float4 bumpMap = float4(0,0,0,0);
 	
+	float4 bumpMap = float4(0,0,0,0);
 	uint tX2,tY2,m2;
 	normalTex.GetDimensions(tX2,tY2);
+	
 	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd);
 	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd);
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
+
 //	float h  = heightMap.Sample(g_samLinear, In.TexCd);
-	In.PosW.xyz += pom.z * mul(In.NormW, tVP) * .2;
+	
+//	In.PosW.xyz += pom.z * mul(In.NormW, tV) * .5;
+//	In.PosW.xyz += mul(tWVP, pom).z * In.NormW * 1;
+//	In.PosW.xyz += pom.z * In.NormW * .15;
+//	In.PosW.xyz -= mul(pom,tangentToWorldSpace).z * In.NormW * 2;
+	
+	In.PosW.xyz -= mul(pom,tangentToWorldSpace);
+	
 //	In.PosW.xyz += Nb * h *.1;
 	return doLighting(In.PosW, Nb, In.V, In.TexCd, pom.z);
 	

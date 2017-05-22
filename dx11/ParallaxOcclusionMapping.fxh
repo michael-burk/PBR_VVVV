@@ -52,5 +52,5 @@ float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
     
     }
 //    return texcoord + vCurrOffset;  
-    return float3(vCurrOffset,fLastSampledHeight);  
+    return float3(vCurrOffset,fLastSampledHeight*fHeightMapScale);  
 }

@@ -1,6 +1,6 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="3240" scrolly="0" bgcolor="15329769">
-   <BOUNDS type="Window" left="13590" top="180" width="15210" height="15105">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
+   <PATCH nodename="C:\Projects\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="510" bgcolor="15329769">
+   <BOUNDS type="Window" left="1905" top="180" width="26895" height="15105">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -61,7 +61,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="0" top="0" width="13740" height="14085">
+   <BOUNDS type="Window" left="-16620" top="600" width="15600" height="15945">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -85,7 +85,7 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
-   <PIN pinname="Texture SizeXY" slicecount="2" values="900,900">
+   <PIN pinname="Texture SizeXY" slicecount="2" values="1024,1024">
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
@@ -514,12 +514,12 @@
    <LINKPOINT x="4335" y="9263">
    </LINKPOINT>
    </LINK>
-   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0" debug="0">
+   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="0" debug="0">
    <BOUNDS type="Node" left="8133" top="7483" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="2775" top="5415" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="11340" top="1455" width="22350" height="14295">
+   <BOUNDS type="Window" left="11340" top="1455" width="22350" height="14760">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -577,7 +577,7 @@
    </PIN>
    <PIN pinname="Res²" slicecount="1" values="512">
    </PIN>
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.17">
    </PIN>
    <PIN pinname="Helper" visible="1" slicecount="1" values="0">
    </PIN>
@@ -585,7 +585,7 @@
    </PIN>
    <PIN pinname="lPos" visible="1">
    </PIN>
-   <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0">
+   <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0.38">
    </PIN>
    <PIN pinname="Shadow" slicecount="3" visible="1" values="1,1,1">
    </PIN>
@@ -599,11 +599,11 @@
    </PIN>
    <PIN pinname="Example Lightness" slicecount="1" values="0.5">
    </PIN>
-   <PIN pinname="DirectionalLight" slicecount="1" visible="1" values="1">
+   <PIN pinname="DirectionalLight" slicecount="1" visible="1" values="0">
    </PIN>
-   <PIN pinname="SpotLight" slicecount="1" values="0">
+   <PIN pinname="SpotLight" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="512">
+   <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="256">
    </PIN>
    <PIN pinname="PointLight" slicecount="1" visible="1" values="0">
    </PIN>
@@ -1069,7 +1069,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="8700" top="10335" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="15">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="120">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1273,7 +1273,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7245" top="6150" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.5,0.5">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1751,7 +1751,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="19200" top="1425" width="7740" height="270">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\Assets\cratered_rock\cratered-rock-albedo.png">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="girlpower\Assets\cratered_rock\cratered-rock-albedo.png">
    </PIN>
    <PIN pinname="Output String" visible="1">
    </PIN>
@@ -1793,7 +1793,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="19200" top="2325" width="7980" height="270">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\Assets\cratered_rock\cratered-rock-metalness.png">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="girlpower\Assets\cratered_rock\cratered-rock-metalness.png">
    </PIN>
    <PIN pinname="Output String" visible="1">
    </PIN>
@@ -1807,7 +1807,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="19200" top="2625" width="7785" height="270">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\Assets\cratered_rock\cratered-rock-normal.png">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="girlpower\Assets\cratered_rock\cratered-rock-normal.png">
    </PIN>
    <PIN pinname="Output String" visible="1">
    </PIN>
@@ -1821,7 +1821,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="19200" top="2925" width="8025" height="270">
    </BOUNDS>
-   <PIN pinname="Input String" visible="0" slicecount="1" values="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\Assets\cratered_rock\cratered-rock-roughness.png">
+   <PIN pinname="Input String" visible="0" slicecount="1" values="girlpower\Assets\cratered_rock\cratered-rock-roughness.png">
    </PIN>
    <PIN pinname="Output String" visible="1">
    </PIN>
@@ -1863,7 +1863,7 @@
    <LINK srcnodeid="1292" srcpinname="Output String" dstnodeid="1263" dstpinname="Filename">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1297">
-   <BOUNDS type="Box" left="1095" top="4710" width="795" height="240">
+   <BOUNDS type="Box" left="1095" top="4710" width="795" height="255">
    </BOUNDS>
    <BOUNDS type="Node" left="1095" top="4710" width="0" height="0">
    </BOUNDS>
@@ -1887,7 +1887,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="3015" top="4875" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="50">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="523">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>

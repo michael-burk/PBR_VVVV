@@ -1,5 +1,5 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="1305" scrolly="0" bgcolor="15132390" locked="0">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
+   <PATCH nodename="C:\Projects\PBR_VVVV\modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="5595" scrolly="0" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="11400" width="100" height="100">
    </BOUNDS>
@@ -149,7 +149,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6285" top="3515" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0.45,0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -181,7 +181,7 @@
    </PIN>
    <PIN pinname="XYZ Transformed" visible="1">
    </PIN>
-   <PIN pinname="XYZ UnTransformed" visible="1" slicecount="3" values="-0.44,-0.97,-1.32">
+   <PIN pinname="XYZ UnTransformed" visible="1" slicecount="3" values="1.42,1.28,0">
    </PIN>
    </NODE>
    <NODE systemname="LinearSpread (Spreads)" nodename="LINEARSPREAD (SPREADS)" componentmode="Hidden" id="42" hiddenwhenlocked="1">
@@ -336,7 +336,7 @@
    <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="11340" top="1455" width="22350" height="14295">
+   <BOUNDS type="Window" left="11340" top="1455" width="22350" height="14760">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -345,7 +345,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="18495" top="11400">
    </BOUNDS>
-   <PIN pinname="Gamma" slicecount="1" visible="1" values="0.08">
+   <PIN pinname="Gamma" slicecount="1" visible="1" values="0.5">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -513,7 +513,7 @@
    </BOUNDS>
    <PIN pinname="Z" slicecount="1" values="0.5">
    </PIN>
-   <PIN pinname="Enabled" slicecount="1" visible="1" values="1">
+   <PIN pinname="Enabled" slicecount="1" visible="1" values="0">
    </PIN>
    <BOUNDS type="Box" left="8190" top="5670">
    </BOUNDS>
@@ -921,7 +921,7 @@
    </BOUNDS>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
-   <PIN pinname="FOV" slicecount="1" visible="1" values="0.11">
+   <PIN pinname="FOV" slicecount="1" visible="1" values="0.12">
    </PIN>
    <PIN pinname="Roll" visible="1" slicecount="1" values="0">
    </PIN>
@@ -1339,7 +1339,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6915" top="4830" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="6">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="8">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1401,7 +1401,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="9450" top="4815" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="6">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="9">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1449,7 +1449,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15345" top="4170" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="512">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="256">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1485,7 +1485,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15360" top="4680" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.17">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1535,7 +1535,7 @@
    </PIN>
    <PIN pinname="Minimum" slicecount="1" pintype="Configuration" values="0">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" pintype="Input" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" pintype="Input" values="0.38">
    </PIN>
    <BOUNDS type="Box" left="15360" top="5205" width="825" height="240">
    </BOUNDS>
@@ -1799,14 +1799,10 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="X Input Value" slicecount="1" values="0">
+   <PIN pinname="X Input Value" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="429" srcpinname="Y Output Value" dstnodeid="224" dstpinname="Enabled" linkstyle="PolyLine" hiddenwhenlocked="1">
-   </LINK>
    <LINK srcnodeid="429" srcpinname="Y Output Value" dstnodeid="20" dstpinname="Enabled" linkstyle="PolyLine" hiddenwhenlocked="1">
-   </LINK>
-   <LINK srcnodeid="429" srcpinname="Y Output Value" dstnodeid="151" dstpinname="Enabled" linkstyle="PolyLine" hiddenwhenlocked="1">
    </LINK>
    <LINK srcnodeid="429" srcpinname="Y Output Value" dstnodeid="78" dstpinname="Enabled" linkstyle="PolyLine" hiddenwhenlocked="1">
    </LINK>
@@ -1996,18 +1992,6 @@
    </LINK>
    <LINK srcnodeid="21" srcpinname="Projection" dstnodeid="80" dstpinname="Projection">
    </LINK>
-   <NODE id="448" systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden">
-   <BOUNDS type="Node" left="6945" top="2400" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="1.2">
-   </PIN>
-   <PIN pinname="Z" slicecount="1" values="0.72">
-   </PIN>
-   <PIN pinname="X" slicecount="1" values="-0.1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="448" srcpinname="XYZ" dstnodeid="25" dstpinname="XYZ UnTransformed">
-   </LINK>
    <LINK srcnodeid="449" srcpinname="Y Output Value" dstnodeid="2" dstpinname="Data" linkstyle="Bezier">
    <LINKPOINT x="13095" y="10985">
    </LINKPOINT>
@@ -2075,7 +2059,7 @@
    </PIN>
    <PIN pinname="Z" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="X" visible="1" slicecount="1" values="0">
+   <PIN pinname="X" visible="1" slicecount="1" values="-0.02">
    </PIN>
    </NODE>
    <LINK srcnodeid="470" srcpinname="Transform Out" dstnodeid="25" dstpinname="Transform" linkstyle="Bezier">
@@ -2279,7 +2263,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="12885" top="2505" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2305,7 +2289,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="13185" top="3300" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2459,7 +2443,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10650" top="10485" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" values="5,2,2">
+   <PIN pinname="Y Input Value" slicecount="3" values="100,2,2">
    </PIN>
    <PIN pinname="X Input Value" slicecount="3" values="1,1,1">
    </PIN>
@@ -2489,7 +2473,7 @@
    </PIN>
    <PIN pinname="Lightness" slicecount="1" visible="1" values="0.3">
    </PIN>
-   <PIN pinname="Saturation" slicecount="1" values="0.1">
+   <PIN pinname="Saturation" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Value" slicecount="1" values="1">
    </PIN>
@@ -2561,11 +2545,11 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="535">
    <BOUNDS type="Node" left="8325" top="2385" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="0.96">
+   <PIN pinname="Y" slicecount="1" values="1.53">
    </PIN>
-   <PIN pinname="X" slicecount="1" values="0.28">
+   <PIN pinname="X" slicecount="1" values="-0.03">
    </PIN>
-   <PIN pinname="Z" slicecount="1" values="-1.17">
+   <PIN pinname="Z" slicecount="1" values="-0.88">
    </PIN>
    <PIN pinname="XYZ" visible="1">
    </PIN>
@@ -2575,7 +2559,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="11865" top="10485" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" values="0,0.27,0.61">
+   <PIN pinname="Y Input Value" slicecount="3" values="3.09,0.27,0.61">
    </PIN>
    <PIN pinname="X Input Value" slicecount="3" values="0,0,0">
    </PIN>
@@ -2791,9 +2775,9 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="547">
    <BOUNDS type="Node" left="3795" top="2520" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="3">
+   <PIN pinname="Y" slicecount="1" values="2.91">
    </PIN>
-   <PIN pinname="Z" slicecount="1" values="5">
+   <PIN pinname="Z" slicecount="1" values="4.76">
    </PIN>
    <PIN pinname="X" slicecount="1" values="0">
    </PIN>
@@ -2801,5 +2785,15 @@
    <LINK srcnodeid="547" srcpinname="XYZ" dstnodeid="218" dstpinname="XYZ UnTransformed">
    </LINK>
    <LINK srcnodeid="369" srcpinname="Buffer" dstnodeid="370" dstpinname="Input Node">
+   </LINK>
+   <NODE id="549" systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden">
+   <BOUNDS type="Node" left="6945" top="2400" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Z" slicecount="1" values="-1.16">
+   </PIN>
+   <PIN pinname="Y" slicecount="1" values="1.77">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="549" srcpinname="XYZ" dstnodeid="25" dstpinname="XYZ UnTransformed">
    </LINK>
    </PATCH>
