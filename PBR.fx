@@ -3,7 +3,6 @@
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
 
-
 struct lightStruct
 {
 	float4 diffuse : COLOR0;
@@ -16,12 +15,11 @@ cbuffer cbPerObject : register (b0)
 {	
 	//transforms
 	float4x4 tW: WORLD;        //the models world matrix
+	float4x4 tWI: WORLDINVERSE;        //the models world matrix
+	float4x4 tV: WORLDVIEW;        //the models world matrix
+	float4x4 tP: WORLDPROJECTION;        //the models world matrix
 	float4x4 tWVP: WORLDVIEWPROJECTION;
-	float4x4 tVP: VIEWPROJECTION;
-	float4x4 tP: PROJECTION;
-	float4x4 tV: VIEW;
 	
-	float3 camPos <string uiname="Camera Position";> ;
 	float4 GlobalReflectionColor <bool color = true; string uiname="Global Reflection Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	float4 GlobalDiffuseColor <bool color = true; string uiname="Global Diffuse Color";>  = { 0.0f,0.0f,0.0f,0.0f };
 	
@@ -35,6 +33,8 @@ cbuffer cbPerObject : register (b0)
 	bool useIridescence = false;	
 
 	float4x4 tTex <bool uvspace=true;>;
+	float4x4 tTexInv <bool uvspace=true;>;
+	float4x4 norm ;
 	
 	float2 iblIntensity <bool visible=true; String uiname="IBL Intensity";> = float2(1,1);	
 	
@@ -45,6 +45,11 @@ cbuffer cbPerObject : register (b0)
 	float roughness <float uimin=0.0; float uimax=1.0;>;
 	float3 F <bool visible=false; String uiname="FresnelF0";> = { 0.04,0.04,0.04 };
 };
+
+cbuffer cbPerRender : register (b1)
+{	
+	float3 camPos <string uiname="Camera Position";> ;
+}
 
 StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
 StructuredBuffer <float> refractionIndex <bool visible=false; String uiname="Refraction Index";>;
@@ -121,10 +126,6 @@ struct vs2ps
 	float3 NormW : TEXCOORD3;
 };
 
-// -----------------------------------------------------------------------------
-// VERTEXSHADERS
-// -----------------------------------------------------------------------------
-
 vs2psBump VS_Bump(
     float4 PosO: POSITION,
     float3 NormO: NORMAL,
@@ -161,31 +162,24 @@ vs2ps VS(
     vs2ps Out = (vs2ps)0;
 	
     Out.PosW = mul(PosO, tW);
-//	Out.NormW = mul(NormO, NormalTransform);
-	Out.NormW = mul(NormO, tW);
+	Out.NormW = mul(NormO, (float3x3)tW);
 	Out.NormW = normalize(Out.NormW);
     Out.PosWVP  = mul(PosO, tWVP);
 	Out.TexCd = mul(TexCd,tTex);
-	Out.V = normalize(camPos - Out.PosW);
-    //Out.ViewDirV = -normalize(mul(PosO, tW));
-	
+	Out.V = normalize(camPos - Out.PosW.xyz);	
     return Out;
 }
 
+static const half3 wavelength[3] =
+{
+	{ 1, 0, 0},
+	{ 0, 1, 0},
+	{ 0, 0, 1},
+};
 
-// wavelength colors
-	static const half3 wavelength[3] =
-    {
-    	{ 1, 0, 0},
-    	{ 0, 1, 0},
-    	{ 0, 0, 1},
-	};
-	
-	static const float MAX_REFLECTION_LOD = 9.0;
+static const float MAX_REFLECTION_LOD = 9.0;
 
-float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd, float2 pomOffset){
-	
-
+float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
 	float3 LightDirW;
 	float4 viewPosition;
@@ -234,17 +228,17 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd, float2 pomOffse
 	
 	if(BPCM){
 		
-		float3 rbmax = (cubeMapBoxBounds[0] - (PosW))/reflVect;
-		float3 rbmin = (cubeMapBoxBounds[1] - (PosW))/reflVect;	
+		float3 rbmax = (cubeMapBoxBounds[0] - (PosW.xyz))/reflVect;
+		float3 rbmin = (cubeMapBoxBounds[1] - (PosW.xyz))/reflVect;	
 		float3 rbminmax = (reflVect>0.0f)?rbmax:rbmin;	
 		float fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);	
-		float3 posonbox = PosW + reflVect*fa;
+		float3 posonbox = PosW.xyz + reflVect*fa;
 		reflVect = posonbox - cubeMapPos;
-		rbmax = (cubeMapBoxBounds[0] - (PosW))/reflVecNorm;
-		rbmin = (cubeMapBoxBounds[1] - (PosW))/reflVecNorm;
+		rbmax = (cubeMapBoxBounds[0] - (PosW.xyz))/reflVecNorm;
+		rbmin = (cubeMapBoxBounds[1] - (PosW.xyz))/reflVecNorm;
 		rbminmax = (reflVecNorm>0.0f)?rbmax:rbmin;	
 		fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);	
-		posonbox = PosW + reflVecNorm*fa;
+		posonbox = PosW.xyz + reflVecNorm*fa;
 		reflVecNorm = posonbox - cubeMapPos;	
 //		if(refraction){
 //			rbmax = (cubeMapBoxBounds[0] - (PosW))/refrVect;
@@ -265,15 +259,13 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd, float2 pomOffse
 	
 	if (useIridescence){
 		float inverseDotView = 1.0 - max(dot(N,V),0.0);
-		iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0));
+		iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0)).rgb;
 	} else {
 		iridescenceColor = 1;
 	}
 	
 	if(tX+tY > 4 || tX1+tY1 > 4){
-		
-	
-		
+				
 		float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
 		float3 kD = 1.0 - kS;
 		
@@ -288,7 +280,6 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd, float2 pomOffse
 		} else {
 		  refl *= (F * envBRDF.x + envBRDF.y);
 		}
-		
 		
 		if(refraction){
 			float3 refrVect;
@@ -325,7 +316,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd, float2 pomOffse
 
 	for(uint i = 0; i< numLights; i++){
 		
-		float3 lightToObject = float4(lPos[i],1) - PosW;
+		float3 lightToObject = lPos[i] - PosW.xyz;
 		float3 L = normalize(lightToObject);
 		float lightDist = length(lightToObject);
 		float falloff = pow(saturate(lightRange[i%numLighRange]-lightDist),1.5);
@@ -344,17 +335,12 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd, float2 pomOffse
 				if(useShadow[i]  == 1){
 					shadowCounter++;
 				} 
-//				float4 PosWOffset = float4(PosW.xyz * mul(N,pomOffset.x),1);
-//				float4 PosWOffset = float4(PosW.xyz + mul(N,pomOffset.x*-.1),1);
+
 				viewPosition = mul(PosW, LightVP[i]);
 				
-//				viewPosition.xy += mul(float4(pomOffset,0,1), LightVP[i]);
-
 				projectTexCoord.x =  viewPosition.x / viewPosition.w / 2.0f + 0.5f;
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
-				
-//				projectTexCoord += mul(float4(pomOffset,0,1)*4, LightP[i]);
 			
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
@@ -474,82 +460,36 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd, float2 pomOffse
 	return finalLight;
 }
 
-float4 PS_PBR_Bump(vs2psBump In): SV_Target
-{	
-
-	float4 bumpMap = float4(0,0,0,0);
-	
-	uint tX2,tY2,m2;
-	normalTex.GetDimensions(tX2,tY2);
-	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tTex).xy);
-	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tTex).xy);
-	bumpMap = (bumpMap * 2.0f) - 1.0f;
-	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
-//	float3 V = normalize(camPos - In.PosW.xyz);
-	return doLighting(In.PosW, Nb, In.V, In.TexCd,0);
-	
-
-}
-
-float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
-{	
-	
-	
-	float3x3 tangentToWorldSpace;
-
-	tangentToWorldSpace[0] = mul( normalize( In.tangent ), (float3x3)-tW );
-	tangentToWorldSpace[1] = mul( normalize( In.binormal ), (float3x3)tW );
-	tangentToWorldSpace[2] = mul( normalize( In.NormW ), (float3x3)tW );
-	
-	float3x3 worldToTangentSpace = transpose(tangentToWorldSpace);
-	
-	float3 E = In.V;
-	float3 N = In.NormW.xyz;
-	E	= mul( E, worldToTangentSpace );
-	N = mul( In.NormW, worldToTangentSpace );
-	
-	float3 pom = parallaxOcclusionMapping(In.TexCd.xy, E, N);
-	In.TexCd.xy += pom.xy;
-//	In.TexCd.xy =  parallaxOcclusionMapping(In.TexCd.xy, E, N);
-	
-	float4 bumpMap = float4(0,0,0,0);
-	uint tX2,tY2,m2;
-	normalTex.GetDimensions(tX2,tY2);
-	
-	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd);
-	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd);
-	bumpMap = (bumpMap * 2.0f) - 1.0f;
-	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
-
-//	float h  = heightMap.Sample(g_samLinear, In.TexCd);
-	
-//	In.PosW.xyz += pom.z * mul(In.NormW, tV) * .5;
-//	In.PosW.xyz += mul(tWVP, pom).z * In.NormW * 1;
-//	In.PosW.xyz += pom.z * In.NormW * .15;
-//	In.PosW.xyz -= mul(pom,tangentToWorldSpace).z * In.NormW * 2;
-	
-	In.PosW.xyz -= mul(pom,tangentToWorldSpace);
-	
-//	In.PosW.xyz += Nb * h *.1;
-	return doLighting(In.PosW, Nb, In.V, In.TexCd, pom.z);
-	
-
-}
 
 float4 PS_PBR(vs2ps In): SV_Target
 {	
-	return doLighting(In.PosW, In.NormW, In.V, In.TexCd,0);
+	return doLighting(In.PosW, In.NormW, In.V, In.TexCd);
+}
+
+float4 PS_PBR_Bump(vs2psBump In): SV_Target
+{	
+
+	float3 bumpMap = float3(0,0,0);
+	
+	uint tX2,tY2,m2;
+	normalTex.GetDimensions(tX2,tY2);
+	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tTex).xy).rgb;
+	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tTex).xy).rgb;
+	bumpMap = (bumpMap * 2.0f) - 1.0f;
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(-In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
+	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+
 }
 
 float4 PS_PBR_Bump_AutoTNB(vs2ps In): SV_Target
 {	
 	
-// compute derivations of the world position
-	float3 p_dx = ddx(In.PosW);
-	float3 p_dy = ddy(In.PosW);
+	// compute derivations of the world position
+	float3 p_dx = ddx(In.PosW.xyz);
+	float3 p_dy = ddy(In.PosW.xyz);
 	// compute derivations of the texture coordinate
-	float2 tc_dx = ddx(In.TexCd);
-	float2 tc_dy = ddy(In.TexCd);
+	float2 tc_dx = ddx(In.TexCd.xy);
+	float2 tc_dy = ddy(In.TexCd.xy);
 	// compute initial tangent and bi-tangent
 	float3 t = normalize( tc_dy.y * p_dx - tc_dx.y * p_dy );
 	float3 b = normalize( tc_dy.x * p_dx - tc_dx.x * p_dy ); // sign inversion
@@ -563,17 +503,116 @@ float4 PS_PBR_Bump_AutoTNB(vs2ps In): SV_Target
 	b = cross(n, x);
 	b = normalize(b);
 	
-	float4 bumpMap = float4(0,0,0,0);
+	float3 bumpMap = float3(0,0,0);
 
 	uint tX2,tY2,m2;
 	normalTex.GetDimensions(tX2,tY2);
-	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear,In.TexCd.xy);
-	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy);
+	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear,In.TexCd.xy).rgb;
+	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy).rgb;
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
-	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t) + bumpMap.y * normalize(b))*bumpy);
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(-t) + bumpMap.y * normalize(b))*bumpy);
 	
-	return doLighting(In.PosW, Nb, In.V, In.TexCd,0);
+	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+}
+
+
+float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
+{	
+	
+	float3x3 tangentToWorldSpace;
+	
+	tangentToWorldSpace[0] = -In.tangent;
+	tangentToWorldSpace[1] = In.binormal;
+	tangentToWorldSpace[2] = In.NormW;
+	
+	float3x3 worldToTangentSpace = transpose(tangentToWorldSpace);
+	
+	float3 E = In.V;
+	float3 N = In.NormW.xyz;
+	E = mul( E, worldToTangentSpace );
+	N = mul( In.NormW, worldToTangentSpace );
+	
+	float3 pom = parallaxOcclusionMapping(In.TexCd.xy, E, N);
+	In.TexCd.xy += pom.xy;
+	
+	float3 bumpMap = float3(0,0,0);
+	
+	uint tX2,tY2,m2;
+	normalTex.GetDimensions(tX2,tY2);
+	
+	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd.xy).rgb;
+	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy).rgb;
+	bumpMap = (bumpMap * 2.0f) - 1.0f;
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * -In.tangent + bumpMap.y * In.binormal)*bumpy);
+	
+	
+//	float3x3 translation = (tW._41, tW._42, tW._43);
+	float scale = sqrt(tW._11*tW._11 + tW._12*tW._12 + tW._13*tW._13);
+	
+	In.PosW.xyz -= mul(mul(pom,mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);
+	
+	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+	
+}
+
+float4 PS_PBR_ParallaxOcclusionMapping_AutoTNB(vs2ps In): SV_Target
+{	
+	
+	// compute derivations of the world position
+	float3 p_dx = ddx(In.PosW.xyz);
+	float3 p_dy = ddy(In.PosW.xyz);
+	// compute derivations of the texture coordinate
+	float2 tc_dx = ddx(In.TexCd.xy);
+	float2 tc_dy = ddy(In.TexCd.xy);
+	// compute initial tangent and bi-tangent
+	float3 t = normalize( tc_dy.y * p_dx - tc_dx.y * p_dy );
+	float3 b = normalize( tc_dy.x * p_dx - tc_dx.x * p_dy ); // sign inversion
+	// get new tangent from a given mesh normal
+	float3 n = normalize(In.NormW);
+	float3 x = cross(n, t);
+	t = cross(x, n);
+	t = normalize(t);
+	// get updated bi-tangent
+	x = cross(b, n);
+	b = cross(n, x);
+	b = normalize(b);
+	
+	float3x3 tangentToWorldSpace;
+
+//	tangentToWorldSpace[0] = mul( normalize( t ), (float3x3)-tW );
+//	tangentToWorldSpace[1] = mul( normalize( b ), (float3x3)tW );
+//	tangentToWorldSpace[2] = mul( normalize( n ), (float3x3)tW );
+
+	tangentToWorldSpace[0] = -t;
+	tangentToWorldSpace[1] = b;
+	tangentToWorldSpace[2] = In.NormW;
+	
+	float3x3 worldToTangentSpace = transpose(tangentToWorldSpace);
+	
+	float3 E = In.V;
+	float3 N = In.NormW.xyz;
+	E	= mul( E, worldToTangentSpace );
+	N = mul( In.NormW, worldToTangentSpace );
+	
+	float3 pom = parallaxOcclusionMapping(In.TexCd.xy, E, N);
+	In.TexCd.xy += pom.xy;
+	
+	float3 bumpMap = float3(0,0,0);
+	
+	uint tX2,tY2,m2;
+	normalTex.GetDimensions(tX2,tY2);
+	
+	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd.xy).rgb;
+	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy).rgb;
+	bumpMap = (bumpMap * 2.0f) - 1.0f;
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t).xyz + bumpMap.y * normalize(b))*bumpy);
+	
+	float scale = sqrt(tW._11*tW._11 + tW._12*tW._12 + tW._13*tW._13);
+	In.PosW.xyz -= mul(mul(pom,mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);
+	
+	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+	
 }
 
 technique10 PBR
@@ -584,6 +623,7 @@ technique10 PBR
 		SetPixelShader( CompileShader( ps_5_0, PS_PBR() ) );
 	}
 }
+
 technique10 PBR_Bump
 {
 	pass P0
@@ -602,11 +642,20 @@ technique10 PBR_Bump_AutoTNB
 	}
 }
 
-technique10 PBR_Bump_ParallaxOcclusionMapping
+technique10 PBR_ParallaxOcclusionMapping
 {
 	pass P0
 	{
 		SetVertexShader( CompileShader( vs_4_0, VS_Bump() ) );
 		SetPixelShader( CompileShader( ps_5_0, PS_PBR_ParallaxOcclusionMapping() ) );
+	}
+}
+
+technique10 PBR_ParallaxOcclusionMapping_AutoTNB
+{
+	pass P0
+	{
+		SetVertexShader( CompileShader( vs_4_0, VS() ) );
+		SetPixelShader( CompileShader( ps_5_0, PS_PBR_ParallaxOcclusionMapping_AutoTNB() ) );
 	}
 }
