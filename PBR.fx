@@ -209,7 +209,6 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	metallTex.GetDimensions(tX,tY);
 	if(tX+tY > 4 && !noTile) metallicT = metallTex.Sample(g_samLinear, TexCd.xy).r;
 	else if(tX+tY > 4 && noTile) metallicT = textureNoTile(metallTex, TexCd.xy).r;
-	
 
 	float3 reflColor = float3(0,0,0);
 	float3 IBL = float3(0,0,0);
@@ -218,7 +217,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	metallicT *= metallic;
 	
     float3 F0 = lerp(F, albedo.xyz, metallicT);
-	texRoughness *= roughness;
+	texRoughness *= max(roughness,.02);
 
 	float3 reflVect = -reflect(V,N);
 	float3 reflVecNorm = N;
@@ -264,10 +263,12 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		iridescenceColor = 1;
 	}
 	
+	float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
+	float3 kD = 1.0 - kS;
+	
 	if(tX+tY > 4 || tX1+tY1 > 4){
 				
-		float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
-		float3 kD = 1.0 - kS;
+
 		
 		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm,texRoughness*MAX_REFLECTION_LOD).rgb;
 		IBL  = IBL * albedo.xyz;
@@ -280,7 +281,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		} else {
 		  refl *= (F * envBRDF.x + envBRDF.y);
 		}
-		
+
 		if(refraction){
 			float3 refrVect;
 		    for(int r=0; r<3; r++) {
@@ -290,7 +291,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 			refrColor = refrColor * (F * envBRDF.x + envBRDF.y);
 		
 		}
-		IBL  = ( ((IBL *iblIntensity.x*(kD*(1-metallic))) + refrColor*kD) + refl * iblIntensity.y) * aoT;
+		IBL  = ( ((IBL *iblIntensity.x*(kD*(1-metallicT))) + refrColor*kD) + refl * iblIntensity.y) * aoT;
 		
 	} else if(useIridescence){
 			float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
@@ -299,6 +300,11 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 			iridescenceColor *= (F * envBRDF.x + envBRDF.y);
 			IBL = iridescenceColor / kD;
 	}
+
+	float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
+	IBL += saturate(GlobalReflectionColor.rgb * (F * envBRDF.x + envBRDF.y) / kD);
+	IBL += GlobalDiffuseColor.rgb;
+	
 	
 	uint d,textureCount;lightMap.GetDimensions(d,d,textureCount);uint dP,textureCountDepth;
 	shadowMap.GetDimensions(dP,dP,textureCountDepth); uint numSpotRange, dummySpot; lightRange.GetDimensions(numSpotRange, dummySpot);
@@ -445,11 +451,9 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 			break;			
 		}	
 	}
-
-//	finalLight.xyz += GlobalReflectionColor.xyz * iridescenceColor * fresnelSchlick(max(dot(N, V), 0.0), F0);
-//	finalLight.xyz += GlobalDiffuseColor.xyz * aoT;
 	
 	finalLight.xyz += IBL.xyz;
+//	finalLight.xyz += ( fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness)) * GlobalReflectionColor.xyz;
 	
 //	Gamma Correction
 //	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
@@ -476,7 +480,7 @@ float4 PS_PBR_Bump(vs2psBump In): SV_Target
 	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tTex).xy).rgb;
 	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tTex).xy).rgb;
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
-	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(-In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
 	return doLighting(In.PosW, Nb, In.V, In.TexCd);
 
 }
@@ -511,7 +515,7 @@ float4 PS_PBR_Bump_AutoTNB(vs2ps In): SV_Target
 	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy).rgb;
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
-	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(-t) + bumpMap.y * normalize(b))*bumpy);
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t) + bumpMap.y * normalize(b))*bumpy);
 	
 	return doLighting(In.PosW, Nb, In.V, In.TexCd);
 }
@@ -544,13 +548,13 @@ float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
 	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd.xy).rgb;
 	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy).rgb;
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
-	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * -In.tangent + bumpMap.y * In.binormal)*bumpy);
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * In.tangent + bumpMap.y * In.binormal)*bumpy);
 	
 	
 //	float3x3 translation = (tW._41, tW._42, tW._43);
 	float scale = sqrt(tW._11*tW._11 + tW._12*tW._12 + tW._13*tW._13);
 	
-	In.PosW.xyz -= mul(mul(pom,mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);
+	In.PosW.xyz -= mul(mul((pom),mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);
 	
 	return doLighting(In.PosW, Nb, In.V, In.TexCd);
 	
@@ -580,9 +584,6 @@ float4 PS_PBR_ParallaxOcclusionMapping_AutoTNB(vs2ps In): SV_Target
 	
 	float3x3 tangentToWorldSpace;
 
-//	tangentToWorldSpace[0] = mul( normalize( t ), (float3x3)-tW );
-//	tangentToWorldSpace[1] = mul( normalize( b ), (float3x3)tW );
-//	tangentToWorldSpace[2] = mul( normalize( n ), (float3x3)tW );
 
 	tangentToWorldSpace[0] = -t;
 	tangentToWorldSpace[1] = b;
@@ -606,7 +607,7 @@ float4 PS_PBR_ParallaxOcclusionMapping_AutoTNB(vs2ps In): SV_Target
 	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd.xy).rgb;
 	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy).rgb;
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
-	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t).xyz + bumpMap.y * normalize(b))*bumpy);
+	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * t + bumpMap.y * b)*bumpy);
 	
 	float scale = sqrt(tW._11*tW._11 + tW._12*tW._12 + tW._13*tW._13);
 	In.PosW.xyz -= mul(mul(pom,mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);

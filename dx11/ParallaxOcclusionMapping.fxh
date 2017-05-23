@@ -1,18 +1,19 @@
 float fHeightMapScale = -.1;
-int nMaxSamples = 10;
-int nMinSamples = 1;
+//int nMaxSamples = 10;
+//int nMinSamples = 1;
+int POM_numSamples <bool visible=false;> = 25;
 
 float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
     
     float fParallaxLimit = -length( V.xy ) / V.z;
-    fParallaxLimit *= fHeightMapScale;  
+    fParallaxLimit *= -fHeightMapScale;  
     
     float2 vOffsetDir = normalize( V.xy );
     float2 vMaxOffset = vOffsetDir * fParallaxLimit;
     
-    int nNumSamples = (int)lerp( nMaxSamples, nMinSamples, saturate(-dot( V, N )) );
-//  nNumSamples = 20;
-    float fStepSize = 1.0 / (float)nNumSamples;
+//    int nNumSamples = (int)lerp( nMaxSamples, nMinSamples, saturate(dot( N, V)) );
+//  	nNumSamples = 50;
+    float fStepSize = 1.0 / (float)POM_numSamples;
     
     float2 dx = ddx( texcoord );
     float2 dy = ddy( texcoord );
@@ -26,19 +27,21 @@ float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
 
     int nCurrSample = 0;
     
-    
-    while ( nCurrSample < nNumSamples ){    
+    float delta1;
+	float delta2;
+	float ratio;
+    while ( nCurrSample < POM_numSamples ){    
                 
       fCurrSampledHeight = heightMap.SampleGrad( g_samLinear, texcoord + vCurrOffset, dx, dy ).r;
       if ( fCurrSampledHeight > fCurrRayHeight ){
-        float delta1 = fCurrSampledHeight - fCurrRayHeight;
-        float delta2 = ( fCurrRayHeight + fStepSize ) - fLastSampledHeight;
+        delta1 = fCurrSampledHeight - fCurrRayHeight;
+        delta2 = ( fCurrRayHeight + fStepSize ) - fLastSampledHeight;
     
-        float ratio = delta1/(delta1+delta2);
+        ratio = delta1/(delta1+delta2);
     
         vCurrOffset = (ratio) * vLastOffset + (1.0-ratio) * vCurrOffset;
     
-        nCurrSample = nNumSamples + 1;
+        nCurrSample = POM_numSamples + 1;
       } else {
         nCurrSample++;
     
@@ -51,6 +54,5 @@ float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
       }
     
     }
-//    return texcoord + vCurrOffset;  
-    return float3(vCurrOffset,fLastSampledHeight*fHeightMapScale);  
+    return float3(vCurrOffset,delta1*-fHeightMapScale);  
 }
