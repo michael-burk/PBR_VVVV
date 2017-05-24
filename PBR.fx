@@ -16,8 +16,8 @@ cbuffer cbPerObject : register (b0)
 	//transforms
 	float4x4 tW: WORLD;        //the models world matrix
 	float4x4 tWI: WORLDINVERSE;        //the models world matrix
-	float4x4 tV: WORLDVIEW;        //the models world matrix
-	float4x4 tP: WORLDPROJECTION;        //the models world matrix
+//	float4x4 tV: WORLDVIEW;        //the models world matrix
+//	float4x4 tP: WORLDPROJECTION;        //the models world matrix
 	float4x4 tWVP: WORLDVIEWPROJECTION;
 	
 	float4 GlobalReflectionColor <bool color = true; string uiname="Global Reflection Color";>  = { 0.0f,0.0f,0.0f,0.0f };
@@ -137,7 +137,7 @@ vs2psBump VS_Bump(
     //inititalize all fields of output struct with 0
     vs2psBump Out = (vs2psBump)0;
     Out.PosW = mul(PosO, tW);	
-	Out.NormW = mul(NormO, (float3x3)tW);
+	Out.NormW = mul(NormO, (float3x3)transpose(tWI));
 	Out.NormW = normalize(Out.NormW);
 	// Calculate the tangent vector against the world matrix only and then normalize the final value.
     Out.tangent = mul(tangent, (float3x3)tW);
@@ -162,7 +162,7 @@ vs2ps VS(
     vs2ps Out = (vs2ps)0;
 	
     Out.PosW = mul(PosO, tW);
-	Out.NormW = mul(NormO, (float3x3)tW);
+	Out.NormW = mul(NormO, (float3x3)transpose(tWI));
 	Out.NormW = normalize(Out.NormW);
     Out.PosWVP  = mul(PosO, tWVP);
 	Out.TexCd = mul(TexCd,tTex);
@@ -178,8 +178,8 @@ static const half3 wavelength[3] =
 };
 
 static const float MAX_REFLECTION_LOD = 9.0;
-
-float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
+float h;
+float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd, float3x3 tangentSpace){
 	
 	float3 LightDirW;
 	float4 viewPosition;
@@ -387,19 +387,22 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 					if(tXS+tYS > 4) falloffSpot = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).r;
 					else if(tXS+tYS < 4) falloffSpot = lerp(1,0,saturate(length(.5-projectTexCoord.xy)*2));
 					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
-					
+
 				}
 			
 				if(useShadow[i]){
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 						lerp(1.0,saturate(shadow),falloff).x, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
+//						finalLight = parallaxSoftShadowMultiplier((mul(lightToObject,tangentSpace)),TexCd,h);
+						
+					
 				} else {
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 						1.0, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
 				}
-//				finalLight += parallaxSoftShadowMultiplier(L,TexCd,2)*1;
+				
 				break;
 	
 			//POINT
@@ -467,7 +470,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 
 float4 PS_PBR(vs2ps In): SV_Target
 {	
-	return doLighting(In.PosW, In.NormW, In.V, In.TexCd);
+	return doLighting(In.PosW, In.NormW, In.V, In.TexCd,0);
 }
 
 float4 PS_PBR_Bump(vs2psBump In): SV_Target
@@ -477,11 +480,11 @@ float4 PS_PBR_Bump(vs2psBump In): SV_Target
 	
 	uint tX2,tY2,m2;
 	normalTex.GetDimensions(tX2,tY2);
-	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, mul(In.TexCd,tTex).xy).rgb;
-	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,mul(In.TexCd,tTex).xy).rgb;
+	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd.xy).rgb;
+	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex, In.TexCd.xy).rgb;
 	bumpMap = (bumpMap * 2.0f) - 1.0f;
 	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(In.tangent).xyz + bumpMap.y * normalize(In.binormal.xyz))*bumpy);
-	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+	return doLighting(In.PosW, Nb, In.V, In.TexCd,0);
 
 }
 
@@ -517,7 +520,7 @@ float4 PS_PBR_Bump_AutoTNB(vs2ps In): SV_Target
 	
 	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t) + bumpMap.y * normalize(b))*bumpy);
 	
-	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+	return doLighting(In.PosW, Nb, In.V, In.TexCd,0);
 }
 
 
@@ -556,7 +559,7 @@ float4 PS_PBR_ParallaxOcclusionMapping(vs2psBump In): SV_Target
 	
 	In.PosW.xyz -= mul(mul((pom),mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);
 	
-	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+	return doLighting(In.PosW, Nb, In.V, In.TexCd,worldToTangentSpace);
 	
 }
 
@@ -612,7 +615,7 @@ float4 PS_PBR_ParallaxOcclusionMapping_AutoTNB(vs2ps In): SV_Target
 	float scale = sqrt(tW._11*tW._11 + tW._12*tW._12 + tW._13*tW._13);
 	In.PosW.xyz -= mul(mul(pom,mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);
 	
-	return doLighting(In.PosW, Nb, In.V, In.TexCd);
+	return doLighting(In.PosW, Nb, In.V, In.TexCd,0);
 	
 }
 

@@ -1,5 +1,5 @@
 float fHeightMapScale = -.1;
-//int nMaxSamples = 10;
+//int nMaxSamples = 50;
 //int nMinSamples = 1;
 int POM_numSamples <bool visible=false;> = 25;
 
@@ -11,8 +11,7 @@ float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
     float2 vOffsetDir = normalize( V.xy );
     float2 vMaxOffset = vOffsetDir * fParallaxLimit;
     
-//    int nNumSamples = (int)lerp( nMaxSamples, nMinSamples, saturate(dot( N, V)) );
-//  	nNumSamples = 50;
+//    int POM_numSamples = (int)lerp( nMaxSamples, nMinSamples, saturate(-dot( N, V)) );
     float fStepSize = 1.0 / (float)POM_numSamples;
     
     float2 dx = ddx( texcoord );
@@ -57,7 +56,7 @@ float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
     return float3(vCurrOffset,delta1*-fHeightMapScale);  
 }
 
-
+//
 //float parallaxSoftShadowMultiplier(float3 L, float2 initialTexCoord,
 //                                       float initialHeight)
 //{
@@ -66,21 +65,21 @@ float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
 //   if(dot(float3(0, 0, 1), L) > 0)
 //   {
 //   	  float2 dx = ddx( initialTexCoord );
-//   	 float2 dy = ddy( initialTexCoord );
+//   	  float2 dy = ddy( initialTexCoord );
 //    
 //      // calculate initial parameters
 //      float numSamplesUnderSurface	= 0;
-//      shadowMultiplier	= 0;
+////      shadowMultiplier	= 0;
 ////      float numLayers	= mix(maxLayers, minLayers, abs(dot(vec3(0, 0, 1), L)));
 //		
-//      float layerHeight	= initialHeight / POM_numSamples;
-//      float2 texStep	= fHeightMapScale * L.xy / L.z / POM_numSamples;
+//      float layerHeight	= fHeightMapScale / POM_numSamples;
+//      float2 texStep	= -fHeightMapScale * L.xy / L.z / POM_numSamples;
 //
 //      // current parameters
-//      float currentLayerHeight	= initialHeight - layerHeight;
+//      float currentLayerHeight	= fHeightMapScale - layerHeight;
 //      float2 currentTextureCoords	= initialTexCoord + texStep;
 //      float heightFromTexture = heightMap.SampleGrad( g_samLinear, initialTexCoord, dx, dy ).r;
-//      int stepIndex	= 1;
+//      int stepIndex	= 0;
 //
 //      // while point is below depth 0.0 )
 //      while(currentLayerHeight > 0)
@@ -99,7 +98,8 @@ float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
 //         stepIndex	+= 1;
 //         currentLayerHeight	-= layerHeight;
 //         currentTextureCoords	+= texStep;
-//         heightFromTexture	= heightMap.SampleGrad( g_samLinear, initialTexCoord, dx, dy ).r;
+//
+//         heightFromTexture	= - heightMap.SampleGrad( g_samLinear, currentTextureCoords, dx, dy ).r;
 //      }
 //
 //      // Shadowing factor should be 1 if there were no points under the surface
@@ -109,7 +109,7 @@ float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
 //      }
 //      else
 //      {
-//         shadowMultiplier = 1.0 - shadowMultiplier;
+//         shadowMultiplier = saturate(1 -shadowMultiplier);
 //      }
 //   }
 //   return shadowMultiplier;

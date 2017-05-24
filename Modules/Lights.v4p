@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="345" scrolly="0" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Projects\PBR_VVVV\modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="315" scrolly="0" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="11400" width="100" height="100">
    </BOUNDS>
@@ -207,7 +207,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="1" values="|0.98832,0.98832,0.98832,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)" hiddenwhenlocked="0">
@@ -336,7 +336,7 @@
    <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="5730" top="1170" width="22350" height="14790">
+   <BOUNDS type="Window" left="2625" top="810" width="22350" height="14790">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -749,9 +749,9 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="X Input Value" slicecount="3" values="1,1,1">
+   <PIN pinname="X Input Value" slicecount="3" values="1,0,0">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="3" values="1,1,1">
+   <PIN pinname="Y Input Value" slicecount="3" values="1,0,0">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="Shadow">
    </PIN>
@@ -1791,7 +1791,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="20235" top="3300" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.5">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2403,7 +2403,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10650" top="10485" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" values="5,1,1">
+   <PIN pinname="Y Input Value" slicecount="3" values="3,1,1">
    </PIN>
    <PIN pinname="X Input Value" slicecount="3" values="1,1,1">
    </PIN>
@@ -2465,7 +2465,7 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="535">
    <BOUNDS type="Node" left="8325" top="2385" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="-2.79">
+   <PIN pinname="Y" slicecount="1" values="-2.93">
    </PIN>
    <PIN pinname="X" slicecount="1" values="-0.03">
    </PIN>
@@ -2505,7 +2505,7 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="547">
    <BOUNDS type="Node" left="3795" top="2520" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="3.11">
+   <PIN pinname="Y" slicecount="1" values="2.95">
    </PIN>
    <PIN pinname="Z" slicecount="1" values="4.76">
    </PIN>
@@ -2519,9 +2519,11 @@
    <NODE id="549" systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden">
    <BOUNDS type="Node" left="6945" top="2400" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Z" slicecount="1" values="1.21">
+   <PIN pinname="Z" slicecount="1" values="-2.48">
    </PIN>
-   <PIN pinname="Y" slicecount="1" values="0.75">
+   <PIN pinname="Y" slicecount="1" values="3.29">
+   </PIN>
+   <PIN pinname="X" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="549" srcpinname="XYZ" dstnodeid="25" dstpinname="XYZ UnTransformed">
@@ -2541,7 +2543,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6150" top="1860" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="-1.95">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="-4.39">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
