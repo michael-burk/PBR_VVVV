@@ -145,7 +145,7 @@
    </PIN>
    <PIN pinname="Transform In" visible="1" slicecount="8" values=",,,,,,,">
    </PIN>
-   <PIN pinname="depthOffset" slicecount="1" values="0.001">
+   <PIN pinname="depthOffset" slicecount="1" values="0.01">
    </PIN>
    <PIN pinname="c" visible="1">
    </PIN>

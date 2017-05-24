@@ -149,7 +149,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="6285" top="3515" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0.45,0">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -901,7 +901,7 @@
    </BOUNDS>
    <PIN pinname="Light Direction" visible="1">
    </PIN>
-   <PIN pinname="FOV" slicecount="1" visible="1" values="0.09">
+   <PIN pinname="FOV" slicecount="1" visible="1" values="0.15">
    </PIN>
    <PIN pinname="Roll" visible="1" slicecount="1" values="0">
    </PIN>
@@ -2039,7 +2039,7 @@
    </PIN>
    <PIN pinname="Z" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="X" visible="1" slicecount="1" values="-0.02">
+   <PIN pinname="X" visible="1" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="470" srcpinname="Transform Out" dstnodeid="25" dstpinname="Transform" linkstyle="Bezier">
@@ -2403,7 +2403,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="10650" top="10485" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="3" values="3,1,1">
+   <PIN pinname="Y Input Value" slicecount="3" values="5,1,1">
    </PIN>
    <PIN pinname="X Input Value" slicecount="3" values="1,1,1">
    </PIN>
@@ -2465,7 +2465,7 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="535">
    <BOUNDS type="Node" left="8325" top="2385" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="-2.75">
+   <PIN pinname="Y" slicecount="1" values="-2.79">
    </PIN>
    <PIN pinname="X" slicecount="1" values="-0.03">
    </PIN>
@@ -2505,7 +2505,7 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="547">
    <BOUNDS type="Node" left="3795" top="2520" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="2.91">
+   <PIN pinname="Y" slicecount="1" values="3.11">
    </PIN>
    <PIN pinname="Z" slicecount="1" values="4.76">
    </PIN>
@@ -2519,9 +2519,9 @@
    <NODE id="549" systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden">
    <BOUNDS type="Node" left="6945" top="2400" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Z" slicecount="1" values="0.13">
+   <PIN pinname="Z" slicecount="1" values="1.21">
    </PIN>
-   <PIN pinname="Y" slicecount="1" values="1.85">
+   <PIN pinname="Y" slicecount="1" values="0.75">
    </PIN>
    </NODE>
    <LINK srcnodeid="549" srcpinname="XYZ" dstnodeid="25" dstpinname="XYZ UnTransformed">
@@ -2535,5 +2535,21 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="550" srcpinname="Texture Out" dstnodeid="71" dstpinname="Input Node">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="551">
+   <BOUNDS type="Box" left="6150" top="1860" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="6150" top="1860" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="-1.95">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="551" srcpinname="Y Output Value" dstnodeid="470" dstpinname="Y">
    </LINK>
    </PATCH>

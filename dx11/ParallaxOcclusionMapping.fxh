@@ -56,3 +56,61 @@ float3 parallaxOcclusionMapping(float2 texcoord, float3 V, float3 N){
     }
     return float3(vCurrOffset,delta1*-fHeightMapScale);  
 }
+
+
+//float parallaxSoftShadowMultiplier(float3 L, float2 initialTexCoord,
+//                                       float initialHeight)
+//{
+//	float shadowMultiplier	= 0;
+//   // calculate lighting only for surface oriented to the light source
+//   if(dot(float3(0, 0, 1), L) > 0)
+//   {
+//   	  float2 dx = ddx( initialTexCoord );
+//   	 float2 dy = ddy( initialTexCoord );
+//    
+//      // calculate initial parameters
+//      float numSamplesUnderSurface	= 0;
+//      shadowMultiplier	= 0;
+////      float numLayers	= mix(maxLayers, minLayers, abs(dot(vec3(0, 0, 1), L)));
+//		
+//      float layerHeight	= initialHeight / POM_numSamples;
+//      float2 texStep	= fHeightMapScale * L.xy / L.z / POM_numSamples;
+//
+//      // current parameters
+//      float currentLayerHeight	= initialHeight - layerHeight;
+//      float2 currentTextureCoords	= initialTexCoord + texStep;
+//      float heightFromTexture = heightMap.SampleGrad( g_samLinear, initialTexCoord, dx, dy ).r;
+//      int stepIndex	= 1;
+//
+//      // while point is below depth 0.0 )
+//      while(currentLayerHeight > 0)
+//      {
+//         // if point is under the surface
+//         if(heightFromTexture < currentLayerHeight)
+//         {
+//            // calculate partial shadowing factor
+//            numSamplesUnderSurface	+= 1;
+//            float newShadowMultiplier	= (currentLayerHeight - heightFromTexture) *
+//                                             (1.0 - stepIndex / POM_numSamples);
+//            shadowMultiplier	= max(shadowMultiplier, newShadowMultiplier);
+//         }
+//
+//         // offset to the next layer
+//         stepIndex	+= 1;
+//         currentLayerHeight	-= layerHeight;
+//         currentTextureCoords	+= texStep;
+//         heightFromTexture	= heightMap.SampleGrad( g_samLinear, initialTexCoord, dx, dy ).r;
+//      }
+//
+//      // Shadowing factor should be 1 if there were no points under the surface
+//      if(numSamplesUnderSurface < 1)
+//      {
+//         shadowMultiplier = 1;
+//      }
+//      else
+//      {
+//         shadowMultiplier = 1.0 - shadowMultiplier;
+//      }
+//   }
+//   return shadowMultiplier;
+//}

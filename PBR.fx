@@ -386,8 +386,8 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 					lightMap.GetDimensions(mS,tXS,tYS);
 					if(tXS+tYS > 4) falloffSpot = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).r;
 					else if(tXS+tYS < 4) falloffSpot = lerp(1,0,saturate(length(.5-projectTexCoord.xy)*2));
-					
 					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
+					
 				}
 			
 				if(useShadow[i]){
@@ -399,7 +399,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 						1.0, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
 				}
-	
+//				finalLight += parallaxSoftShadowMultiplier(L,TexCd,2)*1;
 				break;
 	
 			//POINT
