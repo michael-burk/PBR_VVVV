@@ -1,4 +1,4 @@
-float fHeightMapScale = -.1;
+float fHeightMapScale <bool visible=false;> = .1;
 //int nMaxSamples = 50;
 //int nMinSamples = 1;
 int POM_numSamples <bool visible=false;> = 25;
@@ -75,8 +75,7 @@ void parallaxOcclusionMapping(inout float2 texcoord, inout float3 PosW, float3 V
 	texcoord += vCurrOffset;
 	
 	float scale = sqrt(tW._11*tW._11 + tW._12*tW._12 + tW._13*tW._13);
-//	PosW.xyz -= mul(mul( float3(vCurrOffset,delta1*-fHeightMapScale) ,mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);
 	PosW.xyz -= mul(mul((float3(vCurrOffset,delta1*-fHeightMapScale)),mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);
-//    return float3(vCurrOffset,delta1*-fHeightMapScale);  
+
 }
 

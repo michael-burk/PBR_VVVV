@@ -64,24 +64,6 @@ float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
     float3 specular   = nominator / denominator;
     specular *= lPower;
     specular *= iridescenceColor;
-  
-                    	
-//    float pD = 0.3;
-//    float pS = 0.8;
-//    float alphaX = 0.5;
-//    float alphaY = 0.13;      
-//                    	
-//       float NdotV = dot(N, L);
-//        float HdotN = dot(H, N);
-//        float VdotN = dot(L, N);
-//        float HdotTAlphaX = dot(H, float3(0,1,0)) / alphaX;
-//        float HdotBAlphaY = dot(H, float3(1,0,0)) / alphaY;
-//                    	
-//                    
-//     float exponent = exp(-2.0 * (HdotTAlphaX * HdotTAlphaX + HdotBAlphaY * HdotBAlphaY) / (1.0 + HdotN));
-//	specular *= exponent;
-                    	
-                    
 //  specular = max(iridescenceColor,specular);
     // add to outgoing radiance Lo
     float NdotL = max(dot(N, L), 0.0);                
