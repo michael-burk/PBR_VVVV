@@ -1,6 +1,6 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="0" scrolly="-315" bgcolor="15329769">
-   <BOUNDS type="Window" left="675" top="1965" width="26895" height="15150">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" systemname="PBR_multilight" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\PBR_multilight.v4p" scrollx="3000" scrolly="555" bgcolor="15329769">
+   <BOUNDS type="Window" left="14130" top="0" width="17010" height="15855">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -53,7 +53,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="-17190" top="525" width="15600" height="15945">
+   <BOUNDS type="Window" left="315" top="390" width="13740" height="14085">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -77,7 +77,7 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
-   <PIN pinname="Texture SizeXY" slicecount="2" values="1024,1024">
+   <PIN pinname="Texture SizeXY" slicecount="2" values="900,900">
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
@@ -351,7 +351,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5985" top="7110" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="10,1">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="5,1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -431,7 +431,7 @@
    </PIN>
    <PIN pinname="Rows" slicecount="1" values="2">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="2" values="0,0">
+   <PIN pinname="Y Input Value" slicecount="2" values="2.14,0">
    </PIN>
    <PIN pinname="Vector Size" slicecount="1" values="2">
    </PIN>
@@ -453,7 +453,7 @@
    </PIN>
    <PIN pinname="Rows" slicecount="1" values="2">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="2" values="0,0">
+   <PIN pinname="Y Input Value" slicecount="2" values="0.25,0">
    </PIN>
    <PIN pinname="Vector Size" slicecount="1" values="2">
    </PIN>
@@ -491,7 +491,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="2790" top="6960" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="2625" top="810" width="22350" height="14790">
+   <BOUNDS type="Window" left="11985" top="960" width="22350" height="14790">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="-0.26">
    </PIN>
@@ -559,7 +559,7 @@
    </PIN>
    <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Shadow" slicecount="3" visible="1" values="1,0,0">
+   <PIN pinname="Shadow" slicecount="3" visible="1" values="1,1,0">
    </PIN>
    <PIN pinname="Shadow Geometry Transform" visible="1">
    </PIN>
@@ -577,7 +577,7 @@
    </PIN>
    <PIN pinname="Shadow Res²" visible="1" slicecount="1" values="256">
    </PIN>
-   <PIN pinname="PointLight" slicecount="1" visible="1" values="0">
+   <PIN pinname="PointLight" slicecount="1" visible="1" values="1">
    </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="Layer" dstnodeid="3" dstpinname="Layer 5" linkstyle="Bezier" hiddenwhenlocked="1">
@@ -879,6 +879,8 @@
    </PIN>
    <PIN pinname="h" slicecount="1" values="0">
    </PIN>
+   <PIN pinname="Parallax Occlusion Mapping" visible="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="934" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
    <LINKPOINT x="6195" y="11280">
@@ -1087,7 +1089,7 @@
    </PIN>
    <BOUNDS type="Box" left="6870" top="2835">
    </BOUNDS>
-   <PIN pinname="Radius" slicecount="1" values="0.57">
+   <PIN pinname="Radius" slicecount="1" values="0.2">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1204">
@@ -1095,7 +1097,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7575" top="2265" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="64">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="128">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1121,7 +1123,7 @@
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1205">
    <BOUNDS type="Node" left="8460" top="2445" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="..\..\Users\Schnellebuntebilder\Desktop\Plane.fbx">
+   <PIN pinname="Filename" slicecount="1" values="girlpower\Assets\SoftBox.fbx">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -1257,7 +1259,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="7260" top="7695" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.33,0.33">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.5,0.5">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1667,7 +1669,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="1110" top="6255" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.12">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.1">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -1745,7 +1747,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="12585" top="9960" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Input Enum" slicecount="1" visible="1" values="PBR_ParallaxOcclusionMapping">
+   <PIN pinname="Input Enum" slicecount="1" visible="1" values="PBR_Bump">
    </PIN>
    </NODE>
    <LINK srcnodeid="1316" srcpinname="Output Enum" dstnodeid="934" dstpinname="Technique" linkstyle="Bezier">
@@ -1876,12 +1878,6 @@
    <LINKPOINT x="12300" y="9930">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1205" srcpinname="Output" dstnodeid="1164" dstpinname="Input 1" linkstyle="Bezier">
-   <LINKPOINT x="8925" y="2985">
-   </LINKPOINT>
-   <LINKPOINT x="4965" y="2985">
-   </LINKPOINT>
-   </LINK>
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1334">
    <BOUNDS type="Node" left="9660" top="2445" width="100" height="100">
    </BOUNDS>
@@ -1927,7 +1923,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="9870" top="6510" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="2,3">
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,3">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -2326,10 +2322,30 @@
    </NODE>
    <LINK srcnodeid="1362" srcpinname="Y Output Value" dstnodeid="473" dstpinname="Scale XYZ">
    </LINK>
-   <NODE systemname="HSCB (DX11.TextureFX)" filename="%VVVV%\packs\dx11\nodes\texture11\Filter\HSCB.tfx" nodename="HSCB (DX11.TextureFX)" componentmode="Hidden" id="1363">
-   <BOUNDS type="Node" left="14805" top="12150" width="100" height="100">
-   </BOUNDS>
-   </NODE>
    <LINK srcnodeid="1356" srcpinname="Texture Out" dstnodeid="1350" dstpinname="Input Node">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1366">
+   <BOUNDS type="Box" left="13335" top="11355" width="480" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="13335" top="11355" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Boolean">
+   </PIN>
+   <PIN pinname="Behavior" slicecount="1" values="Toggle">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="1">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Parallax Occlusion Mapping|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1366" srcpinname="Y Output Value" dstnodeid="934" dstpinname="Parallax Occlusion Mapping">
+   </LINK>
+   <LINK srcnodeid="1205" srcpinname="Output" dstnodeid="1164" dstpinname="Input 1">
    </LINK>
    </PATCH>
