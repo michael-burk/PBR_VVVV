@@ -290,8 +290,6 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		IBL  = ( ((IBL *iblIntensity.x*(kD)) + refrColor*kD) + refl * iblIntensity.y) * aoT;
 		
 	} else if(useIridescence){
-//			float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
-//			float3 kD = 1.0 - kS;
 			float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
 			iridescenceColor *= (F0 * envBRDF.x + envBRDF.y);
 			IBL = iridescenceColor / kD;
