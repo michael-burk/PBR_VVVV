@@ -99,7 +99,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="3060" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="14850" top="840" width="14610" height="15855">
+   <BOUNDS type="Window" left="5550" top="840" width="23910" height="15855">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>

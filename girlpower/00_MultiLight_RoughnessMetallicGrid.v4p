@@ -1,5 +1,5 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_RoughnessMetallicGrid.v4p" systemname="00_MultiLight_RoughnessMetallicGrid" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_RoughnessMetallicGrid.v4p" scrollx="75" scrolly="15" bgcolor="15329769" locked="0">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
+   <PATCH nodename="C:\Projects\PBR_VVVV\girlpower\00_MultiLight_RoughnessMetallicGrid.v4p" systemname="00_MultiLight_RoughnessMetallicGrid" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_RoughnessMetallicGrid.v4p" scrollx="75" scrolly="15" bgcolor="15329769" locked="0">
    <BOUNDS type="Window" left="13410" top="1005" width="14535" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -23,7 +23,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="Scale XYZ" slicecount="3" visible="1" values="1,1,1">
+   <PIN pinname="Scale XYZ" slicecount="3" visible="1" values="0.25,0.25,0.25">
    </PIN>
    <PIN pinname="Rotate XYZ" visible="1" slicecount="3" values="0,0,0">
    </PIN>
@@ -421,11 +421,11 @@
    </PIN>
    <PIN pinname="Parallax Occlusion Mapping" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Color(Albedo)" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|" visible="1">
+   <PIN pinname="Color(Albedo)" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
-   <PIN pinname="Global Diffuse Color" slicecount="1" values="|0.00000,0.00000,0.00000,0.00000|" visible="1">
+   <PIN pinname="Global Diffuse Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
-   <PIN pinname="Global Reflection Color" slicecount="1" values="|0.00000,0.00000,0.00000,0.00000|" visible="1">
+   <PIN pinname="Global Reflection Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
    <PIN pinname="FresnelF0XYZ" visible="1" pintype="Input" slicecount="1" values="0.0399999991059303">
    </PIN>
@@ -638,10 +638,6 @@
    <PIN pinname="Radius" slicecount="1" values="0.1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1130" srcpinname="Geometry Out" dstnodeid="1123" dstpinname="Geometry">
-   </LINK>
-   <LINK srcnodeid="1130" srcpinname="Geometry Out" dstnodeid="1091" dstpinname="Shadow Geometry">
-   </LINK>
    <NODE systemname="Cross (2d)" nodename="Cross (2d)" componentmode="Hidden" id="1131">
    <BOUNDS type="Node" left="2940" top="3660" width="100" height="100">
    </BOUNDS>
@@ -659,7 +655,7 @@
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Spread Count" slicecount="1" values="5" visible="1">
+   <PIN pinname="Spread Count" slicecount="1" visible="1" values="5">
    </PIN>
    <PIN pinname="Width" slicecount="1" values="2">
    </PIN>
@@ -729,7 +725,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="5925" top="2190" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="8">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="7">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -751,9 +747,9 @@
    </BOUNDS>
    <PIN pinname="Input" visible="1">
    </PIN>
-   <PIN pinname="Column Count" slicecount="1" values="8">
+   <PIN pinname="Column Count" slicecount="1" values="8" visible="1">
    </PIN>
-   <PIN pinname="Row Count" slicecount="1" values="8">
+   <PIN pinname="Row Count" slicecount="1" values="8" visible="1">
    </PIN>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -777,5 +773,95 @@
    <LINK srcnodeid="1147" srcpinname="Color Output" dstnodeid="1123" dstpinname="Color(Albedo)">
    </LINK>
    <LINK srcnodeid="1146" srcpinname="Output" dstnodeid="1128" dstpinname="Y Input Value">
+   </LINK>
+   <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1148">
+   <BOUNDS type="Node" left="1785" top="1740" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <PIN pinname="Reload" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Filename" slicecount="1" values="Assets\teapot.fbx">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1148" srcpinname="Output" dstnodeid="1123" dstpinname="Geometry">
+   </LINK>
+   <LINK srcnodeid="1148" srcpinname="Output" dstnodeid="1091" dstpinname="Shadow Geometry">
+   </LINK>
+   <NODE systemname="Timing (Debug)" nodename="Timing (Debug)" componentmode="Hidden" id="1149">
+   <BOUNDS type="Node" left="7200" top="10350" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="frames per second" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1150">
+   <BOUNDS type="Box" left="7290" top="10950" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7290" top="10950" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1149" srcpinname="frames per second" dstnodeid="1150" dstpinname="Y Input Value">
+   </LINK>
+   <NODE systemname="MainLoop (VVVV)" nodename="MainLoop (VVVV)" componentmode="Hidden" id="-6">
+   <BOUNDS type="Node" left="7500" top="9675" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Maximum Foreground FPS" visible="1">
+   </PIN>
+   <PIN pinname="Maximum Background FPS" visible="1">
+   </PIN>
+   <PIN pinname="Time Mode" slicecount="1" values="Filtered">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1151">
+   <BOUNDS type="Box" left="7320" top="9015" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7320" top="9015" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="500">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1151" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Foreground FPS">
+   </LINK>
+   <LINK srcnodeid="1151" srcpinname="Y Output Value" dstnodeid="-6" dstpinname="Maximum Background FPS">
+   </LINK>
+   <NODE systemname="Timing (Debug)" nodename="Timing (Debug)" componentmode="Hidden" id="1152">
+   <BOUNDS type="Node" left="8970" top="8865" width="100" height="100">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="1142" srcpinname="Y Output Value" dstnodeid="1146" dstpinname="Column Count">
+   </LINK>
+   <LINK srcnodeid="1142" srcpinname="Y Output Value" dstnodeid="1146" dstpinname="Row Count">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1153">
+   <BOUNDS type="Box" left="3750" top="4380" width="795" height="720">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3750" top="4380" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,-0.08,0">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="3">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1153" srcpinname="Y Output Value" dstnodeid="473" dstpinname="Rotate XYZ">
    </LINK>
    </PATCH>
