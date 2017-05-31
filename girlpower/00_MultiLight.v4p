@@ -45,7 +45,7 @@
    </PIN>
    <PIN pinname="Depth Buffer Format" slicecount="1" values="D32_Float">
    </PIN>
-   <PIN pinname="AA Samples per Pixel" slicecount="1" values="8">
+   <PIN pinname="AA Samples per Pixel" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
@@ -317,7 +317,7 @@
    </PIN>
    <PIN pinname="Layer" visible="1">
    </PIN>
-   <PIN pinname="noTile" slicecount="1" values="0" visible="-1" pintype="Input">
+   <PIN pinname="noTile" slicecount="1" visible="-1" pintype="Input" values="0">
    </PIN>
    <PIN pinname="Texture" visible="1" slicecount="1" values="||">
    </PIN>
@@ -329,7 +329,7 @@
    </PIN>
    <PIN pinname="Camera PositionXYZ" visible="1">
    </PIN>
-   <PIN pinname="IBL IntensityXY" slicecount="2" values="0,0" visible="-1" pintype="Input">
+   <PIN pinname="IBL IntensityXY" slicecount="2" visible="-1" pintype="Input" values="0,0">
    </PIN>
    <PIN pinname="roughness" slicecount="1" visible="1" values="0">
    </PIN>
@@ -339,7 +339,7 @@
    </PIN>
    <PIN pinname="metallic" visible="1" slicecount="25" values="0.02,0.06,0.1,0.14,0.18,0.22,0.26,0.3,0.34,0.38,0.42,0.46,0.5,0.54,0.58,0.62,0.66,0.7,0.74,0.78,0.82,0.86,0.9,0.94,0.98">
    </PIN>
-   <PIN pinname="Bumpiness" slicecount="1" values="0" visible="-1" pintype="Input">
+   <PIN pinname="Bumpiness" slicecount="1" visible="-1" pintype="Input" values="0">
    </PIN>
    <PIN pinname="NormalMap" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
@@ -355,11 +355,11 @@
    </PIN>
    <PIN pinname="Iridescence" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="CubeMap Refl" visible="-1" pintype="Input" slicecount="1" values="||">
+   <PIN pinname="CubeMap Refl" visible="1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="CubeMap Irradiance" visible="-1" pintype="Input" slicecount="1" values="||">
+   <PIN pinname="CubeMap Irradiance" visible="1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="Parallax Occlusion Mapping" slicecount="1" values="0" visible="-1" pintype="Input">
+   <PIN pinname="Parallax Occlusion Mapping" slicecount="1" visible="-1" pintype="Input" values="0">
    </PIN>
    <PIN pinname="Color(Albedo)" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
@@ -370,6 +370,8 @@
    <PIN pinname="FresnelF0XYZ" visible="1" pintype="Input" slicecount="1" values="0.0399999991059303">
    </PIN>
    <PIN pinname="useIridescence" visible="-1" pintype="Input" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="useIBL" slicecount="1" values="0">
    </PIN>
    </NODE>
    <LINK srcnodeid="956" srcpinname="Render State" dstnodeid="1123" dstpinname="Render State" linkstyle="Bezier">

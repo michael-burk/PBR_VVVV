@@ -195,7 +195,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	texture2d.GetDimensions(tX,tY);
 	if(tX+tY > 4 && !noTile) texCol = texture2d.Sample(g_samLinear, TexCd.xy);
 	else if(tX+tY > 4 && noTile) texCol = textureNoTile(texture2d,TexCd.xy);
-	
+
 	roughTex.GetDimensions(tX,tY);
 	if(tX+tY > 4 && !noTile) texRoughness = roughTex.Sample(g_samLinear, TexCd.xy).r;
 	else if(tX+tY > 4 && noTile) texRoughness = textureNoTile(roughTex,TexCd.xy).r;
@@ -220,32 +220,6 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	float3 reflVect = -reflect(V,N);
 	float3 reflVecNorm = N;
 
-	// Box Projected CubeMap
-	////////////////////////////////////////////////////
-	
-	if(BPCM){
-		
-		float3 rbmax = (cubeMapBoxBounds[0] - (PosW.xyz))/reflVect;
-		float3 rbmin = (cubeMapBoxBounds[1] - (PosW.xyz))/reflVect;	
-		float3 rbminmax = (reflVect>0.0f)?rbmax:rbmin;	
-		float fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);	
-		float3 posonbox = PosW.xyz + reflVect*fa;
-		reflVect = posonbox - cubeMapPos;
-		rbmax = (cubeMapBoxBounds[0] - (PosW.xyz))/reflVecNorm;
-		rbmin = (cubeMapBoxBounds[1] - (PosW.xyz))/reflVecNorm;
-		rbminmax = (reflVecNorm>0.0f)?rbmax:rbmin;	
-		fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);	
-		posonbox = PosW.xyz + reflVecNorm*fa;
-		reflVecNorm = posonbox - cubeMapPos;	
-//		if(refraction){
-//			rbmax = (cubeMapBoxBounds[0] - (PosW))/refrVect;
-//			rbmin = (cubeMapBoxBounds[1] - (PosW))/refrVect;
-//			rbminmax = (refrVect>0.0f)?rbmax:rbmin;		
-//			fa = min(min(rbminmax.x, rbminmax.y), rbminmax.z);			
-//			posonbox = PosW + refrVect*fa;
-//			refrVect = posonbox - cubeMapPos;
-//		}		
-	}
 	
 	uint tX1,tY1,m1;
 	cubeTexRefl.GetDimensions(tX,tY);
@@ -253,7 +227,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
 	float3 refrColor = 0;
 	float3 iridescenceColor = 0;
-	
+	float2 envBRDF = 1;
 	if (useIridescence){
 		float inverseDotView = 1.0 - max(dot(N,V),0.0);
 		iridescenceColor = iridescence.Sample(g_samLinear, float2(inverseDotView,0)).rgb;
@@ -264,13 +238,14 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
 	float3 kD = 1.0 - kS;
 	kD *= 1-metallicT;
-	if(tX+tY > 4 || tX1+tY1 > 4){
-				
-		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm,texRoughness*MAX_REFLECTION_LOD).rgb;
-		IBL  = IBL * albedo.xyz;
 	
+	if(tX+tY > 4 || tX1+tY1 > 4){
+			
+		IBL = cubeTexIrradiance.SampleLevel(g_samLinear,reflVecNorm,texRoughness).rgb;
+		IBL  = IBL * albedo.xyz;
+		
 		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,reflVect,texRoughness*MAX_REFLECTION_LOD).rgb;
-		float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
+		envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
 		
 		if(useIridescence){
 		  refl = max(refl,iridescenceColor) * (F0 * envBRDF.x + envBRDF.y);
@@ -287,15 +262,16 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 			refrColor = refrColor * (F * envBRDF.x + envBRDF.y);
 		
 		}
+		
 		IBL  = ( ((IBL *iblIntensity.x*(kD)) + refrColor*kD) + refl * iblIntensity.y) * aoT;
 		
 	} else if(useIridescence){
 			float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
 			iridescenceColor *= (F0 * envBRDF.x + envBRDF.y);
-			IBL = iridescenceColor / kD;
+			IBL = iridescenceColor / kD;	
 	}
-
-	float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
+	
+	envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
 	IBL += saturate(GlobalReflectionColor.rgb * (F0 * envBRDF.x + envBRDF.y) / kD);
 	IBL += GlobalDiffuseColor.rgb * albedo.rgb * kD;
 	
@@ -450,11 +426,10 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	finalLight.xyz += IBL.xyz;
 	
 //	Gamma Correction
-//	finalLight.xyz = finalLight.xyz / (finalLight.xyz + float3(1.0,1.0,1.0));
-//	finalLight.xyz = pow(abs(finalLight.xyz), 1.0/2.2); 
-	
+
 	finalLight.rgb = ACESFitted(finalLight.rgb);
 	finalLight.a = Alpha;
+
 	return finalLight;
 }
 

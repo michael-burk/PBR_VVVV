@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="8655" scrolly="555" bgcolor="15132390" locked="0">
+   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="11010" scrolly="0" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="11400" width="100" height="100">
    </BOUNDS>
@@ -1787,9 +1787,9 @@
    <LINK srcnodeid="429" srcpinname="Y Output Value" dstnodeid="78" dstpinname="Enabled" linkstyle="PolyLine" hiddenwhenlocked="1">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="430" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="20235" top="3300" width="795" height="240">
+   <BOUNDS type="Box" left="14610" top="7245" width="795" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="20235" top="3300" width="0" height="0">
+   <BOUNDS type="Node" left="14610" top="7245" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="1">
    </PIN>
@@ -2447,9 +2447,9 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="430" srcpinname="Y Output Value" dstnodeid="41" dstpinname="Lightness" linkstyle="Bezier" hiddenwhenlocked="1">
-   <LINKPOINT x="20230" y="6260">
+   <LINKPOINT x="16480" y="8890">
    </LINKPOINT>
-   <LINKPOINT x="14645" y="5650">
+   <LINKPOINT x="12770" y="6965">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="41" srcpinname="Output" dstnodeid="442" dstpinname="Color" linkstyle="Bezier" hiddenwhenlocked="1">
