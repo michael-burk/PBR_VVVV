@@ -241,7 +241,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
 	if(tX+tY > 4 || tX1+tY1 > 4){
 			
-		IBL = cubeTexIrradiance.SampleLevel(g_samLinear,reflVecNorm,texRoughness).rgb;
+		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
 		IBL  = IBL * albedo.xyz;
 		
 		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,reflVect,texRoughness*MAX_REFLECTION_LOD).rgb;
