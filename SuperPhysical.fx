@@ -10,12 +10,13 @@ struct lightStruct
 	float4 ambient : COLOR1;
 };
 static const float minVariance = 0;	
-
+	
 cbuffer cbPerObject : register (b0)
 {	
 	//transforms
 	float4x4 tW: WORLD;        //the models world matrix
 	float4x4 tWI: WORLDINVERSE;        //the models world matrix
+
 	float4x4 tWVP: WORLDVIEWPROJECTION;
 	
 	float4 GlobalReflectionColor <bool color = true; string uiname="Global Reflection Color";>  = { 0.0f,0.0f,0.0f,0.0f };
@@ -46,7 +47,8 @@ cbuffer cbPerObject : register (b0)
 
 cbuffer cbPerRender : register (b1)
 {	
-	float3 camPos <string uiname="Camera Position";> ;
+	float4x4 tVI : VIEWINVERSE;
+	bool gammaCorrection <bool visible=false;> = true;
 }
 
 StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
@@ -145,7 +147,7 @@ vs2psBump VS_Bump(
     Out.binormal = normalize(Out.binormal);
     Out.PosWVP  = mul(PosO, tWVP);
 	Out.TexCd = mul(TexCd,tTex);
-	Out.V = normalize(camPos - Out.PosW.xyz);
+	Out.V = normalize(tVI[3].xyz - Out.PosW.xyz);
     return Out;
 }
 
@@ -164,7 +166,7 @@ vs2ps VS(
 	Out.NormW = normalize(Out.NormW);
     Out.PosWVP  = mul(PosO, tWVP);
 	Out.TexCd = mul(TexCd,tTex);
-	Out.V = normalize(camPos - Out.PosW.xyz);	
+	Out.V = normalize(tVI[3].xyz - Out.PosW.xyz);	
     return Out;
 }
 
@@ -427,7 +429,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
 //	Gamma Correction
 
-	finalLight.rgb = ACESFitted(finalLight.rgb);
+	if(gammaCorrection) finalLight.rgb = ACESFitted(finalLight.rgb);
 	finalLight.a = Alpha;
 
 	return finalLight;

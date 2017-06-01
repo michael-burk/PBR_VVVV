@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
    <PATCH nodename="C:\Projects\PBR_VVVV\girlpower\00_MultiLight.v4p" systemname="04_MultiLight" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\04_MultiLight.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="13410" top="1005" width="14535" height="12540">
+   <BOUNDS type="Window" left="14565" top="315" width="9450" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -29,7 +29,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="1215" top="1035" width="12240" height="12585">
+   <BOUNDS type="Window" left="2475" top="315" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -57,9 +57,11 @@
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
-   <PIN pinname="View" slicecount="1" values="||">
+   <PIN pinname="View" slicecount="1" values="||" visible="1">
    </PIN>
-   <PIN pinname="Projection" slicecount="1" values="||">
+   <PIN pinname="Projection" slicecount="1" values="||" visible="1">
+   </PIN>
+   <PIN pinname="Shared Texture" slicecount="1" values="0">
    </PIN>
    </NODE>
    <NODE id="2" systemname="AspectRatio (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="AspectRatio (DX11.Layer)" componentmode="Hidden">
@@ -196,58 +198,6 @@
    <PIN pinname="PointLight" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <NODE id="1" systemname="Camera (Transform Orbit Legacy) Instant Position" filename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" nodename="..\Modules\Camera (Transform Orbit Legacy) Instant Position.v4p" componentmode="Hidden">
-   <BOUNDS type="Node" left="3855" top="8775" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="View" visible="1">
-   </PIN>
-   <PIN pinname="Projection" visible="1">
-   </PIN>
-   <PIN pinname="Initial Yaw" slicecount="1" values="0.1">
-   </PIN>
-   <PIN pinname="Initial Pitch" slicecount="1" values="0.08">
-   </PIN>
-   <PIN pinname="Initial Distance" slicecount="1" values="3">
-   </PIN>
-   <PIN pinname="Near Plane" slicecount="1" values="0.05">
-   </PIN>
-   <PIN pinname="Far Plane" slicecount="1" values="1000">
-   </PIN>
-   <PIN pinname="View Projection" visible="1">
-   </PIN>
-   <PIN pinname="Position" visible="1">
-   </PIN>
-   <PIN pinname="Initial FOV" slicecount="1" values="0.15">
-   </PIN>
-   <PIN pinname="Inital Distance" slicecount="1" values="7.1">
-   </PIN>
-   <PIN pinname="Camera Position" visible="1">
-   </PIN>
-   <PIN pinname="Target Initial Position" slicecount="3" visible="1" values="0,0,0">
-   </PIN>
-   <PIN pinname="Roll" slicecount="1" values="0">
-   </PIN>
-   <PIN pinname="Camera Position Instant" visible="1">
-   </PIN>
-   <BOUNDS type="Window" left="1785" top="705" width="18435" height="13185">
-   </BOUNDS>
-   <PIN pinname="Camera Direction" visible="1">
-   </PIN>
-   <BOUNDS type="Box" left="3855" top="8775">
-   </BOUNDS>
-   </NODE>
-   <LINK srcnodeid="1" srcpinname="View" dstnodeid="928" dstpinname="View" linkstyle="Bezier">
-   <LINKPOINT x="3885" y="9188">
-   </LINKPOINT>
-   <LINKPOINT x="3885" y="9188">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="Projection" dstnodeid="928" dstpinname="Projection" linkstyle="Bezier">
-   <LINKPOINT x="4050" y="9180">
-   </LINKPOINT>
-   <LINKPOINT x="4050" y="9180">
-   </LINKPOINT>
-   </LINK>
    <NODE systemname="Group (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Group (DX11.Layer)" componentmode="Hidden" id="1101">
    <BOUNDS type="Node" left="2385" top="8340" width="100" height="100">
    </BOUNDS>
@@ -391,87 +341,87 @@
    <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="1123" dstpinname="tTex" linkstyle="PolyLine">
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightViewProjection" dstnodeid="1123" dstpinname="LightViewProjection" linkstyle="Bezier">
-   <LINKPOINT x="5430" y="7620">
+   <LINKPOINT x="5415" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="4785" y="7620">
+   <LINKPOINT x="4620" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightView" dstnodeid="1123" dstpinname="LightView" linkstyle="Bezier">
    <LINKPOINT x="5580" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="4935" y="7620">
+   <LINKPOINT x="4785" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightProjection" dstnodeid="1123" dstpinname="LightProjection" linkstyle="Bezier">
    <LINKPOINT x="5730" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5085" y="7620">
+   <LINKPOINT x="4935" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Light Range" dstnodeid="1123" dstpinname="LightRange" linkstyle="Bezier">
-   <LINKPOINT x="5895" y="7620">
+   <LINKPOINT x="5880" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5235" y="7620">
+   <LINKPOINT x="5085" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="1123" dstpinname="Directional/Spot/Point" linkstyle="Bezier">
    <LINKPOINT x="6045" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5385" y="7620">
+   <LINKPOINT x="5235" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lPos" dstnodeid="1123" dstpinname="lPos" linkstyle="Bezier">
    <LINKPOINT x="6195" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5535" y="7620">
+   <LINKPOINT x="5385" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt0" dstnodeid="1123" dstpinname="lAtt0" linkstyle="Bezier">
    <LINKPOINT x="6360" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5700" y="7620">
+   <LINKPOINT x="5535" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt1" dstnodeid="1123" dstpinname="lAtt1" linkstyle="Bezier">
    <LINKPOINT x="6510" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5850" y="7620">
+   <LINKPOINT x="5685" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt2" dstnodeid="1123" dstpinname="lAtt2" linkstyle="Bezier">
-   <LINKPOINT x="6675" y="7620">
+   <LINKPOINT x="6660" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="6000" y="7620">
+   <LINKPOINT x="5850" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="AmbientColor" dstnodeid="1123" dstpinname="Ambient Color" linkstyle="Bezier">
    <LINKPOINT x="6825" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="6150" y="7620">
+   <LINKPOINT x="6000" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Diffuse Color" dstnodeid="1123" dstpinname="Diffuse Color" linkstyle="Bezier">
    <LINKPOINT x="6975" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="6300" y="7620">
+   <LINKPOINT x="6150" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="1123" dstpinname="Shadow Near Plane / Far Plane" linkstyle="Bezier">
-   <LINKPOINT x="7440" y="7620">
-   </LINKPOINT>
-   <LINKPOINT x="6915" y="7620">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1091" srcpinname="LightBleedingLimit" dstnodeid="1123" dstpinname="Light Bleeding Limit" linkstyle="Bezier">
-   <LINKPOINT x="7605" y="7620">
+   <LINKPOINT x="7425" y="7620">
    </LINKPOINT>
    <LINKPOINT x="7065" y="7620">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="1091" srcpinname="UseShadow" dstnodeid="1123" dstpinname="Shadow" linkstyle="Bezier">
-   <LINKPOINT x="7755" y="7620">
+   <LINK srcnodeid="1091" srcpinname="LightBleedingLimit" dstnodeid="1123" dstpinname="Light Bleeding Limit" linkstyle="Bezier">
+   <LINKPOINT x="7590" y="7628">
    </LINKPOINT>
-   <LINKPOINT x="7215" y="7620">
+   <LINKPOINT x="7215" y="7628">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1091" srcpinname="UseShadow" dstnodeid="1123" dstpinname="Shadow" linkstyle="Bezier">
+   <LINKPOINT x="7740" y="7628">
+   </LINKPOINT>
+   <LINKPOINT x="7365" y="7628">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1123" srcpinname="Layer" dstnodeid="1101" dstpinname="Layer 1" linkstyle="Bezier">
@@ -481,21 +431,15 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="SpotLightTex" dstnodeid="1123" dstpinname="SpotTex" linkstyle="Bezier">
-   <LINKPOINT x="7140" y="7620">
+   <LINKPOINT x="7125" y="7628">
    </LINKPOINT>
-   <LINKPOINT x="6615" y="7620">
+   <LINKPOINT x="6765" y="7628">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Shadow Map" dstnodeid="1123" dstpinname="ShadowMap" linkstyle="Bezier">
-   <LINKPOINT x="7290" y="7620">
+   <LINKPOINT x="7275" y="7628">
    </LINKPOINT>
-   <LINKPOINT x="6765" y="7620">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1" srcpinname="Camera Position Instant" dstnodeid="1123" dstpinname="Camera PositionXYZ" linkstyle="Bezier">
-   <LINKPOINT x="4605" y="8453">
-   </LINKPOINT>
-   <LINKPOINT x="5175" y="8453">
+   <LINKPOINT x="6915" y="7628">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1125" srcpinname="Transform Out" dstnodeid="1123" dstpinname="tTexInv" linkstyle="PolyLine">
@@ -599,5 +543,13 @@
    </LINKPOINT>
    <LINKPOINT x="4485" y="6345">
    </LINKPOINT>
+   </LINK>
+   <NODE systemname="Camera (Transform Orbit)" filename="%VVVV%\lib\packs\VL.EditingFramework.0.49.229-g30fb9f349f\vvvv\nodes\modules\Camera (Transform Orbit).v4p" nodename="Camera (Transform Orbit)" componentmode="Hidden" id="1151">
+   <BOUNDS type="Node" left="3690" top="8760" width="100" height="100">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="1151" srcpinname="View" dstnodeid="928" dstpinname="View">
+   </LINK>
+   <LINK srcnodeid="1151" srcpinname="Projection" dstnodeid="928" dstpinname="Projection">
    </LINK>
    </PATCH>
