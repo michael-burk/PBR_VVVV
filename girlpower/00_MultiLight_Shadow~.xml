@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_Shadow.v4p" systemname="00_MultiLight_Shadow" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_Shadow.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="14565" top="315" width="9450" height="12540">
+   <BOUNDS type="Window" left="14670" top="825" width="9450" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -29,7 +29,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="1905" top="495" width="12240" height="12585">
+   <BOUNDS type="Window" left="0" top="195" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -101,7 +101,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="5070" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="14415" top="735" width="14610" height="15855">
+   <BOUNDS type="Window" left="10110" top="1065" width="16125" height="14895">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>
@@ -177,7 +177,7 @@
    </PIN>
    <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.14">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.09">
    </PIN>
    <PIN pinname="Shadow Res²" slicecount="1" values="256">
    </PIN>
@@ -305,9 +305,9 @@
    </PIN>
    <PIN pinname="Iridescence" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="CubeMap Refl" visible="1" pintype="Input" slicecount="1" values="||">
+   <PIN pinname="CubeMap Refl" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
-   <PIN pinname="CubeMap Irradiance" visible="1" pintype="Input" slicecount="1" values="||">
+   <PIN pinname="CubeMap Irradiance" visible="-1" pintype="Input" slicecount="1" values="||">
    </PIN>
    <PIN pinname="Parallax Occlusion Mapping" slicecount="1" visible="-1" pintype="Input" values="0">
    </PIN>
@@ -343,69 +343,69 @@
    <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="1123" dstpinname="tTex" linkstyle="PolyLine">
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightViewProjection" dstnodeid="1123" dstpinname="LightViewProjection" linkstyle="Bezier">
-   <LINKPOINT x="5415" y="7620">
+   <LINKPOINT x="5430" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="4620" y="7620">
+   <LINKPOINT x="4470" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightView" dstnodeid="1123" dstpinname="LightView" linkstyle="Bezier">
-   <LINKPOINT x="5580" y="7620">
+   <LINKPOINT x="5580" y="7613">
    </LINKPOINT>
-   <LINKPOINT x="4785" y="7620">
+   <LINKPOINT x="4635" y="7613">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightProjection" dstnodeid="1123" dstpinname="LightProjection" linkstyle="Bezier">
-   <LINKPOINT x="5730" y="7620">
+   <LINKPOINT x="5730" y="7613">
    </LINKPOINT>
-   <LINKPOINT x="4935" y="7620">
+   <LINKPOINT x="4785" y="7613">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Light Range" dstnodeid="1123" dstpinname="LightRange" linkstyle="Bezier">
-   <LINKPOINT x="5880" y="7620">
+   <LINKPOINT x="5895" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5085" y="7620">
+   <LINKPOINT x="4935" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightType (Directional/Point/Spot)" dstnodeid="1123" dstpinname="Directional/Spot/Point" linkstyle="Bezier">
    <LINKPOINT x="6045" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5235" y="7620">
+   <LINKPOINT x="5085" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lPos" dstnodeid="1123" dstpinname="lPos" linkstyle="Bezier">
-   <LINKPOINT x="6195" y="7620">
+   <LINKPOINT x="6210" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5385" y="7620">
+   <LINKPOINT x="5235" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt0" dstnodeid="1123" dstpinname="lAtt0" linkstyle="Bezier">
    <LINKPOINT x="6360" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5535" y="7620">
+   <LINKPOINT x="5400" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt1" dstnodeid="1123" dstpinname="lAtt1" linkstyle="Bezier">
    <LINKPOINT x="6510" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5685" y="7620">
+   <LINKPOINT x="5550" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lAtt2" dstnodeid="1123" dstpinname="lAtt2" linkstyle="Bezier">
-   <LINKPOINT x="6660" y="7620">
+   <LINKPOINT x="6675" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="5850" y="7620">
+   <LINKPOINT x="5700" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="AmbientColor" dstnodeid="1123" dstpinname="Ambient Color" linkstyle="Bezier">
    <LINKPOINT x="6825" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="6000" y="7620">
+   <LINKPOINT x="5850" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Diffuse Color" dstnodeid="1123" dstpinname="Diffuse Color" linkstyle="Bezier">
-   <LINKPOINT x="6975" y="7620">
+   <LINKPOINT x="6990" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="6150" y="7620">
+   <LINKPOINT x="6000" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="NearFarPlane" dstnodeid="1123" dstpinname="Shadow Near Plane / Far Plane" linkstyle="Bezier">
@@ -415,15 +415,15 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="LightBleedingLimit" dstnodeid="1123" dstpinname="Light Bleeding Limit" linkstyle="Bezier">
-   <LINKPOINT x="7590" y="7628">
+   <LINKPOINT x="7455" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="7215" y="7628">
+   <LINKPOINT x="6615" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="UseShadow" dstnodeid="1123" dstpinname="Shadow" linkstyle="Bezier">
-   <LINKPOINT x="7740" y="7628">
+   <LINKPOINT x="7605" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="7365" y="7628">
+   <LINKPOINT x="6765" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1123" srcpinname="Layer" dstnodeid="1101" dstpinname="Layer 1" linkstyle="Bezier">
@@ -433,15 +433,15 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="SpotLightTex" dstnodeid="1123" dstpinname="SpotTex" linkstyle="Bezier">
-   <LINKPOINT x="7125" y="7628">
+   <LINKPOINT x="7140" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="6765" y="7628">
+   <LINKPOINT x="6315" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Shadow Map" dstnodeid="1123" dstpinname="ShadowMap" linkstyle="Bezier">
-   <LINKPOINT x="7275" y="7628">
+   <LINKPOINT x="7290" y="7620">
    </LINKPOINT>
-   <LINKPOINT x="6915" y="7628">
+   <LINKPOINT x="6465" y="7620">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1125" srcpinname="Transform Out" dstnodeid="1123" dstpinname="tTexInv" linkstyle="PolyLine">

@@ -47,7 +47,8 @@ cbuffer cbPerObj : register( b1 )
 {	
 	float4x4 tW : WORLD;
 	float3 lightPos;
-	float2 nearFarPlane;
+//	float2 nearFarPlane;
+	float lightDist;
 	float depthOffset;
 	
 };
@@ -73,8 +74,8 @@ float4 PS(psInput input): SV_Target
     float4 col = 0;
 	
 	float worldSpaceDistance = distance(lightPos, input.posObject.xyz);
-	float dist = (worldSpaceDistance - nearFarPlane.x) /
-              (nearFarPlane.y - nearFarPlane.x) + depthOffset;
+	float dist = (worldSpaceDistance - 0) /
+              (lightDist - 0) + depthOffset;
 
 	col.r = saturate(dist);
 	col.g = col.r * col.r;
@@ -98,8 +99,8 @@ float4 PS_AT(psInput_AT input): SV_Target
     float4 col = 0;
 	
 	float worldSpaceDistance = distance(lightPos, input.posObject.xyz);
-	float dist = (worldSpaceDistance - nearFarPlane.x) /
-              (nearFarPlane.y - nearFarPlane.x) + depthOffset;
+	float dist = (worldSpaceDistance - 0) /
+              (lightDist - 0) + depthOffset;
 	
 	float alpha = inputTexture.Sample(linearSampler,input.uv.xy).a;
 
