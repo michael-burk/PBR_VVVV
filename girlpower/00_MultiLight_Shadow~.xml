@@ -96,12 +96,12 @@
    </PACK>
    <PACK Name="vvvv-ZeroMQ" Version="0.5.2">
    </PACK>
-   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="0">
+   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0">
    <BOUNDS type="Node" left="5268" top="7138" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="5070" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="13200" top="600" width="14610" height="15855">
+   <BOUNDS type="Window" left="14415" top="735" width="14610" height="15855">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>
@@ -167,7 +167,7 @@
    </PIN>
    <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="Shadow" visible="1" slicecount="3" values="0,0,0">
+   <PIN pinname="Shadow" visible="1" slicecount="3" values="1,1,1">
    </PIN>
    <PIN pinname="Shadow Technique" slicecount="1" values="VSM">
    </PIN>
