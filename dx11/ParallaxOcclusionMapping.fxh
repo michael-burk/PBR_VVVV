@@ -76,6 +76,5 @@ void parallaxOcclusionMapping(inout float2 texcoord, inout float3 PosW, float3 V
 	
 	float scale = sqrt(tW._11*tW._11 + tW._12*tW._12 + tW._13*tW._13);
 	PosW.xyz -= mul(mul((float3(vCurrOffset,delta1*-fHeightMapScale)),mul(tangentToWorldSpace,(float3x3)tTexInv)).xyz,scale);
-
 }
 

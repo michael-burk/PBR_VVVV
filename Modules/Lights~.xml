@@ -2524,8 +2524,4 @@
    <PIN pinname="Spread Count" slicecount="1" values="4">
    </PIN>
    </NODE>
-   <LINK srcnodeid="444" srcpinname="Output" dstnodeid="45" dstpinname="Color Input">
-   </LINK>
-   <LINK srcnodeid="442" srcpinname="Output" dstnodeid="299" dstpinname="Color Input">
-   </LINK>
    </PATCH>

@@ -1,8 +1,17 @@
-float4 calcShadowVSM(float worldSpaceDistance, float2 projectTexCoord, int shadowCounter){
-	
-	    float currentDistanceToLight = clamp((worldSpaceDistance - nearFarPlane[shadowCounter].x) 
-        / (nearFarPlane[shadowCounter].y - nearFarPlane[shadowCounter].x), 0, 1);
 
+
+float4 calcShadowVSM(float worldSpaceDistance, float lightRange, float2 projectTexCoord, int shadowCounter){
+
+	
+//	float m22 = LightP[shadowCounter]._m22;
+//	float m32 = LightP[shadowCounter]._m32;    
+//	
+//	float near = (2.0f*m32)/(2.0f*m22-2.0f);
+//	float far = ((m22-1.0f)*near)/(m22+1.0);
+	
+	 float currentDistanceToLight = clamp((worldSpaceDistance - 0 /*nearPlane*/) 
+     / (lightRange /*farPlane*/ - 0 /*nearPlane*/), 0, 1);
+	
     /////////////////////////////////////////////////////////
 
     // get blured and blured squared distance to light

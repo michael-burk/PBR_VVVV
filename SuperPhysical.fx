@@ -10,7 +10,8 @@ struct lightStruct
 	float4 ambient : COLOR1;
 };
 static const float minVariance = 0;	
-	
+static const float3 F = float3(0.04,0.04,0.04);	
+
 cbuffer cbPerObject : register (b0)
 {	
 	//transforms
@@ -40,7 +41,7 @@ cbuffer cbPerObject : register (b0)
 	bool pom <string uiname="Parallax Occlusion Mapping";> = false;
 	float metallic <float uimin=0.0; float uimax=1.0;>;
 	float roughness <float uimin=0.0; float uimax=1.0;>;
-	float3 F <bool visible=false; String uiname="FresnelF0";> = { 0.04,0.04,0.04 };
+//	float3 F <bool visible=false; String uiname="FresnelF0";> = { 0.04,0.04,0.04 };
 	
 	bool noTile = false;
 };
@@ -81,22 +82,21 @@ TextureCube cubeTexRefl <string uiname="CubeMap Refl"; >;
 TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
 Texture2DArray lightMap <string uiname="SpotTex"; >;
 Texture2DArray shadowMap <string uiname="ShadowMap"; >;
-StructuredBuffer <float2> nearFarPlane <string uiname="Shadow Near Plane / Far Plane"; >;
 StructuredBuffer <float> lightBleedingLimit <string uiname="Light Bleeding Limit";>;
 StructuredBuffer <int> useShadow <string uiname="Shadow"; >;
 
 SamplerState g_samLinear
 {
     Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Clamp;
-    AddressV = Clamp;
+    AddressU = WRAP;
+    AddressV = WRAP;
 };
 
 SamplerState shadowSampler
 {
     Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Clamp;
-    AddressV = Clamp;
+    AddressU = WRAP;
+    AddressV = WRAP;
 };
 
 #include "dx11/VSM.fxh"
@@ -322,7 +322,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 			
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));	
+					shadow = saturate(calcShadowVSM(lightDist, lightRange[i%numLighRange],projectTexCoord,shadowCounter-1));	
 				} else {
 					shadow = 1;
 				}
@@ -358,14 +358,14 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 					lightMap.GetDimensions(mS,tXS,tYS);
 					if(tXS+tYS > 4) falloffSpot = lightMap.Sample(g_samLinear, float3(projectTexCoord, i), 0 ).r;
 					else if(tXS+tYS < 4) falloffSpot = lerp(1,0,saturate(length(.5-projectTexCoord.xy)*2));
-					shadow = saturate(calcShadowVSM(lightDist,projectTexCoord,shadowCounter-1));
+					shadow = saturate(calcShadowVSM(lightDist, lightRange[i%numLighRange], projectTexCoord,shadowCounter-1));
 
 				}
 			
 				if(useShadow[i]){
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 						finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
-						lerp(1.0,saturate(shadow),falloff).x, falloffSpot, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
+						lerp(1.0,saturate(shadow),falloff).x, falloffSpot*falloff, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
 					
 				} else {
 						float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
@@ -409,7 +409,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				   			projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;
 							projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 							
-							shadow += saturate(calcShadowVSM(lightDist,projectTexCoord,p+shadowCounter-6));
+							shadow += saturate(calcShadowVSM(lightDist, lightRange[i%numLighRange], projectTexCoord,p+shadowCounter-6));
 
 						}
 					}
