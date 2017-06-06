@@ -3,6 +3,8 @@
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
 
+static const float MAX_REFLECTION_LOD = 8.0;
+
 struct lightStruct
 {
 	float4 diffuse : COLOR0;
@@ -175,7 +177,6 @@ static const half3 wavelength[3] =
 	{ 0, 0, 1},
 };
 
-static const float MAX_REFLECTION_LOD = 9.0;
 
 float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
@@ -215,7 +216,8 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	metallicT *= metallic;
 	
     float3 F0 = lerp(F, albedo.xyz, metallicT);
-	texRoughness *= max(roughness,.02);
+	texRoughness *= roughness;
+	texRoughness = min(max(texRoughness,.01),.99);
 
 	float3 reflVect = -reflect(V,N);
 	float3 reflVecNorm = N;
@@ -235,22 +237,22 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		iridescenceColor = 1;
 	}
 	
-	float3 kS = fresnelSchlickRoughness(max(dot(N, V), 0.0), F,texRoughness);
-	float3 kD = 1.0 - kS;
-	kD *= 1-metallicT;
-	
+	float3 kS  = fresnelSchlickRoughness(max(dot(N, V), 0.0), F0,texRoughness);
+	float3 kD  = 1.0 - kS;
+		   kD *= 1.0 - metallicT;
+//	envBRDF  = brdfLUT.SampleLevel(g_samLinear, float2(max(dot(N, V), 0.0),texRoughness)*float2(1,-1),texRoughness*MAX_REFLECTION_LOD).rg;
+	envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0),texRoughness)*float2(1,-1)).rg;
 	if(tX+tY > 4 || tX1+tY1 > 4){
 			
 		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
 		IBL  = IBL * albedo.xyz;
 		
 		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,reflVect,texRoughness*MAX_REFLECTION_LOD).rgb;
-		envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
 		
 		if(useIridescence){
-		  refl = max(refl,iridescenceColor) * (F0 * envBRDF.x + envBRDF.y);
+		  refl = max(refl,iridescenceColor) * (kS * envBRDF.x + envBRDF.y);
 		} else {
-		  refl *= (F0 * envBRDF.x + envBRDF.y);
+		  refl *= (kS * envBRDF.x + envBRDF.y);
 		}
 
 		if(refraction){
@@ -259,19 +261,17 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		    	refrVect = refract(-V, N , refractionIndex[r]);
 		    	refrColor += cubeTexRefl.SampleLevel(g_samLinear,refrVect,texRoughness*MAX_REFLECTION_LOD).rgb * wavelength[r];
 			}
-			refrColor = refrColor * (F * envBRDF.x + envBRDF.y);
+			refrColor = refrColor * (kS * envBRDF.x + envBRDF.y);
 		}
 		
-		IBL  = ( ((IBL *iblIntensity.x*(kD)) + refrColor*kD) + refl * iblIntensity.y) * aoT;
+		IBL  = ( (IBL *iblIntensity.x + refrColor)*kD + refl * iblIntensity.y) * aoT;
 		
 	} else if(useIridescence){
-			float2 envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
-			iridescenceColor *= (F0 * envBRDF.x + envBRDF.y);
+			iridescenceColor *= (kS * envBRDF.x + envBRDF.y);
 			IBL = iridescenceColor / kD;	
 	}
 	
-	envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0), texRoughness)).rb;
-	IBL += saturate(GlobalReflectionColor.rgb * (F0 * envBRDF.x + envBRDF.y) / kD);
+	IBL += saturate(GlobalReflectionColor.rgb * (kS * envBRDF.x + envBRDF.y) / kD);
 	IBL += GlobalDiffuseColor.rgb * albedo.rgb * kD;
 	
 	uint numlAmb, dummyAmb;lAmbient.GetDimensions(numlAmb, dummyAmb);

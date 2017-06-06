@@ -50,11 +50,12 @@ float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
                     float3 lAmb, float shadow, float3 projectionColor, float falloff,
                     float lightDist, float lAtt0, float lAtt1, float lAtt2, float3 F0,
                     float attenuation, float roughness, float metallic, float ao,float3 iridescenceColor){
+                    	
     float3 H = normalize(V + L);
     float3 radiance   = lDiff * attenuation * shadow * projectionColor;      
     // cook-torrance brdf
-    float NDF = DistributionGGX(N, H, roughness);        
-    float G   = GeometrySmith(N, V, L, roughness);      
+    float NDF = DistributionGGX(N, H,roughness);        
+    float G   = GeometrySmith(N, V, L,roughness);      
     float3 F  = fresnelSchlick(max(dot(H, V), 0.0), F0);                                
     float3 kS = F;
     float3 kD = float3(1.0,1.0,1.0) - kS;
