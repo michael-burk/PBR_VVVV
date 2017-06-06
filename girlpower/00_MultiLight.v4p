@@ -57,9 +57,9 @@
    </PIN>
    <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
    </PIN>
-   <PIN pinname="View" slicecount="1" values="||" visible="1">
+   <PIN pinname="View" slicecount="1" visible="1" values="||">
    </PIN>
-   <PIN pinname="Projection" slicecount="1" values="||" visible="1">
+   <PIN pinname="Projection" slicecount="1" visible="1" values="||">
    </PIN>
    <PIN pinname="Shared Texture" slicecount="1" values="0">
    </PIN>

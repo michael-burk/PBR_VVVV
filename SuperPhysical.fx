@@ -51,9 +51,6 @@ cbuffer cbPerRender : register (b1)
 	bool gammaCorrection <bool visible=false;> = true;
 }
 
-StructuredBuffer <float3> cubeMapBoxBounds <bool visible=false;string uiname="Cube Map Bounds";>;
-StructuredBuffer <float> refractionIndex <bool visible=false; String uiname="Refraction Index";>;
-
 StructuredBuffer <float4x4> LightVP <string uiname="LightViewProjection";>;
 StructuredBuffer <float4x4> LightV <string uiname="LightView";>;
 StructuredBuffer <float4x4> LightP <string uiname="LightProjection";>;
@@ -77,6 +74,8 @@ Texture2D aoTex <string uiname="AOMap"; >;
 Texture2D brdfLUT <string uiname="brdfLUT"; >;
 Texture2D iridescence <string uiname="Iridescence"; >;
 
+StructuredBuffer <float> refractionIndex <bool visible=false; String uiname="Refraction Index";>;
+
 TextureCube cubeTexRefl <string uiname="CubeMap Refl"; >;
 TextureCube cubeTexIrradiance <string uiname="CubeMap Irradiance"; >;
 Texture2DArray lightMap <string uiname="SpotTex"; >;
@@ -91,7 +90,7 @@ SamplerState g_samLinear
     AddressV = WRAP;
 };
 
-SamplerState shadowSampler
+SamplerState shadowSampler : immutable
 {
     Filter = MIN_MAG_MIP_LINEAR;
     AddressU = WRAP;
