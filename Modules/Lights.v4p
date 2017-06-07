@@ -1,5 +1,5 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\Modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="0" scrolly="0" bgcolor="15132390" locked="0">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
+   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\Lights.v4p" systemname="LightsStudioExample" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\LightsStudioExample.v4p" scrollx="7080" scrolly="0" bgcolor="15132390" locked="0">
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="10635" top="11400" width="100" height="100">
    </BOUNDS>
@@ -9,7 +9,7 @@
    </PIN>
    <BOUNDS type="Box" left="10635" top="11400">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="1">
@@ -21,7 +21,7 @@
    </PIN>
    <BOUNDS type="Box" left="11865" top="11400">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="2">
@@ -33,7 +33,7 @@
    </PIN>
    <BOUNDS type="Box" left="13065" top="11400">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer 3d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER 3D)" componentmode="Hidden" id="3" hiddenwhenlocked="0">
@@ -47,7 +47,7 @@
    </PIN>
    <BOUNDS type="Box" left="9090" top="11115">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Int)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER INT)" componentmode="Hidden" id="6" hiddenwhenlocked="0">
@@ -59,7 +59,7 @@
    </PIN>
    <BOUNDS type="Box" left="7620" top="11385">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE systemname="Cons (Spreads)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="CONS (SPREADS)" componentmode="Hidden" id="10" hiddenwhenlocked="1">
@@ -87,7 +87,7 @@
    </PIN>
    <BOUNDS type="Box" left="15510" top="11400">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Transform)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER TRANSFORM)" componentmode="Hidden" id="15" hiddenwhenlocked="0">
@@ -99,7 +99,9 @@
    </PIN>
    <BOUNDS type="Box" left="2160" top="11385">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
+   </PIN>
+   <PIN pinname="Transpose" slicecount="1" values="1">
    </PIN>
    </NODE>
    <NODE systemname="DynamicBuffer (DX11.Buffer Value)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="DYNAMICBUFFER (DX11.BUFFER VALUE)" componentmode="Hidden" id="18" hiddenwhenlocked="0">
@@ -111,7 +113,7 @@
    </PIN>
    <BOUNDS type="Box" left="6315" top="11400">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE systemname="Cone (DX11)" filename="Cone (DX11).v4p" nodename="CONE (DX11)" componentmode="Hidden" id="20" hiddenwhenlocked="1">
@@ -207,7 +209,7 @@
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
-   <PIN pinname="Color Input" visible="1" slicecount="4" values="|0.00000,0.00000,0.00000,1.00000|,|1.00000,0.67019,0.80126,1.00000|,|0.70667,0.67205,1.00000,1.00000|,|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" visible="1" slicecount="3" values="|0.17597,1.00000,0.00000,1.00000|,|0.67000,1.00000,0.80200,1.00000|,|0.80200,0.67000,1.00000,1.00000|">
    </PIN>
    </NODE>
    <NODE id="49" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)" hiddenwhenlocked="0">
@@ -415,7 +417,7 @@
    </PIN>
    <BOUNDS type="Box" left="5040" top="11400">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <PACK Name="vvvv-Message" Version="2.9.0">
@@ -689,7 +691,7 @@
    </PIN>
    <BOUNDS type="Box" left="24660" top="11400">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE nodename="IOBOX (NODE)" componentmode="InABox" id="247" hiddenwhenlocked="0" systemname="IOBox (Node)">
@@ -739,7 +741,7 @@
    </PIN>
    <BOUNDS type="Box" left="14220" top="11400">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE id="296" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBOX (NODE)" hiddenwhenlocked="0">
@@ -1025,7 +1027,7 @@
    </PIN>
    <BOUNDS type="Box" left="3690" top="11400">
    </BOUNDS>
-   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Default">
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="359" systemname="IOBox (Value Advanced)">
@@ -1147,6 +1149,8 @@
    </PIN>
    <BOUNDS type="Box" left="23040" top="11400">
    </BOUNDS>
+   <PIN pinname="Preferred Buffer Type" slicecount="1" values="Dynamic">
+   </PIN>
    </NODE>
    <NODE nodename="IOBox (Node)" componentmode="InABox" id="405" hiddenwhenlocked="0" systemname="IOBox (Node)">
    <BOUNDS type="Box" left="23055" top="12420" width="1275" height="240">
@@ -2293,7 +2297,7 @@
    <NODE systemname="Vector (3d Join)" nodename="VECTOR (3D JOIN)" componentmode="Hidden" id="573">
    <BOUNDS type="Node" left="8325" top="2385" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Y" slicecount="1" values="2.06">
+   <PIN pinname="Y" slicecount="1" values="1.21">
    </PIN>
    </NODE>
    <LINK srcnodeid="573" srcpinname="XYZ" dstnodeid="426" dstpinname="Y Input Value">
@@ -2321,8 +2325,6 @@
    </LINKPOINT>
    <LINKPOINT x="6375" y="10598">
    </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="444" srcpinname="Output" dstnodeid="45" dstpinname="Color Input">
    </LINK>
    <LINK srcnodeid="442" srcpinname="Output" dstnodeid="299" dstpinname="Color Input">
    </LINK>
@@ -2375,5 +2377,7 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="592" srcpinname="XYZ" dstnodeid="25" dstpinname="XYZ UnTransformed">
+   </LINK>
+   <LINK srcnodeid="444" srcpinname="Output" dstnodeid="45" dstpinname="Color Input">
    </LINK>
    </PATCH>

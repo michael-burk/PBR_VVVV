@@ -3,7 +3,7 @@
 //@tags: shading, blinn
 //@credits: Vux, Dottore, Catweasel
 
-static const float MAX_REFLECTION_LOD = 8.0;
+static const float MAX_REFLECTION_LOD = 9.0;
 
 struct lightStruct
 {
@@ -50,7 +50,7 @@ cbuffer cbPerObject : register (b0)
 cbuffer cbPerRender : register (b1)
 {	
 	float4x4 tVI : VIEWINVERSE;
-	bool gammaCorrection <bool visible=false;> = true;
+//	bool gammaCorrection <bool visible=false;> = true;
 }
 
 StructuredBuffer <float4x4> LightVP <string uiname="LightViewProjection";>;
@@ -102,7 +102,7 @@ SamplerState shadowSampler : immutable
 #include "dx11/VSM.fxh"
 #include "dx11/NoTile.fxh"
 #include "dx11/ParallaxOcclusionMapping.fxh"
-#include "dx11/ToneMapping.fxh"
+//#include "dx11/ToneMapping.fxh"
 #include "dx11/CookTorrance.fxh"
 
 
@@ -217,7 +217,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
     float3 F0 = lerp(F, albedo.xyz, metallicT);
 	texRoughness *= roughness;
-	texRoughness = min(max(texRoughness,.01),.99);
+	texRoughness = min(max(texRoughness,.01),.95);
 
 	float3 reflVect = -reflect(V,N);
 	float3 reflVecNorm = N;
@@ -240,8 +240,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	float3 kS  = fresnelSchlickRoughness(max(dot(N, V), 0.0), F0,texRoughness);
 	float3 kD  = 1.0 - kS;
 		   kD *= 1.0 - metallicT;
-//	envBRDF  = brdfLUT.SampleLevel(g_samLinear, float2(max(dot(N, V), 0.0),texRoughness)*float2(1,-1),texRoughness*MAX_REFLECTION_LOD).rg;
-	envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0),texRoughness)*float2(1,-1)).rg;
+	envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0)-.01,texRoughness)*float2(1,-1)).rg;
 	if(tX+tY > 4 || tX1+tY1 > 4){
 			
 		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
@@ -424,7 +423,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	
 //	Gamma Correction
 
-	if(gammaCorrection) finalLight.rgb = ACESFitted(finalLight.rgb);
+//	if(gammaCorrection) finalLight.rgb = ACESFitted(finalLight.rgb);
 	finalLight.a = Alpha;
 
 	return finalLight;

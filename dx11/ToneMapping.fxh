@@ -1,4 +1,4 @@
-
+float gamma = 1;
 
 // sRGB => XYZ => D65_2_D60 => AP1 => RRT_SAT
 static const float3x3 ACESInputMat =
@@ -30,7 +30,7 @@ float3 ACESFitted(float3 color)
     // Apply RRT and ODT
     color = RRTAndODTFit(color);
 
-    color = mul(ACESOutputMat, color);
+    color = mul(ACESOutputMat*gamma, color);
 
     // Clamp to [0, 1]
     color = saturate(color);
