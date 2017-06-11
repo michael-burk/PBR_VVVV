@@ -241,6 +241,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 	float3 kD  = 1.0 - kS;
 		   kD *= 1.0 - metallicT;
 	envBRDF  = brdfLUT.Sample(g_samLinear, float2(max(dot(N, V), 0.0)-.01,texRoughness)*float2(1,-1)).rg;
+	
 	if(tX+tY > 4 || tX1+tY1 > 4){
 			
 		IBL = cubeTexIrradiance.Sample(g_samLinear,reflVecNorm).rgb;
@@ -263,7 +264,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 			refrColor = refrColor * (kS * envBRDF.x + envBRDF.y);
 		}
 		
-		IBL  = ( (IBL *iblIntensity.x + refrColor)*kD + refl * iblIntensity.y) * aoT;
+		IBL  = saturate( (IBL *iblIntensity.x + refrColor)*kD + refl * iblIntensity.y) * aoT;
 		
 	} else if(useIridescence){
 			iridescenceColor *= (kS * envBRDF.x + envBRDF.y);
@@ -419,7 +420,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		}	
 	}
 	
-	finalLight.xyz += IBL.xyz;
+	finalLight.xyz += IBL;
 	
 //	Gamma Correction
 
@@ -446,9 +447,10 @@ float4 PS_PBR_Bump(vs2psBump In): SV_Target
 	
 	uint tX2,tY2,m2;
 	normalTex.GetDimensions(tX2,tY2);
-	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd.xy).rgb;
-	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex, In.TexCd.xy).rgb;
-	bumpMap = (bumpMap * 2.0f) - 1.0f;
+	if(tX2+tY2 > 4 && !noTile) bumpMap = normalTex.Sample(g_samLinear, In.TexCd.xy).rgb;
+	else if(tX2+tY2 > 4 && noTile) bumpMap = textureNoTile(normalTex, In.TexCd.xy).rgb;
+	if(length(bumpMap) > 0) bumpMap = (bumpMap * 2.0f) - 1.0f;
+	
 	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * In.tangent + bumpMap.y * In.binormal)*bumpy);
 	return doLighting(In.PosW, Nb, In.V, In.TexCd);
 
@@ -484,9 +486,9 @@ float4 PS_PBR_Bump_AutoTNB(vs2ps In): SV_Target
 
 	uint tX2,tY2,m2;
 	normalTex.GetDimensions(tX2,tY2);
-	if(tX2+tY2 > 0 && !noTile) bumpMap = normalTex.Sample(g_samLinear,In.TexCd.xy).rgb;
-	else if(tX2+tY2 > 2 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy).rgb;
-	bumpMap = (bumpMap * 2.0f) - 1.0f;
+	if(tX2+tY2 > 4 && !noTile) bumpMap = normalTex.Sample(g_samLinear,In.TexCd.xy).rgb;
+	else if(tX2+tY2 > 4 && noTile) bumpMap = textureNoTile(normalTex,In.TexCd.xy).rgb;
+	if(length(bumpMap) > 0) bumpMap = (bumpMap * 2.0f) - 1.0f;
 	
 	float3 Nb = normalize(In.NormW.xyz + (bumpMap.x * normalize(t) + bumpMap.y * normalize(b))*bumpy);
 	
