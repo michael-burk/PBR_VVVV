@@ -338,14 +338,14 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		   		projectTexCoord.y = -viewPosition.y / viewPosition.w / 2.0f + 0.5f;			
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 			
-				float falloffSpot = 0;
+				float3 falloffSpot = 0;
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
 				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
 					
 					uint tXS,tYS,mS;
 					lightMap.GetDimensions(mS,tXS,tYS);
-					if(tXS+tYS > 4) falloffSpot = lightMap.Sample(g_samLinear, float3(projectTexCoord, spotLightCount), 0 ).r;
-					else if(tXS+tYS < 4) falloffSpot = lerp(1,0,saturate(length(.5-projectTexCoord.xy)*2));
+					if(tXS+tYS > 4) falloffSpot = lightMap.Sample(g_samLinear, float3(projectTexCoord, spotLightCount), 0 ).rgb;
+					else if(tXS+tYS < 4) falloffSpot = smoothstep(1,0,saturate(length(.5-projectTexCoord.xy)*2));
 					shadow = saturate(calcShadowVSM(lightDist, lightRange[i%numLights], projectTexCoord,shadowCounter));
 
 				}
