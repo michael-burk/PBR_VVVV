@@ -23,9 +23,9 @@
    </PIN>
    </NODE>
    <NODE id="1039" systemname="Preview (DX11.Texture)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Preview (DX11.Texture)" componentmode="InAWindow" stayontop="0">
-   <BOUNDS type="Node" left="2580" top="10080" width="100" height="100">
+   <BOUNDS type="Node" left="2565" top="10410" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="2580" top="10080" width="6000" height="4500">
+   <BOUNDS type="Box" left="2565" top="10410" width="6000" height="4500">
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
@@ -55,7 +55,7 @@
    </PIN>
    <PIN pinname="Texture SizeXY" slicecount="2" values="800,800">
    </PIN>
-   <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
+   <PIN pinname="Target Format" slicecount="1" values="R16G16B16A16_Float">
    </PIN>
    <PIN pinname="View" slicecount="1" visible="1" values="||">
    </PIN>
@@ -449,7 +449,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="4860" top="5220" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.2">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -465,8 +465,6 @@
    </LINKPOINT>
    <LINKPOINT x="4290" y="6660">
    </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1039" dstpinname="Texture In">
    </LINK>
    <NODE systemname="Sphere (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sphere (DX11.Geometry)" componentmode="Hidden" id="1130">
    <BOUNDS type="Node" left="2745" top="3555" width="100" height="100">
@@ -551,5 +549,21 @@
    <LINK srcnodeid="1151" srcpinname="View" dstnodeid="928" dstpinname="View">
    </LINK>
    <LINK srcnodeid="1151" srcpinname="Projection" dstnodeid="928" dstpinname="Projection">
+   </LINK>
+   <NODE systemname="SuperToneMapping (DX11.TextureFX)" filename="..\dx11\SuperToneMapping.tfx" nodename="SuperToneMapping (DX11.TextureFX)" componentmode="Hidden" id="1152">
+   <BOUNDS type="Node" left="2565" top="9960" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="gamma" slicecount="1" values="1.35">
+   </PIN>
+   <PIN pinname="Enabled" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1152" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="1152" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
    </LINK>
    </PATCH>

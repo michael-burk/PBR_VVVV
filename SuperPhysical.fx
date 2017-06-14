@@ -30,7 +30,6 @@ cbuffer cbPerObject : register (b0)
 	float lPower <String uiname="Power"; float uimin=0.0;> = 1.0;     //shininess of specular highlight
 
 	bool refraction <bool visible=false; String uiname="Refraction";> = false;
-	bool BPCM <bool visible= false; String uiname="Box Projected Cube Map";>;
 	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
 	bool useIridescence = false;	
 
@@ -250,7 +249,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		float3 refl = cubeTexRefl.SampleLevel(g_samLinear,reflVect,texRoughness*MAX_REFLECTION_LOD).rgb;
 		
 		if(useIridescence){
-		  refl = max(refl,iridescenceColor) * (kS * envBRDF.x + envBRDF.y);
+		  refl *= iridescenceColor * (kS * envBRDF.x + envBRDF.y);
 		} else {
 		  refl *= (kS * envBRDF.x + envBRDF.y);
 		}
@@ -261,17 +260,19 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		    	refrVect = refract(-V, N , refractionIndex[r]);
 		    	refrColor += cubeTexRefl.SampleLevel(g_samLinear,refrVect,texRoughness*MAX_REFLECTION_LOD).rgb * wavelength[r];
 			}
-			refrColor = refrColor * (kS * envBRDF.x + envBRDF.y);
+			refrColor *= 1 - (kS * envBRDF.x + envBRDF.y);
+			IBL *= texRoughness;
 		}
 		
 		IBL  = saturate( (IBL *iblIntensity.x + refrColor)*kD + refl * iblIntensity.y) * aoT;
-		
+	
 	} else if(useIridescence){
 			iridescenceColor *= (kS * envBRDF.x + envBRDF.y);
 			IBL = iridescenceColor / kD;	
+		
 	}
 	
-	IBL += saturate(GlobalReflectionColor.rgb * (kS * envBRDF.x + envBRDF.y) / kD);
+	IBL += saturate(GlobalReflectionColor.rgb * (kS * envBRDF.x + envBRDF.y) / kD) * iridescenceColor;
 	IBL += GlobalDiffuseColor.rgb * albedo.rgb * kD;
 	
 	uint numlAmb, dummyAmb;lAmbient.GetDimensions(numlAmb, dummyAmb);

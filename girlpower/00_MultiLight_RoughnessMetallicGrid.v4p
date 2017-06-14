@@ -1,6 +1,6 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_RoughnessMetallicGrid.v4p" systemname="00_MultiLight_RoughnessMetallicGrid" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_RoughnessMetallicGrid.v4p" scrollx="75" scrolly="15" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="13410" top="1005" width="14535" height="12540">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
+   <PATCH nodename="C:\Projects\PBR_VVVV\girlpower\00_MultiLight_RoughnessMetallicGrid.v4p" systemname="00_MultiLight_RoughnessMetallicGrid" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_RoughnessMetallicGrid.v4p" scrollx="75" scrolly="15" bgcolor="15329769" locked="0">
+   <BOUNDS type="Window" left="13455" top="1005" width="14490" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -23,7 +23,7 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="Scale XYZ" slicecount="3" visible="1" values="0.25,0.25,0.25">
+   <PIN pinname="Scale XYZ" slicecount="3" visible="1" values="0.5,0.5,0.5">
    </PIN>
    <PIN pinname="Rotate XYZ" visible="1" slicecount="3" values="0,0,0">
    </PIN>
@@ -398,12 +398,6 @@
    <PIN pinname="Transform Out" visible="1">
    </PIN>
    </NODE>
-   <LINK srcnodeid="473" srcpinname="Transform Out" dstnodeid="1125" dstpinname="Source" linkstyle="Bezier">
-   <LINKPOINT x="2940" y="6330">
-   </LINKPOINT>
-   <LINKPOINT x="4650" y="6330">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="1123" dstpinname="tTex" linkstyle="Bezier">
    <LINKPOINT x="3975" y="7538">
    </LINKPOINT>
@@ -566,20 +560,6 @@
    <LINKPOINT x="4890" y="7048">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1039" dstpinname="Texture In">
-   </LINK>
-   <NODE systemname="Sphere (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sphere (DX11.Geometry)" componentmode="Hidden" id="1130">
-   <BOUNDS type="Node" left="1770" top="3345" width="100" height="100">
-   </BOUNDS>
-   <PIN pinname="Geometry Out" visible="1">
-   </PIN>
-   <PIN pinname="Resolution Y" slicecount="1" values="32">
-   </PIN>
-   <PIN pinname="Resolution X" slicecount="1" values="32">
-   </PIN>
-   <PIN pinname="Radius" slicecount="1" values="0.1">
-   </PIN>
-   </NODE>
    <NODE systemname="Cross (2d)" nodename="Cross (2d)" componentmode="Hidden" id="1131">
    <BOUNDS type="Node" left="2940" top="3660" width="100" height="100">
    </BOUNDS>
@@ -599,7 +579,7 @@
    </PIN>
    <PIN pinname="Spread Count" slicecount="1" visible="1" values="5">
    </PIN>
-   <PIN pinname="Width" slicecount="1" values="2">
+   <PIN pinname="Width" slicecount="1" values="4">
    </PIN>
    </NODE>
    <LINK srcnodeid="1132" srcpinname="Output" dstnodeid="1131" dstpinname="X In">
@@ -703,9 +683,9 @@
    </LINKPOINT>
    </LINK>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="1147" systemname="IOBox (Color)">
-   <BOUNDS type="Box" left="2595" top="5910" width="2250" height="480">
+   <BOUNDS type="Box" left="3345" top="6090" width="1155" height="465">
    </BOUNDS>
-   <BOUNDS type="Node" left="2595" top="5910" width="0" height="0">
+   <BOUNDS type="Node" left="3345" top="6090" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Color Input" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
@@ -717,7 +697,7 @@
    <LINK srcnodeid="1146" srcpinname="Output" dstnodeid="1128" dstpinname="Y Input Value">
    </LINK>
    <NODE systemname="GeometryFile (DX11.Geometry Assimp)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.Assimp.dll" nodename="GeometryFile (DX11.Geometry Assimp)" componentmode="Hidden" id="1148">
-   <BOUNDS type="Node" left="1785" top="1740" width="100" height="100">
+   <BOUNDS type="Node" left="2295" top="1740" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
@@ -777,5 +757,23 @@
    </LINKPOINT>
    <LINKPOINT x="5175" y="8453">
    </LINKPOINT>
+   </LINK>
+   <NODE systemname="SuperToneMapping (DX11.TextureFX)" filename="..\dx11\SuperToneMapping.tfx" nodename="SuperToneMapping (DX11.TextureFX)" componentmode="Hidden" id="1155">
+   <BOUNDS type="Node" left="2595" top="9855" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="gamma" slicecount="1" values="1.5">
+   </PIN>
+   <PIN pinname="Enabled" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1155" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="1155" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="1125" dstpinname="Source">
    </LINK>
    </PATCH>

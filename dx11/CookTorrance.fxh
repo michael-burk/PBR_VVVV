@@ -66,6 +66,8 @@ float3 cookTorrance(float3 V, float3 L, float3 N, float3 albedo, float3 lDiff,
     specular *= lPower;
     specular *= iridescenceColor;
     // add to outgoing radiance Lo
+                    	
+    if(refraction) radiance *= roughness;
     float NdotL = max(dot(N, L), 0.0);                
     float3 returnLight = (kD * albedo.xyz / PI + specular) * radiance * NdotL;
     return returnLight + lAmb * lAtt0 / pow(lightDist,lAtt2) * falloff * ao;

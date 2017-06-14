@@ -47,7 +47,7 @@
    </PIN>
    <PIN pinname="AA Samples per Pixel" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.62488,0.00000,1.00000,0.00000|">
+   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
    <PIN pinname="Show Cursor" slicecount="1" values="1">
    </PIN>
@@ -55,7 +55,7 @@
    </PIN>
    <PIN pinname="Texture SizeXY" slicecount="2" values="800,800">
    </PIN>
-   <PIN pinname="Target Format" slicecount="1" values="R8G8B8A8_UNorm">
+   <PIN pinname="Target Format" slicecount="1" values="R16G16B16A16_Float">
    </PIN>
    <PIN pinname="View" slicecount="1" visible="1" values="||">
    </PIN>
@@ -183,7 +183,7 @@
    </PIN>
    <PIN pinname="Example Lightness" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="DirectionalLight" slicecount="1" values="1">
+   <PIN pinname="DirectionalLight" slicecount="1" values="0">
    </PIN>
    <PIN pinname="SpotLight" slicecount="1" values="1">
    </PIN>
@@ -315,7 +315,7 @@
    </PIN>
    <PIN pinname="Global Diffuse Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.00000|">
    </PIN>
-   <PIN pinname="Global Reflection Color" slicecount="1" visible="1" values="|0.00834,0.00834,0.00834,0.00000|">
+   <PIN pinname="Global Reflection Color" slicecount="1" visible="1" values="|0.00000,0.00632,0.00834,0.00000|">
    </PIN>
    <PIN pinname="FresnelF0XYZ" visible="1" pintype="Input" slicecount="1" values="0.0399999991059303">
    </PIN>
@@ -472,20 +472,14 @@
    <LINKPOINT x="4590" y="6645">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1039" dstpinname="Texture In" linkstyle="Bezier">
-   <LINKPOINT x="2595" y="9840">
-   </LINKPOINT>
-   <LINKPOINT x="2595" y="9840">
-   </LINKPOINT>
-   </LINK>
    <NODE systemname="Sphere (DX11.Geometry)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Sphere (DX11.Geometry)" componentmode="Hidden" id="1130">
    <BOUNDS type="Node" left="3105" top="2880" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Geometry Out" visible="1">
    </PIN>
-   <PIN pinname="Resolution Y" slicecount="1" values="64">
+   <PIN pinname="Resolution Y" slicecount="1" values="64" visible="1">
    </PIN>
-   <PIN pinname="Resolution X" slicecount="1" values="64">
+   <PIN pinname="Resolution X" slicecount="1" values="64" visible="1">
    </PIN>
    <PIN pinname="Radius" slicecount="1" values="0.4">
    </PIN>
@@ -1037,5 +1031,41 @@
    </LINKPOINT>
    <LINKPOINT x="9735" y="2745">
    </LINKPOINT>
+   </LINK>
+   <NODE systemname="SuperToneMapping (DX11.TextureFX)" filename="..\dx11\SuperToneMapping.tfx" nodename="SuperToneMapping (DX11.TextureFX)" componentmode="Hidden" id="1186">
+   <BOUNDS type="Node" left="2565" top="9705" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <PIN pinname="gamma" slicecount="1" values="1.5">
+   </PIN>
+   <PIN pinname="Enabled" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1186" dstpinname="Texture In">
+   </LINK>
+   <LINK srcnodeid="1186" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1187">
+   <BOUNDS type="Box" left="3735" top="2295" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="3735" top="2295" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="64">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Value Type" slicecount="1" values="Integer">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="1187" srcpinname="Y Output Value" dstnodeid="1130" dstpinname="Resolution Y">
+   </LINK>
+   <LINK srcnodeid="1187" srcpinname="Y Output Value" dstnodeid="1130" dstpinname="Resolution X">
    </LINK>
    </PATCH>
