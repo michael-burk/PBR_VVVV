@@ -471,7 +471,7 @@
    </BOUNDS>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Ambient Color|">
    </PIN>
-   <PIN pinname="Color Input" slicecount="1" values="|0.61051,0.61051,0.61051,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" values="|0.00500,0.00500,0.00500,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
@@ -519,7 +519,7 @@
    </BOUNDS>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Diffuse Color|">
    </PIN>
-   <PIN pinname="Color Input" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" values="|0.60381,0.60381,0.60381,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>

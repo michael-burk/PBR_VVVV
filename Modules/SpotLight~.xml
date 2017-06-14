@@ -191,7 +191,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2070" top="3705" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="-0.23">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -382,10 +382,6 @@
    </LINK>
    <LINK srcnodeid="38" srcpinname="Output" dstnodeid="11" dstpinname="Input Node">
    </LINK>
-   <LINK srcnodeid="19" srcpinname="Y Output Value" dstnodeid="5" dstpinname="Far Plane">
-   </LINK>
-   <LINK srcnodeid="19" srcpinname="Y Output Value" dstnodeid="17" dstpinname="Y Input Value">
-   </LINK>
    <LINK srcnodeid="30" srcpinname="Count" dstnodeid="36" dstpinname="Count">
    </LINK>
    <LINK srcnodeid="30" srcpinname="Count" dstnodeid="37" dstpinname="Count">
@@ -397,7 +393,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2550" top="2460" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.12">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.17">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -409,9 +405,9 @@
    <LINK srcnodeid="43" srcpinname="Y Output Value" dstnodeid="5" dstpinname="FOV">
    </LINK>
    <NODE systemname="IOBox (Color)" nodename="IOBox (Color)" componentmode="InABox" id="51">
-   <BOUNDS type="Node" left="10620" top="6180" width="100" height="100">
+   <BOUNDS type="Node" left="10620" top="6480" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="10620" top="6180" width="285" height="420">
+   <BOUNDS type="Box" left="10620" top="6480" width="285" height="420">
    </BOUNDS>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Ambient Color|">
    </PIN>
@@ -419,9 +415,9 @@
    </PIN>
    </NODE>
    <NODE systemname="IOBox (Color)" nodename="IOBox (Color)" componentmode="InABox" id="50">
-   <BOUNDS type="Node" left="11940" top="6075" width="100" height="100">
+   <BOUNDS type="Node" left="11940" top="6375" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="11940" top="6075" width="285" height="420">
+   <BOUNDS type="Box" left="11940" top="6375" width="285" height="420">
    </BOUNDS>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Diffuse Color|">
    </PIN>
@@ -447,7 +443,7 @@
    </PIN>
    </NODE>
    <NODE systemname="Switch (Color Input)" nodename="Switch (Color Input)" componentmode="Hidden" id="47" hiddenwhenlocked="0">
-   <BOUNDS type="Node" left="10620" top="5490" width="100" height="100">
+   <BOUNDS type="Node" left="10620" top="5385" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Input 1" visible="1" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
@@ -461,8 +457,6 @@
    <LINK srcnodeid="49" srcpinname="Output" dstnodeid="47" dstpinname="Input 1">
    </LINK>
    <LINK srcnodeid="48" srcpinname="Color Output" dstnodeid="47" dstpinname="Input 2">
-   </LINK>
-   <LINK srcnodeid="47" srcpinname="Output" dstnodeid="51" dstpinname="Color Input">
    </LINK>
    <NODE systemname="NIL (Color)" filename="%VVVV%\lib\nodes\modules\Color\NIL (Color).v4p" nodename="NIL (Color)" componentmode="Hidden" id="46">
    <BOUNDS type="Node" left="12240" top="4875" width="100" height="100">
@@ -498,10 +492,68 @@
    </NODE>
    <LINK srcnodeid="44" srcpinname="Color Output" dstnodeid="45" dstpinname="Input 2">
    </LINK>
-   <LINK srcnodeid="45" srcpinname="Output" dstnodeid="50" dstpinname="Color Input">
-   </LINK>
    <LINK srcnodeid="33" srcpinname="Y Output Value" dstnodeid="47" dstpinname="Switch">
    </LINK>
    <LINK srcnodeid="33" srcpinname="Y Output Value" dstnodeid="45" dstpinname="Switch">
+   </LINK>
+   <NODE systemname="GetSpread (Color)" filename="" nodename="GetSpread (Color)" componentmode="Hidden" id="52">
+   <BOUNDS type="Node" left="10605" top="5775" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="10605" top="5775">
+   </BOUNDS>
+   <PIN pinname="Count" visible="1" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="30" srcpinname="Count" dstnodeid="52" dstpinname="Count">
+   </LINK>
+   <LINK srcnodeid="48" srcpinname="Color Output" dstnodeid="52" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="52" srcpinname="Output" dstnodeid="51" dstpinname="Color Input">
+   </LINK>
+   <NODE systemname="GetSpread (Color)" filename="" nodename="GetSpread (Color)" componentmode="Hidden" id="53">
+   <BOUNDS type="Node" left="11925" top="5850" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="11925" top="5850">
+   </BOUNDS>
+   <PIN pinname="Count" visible="1" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="30" srcpinname="Count" dstnodeid="53" dstpinname="Count">
+   </LINK>
+   <LINK srcnodeid="44" srcpinname="Color Output" dstnodeid="53" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="53" srcpinname="Output" dstnodeid="50" dstpinname="Color Input">
+   </LINK>
+   <NODE systemname="GetSpread (Spreads)" filename="" nodename="GetSpread (Spreads)" componentmode="Hidden" id="54">
+   <BOUNDS type="Node" left="7710" top="4140" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="7710" top="4140">
+   </BOUNDS>
+   <PIN pinname="Count" visible="1" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="19" srcpinname="Y Output Value" dstnodeid="54" dstpinname="Input" linkstyle="Bezier">
+   <LINKPOINT x="5085" y="3075">
+   </LINKPOINT>
+   <LINKPOINT x="7695" y="3075">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="30" srcpinname="Count" dstnodeid="54" dstpinname="Count">
+   </LINK>
+   <LINK srcnodeid="54" srcpinname="Output" dstnodeid="5" dstpinname="Far Plane">
+   </LINK>
+   <LINK srcnodeid="54" srcpinname="Output" dstnodeid="17" dstpinname="Y Input Value">
    </LINK>
    </PATCH>

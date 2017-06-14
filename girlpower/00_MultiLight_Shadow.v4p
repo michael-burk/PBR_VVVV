@@ -494,12 +494,12 @@
    </LINK>
    <LINK srcnodeid="1162" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
    </LINK>
-   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="InAWindow" id="1091" stayontop="0">
+   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0">
    <BOUNDS type="Node" left="5268" top="6988" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="4920" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="6465" top="1620" width="20445" height="13110">
+   <BOUNDS type="Window" left="5310" top="3555" width="20445" height="12600">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>
@@ -575,9 +575,9 @@
    </PIN>
    <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.45">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.13">
    </PIN>
-   <PIN pinname="Shadow Res²" slicecount="1" values="256">
+   <PIN pinname="Shadow Res²" slicecount="1" values="128">
    </PIN>
    <PIN pinname="Example Lightness" slicecount="1" values="1">
    </PIN>

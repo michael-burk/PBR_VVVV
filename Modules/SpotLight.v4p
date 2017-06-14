@@ -191,7 +191,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2070" top="3705" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="-0.23">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -382,10 +382,6 @@
    </LINK>
    <LINK srcnodeid="38" srcpinname="Output" dstnodeid="11" dstpinname="Input Node">
    </LINK>
-   <LINK srcnodeid="19" srcpinname="Y Output Value" dstnodeid="5" dstpinname="Far Plane">
-   </LINK>
-   <LINK srcnodeid="19" srcpinname="Y Output Value" dstnodeid="17" dstpinname="Y Input Value">
-   </LINK>
    <LINK srcnodeid="30" srcpinname="Count" dstnodeid="36" dstpinname="Count">
    </LINK>
    <LINK srcnodeid="30" srcpinname="Count" dstnodeid="37" dstpinname="Count">
@@ -397,7 +393,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="2550" top="2460" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.12">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.17">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -535,5 +531,29 @@
    <LINK srcnodeid="44" srcpinname="Color Output" dstnodeid="53" dstpinname="Input">
    </LINK>
    <LINK srcnodeid="53" srcpinname="Output" dstnodeid="50" dstpinname="Color Input">
+   </LINK>
+   <NODE systemname="GetSpread (Spreads)" filename="" nodename="GetSpread (Spreads)" componentmode="Hidden" id="54">
+   <BOUNDS type="Node" left="7605" top="4440" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="7605" top="4440">
+   </BOUNDS>
+   <PIN pinname="Count" visible="1" slicecount="1" values="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="19" srcpinname="Y Output Value" dstnodeid="54" dstpinname="Input" linkstyle="Bezier">
+   <LINKPOINT x="5050" y="3175">
+   </LINKPOINT>
+   <LINKPOINT x="7625" y="3275">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="30" srcpinname="Count" dstnodeid="54" dstpinname="Count">
+   </LINK>
+   <LINK srcnodeid="54" srcpinname="Output" dstnodeid="5" dstpinname="Far Plane">
+   </LINK>
+   <LINK srcnodeid="54" srcpinname="Output" dstnodeid="17" dstpinname="Y Input Value">
    </LINK>
    </PATCH>

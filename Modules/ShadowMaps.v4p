@@ -1,5 +1,5 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="0" locked="0">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
+   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="60" scrolly="0" locked="0">
    <BOUNDS type="Window" left="15915" top="1110" width="11580" height="13185">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -629,9 +629,9 @@
    <LINK srcnodeid="4" srcpinname="Render State" dstnodeid="79" dstpinname="Render State">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="219">
-   <BOUNDS type="Box" left="7650" top="4530" width="795" height="240">
+   <BOUNDS type="Box" left="4785" top="4335" width="795" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="7650" top="4530" width="0" height="0">
+   <BOUNDS type="Node" left="4785" top="4335" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0">
    </PIN>

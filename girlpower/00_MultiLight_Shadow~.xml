@@ -499,7 +499,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="4920" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="6465" top="1620" width="20445" height="13110">
+   <BOUNDS type="Window" left="5310" top="3555" width="20445" height="12600">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>
@@ -575,7 +575,7 @@
    </PIN>
    <PIN pinname="LightBleedingLimit" visible="1" slicecount="1" values="0">
    </PIN>
-   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.45">
+   <PIN pinname="Shadow Blur Width" slicecount="1" values="0.2">
    </PIN>
    <PIN pinname="Shadow Res²" slicecount="1" values="256">
    </PIN>

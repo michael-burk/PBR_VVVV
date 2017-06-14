@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\DirectionalLight.v4p" systemname="DirectionalLight" filename="C:\Projects\PBR_VVVV\Modules\DirectionalLight.v4p" scrollx="3225" scrolly="270">
+   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\DirectionalLight.v4p" systemname="DirectionalLight" filename="C:\Projects\PBR_VVVV\Modules\DirectionalLight.v4p" scrollx="345" scrolly="675">
    <NODE nodename="IOBOX (VALUE ADVANCED)" componentmode="InABox" id="4" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="2910" top="3165" width="480" height="480">
    </BOUNDS>
@@ -106,20 +106,6 @@
    <PIN pinname="LightDir" visible="1">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="8" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="2745" top="4380" width="390" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="2745" top="4380" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="6">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   </NODE>
    <LINK srcnodeid="7" srcpinname="View" dstnodeid="5" dstpinname="View" linkstyle="PolyLine" hiddenwhenlocked="1">
    </LINK>
    <LINK srcnodeid="7" srcpinname="Projection" dstnodeid="5" dstpinname="Proj" linkstyle="PolyLine" hiddenwhenlocked="1">
@@ -143,8 +129,6 @@
    </BOUNDS>
    </NODE>
    <LINK srcnodeid="5" srcpinname="Layer" dstnodeid="13" dstpinname="Input Node" linkstyle="PolyLine">
-   </LINK>
-   <LINK srcnodeid="8" srcpinname="Y Output Value" dstnodeid="7" dstpinname="Far Plane" linkstyle="PolyLine">
    </LINK>
    <LINK srcnodeid="4" srcpinname="Y Output Value" dstnodeid="7" dstpinname="Ortho" linkstyle="PolyLine">
    </LINK>
@@ -193,13 +177,13 @@
    <NODE id="18" systemname="IOBox (Value Advanced)" componentmode="InABox" nodename="IOBox (Value Advanced)">
    <PIN pinname="Descriptive Name" slicecount="1" values="lRange">
    </PIN>
-   <BOUNDS type="Box" left="7350" top="6720" width="750" height="240">
+   <BOUNDS type="Box" left="7935" top="6750" width="750" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="7350" top="6720" width="750" height="240">
+   <BOUNDS type="Node" left="7935" top="6750" width="750" height="240">
    </BOUNDS>
+   <PIN pinname="Y Input Value" visible="1">
+   </PIN>
    </NODE>
-   <LINK srcnodeid="8" srcpinname="Y Output Value" dstnodeid="18" dstpinname="Y Input Value" linkstyle="PolyLine">
-   </LINK>
    <BOUNDS type="Window" left="12480" top="4110" width="15075" height="8685">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -226,8 +210,6 @@
    <PIN pinname="Y Input Value" slicecount="1" values="6">
    </PIN>
    </NODE>
-   <LINK srcnodeid="20" srcpinname="Y Output Value" dstnodeid="8" dstpinname="Y Input Value" linkstyle="PolyLine">
-   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="21">
    <BOUNDS type="Box" left="390" top="2580" width="795" height="720">
    </BOUNDS>
@@ -565,5 +547,25 @@
    <LINK srcnodeid="46" srcpinname="Output" dstnodeid="44" dstpinname="Color Input">
    </LINK>
    <LINK srcnodeid="45" srcpinname="Output" dstnodeid="43" dstpinname="Color Input">
+   </LINK>
+   <LINK srcnodeid="20" srcpinname="Y Output Value" dstnodeid="7" dstpinname="Far Plane">
+   </LINK>
+   <NODE systemname="GetSpread (Spreads)" filename="" nodename="GetSpread (Spreads)" componentmode="Hidden" id="47">
+   <BOUNDS type="Node" left="7920" top="6270" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input" visible="1" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="7920" top="6270">
+   </BOUNDS>
+   <PIN pinname="Count" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="33" srcpinname="Count" dstnodeid="47" dstpinname="Count">
+   </LINK>
+   <LINK srcnodeid="20" srcpinname="Y Output Value" dstnodeid="47" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="47" srcpinname="Output" dstnodeid="18" dstpinname="Y Input Value">
    </LINK>
    </PATCH>
