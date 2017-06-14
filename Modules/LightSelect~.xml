@@ -3,9 +3,9 @@
    <NODE id="24" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
    <PIN pinname="Descriptive Name" slicecount="1" values="|LightVP - Shadow Selection|">
    </PIN>
-   <BOUNDS type="Box" left="6105" top="10590" width="750" height="240">
+   <BOUNDS type="Box" left="5370" top="10755" width="750" height="240">
    </BOUNDS>
-   <BOUNDS type="Node" left="6105" top="10590" width="750" height="240">
+   <BOUNDS type="Node" left="5370" top="10755" width="750" height="240">
    </BOUNDS>
    <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
    </PIN>
