@@ -375,7 +375,6 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				float pZ;
 				if(useShadow[i]){
 					
-					
 					for(int p = 0; p < 6; p++){
 						
 						float4x4 LightPcropp = LightP[p + lightCounter];
@@ -408,15 +407,18 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 							finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 							lerp(1,saturate(shadow),falloff).x, 1.0, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
 				
-							shadowCounter+=6;
+							shadowCounter += 6;
+							lightCounter  += 6;
 				} else {
 						    float attenuation = lAtt0[i%numlAtt0] / pow(lightDist,lAtt1[i%numlAtt1]);
 							finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
-				}
+			
+//							lightCounter  += 1;
+				}	
 			
 			
-			lightCounter+=6;
+//			lightCounter+=6;
 			break;			
 		}	
 	}

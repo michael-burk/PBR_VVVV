@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\DirectionalLight.v4p" systemname="DirectionalLight" filename="C:\Projects\PBR_VVVV\Modules\DirectionalLight.v4p" scrollx="0" scrolly="0">
+   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\DirectionalLight.v4p" systemname="DirectionalLight" filename="C:\Projects\PBR_VVVV\Modules\DirectionalLight.v4p" scrollx="960" scrolly="0">
    <NODE nodename="IOBOX (VALUE ADVANCED)" componentmode="InABox" id="4" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="2910" top="3165" width="480" height="480">
    </BOUNDS>
@@ -207,7 +207,13 @@
    </BOUNDS>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" values="6">
+   <PIN pinname="Y Input Value" slicecount="1" values="3">
+   </PIN>
+   <PIN pinname="Minimum" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="Maximum" slicecount="1" values="100">
+   </PIN>
+   <PIN pinname="Default" slicecount="1" values="1">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="21">
@@ -255,7 +261,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="1875" top="3345" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="-0.19">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="0.31">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -447,7 +453,7 @@
    </BOUNDS>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Ambient Color|">
    </PIN>
-   <PIN pinname="Color Input" slicecount="1" values="|0.00834,0.00834,0.00834,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
@@ -459,7 +465,7 @@
    </BOUNDS>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Diffuse Color|">
    </PIN>
-   <PIN pinname="Color Input" slicecount="1" values="|0.23017,0.23017,0.23017,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" values="|0.23019,0.23019,0.23019,1.00000|">
    </PIN>
    <PIN pinname="Color Output" visible="1">
    </PIN>
@@ -605,5 +611,45 @@
    <LINK srcnodeid="33" srcpinname="Count" dstnodeid="53" dstpinname="Select">
    </LINK>
    <LINK srcnodeid="33" srcpinname="Count" dstnodeid="53" dstpinname="Count">
+   </LINK>
+   <NODE systemname="Select (Transform)" filename="%VVVV%\lib\nodes\plugins\VVVV.Nodes.dll" nodename="Select (Transform)" componentmode="Hidden" id="55">
+   <BOUNDS type="Node" left="5100" top="7620" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Select" visible="1">
+   </PIN>
+   <PIN pinname="Input" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <NODE id="56" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
+   <PIN pinname="Descriptive Name" slicecount="1" values="|View Projection Shadow|">
+   </PIN>
+   <BOUNDS type="Box" left="5055" top="8175" width="750" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5055" top="8175" width="750" height="240">
+   </BOUNDS>
+   <PIN pinname="Input Node" visible="1" slicecount="1" values="||">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="36" srcpinname="Output" dstnodeid="55" dstpinname="Input">
+   </LINK>
+   <LINK srcnodeid="55" srcpinname="Output" dstnodeid="56" dstpinname="Input Node">
+   </LINK>
+   <NODE systemname="Multiply (Value)" nodename="Multiply (Value)" componentmode="Hidden" id="57">
+   <BOUNDS type="Node" left="5580" top="7200" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Input 2" visible="1">
+   </PIN>
+   <PIN pinname="Input 1" visible="1">
+   </PIN>
+   <PIN pinname="Output" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="30" srcpinname="Y Output Value" dstnodeid="57" dstpinname="Input 2">
+   </LINK>
+   <LINK srcnodeid="54" srcpinname="Y Output Value" dstnodeid="57" dstpinname="Input 1">
+   </LINK>
+   <LINK srcnodeid="57" srcpinname="Output" dstnodeid="55" dstpinname="Select">
    </LINK>
    </PATCH>

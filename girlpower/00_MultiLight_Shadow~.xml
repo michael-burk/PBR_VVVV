@@ -29,7 +29,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="-15885" top="855" width="12240" height="12585">
+   <BOUNDS type="Window" left="-14250" top="660" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -475,7 +475,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="4920" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="1125" top="7890" width="24855" height="16230">
+   <BOUNDS type="Window" left="3105" top="1650" width="24855" height="16230">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>

@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
    <PATCH nodename="C:\Projects\PBR_VVVV\girlpower\00_MultiLight_Shadow.v4p" systemname="00_MultiLight_Shadow" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_Shadow.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="14670" top="825" width="9900" height="12540">
+   <BOUNDS type="Window" left="8115" top="2280" width="9900" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -29,7 +29,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="-15885" top="855" width="12240" height="12585">
+   <BOUNDS type="Window" left="-14250" top="660" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -475,7 +475,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="4920" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="1860" top="3285" width="24855" height="16230">
+   <BOUNDS type="Window" left="3525" top="1050" width="24855" height="16050">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>
