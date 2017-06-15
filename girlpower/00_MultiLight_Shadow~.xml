@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
    <PATCH nodename="C:\Projects\PBR_VVVV\girlpower\00_MultiLight_Shadow.v4p" systemname="00_MultiLight_Shadow" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_Shadow.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="14670" top="825" width="9900" height="12540">
+   <BOUNDS type="Window" left="8115" top="2280" width="9900" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -475,7 +475,7 @@
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="4920" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="3105" top="1650" width="24855" height="16230">
+   <BOUNDS type="Window" left="3525" top="1050" width="24855" height="16050">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>
@@ -541,7 +541,7 @@
    </PIN>
    <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="Shadow" visible="1" slicecount="1" values="0">
+   <PIN pinname="Shadow" visible="1" slicecount="1" values="1">
    </PIN>
    <PIN pinname="Shadow Technique" slicecount="1" values="VSM">
    </PIN>

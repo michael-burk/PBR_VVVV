@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\SpotLight.v4p" systemname="SpotLight" filename="C:\Projects\PBR_VVVV\Modules\SpotLight.v4p" scrollx="0" scrolly="0">
+   <PATCH nodename="C:\Projects\PBR_VVVV\modules\SpotLight.v4p" systemname="SpotLight" filename="C:\Projects\PBR_VVVV\Modules\SpotLight.v4p" scrollx="0" scrolly="0">
    <NODE systemname="Cone (DX11)" filename="Cone (DX11).v4p" nodename="CONE (DX11)" componentmode="Hidden" id="0" hiddenwhenlocked="1">
    <BOUNDS type="Node" left="1500" top="4980" width="100" height="100">
    </BOUNDS>

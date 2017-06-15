@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="3195" locked="0">
+   <PATCH nodename="C:\Projects\PBR_VVVV\modules\ShadowMaps.v4p" systemname="ShadowMaps" filename="C:\Users\Michael\Desktop\PROJECTS\superphong\Modules\ShadowMaps.v4p" scrollx="0" scrolly="6930" locked="0">
    <BOUNDS type="Window" left="7875" top="2565" width="17130" height="13185">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -702,7 +702,7 @@
    <PIN pinname="Output" visible="1">
    </PIN>
    </NODE>
-   <NODE systemname="LightSelect" filename="LightSelect.v4p" nodename="LIGHTSELECT.V4P" componentmode="InAWindow" id="223" stayontop="1" hiddenwhenlocked="0">
+   <NODE systemname="LightSelect" filename="LightSelect.v4p" nodename="LIGHTSELECT.V4P" componentmode="Hidden" id="223" stayontop="1" hiddenwhenlocked="0" debug="0">
    <BOUNDS type="Node" left="1560" top="4442" width="2550" height="270">
    </BOUNDS>
    <BOUNDS type="Box" left="960" top="1390" width="12475" height="6105">

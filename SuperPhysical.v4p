@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\girlpower\00_MultiLight_Shadow.v4p" systemname="00_MultiLight_Shadow" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_MultiLight_Shadow.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="1905" top="1380" width="9900" height="12540">
+   <PATCH nodename="C:\Projects\PBR_VVVV\SuperPhysical.v4p" systemname="SuperPhysical" filename="C:\Projects\PBR_VVVV\SuperPhysical.v4p" scrollx="0" scrolly="0" bgcolor="15329769" locked="0">
+   <BOUNDS type="Window" left="5340" top="1635" width="9900" height="12540">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -96,7 +96,7 @@
    </PACK>
    <PACK Name="vvvv-ZeroMQ" Version="0.5.2">
    </PACK>
-   <NODE systemname="SuperPhysical (DX11.Effect)" filename="..\SuperPhysical.fx" nodename="SuperPhysical (DX11.Effect)" componentmode="Hidden" id="1123">
+   <NODE systemname="SuperPhysical (DX11.Effect)" filename="SuperPhysical.fx" nodename="SuperPhysical (DX11.Effect)" componentmode="Hidden" id="1123">
    <BOUNDS type="Node" left="2430" top="7845" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Render State" visible="1">
@@ -273,9 +273,9 @@
    </LINKPOINT>
    </LINK>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="1147" systemname="IOBox (Color)">
-   <BOUNDS type="Box" left="3345" top="6240" width="735" height="585">
+   <BOUNDS type="Box" left="3360" top="5955" width="735" height="585">
    </BOUNDS>
-   <BOUNDS type="Node" left="3345" top="6240" width="0" height="0">
+   <BOUNDS type="Node" left="3360" top="5955" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Color Input" slicecount="1" visible="1" values="|1.00000,1.00000,1.00000,1.00000|">
    </PIN>
@@ -285,7 +285,7 @@
    <LINK srcnodeid="1147" srcpinname="Color Output" dstnodeid="1123" dstpinname="Color(Albedo)">
    </LINK>
    <NODE systemname="Transform (Transform 3d Vector)" nodename="Transform (Transform 3d Vector)" componentmode="Hidden" id="1148">
-   <BOUNDS type="Node" left="7290" top="5850" width="100" height="100">
+   <BOUNDS type="Node" left="6825" top="4800" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Translate XYZ" visible="1">
    </PIN>
@@ -294,7 +294,7 @@
    <PIN pinname="Transform Out" visible="1">
    </PIN>
    </NODE>
-   <NODE systemname="Camera (Transform Orbit)" filename="%VVVV%\lib\packs\VL.EditingFramework.0.49.63-g3a681d5a96\vvvv\nodes\modules\Camera (Transform Orbit).v4p" nodename="Camera (Transform Orbit)" componentmode="Hidden" id="1151">
+   <NODE systemname="Camera (Transform Orbit)" filename="%VVVV%\lib\packs\VL.EditingFramework.0.49.229-g30fb9f349f\vvvv\nodes\modules\Camera (Transform Orbit).v4p" nodename="Camera (Transform Orbit)" componentmode="Hidden" id="1151">
    <BOUNDS type="Node" left="3690" top="8760" width="100" height="100">
    </BOUNDS>
    </NODE>
@@ -329,7 +329,7 @@
    <LINK srcnodeid="1153" srcpinname="Geometry Out" dstnodeid="1152" dstpinname="Input 1">
    </LINK>
    <NODE systemname="Vector (3d Join)" nodename="Vector (3d Join)" componentmode="Hidden" id="1154">
-   <BOUNDS type="Node" left="7485" top="4770" width="100" height="100">
+   <BOUNDS type="Node" left="7020" top="3720" width="100" height="100">
    </BOUNDS>
    <PIN pinname="XYZ" visible="1">
    </PIN>
@@ -339,9 +339,9 @@
    <LINK srcnodeid="1154" srcpinname="XYZ" dstnodeid="1148" dstpinname="Translate XYZ">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1155" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="7755" top="3390" width="795" height="480">
+   <BOUNDS type="Box" left="7290" top="2340" width="795" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="7755" top="3390" width="0" height="0">
+   <BOUNDS type="Node" left="7290" top="2340" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="2" visible="1" values="-0.5,0">
    </PIN>
@@ -363,7 +363,7 @@
    <LINK srcnodeid="1155" srcpinname="Y Output Value" dstnodeid="1154" dstpinname="Y">
    </LINK>
    <NODE systemname="Vector (3d Join)" nodename="Vector (3d Join)" componentmode="Hidden" id="1156">
-   <BOUNDS type="Node" left="8220" top="4785" width="100" height="100">
+   <BOUNDS type="Node" left="7755" top="3735" width="100" height="100">
    </BOUNDS>
    <PIN pinname="XYZ" visible="1">
    </PIN>
@@ -377,9 +377,9 @@
    <LINK srcnodeid="1156" srcpinname="XYZ" dstnodeid="1148" dstpinname="Rotate XYZ">
    </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1157" systemname="IOBox (Value Advanced)">
-   <BOUNDS type="Box" left="8220" top="4080" width="795" height="480">
+   <BOUNDS type="Box" left="7755" top="3030" width="795" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="8220" top="4080" width="0" height="0">
+   <BOUNDS type="Node" left="7755" top="3030" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="2" visible="1" values="0.25,0">
    </PIN>
@@ -401,7 +401,7 @@
    <LINK srcnodeid="1157" srcpinname="Y Output Value" dstnodeid="1156" dstpinname="X">
    </LINK>
    <NODE id="1158" systemname="UniformScale (Transform)" nodename="UniformScale (Transform)" componentmode="Hidden" hiddenwhenlocked="0" managers="">
-   <BOUNDS type="Node" left="7290" top="6315" width="100" height="100">
+   <BOUNDS type="Node" left="6825" top="5265" width="100" height="100">
    </BOUNDS>
    <PIN pinname="Descriptive Name" pintype="Configuration" slicecount="1" values="||">
    </PIN>
@@ -418,12 +418,16 @@
    </NODE>
    <LINK srcnodeid="1148" srcpinname="Transform Out" dstnodeid="1158" dstpinname="Transform In">
    </LINK>
-   <LINK srcnodeid="1158" srcpinname="Transform Out" dstnodeid="1123" dstpinname="Transform In">
+   <LINK srcnodeid="1158" srcpinname="Transform Out" dstnodeid="1123" dstpinname="Transform In" linkstyle="Bezier">
+   <LINKPOINT x="6825" y="6675">
+   </LINKPOINT>
+   <LINKPOINT x="2955" y="6675">
+   </LINKPOINT>
    </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1159">
-   <BOUNDS type="Box" left="8265" top="5595" width="795" height="480">
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1159" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="7800" top="4545" width="795" height="480">
    </BOUNDS>
-   <BOUNDS type="Node" left="8265" top="5595" width="0" height="0">
+   <BOUNDS type="Node" left="7800" top="4545" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Y Input Value" slicecount="2" visible="1" values="5,1">
    </PIN>
@@ -440,7 +444,7 @@
    </NODE>
    <LINK srcnodeid="1159" srcpinname="Y Output Value" dstnodeid="1158" dstpinname="XYZ">
    </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1160">
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="1160" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="3000" top="2340" width="795" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="3000" top="2340" width="0" height="0">
@@ -460,7 +464,7 @@
    </LINK>
    <LINK srcnodeid="1160" srcpinname="Y Output Value" dstnodeid="1153" dstpinname="Resolution Y">
    </LINK>
-   <NODE systemname="SuperToneMapping (DX11.TextureFX)" filename="..\dx11\SuperToneMapping.tfx" nodename="SuperToneMapping (DX11.TextureFX)" componentmode="Hidden" id="1162">
+   <NODE systemname="SuperToneMapping (DX11.TextureFX)" filename="dx11\SuperToneMapping.tfx" nodename="SuperToneMapping (DX11.TextureFX)" componentmode="Hidden" id="1162">
    <BOUNDS type="Node" left="2565" top="9705" width="100" height="100">
    </BOUNDS>
    <PIN pinname="gamma" slicecount="1" values="1.25">
@@ -470,12 +474,30 @@
    </LINK>
    <LINK srcnodeid="1162" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
    </LINK>
-   <NODE systemname="Lights" filename="..\Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0" debug="0">
+   <NODE systemname="Group (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Group (DX11.Layer)" componentmode="Hidden" id="1164">
+   <BOUNDS type="Node" left="2385" top="8340" width="100" height="100">
+   </BOUNDS>
+   </NODE>
+   <LINK srcnodeid="1164" srcpinname="Layer Out" dstnodeid="2" dstpinname="Layer In" linkstyle="Bezier">
+   <LINKPOINT x="2430" y="8693">
+   </LINKPOINT>
+   <LINKPOINT x="2505" y="8693">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="1123" srcpinname="Layer" dstnodeid="1164" dstpinname="Layer 1" linkstyle="Bezier">
+   <LINKPOINT x="2475" y="8225">
+   </LINKPOINT>
+   <LINKPOINT x="2565" y="8230">
+   </LINKPOINT>
+   </LINK>
+   <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="1125" dstpinname="Source">
+   </LINK>
+   <NODE systemname="Lights" filename="Modules\Lights.v4p" nodename="..\Modules\Lights.v4p" componentmode="Hidden" id="1091" stayontop="0" debug="0">
    <BOUNDS type="Node" left="5268" top="6988" width="0" height="0">
    </BOUNDS>
    <BOUNDS type="Box" left="0" top="4920" width="11510" height="16150">
    </BOUNDS>
-   <BOUNDS type="Window" left="3525" top="1050" width="24855" height="16050">
+   <BOUNDS type="Window" left="2700" top="345" width="25710" height="16890">
    </BOUNDS>
    <PIN pinname="Pitch" visible="-1" pintype="Input" slicecount="1" values="0.13">
    </PIN>
@@ -529,7 +551,7 @@
    </PIN>
    <PIN pinname="Light Range" visible="1">
    </PIN>
-   <PIN pinname="Helper" visible="1" slicecount="1" values="0">
+   <PIN pinname="Helper" visible="1" slicecount="1" values="1">
    </PIN>
    <PIN pinname="LightViewProjection" visible="1">
    </PIN>
@@ -541,7 +563,7 @@
    </PIN>
    <PIN pinname="PointLight Count" slicecount="1" visible="1" values="1">
    </PIN>
-   <PIN pinname="Shadow" visible="1" slicecount="1" values="1">
+   <PIN pinname="Shadow" visible="1" slicecount="1" values="0">
    </PIN>
    <PIN pinname="Shadow Technique" slicecount="1" values="VSM">
    </PIN>
@@ -571,9 +593,11 @@
    </PIN>
    <PIN pinname="PointLight" slicecount="1" values="1">
    </PIN>
+   <PIN pinname="Evaluate" slicecount="1" values="1">
+   </PIN>
    </NODE>
    <LINK srcnodeid="1091" srcpinname="LightViewProjection" dstnodeid="1123" dstpinname="LightViewProjection" linkstyle="Bezier">
-   <LINKPOINT x="5430" y="7538">
+   <LINKPOINT x="5415" y="7538">
    </LINKPOINT>
    <LINKPOINT x="4485" y="7538">
    </LINKPOINT>
@@ -597,7 +621,7 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="lPos" dstnodeid="1123" dstpinname="lPos" linkstyle="Bezier">
-   <LINKPOINT x="6210" y="7538">
+   <LINKPOINT x="6195" y="7538">
    </LINKPOINT>
    <LINKPOINT x="5235" y="7538">
    </LINKPOINT>
@@ -621,7 +645,7 @@
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="AmbientColor" dstnodeid="1123" dstpinname="Ambient Color" linkstyle="Bezier">
-   <LINKPOINT x="6990" y="7538">
+   <LINKPOINT x="6975" y="7538">
    </LINKPOINT>
    <LINKPOINT x="5850" y="7538">
    </LINKPOINT>
@@ -664,22 +688,10 @@
    </LINK>
    <LINK srcnodeid="1152" srcpinname="Output" dstnodeid="1091" dstpinname="Shadow Geometry">
    </LINK>
-   <LINK srcnodeid="1158" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Geometry Transform">
-   </LINK>
-   <NODE systemname="Group (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Group (DX11.Layer)" componentmode="Hidden" id="1164">
-   <BOUNDS type="Node" left="2385" top="8340" width="100" height="100">
-   </BOUNDS>
-   </NODE>
-   <LINK srcnodeid="1164" srcpinname="Layer Out" dstnodeid="2" dstpinname="Layer In" linkstyle="Bezier">
-   <LINKPOINT x="2430" y="8693">
+   <LINK srcnodeid="1158" srcpinname="Transform Out" dstnodeid="1091" dstpinname="Shadow Geometry Transform" linkstyle="Bezier">
+   <LINKPOINT x="6855" y="6263">
    </LINKPOINT>
-   <LINKPOINT x="2505" y="8693">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1123" srcpinname="Layer" dstnodeid="1164" dstpinname="Layer 1" linkstyle="Bezier">
-   <LINKPOINT x="2475" y="8225">
-   </LINKPOINT>
-   <LINKPOINT x="2565" y="8230">
+   <LINKPOINT x="6855" y="6263">
    </LINKPOINT>
    </LINK>
    <LINK srcnodeid="1091" srcpinname="Helper" dstnodeid="1164" dstpinname="Layer 2" linkstyle="Bezier">
@@ -694,6 +706,8 @@
    <LINKPOINT x="5085" y="7538">
    </LINKPOINT>
    </LINK>
-   <LINK srcnodeid="745" srcpinname="Transform Out" dstnodeid="1125" dstpinname="Source">
-   </LINK>
+   <NODE systemname="Light Setup" filename="Modules\Light Setup.v4p" nodename="Modules\Light Setup.v4p" componentmode="Hidden" id="1168">
+   <BOUNDS type="Node" left="1140" top="6045" width="100" height="100">
+   </BOUNDS>
+   </NODE>
    </PATCH>

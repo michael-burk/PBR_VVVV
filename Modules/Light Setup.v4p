@@ -1,0 +1,31 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
+   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\Light Setup.v4p" systemname="Light Setup" filename="C:\Projects\PBR_VVVV\Modules\Light Setup.v4p" scrollx="0" scrolly="0">
+   <BOUNDS type="Window" left="1395" top="4380" width="3300" height="3855">
+   </BOUNDS>
+   <PACK Name="addonpack" Version="35.0.0">
+   </PACK>
+   <NODE systemname="Directional Setup" filename="Modules\Directional Setup.v4p" nodename="Modules\Directional Setup.v4p" componentmode="Hidden" id="38" stayontop="0">
+   <BOUNDS type="Node" left="465" top="510" width="2025" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="465" top="510" width="3100" height="3100">
+   </BOUNDS>
+   <BOUNDS type="Window" left="-22095" top="4350" width="16770" height="9735">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="Spot Setup" filename="Spot Setup.v4p" nodename="Spot Setup.v4p" componentmode="Hidden" id="39">
+   <BOUNDS type="Node" left="465" top="1395" width="2025" height="270">
+   </BOUNDS>
+   <BOUNDS type="Window" left="-25920" top="5250" width="16740" height="9735">
+   </BOUNDS>
+   <BOUNDS type="Box" left="465" top="1395">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="Point Setup" filename="Point Setup.v4p" nodename="Point Setup.v4p" componentmode="Hidden" id="40">
+   <BOUNDS type="Node" left="465" top="2220" width="2070" height="270">
+   </BOUNDS>
+   <BOUNDS type="Window" left="-21360" top="4620" width="12030" height="9735">
+   </BOUNDS>
+   <BOUNDS type="Box" left="465" top="2220">
+   </BOUNDS>
+   </NODE>
+   </PATCH>
