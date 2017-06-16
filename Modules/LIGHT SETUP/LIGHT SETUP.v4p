@@ -1,0 +1,75 @@
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
+   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\LIGHT SETUP\LIGHT SETUP.v4p" systemname="Light Setup" filename="C:\Projects\PBR_VVVV\Modules\Light Setup.v4p" scrollx="0" scrolly="0">
+   <BOUNDS type="Window" left="825" top="1680" width="3300" height="6435">
+   </BOUNDS>
+   <PACK Name="addonpack" Version="35.0.0">
+   </PACK>
+   <NODE systemname="Directional Setup" filename="Modules\Directional Setup.v4p" nodename="Modules\Directional Setup.v4p" componentmode="Hidden" id="38" stayontop="0">
+   <BOUNDS type="Node" left="345" top="450" width="2025" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="345" top="450" width="3100" height="3100">
+   </BOUNDS>
+   <BOUNDS type="Window" left="-26340" top="3420" width="16350" height="9735">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="Spot Setup" filename="Spot Setup.v4p" nodename="Spot Setup.v4p" componentmode="Hidden" id="39">
+   <BOUNDS type="Node" left="345" top="1335" width="2025" height="270">
+   </BOUNDS>
+   <BOUNDS type="Window" left="-27930" top="2760" width="14640" height="9240">
+   </BOUNDS>
+   <BOUNDS type="Box" left="345" top="1335">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="Point Setup" filename="Point Setup.v4p" nodename="Point Setup.v4p" componentmode="Hidden" id="40">
+   <BOUNDS type="Node" left="345" top="2160" width="2025" height="270">
+   </BOUNDS>
+   <BOUNDS type="Window" left="-28620" top="3945" width="12375" height="8895">
+   </BOUNDS>
+   <BOUNDS type="Box" left="345" top="2160">
+   </BOUNDS>
+   </NODE>
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="42">
+   <BOUNDS type="Box" left="345" top="4515" width="2250" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="345" top="4515" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.25098|">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Global Diffuse Color|">
+   </PIN>
+   <PIN pinname="Color Output" visible="1">
+   </PIN>
+   <PIN pinname="Pin Visibility" slicecount="1" values="False">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="41">
+   <BOUNDS type="Box" left="345" top="3210" width="2250" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="345" top="3210" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.25098|">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|Global Reflection Color|">
+   </PIN>
+   <PIN pinname="Color Output" visible="1">
+   </PIN>
+   <PIN pinname="Pin Visibility" slicecount="1" values="False">
+   </PIN>
+   </NODE>
+   <NODE nodename="S (Color)" id="43">
+   <BOUNDS type="Node" left="345" top="3825" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Send String" slicecount="1" values="|Global Relfection Color|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="41" srcpinname="Color Output" dstnodeid="43" dstpinname="Input Value">
+   </LINK>
+   <NODE nodename="S (Color)" id="44">
+   <BOUNDS type="Node" left="345" top="5055" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Send String" slicecount="1" values="|Global Diffuse Color|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="42" srcpinname="Color Output" dstnodeid="44" dstpinname="Input Value">
+   </LINK>
+   </PATCH>

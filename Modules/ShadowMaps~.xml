@@ -364,6 +364,12 @@
    <PIN pinname="Enabled" visible="1">
    </PIN>
    </NODE>
+   <LINK srcnodeid="19" srcpinname="Count" dstnodeid="72" dstpinname="Element Count" linkstyle="Bezier">
+   <LINKPOINT x="1940" y="9790">
+   </LINKPOINT>
+   <LINKPOINT x="2470" y="10385">
+   </LINKPOINT>
+   </LINK>
    <LINK srcnodeid="155" srcpinname="Y Output Value" dstnodeid="72" dstpinname="SizeXY" linkstyle="Bezier">
    <LINKPOINT x="2580" y="9488">
    </LINKPOINT>

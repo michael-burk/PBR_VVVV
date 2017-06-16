@@ -294,11 +294,11 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 		float3 lightToObject = lPos[i] - PosW.xyz;
 		float3 L = normalize(lightToObject);
 		float lightDist = length(lightToObject);
-		float falloff = pow(saturate(lightRange[i%numLights]-lightDist),1.5);
+		float falloff = pow(saturate(lightRange[i%numLights]-lightDist),2);
+//		falloff = smoothstep(0,1,pow(saturate(lightRange[i%numLights]-lightDist),1));
 		float projectTexCoordZ;
 		
 		LightDirW = normalize(lightToObject);
-
 			
 		switch (lightType[i]){
 			
@@ -313,8 +313,7 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 				projectTexCoordZ = viewPosition.z / viewPosition.w / 2.0f + 0.5f;
 			
 				if((saturate(projectTexCoord.x) == projectTexCoord.x) && (saturate(projectTexCoord.y) == projectTexCoord.y)
-				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){
-					shadow = saturate(calcShadowVSM(lightDist, lightRange[i%numLights],projectTexCoord,shadowCounter));	
+				&& (saturate(projectTexCoordZ) == projectTexCoordZ)){					shadow = saturate(calcShadowVSM(lightDist, lightRange[i%numLights],projectTexCoord,shadowCounter));	
 				} else {
 					shadow = 1;
 				}
@@ -414,11 +413,10 @@ float4 doLighting(float4 PosW, float3 N, float3 V, float4 TexCd){
 							finalLight.xyz += cookTorrance(V, L, N, albedo.xyz, lDiff[i%numlDiff].xyz, lAmbient[i%numlDiff].xyz,
 							1, 1, falloff, lightDist, lAtt0[i%numlAtt0], lAtt1[i%numlAtt1], lAtt2[i%numlAtt2], F0, attenuation, texRoughness, metallicT, aoT, iridescenceColor);
 			
-//							lightCounter  += 1;
 				}	
 			
 			
-//			lightCounter+=6;
+
 			break;			
 		}	
 	}

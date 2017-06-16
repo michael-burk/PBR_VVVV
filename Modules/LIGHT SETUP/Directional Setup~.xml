@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\Directional Setup.v4p" systemname="Directional Setup" filename="C:\Projects\PBR_VVVV\Modules\Directional Setup.v4p" scrollx="0" scrolly="0">
-   <BOUNDS type="Window" left="-24135" top="5970" width="16770" height="9735">
+   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\LIGHT SETUP\Directional Setup.v4p" systemname="Directional Setup" filename="C:\Projects\PBR_VVVV\Modules\Directional Setup.v4p" scrollx="0" scrolly="150">
+   <BOUNDS type="Window" left="-26340" top="3420" width="16350" height="9735">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -65,7 +65,7 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" values="0.1">
+   <PIN pinname="Y Input Value" slicecount="1" values="0.15">
    </PIN>
    <PIN pinname="Sticky Slider" slicecount="1" values="1">
    </PIN>
@@ -389,7 +389,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="990" top="5970" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00167,0.00167,0.00167,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Ambient Color|">
    </PIN>
@@ -403,7 +403,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="3405" top="5970" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.67223,0.67223,0.67223,1.00000|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.31529,0.31529,0.31529,1.00000|">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Diffuse Color|">
    </PIN>

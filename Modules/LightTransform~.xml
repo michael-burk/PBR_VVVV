@@ -764,6 +764,8 @@
    <LINKPOINT x="6090" y="7193">
    </LINKPOINT>
    </LINK>
+   <LINK srcnodeid="105" srcpinname="Y Output Value" dstnodeid="104" dstpinname="XYZ">
+   </LINK>
    <LINK srcnodeid="105" srcpinname="Y Output Value" dstnodeid="104" dstpinname="X" linkstyle="Bezier">
    <LINKPOINT x="12600" y="2790">
    </LINKPOINT>
