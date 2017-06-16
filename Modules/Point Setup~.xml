@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
    <PATCH nodename="C:\Projects\PBR_VVVV\Modules\Point Setup.v4p" systemname="Directional Setup" filename="C:\Projects\PBR_VVVV\Modules\Directional Setup.v4p" scrollx="0" scrolly="0">
-   <BOUNDS type="Window" left="-17400" top="5280" width="12030" height="9735">
+   <BOUNDS type="Window" left="-15510" top="5745" width="12030" height="9735">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -11,7 +11,7 @@
    </BOUNDS>
    <PIN pinname="Rows" slicecount="1" values="3">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,0,0">
+   <PIN pinname="Y Input Value" slicecount="3" visible="1" values="0,1.77,0">
    </PIN>
    <PIN pinname="Vector Size" slicecount="1" values="3">
    </PIN>
@@ -75,7 +75,7 @@
    </PIN>
    <PIN pinname="Y Output Value" visible="1">
    </PIN>
-   <PIN pinname="Y Input Value" slicecount="1" values="0.13">
+   <PIN pinname="Y Input Value" slicecount="1" values="0.05">
    </PIN>
    <PIN pinname="X Input Value" slicecount="1" values="6">
    </PIN>
@@ -531,11 +531,13 @@
    </BOUNDS>
    <PIN pinname="XYZ" visible="1">
    </PIN>
-   <PIN pinname="Y" visible="1" slicecount="1" values="0.37">
+   <PIN pinname="Y" visible="1" slicecount="1" values="0.75">
    </PIN>
    <PIN pinname="X" visible="1">
    </PIN>
    </NODE>
+   <LINK srcnodeid="48" srcpinname="XYZ" dstnodeid="5" dstpinname="Y Input Value">
+   </LINK>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="49">
    <BOUNDS type="Box" left="2610" top="2100" width="795" height="480">
    </BOUNDS>
@@ -577,9 +579,9 @@
    </BOUNDS>
    <PIN pinname="Output" visible="1">
    </PIN>
-   <PIN pinname="Spread Count" slicecount="1" values="101">
+   <PIN pinname="Spread Count" slicecount="1" values="20">
    </PIN>
-   <PIN pinname="Width" slicecount="1" values="4.84">
+   <PIN pinname="Width" slicecount="1" values="3.84">
    </PIN>
    </NODE>
    <LINK srcnodeid="51" srcpinname="Output" dstnodeid="48" dstpinname="X">
