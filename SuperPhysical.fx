@@ -30,7 +30,6 @@ cbuffer cbPerObject : register (b0)
 	float lPower <String uiname="Power"; float uimin=0.0;> = 1.0;     //shininess of specular highlight
 
 	bool refraction <bool visible=false; String uiname="Refraction";> = false;
-	float3 cubeMapPos  <bool visible=false;string uiname="Cube Map Position"; > = float3(0,0,0);
 	bool useIridescence = false;	
 
 	float4x4 tTex <bool uvspace=true;>;

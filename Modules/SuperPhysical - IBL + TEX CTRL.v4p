@@ -1,5 +1,5 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\SuperPhysical - Standard.v4p" systemname="SuperPhysical - Standard" filename="C:\Projects\PBR_VVVV\Modules\SuperPhysical - Standard.v4p">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\Modules\SuperPhysical - IBL + Tex CTRL.v4p" systemname="SuperPhysical - Standard" filename="C:\Projects\PBR_VVVV\Modules\SuperPhysical - Standard.v4p">
    <NODE systemname="UniformScale (Transform)" nodename="UniformScale (Transform)" componentmode="Hidden" id="0">
    <BOUNDS type="Node" left="2700" top="4517" width="100" height="100">
    </BOUNDS>
@@ -334,20 +334,6 @@
    </NODE>
    <LINK srcnodeid="0" srcpinname="Transform Out" dstnodeid="2" dstpinname="Source">
    </LINK>
-   <NODE id="9" systemname="IOBox (Node)" componentmode="InABox" nodename="IOBox (Node)">
-   <PIN pinname="Descriptive Name" slicecount="1" values="Helper">
-   </PIN>
-   <BOUNDS type="Box" left="4143" top="5942" width="750" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="4143" top="5942" width="750" height="240">
-   </BOUNDS>
-   </NODE>
-   <LINK srcnodeid="3" srcpinname="Helper" dstnodeid="9" dstpinname="Input Node" linkstyle="Bezier">
-   <LINKPOINT x="4170" y="5348">
-   </LINKPOINT>
-   <LINKPOINT x="4170" y="5348">
-   </LINKPOINT>
-   </LINK>
    <BOUNDS type="Window" left="4350" top="6555" width="11070" height="7785">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
@@ -528,4 +514,18 @@
    </NODE>
    <LINK srcnodeid="26" srcpinname="Input Value" dstnodeid="1" dstpinname="Texture">
    </LINK>
+   <NODE systemname="LIGHT SETUP - IBL" filename="LIGHT SETUP\LIGHT SETUP - IBL.v4p" nodename="LIGHT SETUP\LIGHT SETUP - IBL.v4p" componentmode="InAWindow" id="29">
+   <BOUNDS type="Node" left="6390" top="630" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Box" left="6390" top="630">
+   </BOUNDS>
+   </NODE>
+   <NODE systemname="STANDARD MATERIAL - TEX CNTRL" filename="MATERIAL SETUP\STANDARD MATERIAL - TEX CNTRL.v4p" nodename="MATERIAL SETUP\STANDARD MATERIAL - TEX CNTRL.v4p" componentmode="InAWindow" id="30">
+   <BOUNDS type="Node" left="6390" top="1230" width="100" height="100">
+   </BOUNDS>
+   <BOUNDS type="Window" left="4170" top="1695" width="9045" height="3045">
+   </BOUNDS>
+   <BOUNDS type="Box" left="6390" top="1230">
+   </BOUNDS>
+   </NODE>
    </PATCH>

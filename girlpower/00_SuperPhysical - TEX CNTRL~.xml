@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_SuperPhysical - Standard.v4p" systemname="00_SuperPhysical - Standard" filename="C:\Projects\PBR_VVVV\girlpower\00_SuperPhysical - Standard.v4p" scrollx="0" scrolly="-345" bgcolor="15329769" locked="0">
-   <BOUNDS type="Window" left="4155" top="4785" width="9000" height="9795">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\girlpower\00_SuperPhysical - TEX CNTRL.v4p" systemname="00_SuperPhysical - Standard" filename="C:\Projects\PBR_VVVV\girlpower\00_SuperPhysical - Standard.v4p" scrollx="0" scrolly="-345" bgcolor="15329769" locked="0">
+   <BOUNDS type="Window" left="4155" top="4785" width="7380" height="9675">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -13,7 +13,7 @@
    </BOUNDS>
    <PIN pinname="Texture In" visible="1" slicecount="1" values="||">
    </PIN>
-   <BOUNDS type="Window" left="13035" top="1785" width="12240" height="12585">
+   <BOUNDS type="Window" left="11505" top="1815" width="12240" height="12585">
    </BOUNDS>
    </NODE>
    <NODE id="928" systemname="Renderer (DX11 TempTarget)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Renderer (DX11 TempTarget)" componentmode="InAWindow" stayontop="0">
@@ -31,7 +31,7 @@
    </PIN>
    <PIN pinname="AA Samples per Pixel" slicecount="1" values="1">
    </PIN>
-   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.25098|">
+   <PIN pinname="Background Color" slicecount="1" visible="1" values="|0.00000,0.27560,0.29656,0.25098|">
    </PIN>
    <PIN pinname="Show Cursor" slicecount="1" values="1">
    </PIN>
@@ -269,7 +269,7 @@
    <NODE systemname="SuperToneMapping (DX11.TextureFX)" filename="..\dx11\SuperToneMapping.tfx" nodename="SuperToneMapping (DX11.TextureFX)" componentmode="Hidden" id="1162">
    <BOUNDS type="Node" left="1875" top="6540" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="gamma" slicecount="1" values="1">
+   <PIN pinname="gamma" slicecount="1" values="2">
    </PIN>
    <PIN pinname="Enabled" slicecount="1" values="1">
    </PIN>
@@ -278,52 +278,26 @@
    </NODE>
    <LINK srcnodeid="928" srcpinname="Buffers" dstnodeid="1162" dstpinname="Texture In">
    </LINK>
-   <NODE systemname="Group (DX11.Layer)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="Group (DX11.Layer)" componentmode="Hidden" id="1164">
-   <BOUNDS type="Node" left="1695" top="5175" width="100" height="100">
-   </BOUNDS>
-   </NODE>
-   <LINK srcnodeid="1164" srcpinname="Layer Out" dstnodeid="2" dstpinname="Layer In" linkstyle="Bezier">
-   <LINKPOINT x="1740" y="5528">
-   </LINKPOINT>
-   <LINKPOINT x="1815" y="5528">
-   </LINKPOINT>
-   </LINK>
    <LINK srcnodeid="1162" srcpinname="Texture Out" dstnodeid="1039" dstpinname="Texture In">
    </LINK>
-   <NODE systemname="SuperPhysical - Standard" filename="..\Modules\SuperPhysical - Standard.v4p" nodename="..\Modules\SuperPhysical - Standard.v4p" componentmode="Hidden" id="1168" debug="0">
-   <BOUNDS type="Node" left="1887" top="4664" width="0" height="0">
+   <NODE systemname="SuperPhysical - TEX CTRL" filename="..\Modules\SuperPhysical - TEX CTRL.v4p" nodename="..\Modules\SuperPhysical - TEX CTRL.v4p" componentmode="Hidden" id="1169">
+   <BOUNDS type="Node" left="1815" top="4995" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Box" left="0" top="2686" width="5838" height="3957">
-   </BOUNDS>
-   <BOUNDS type="Window" left="4350" top="6555" width="11070" height="7785">
+   <BOUNDS type="Window" left="8310" top="6420" width="11070" height="7785">
    </BOUNDS>
    <PIN pinname="Geometry" visible="1">
    </PIN>
    <PIN pinname="Transform In" visible="1">
    </PIN>
-   <PIN pinname="Color(Albedo)" visible="1" slicecount="1" values="|1.00000,1.00000,1.00000,1.00000|">
+   <PIN pinname="Layer" visible="1">
    </PIN>
-   <PIN pinname="Texture" visible="1" slicecount="1" values="||">
+   <PIN pinname="Technique" slicecount="1" values="PBR_Bump_AutoTNB">
    </PIN>
    </NODE>
-   <LINK srcnodeid="1152" srcpinname="Output" dstnodeid="1168" dstpinname="Shadow Geometry - Geometry">
+   <LINK srcnodeid="1152" srcpinname="Output" dstnodeid="1169" dstpinname="Geometry">
    </LINK>
-   <LINK srcnodeid="1158" srcpinname="Transform Out" dstnodeid="1168" dstpinname="Shadow Geometry Transform - Transform In">
+   <LINK srcnodeid="1158" srcpinname="Transform Out" dstnodeid="1169" dstpinname="Transform In">
    </LINK>
-   <LINK srcnodeid="1168" srcpinname="Layer" dstnodeid="1164" dstpinname="Layer 1">
-   </LINK>
-   <LINK srcnodeid="1168" srcpinname="Helper" dstnodeid="1164" dstpinname="Layer 2" linkstyle="Bezier">
-   <LINKPOINT x="3320" y="5083">
-   </LINKPOINT>
-   <LINKPOINT x="2125" y="4998">
-   </LINKPOINT>
-   </LINK>
-   <LINK srcnodeid="1152" srcpinname="Output" dstnodeid="1168" dstpinname="Geometry" linkstyle="PolyLine">
-   </LINK>
-   <LINK srcnodeid="1158" srcpinname="Transform Out" dstnodeid="1168" dstpinname="Transform In" linkstyle="Bezier">
-   <LINKPOINT x="4245" y="4398">
-   </LINKPOINT>
-   <LINKPOINT x="3045" y="4348">
-   </LINKPOINT>
+   <LINK srcnodeid="1169" srcpinname="Layer" dstnodeid="2" dstpinname="Layer In">
    </LINK>
    </PATCH>

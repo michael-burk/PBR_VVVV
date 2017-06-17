@@ -47,7 +47,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="345" top="3210" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.25098|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.67749,0.18212,0.00000,0.25098|">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Global Reflection Color|">
    </PIN>
