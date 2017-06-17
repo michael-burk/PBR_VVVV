@@ -571,7 +571,7 @@
    <NODE systemname="STANDARD MATERIAL - IBL + TEX CNTRL" filename="MATERIAL SETUP\STANDARD MATERIAL - IBL + TEX CNTRL.v4p" nodename="MATERIAL SETUP\STANDARD MATERIAL - IBL + TEX CNTRL.v4p" componentmode="InAWindow" id="29" stayontop="0">
    <BOUNDS type="Node" left="1605" top="780" width="100" height="100">
    </BOUNDS>
-   <BOUNDS type="Window" left="4395" top="645" width="6795" height="3015">
+   <BOUNDS type="Window" left="4335" top="630" width="6795" height="3015">
    </BOUNDS>
    <BOUNDS type="Box" left="1605" top="780">
    </BOUNDS>
@@ -693,7 +693,7 @@
    <NODE systemname="LIGHT SETUP - IBL" filename="LIGHT SETUP\LIGHT SETUP - IBL.v4p" nodename="LIGHT SETUP\LIGHT SETUP - IBL.v4p" componentmode="InAWindow" id="28">
    <BOUNDS type="Node" left="1650" top="345" width="2010" height="270">
    </BOUNDS>
-   <BOUNDS type="Window" left="945" top="630" width="3570" height="6375">
+   <BOUNDS type="Window" left="930" top="600" width="3570" height="6375">
    </BOUNDS>
    <BOUNDS type="Box" left="1650" top="345">
    </BOUNDS>

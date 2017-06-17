@@ -1,23 +1,15 @@
-<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.5.dtd" >
-   <PATCH nodename="C:\Projects\PBR_VVVV\Modules\LIGHT SETUP\LIGHT SETUP.v4p" systemname="Light Setup" filename="C:\Projects\PBR_VVVV\Modules\Light Setup.v4p" scrollx="0" scrolly="0">
-   <BOUNDS type="Window" left="825" top="1680" width="3300" height="6435">
+<!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\modules\LIGHT SETUP\LIGHT SETUP - IBL.v4p" systemname="LIGHT SETUP - IBL" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\Modules\LIGHT SETUP\LIGHT SETUP - IBL.v4p" scrollx="0" scrolly="0">
+   <BOUNDS type="Window" left="930" top="600" width="3570" height="6375">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
-   <NODE systemname="Directional Setup" filename="Modules\Directional Setup.v4p" nodename="Modules\Directional Setup.v4p" componentmode="Hidden" id="38" stayontop="0">
+   <NODE systemname="Directional Setup" filename="Directional Setup.v4p" nodename="Modules\Directional Setup.v4p" componentmode="Hidden" id="38" stayontop="0">
    <BOUNDS type="Node" left="345" top="450" width="2025" height="270">
    </BOUNDS>
    <BOUNDS type="Box" left="345" top="450" width="3100" height="3100">
    </BOUNDS>
    <BOUNDS type="Window" left="-26340" top="3420" width="16350" height="9735">
-   </BOUNDS>
-   </NODE>
-   <NODE systemname="Spot Setup" filename="Spot Setup.v4p" nodename="Spot Setup.v4p" componentmode="Hidden" id="39">
-   <BOUNDS type="Node" left="345" top="1335" width="2025" height="270">
-   </BOUNDS>
-   <BOUNDS type="Window" left="-27930" top="2760" width="14640" height="9240">
-   </BOUNDS>
-   <BOUNDS type="Box" left="345" top="1335">
    </BOUNDS>
    </NODE>
    <NODE systemname="Point Setup" filename="Point Setup.v4p" nodename="Point Setup.v4p" componentmode="Hidden" id="40">
@@ -28,12 +20,12 @@
    <BOUNDS type="Box" left="345" top="2160">
    </BOUNDS>
    </NODE>
-   <NODE nodename="IOBox (Color)" componentmode="InABox" id="42">
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="42" systemname="IOBox (Color)">
    <BOUNDS type="Box" left="345" top="4515" width="2250" height="480">
    </BOUNDS>
    <BOUNDS type="Node" left="345" top="4515" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.25098|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Global Diffuse Color|">
    </PIN>
@@ -42,12 +34,12 @@
    <PIN pinname="Pin Visibility" slicecount="1" values="False">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (Color)" componentmode="InABox" id="41">
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="41" systemname="IOBox (Color)">
    <BOUNDS type="Box" left="345" top="3210" width="2250" height="480">
    </BOUNDS>
    <BOUNDS type="Node" left="345" top="3210" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,0.25098|">
+   <PIN pinname="Color Input" slicecount="1" visible="1" values="|0.00000,0.00000,0.00000,1.00000|">
    </PIN>
    <PIN pinname="Descriptive Name" slicecount="1" values="|Global Reflection Color|">
    </PIN>
@@ -56,7 +48,7 @@
    <PIN pinname="Pin Visibility" slicecount="1" values="False">
    </PIN>
    </NODE>
-   <NODE nodename="S (Color)" id="43">
+   <NODE nodename="S (Color)" id="43" systemname="S (Color)">
    <BOUNDS type="Node" left="345" top="3825" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Global Relfection Color|">
@@ -64,12 +56,166 @@
    </NODE>
    <LINK srcnodeid="41" srcpinname="Color Output" dstnodeid="43" dstpinname="Input Value">
    </LINK>
-   <NODE nodename="S (Color)" id="44">
+   <NODE nodename="S (Color)" id="44" systemname="S (Color)">
    <BOUNDS type="Node" left="345" top="5055" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Global Diffuse Color|">
    </PIN>
    </NODE>
    <LINK srcnodeid="42" srcpinname="Color Output" dstnodeid="44" dstpinname="Input Value">
+   </LINK>
+   <NODE systemname="Spot Setup" filename="Spot Setup.v4p" nodename="Spot Setup.v4p" componentmode="Hidden" id="39">
+   <BOUNDS type="Node" left="345" top="1335" width="2025" height="270">
+   </BOUNDS>
+   <BOUNDS type="Window" left="-27930" top="2760" width="14640" height="9240">
+   </BOUNDS>
+   <BOUNDS type="Box" left="345" top="1335">
+   </BOUNDS>
+   </NODE>
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="45" systemname="IOBox (String)">
+   <BOUNDS type="Node" left="2190" top="5505" width="960" height="270">
+   </BOUNDS>
+   <BOUNDS type="Box" left="2190" top="5505" width="960" height="270">
+   </BOUNDS>
+   <PIN pinname="Input String" visible="0" slicecount="1" values="|look --&gt;|">
+   </PIN>
+   <PIN pinname="Output String" visible="0">
+   </PIN>
+   <PIN pinname="Show Grid" slicecount="1" values="0">
+   </PIN>
+   <PIN pinname="String Type" slicecount="1" values="MultiLine">
+   </PIN>
+   </NODE>
+   <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="51">
+   <BOUNDS type="Node" left="4125" top="2280" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Filename" slicecount="1" values="..\..\Assets\IBL\Brdf.dds">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="4125" top="2280">
+   </BOUNDS>
+   <PIN pinname="Reload" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="50">
+   <BOUNDS type="Node" left="7350" top="2280" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Filename" slicecount="1" values="..\..\Assets\IBL\garden\testDiffuseHDR.dds">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="7350" top="2280">
+   </BOUNDS>
+   <PIN pinname="Reload" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <NODE systemname="FileTexture (DX11 2d)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d)" componentmode="Hidden" id="49">
+   <BOUNDS type="Node" left="5520" top="2280" width="100" height="100">
+   </BOUNDS>
+   <PIN pinname="Filename" slicecount="1" values="..\..\Assets\IBL\garden\testSpecularHDR.dds">
+   </PIN>
+   <PIN pinname="Texture Out" visible="1">
+   </PIN>
+   <BOUNDS type="Box" left="5520" top="2280">
+   </BOUNDS>
+   <PIN pinname="Reload" slicecount="1" values="0">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="48" systemname="IOBox (Node)">
+   <BOUNDS type="Box" left="4125" top="2775" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="4125" top="2775" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Node" slicecount="1" visible="1" values="||">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="brdfLUT">
+   </PIN>
+   <PIN pinname="Output Node" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="47" systemname="IOBox (Node)">
+   <BOUNDS type="Box" left="5520" top="2775" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="5520" top="2775" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Node" slicecount="1" visible="1" values="||">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|CubeMap Refl|">
+   </PIN>
+   <PIN pinname="Output Node" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="46" systemname="IOBox (Node)">
+   <BOUNDS type="Box" left="7350" top="2775" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7350" top="2775" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Input Node" slicecount="1" visible="1" values="||">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|CubeMap Irradiance|">
+   </PIN>
+   <PIN pinname="Output Node" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="49" srcpinname="Texture Out" dstnodeid="47" dstpinname="Input Node">
+   </LINK>
+   <LINK srcnodeid="50" srcpinname="Texture Out" dstnodeid="46" dstpinname="Input Node">
+   </LINK>
+   <LINK srcnodeid="51" srcpinname="Texture Out" dstnodeid="48" dstpinname="Input Node">
+   </LINK>
+   <NODE nodename="S (Node)" id="52" systemname="S (Node)">
+   <BOUNDS type="Node" left="4125" top="3810" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Send String" slicecount="1" values="|IBL - brdfLUT|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="48" srcpinname="Output Node" dstnodeid="52" dstpinname="Input Value">
+   </LINK>
+   <NODE nodename="S (Node)" id="53" systemname="S (Node)">
+   <BOUNDS type="Node" left="5520" top="3810" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Send String" slicecount="1" values="|IBL - CubeMapRefl|">
+   </PIN>
+   <PIN pinname="Input Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="47" srcpinname="Output Node" dstnodeid="53" dstpinname="Input Value">
+   </LINK>
+   <NODE nodename="S (Node)" id="54" systemname="S (Node)">
+   <BOUNDS type="Node" left="7350" top="3810" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Send String" slicecount="1" values="|IBL - CubeMapIrradiance|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="46" srcpinname="Output Node" dstnodeid="54" dstpinname="Input Value">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="55" systemname="IOBox (Value Advanced)">
+   <BOUNDS type="Box" left="9600" top="2370" width="795" height="480">
+   </BOUNDS>
+   <BOUNDS type="Node" left="9600" top="2370" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="2" visible="1" values="1,1">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Vector Size" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Rows" slicecount="1" values="2">
+   </PIN>
+   <PIN pinname="Descriptive Name" slicecount="1" values="|IBL IntensityXY|">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <NODE nodename="S (Value)" id="56" systemname="S (Value)">
+   <BOUNDS type="Node" left="9600" top="3810" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Send String" slicecount="1" values="|IBL - Intensity|">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="55" srcpinname="Y Output Value" dstnodeid="56" dstpinname="Input Value">
    </LINK>
    </PATCH>

@@ -1,6 +1,6 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
    <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\Modules\LIGHT SETUP\LIGHT SETUP.v4p" systemname="Light Setup" filename="C:\Projects\PBR_VVVV\Modules\Light Setup.v4p" scrollx="0" scrolly="0">
-   <BOUNDS type="Window" left="975" top="1755" width="3300" height="6435">
+   <BOUNDS type="Window" left="975" top="1755" width="3315" height="6435">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -10,14 +10,6 @@
    <BOUNDS type="Box" left="345" top="450" width="3100" height="3100">
    </BOUNDS>
    <BOUNDS type="Window" left="-26340" top="3420" width="16350" height="9735">
-   </BOUNDS>
-   </NODE>
-   <NODE systemname="Spot Setup" filename="Spot Setup.v4p" nodename="Spot Setup.v4p" componentmode="Hidden" id="39">
-   <BOUNDS type="Node" left="345" top="1335" width="2025" height="270">
-   </BOUNDS>
-   <BOUNDS type="Window" left="-27930" top="2760" width="14640" height="9240">
-   </BOUNDS>
-   <BOUNDS type="Box" left="345" top="1335">
    </BOUNDS>
    </NODE>
    <NODE systemname="Point Setup" filename="Point Setup.v4p" nodename="Point Setup.v4p" componentmode="Hidden" id="40">
@@ -72,4 +64,12 @@
    </NODE>
    <LINK srcnodeid="42" srcpinname="Color Output" dstnodeid="44" dstpinname="Input Value">
    </LINK>
+   <NODE systemname="Spot Setup" filename="Spot Setup.v4p" nodename="Spot Setup.v4p" componentmode="Hidden" id="39">
+   <BOUNDS type="Node" left="345" top="1335" width="2025" height="270">
+   </BOUNDS>
+   <BOUNDS type="Window" left="-27930" top="2760" width="14640" height="9240">
+   </BOUNDS>
+   <BOUNDS type="Box" left="345" top="1335">
+   </BOUNDS>
+   </NODE>
    </PATCH>

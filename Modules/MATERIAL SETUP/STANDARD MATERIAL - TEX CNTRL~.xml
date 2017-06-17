@@ -20,7 +20,7 @@
    <PIN pinname="Maximum" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="4155" top="1800" width="7590" height="3030">
+   <BOUNDS type="Window" left="4155" top="1800" width="6900" height="3015">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -49,7 +49,7 @@
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Color)" componentmode="InABox" id="2">
-   <BOUNDS type="Box" left="4335" top="810" width="2250" height="480">
+   <BOUNDS type="Box" left="4335" top="810" width="1965" height="480">
    </BOUNDS>
    <BOUNDS type="Node" left="4335" top="810" width="0" height="0">
    </BOUNDS>
@@ -457,7 +457,7 @@
    </BOUNDS>
    <BOUNDS type="Node" left="15795" top="615" width="0" height="0">
    </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="50">
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="25">
    </PIN>
    <PIN pinname="Units" slicecount="1" values="||">
    </PIN>
@@ -474,6 +474,10 @@
    <PIN pinname="Maximum" slicecount="1" values="100">
    </PIN>
    <PIN pinname="Default" slicecount="1" values="25">
+   </PIN>
+   <PIN pinname="X Input Value" slicecount="1" values="25">
+   </PIN>
+   <PIN pinname="Pin Visibility" slicecount="1" values="False">
    </PIN>
    </NODE>
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="52">
@@ -497,6 +501,8 @@
    </PIN>
    <PIN pinname="Default" slicecount="1" values=".1">
    </PIN>
+   <PIN pinname="Pin Visibility" slicecount="1" values="False">
+   </PIN>
    </NODE>
    <NODE nodename="S (Value)" id="54">
    <BOUNDS type="Node" left="15795" top="2085" width="0" height="0">
@@ -519,6 +525,10 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
+   <PIN pinname="ScaleY" visible="1">
+   </PIN>
+   <PIN pinname="ScaleX" visible="1">
+   </PIN>
    </NODE>
    <NODE nodename="S (Node)" id="57">
    <BOUNDS type="Node" left="6720" top="1605" width="0" height="0">
@@ -527,5 +537,23 @@
    </PIN>
    </NODE>
    <LINK srcnodeid="56" srcpinname="Transform Out" dstnodeid="57" dstpinname="Input Value">
+   </LINK>
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="58">
+   <BOUNDS type="Box" left="7380" top="390" width="795" height="240">
+   </BOUNDS>
+   <BOUNDS type="Node" left="7380" top="390" width="0" height="0">
+   </BOUNDS>
+   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="3">
+   </PIN>
+   <PIN pinname="Units" slicecount="1" values="||">
+   </PIN>
+   <PIN pinname="Precision" slicecount="1" values="4">
+   </PIN>
+   <PIN pinname="Y Output Value" visible="1">
+   </PIN>
+   </NODE>
+   <LINK srcnodeid="58" srcpinname="Y Output Value" dstnodeid="56" dstpinname="ScaleY">
+   </LINK>
+   <LINK srcnodeid="58" srcpinname="Y Output Value" dstnodeid="56" dstpinname="ScaleX">
    </LINK>
    </PATCH>

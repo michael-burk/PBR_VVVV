@@ -1,5 +1,5 @@
 <!DOCTYPE PATCH  SYSTEM "http://vvvv.org/versions/vvvv50beta35.2.dtd" >
-   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\modules\MATERIAL SETUP\STANDARD MATERIAL - TEX CNTRL.v4p" systemname="Standard Material" filename="C:\Projects\PBR_VVVV\Modules\MATERIAL SETUP\Standard Material.v4p">
+   <PATCH nodename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\Modules\MATERIAL SETUP\STANDARD MATERIAL - TEX CNTRL 2.v4p" systemname="STANDARD MATERIAL - TEX CNTRL 2" filename="C:\Users\Michael\Desktop\PROJECTS\PBR_VVVV\Modules\MATERIAL SETUP\STANDARD MATERIAL - TEX CNTRL 2.v4p">
    <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="0" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="420" top="810" width="795" height="240">
    </BOUNDS>
@@ -20,7 +20,7 @@
    <PIN pinname="Maximum" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <BOUNDS type="Window" left="4155" top="1800" width="22035" height="6570">
+   <BOUNDS type="Window" left="4155" top="1800" width="6750" height="2970">
    </BOUNDS>
    <PACK Name="addonpack" Version="35.0.0">
    </PACK>
@@ -48,8 +48,8 @@
    <PIN pinname="Maximum" slicecount="1" values="1">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (Color)" componentmode="InABox" id="2">
-   <BOUNDS type="Box" left="4335" top="810" width="1965" height="480">
+   <NODE nodename="IOBox (Color)" componentmode="InABox" id="2" systemname="IOBox (Color)">
+   <BOUNDS type="Box" left="4335" top="810" width="2250" height="480">
    </BOUNDS>
    <BOUNDS type="Node" left="4335" top="810" width="0" height="0">
    </BOUNDS>
@@ -62,7 +62,7 @@
    <PIN pinname="Pin Visibility" slicecount="1" values="False">
    </PIN>
    </NODE>
-   <NODE nodename="S (Value)" id="4">
+   <NODE nodename="S (Value)" id="4" systemname="S (Value)">
    <BOUNDS type="Node" left="405" top="1590" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - Metallic|">
@@ -70,7 +70,7 @@
    </NODE>
    <LINK srcnodeid="0" srcpinname="Y Output Value" dstnodeid="4" dstpinname="Input Value">
    </LINK>
-   <NODE nodename="S (Value)" id="5">
+   <NODE nodename="S (Value)" id="5" systemname="S (Value)">
    <BOUNDS type="Node" left="2340" top="1590" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - Roughness|">
@@ -80,7 +80,7 @@
    </NODE>
    <LINK srcnodeid="1" srcpinname="Y Output Value" dstnodeid="5" dstpinname="Input Value">
    </LINK>
-   <NODE nodename="S (Color)" id="7">
+   <NODE nodename="S (Color)" id="7" systemname="S (Color)">
    <BOUNDS type="Node" left="4335" top="1590" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - Color (Albedo)|">
@@ -88,7 +88,7 @@
    </NODE>
    <LINK srcnodeid="2" srcpinname="Color Output" dstnodeid="7" dstpinname="Input Value">
    </LINK>
-   <NODE nodename="S (Node)" id="8">
+   <NODE nodename="S (Node)" id="8" systemname="S (Node)">
    <BOUNDS type="Node" left="675" top="4470" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - Texture|">
@@ -96,7 +96,7 @@
    <PIN pinname="Input Value" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (Node)" componentmode="InABox" id="16">
+   <NODE nodename="IOBox (Node)" componentmode="InABox" id="16" systemname="IOBox (Node)">
    <BOUNDS type="Box" left="1965" top="3690" width="795" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="1965" top="3690" width="0" height="0">
@@ -108,7 +108,7 @@
    <PIN pinname="Output Node" visible="1">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="11">
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="11" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="10140" top="810" width="480" height="480">
    </BOUNDS>
    <BOUNDS type="Node" left="10140" top="810" width="0" height="0">
@@ -130,7 +130,7 @@
    <PIN pinname="Pin Visibility" slicecount="1" values="OnlyInspector">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="10">
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="10" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="12360" top="795" width="480" height="480">
    </BOUNDS>
    <BOUNDS type="Node" left="12360" top="795" width="0" height="0">
@@ -154,7 +154,7 @@
    <PIN pinname="X Input Value" slicecount="1" values="0">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="9">
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="9" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="9150" top="810" width="795" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="9150" top="810" width="0" height="0">
@@ -172,7 +172,7 @@
    <PIN pinname="Pin Visibility" slicecount="1" values="False">
    </PIN>
    </NODE>
-   <NODE nodename="S (Value)" id="17">
+   <NODE nodename="S (Value)" id="17" systemname="S (Value)">
    <BOUNDS type="Node" left="9165" top="1995" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - Bumpiness|">
@@ -180,7 +180,7 @@
    </NODE>
    <LINK srcnodeid="9" srcpinname="Y Output Value" dstnodeid="17" dstpinname="Input Value">
    </LINK>
-   <NODE nodename="S (Value)" id="18">
+   <NODE nodename="S (Value)" id="18" systemname="S (Value)">
    <BOUNDS type="Node" left="12345" top="1440" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - ParallaxOcclusionMapping|">
@@ -188,7 +188,7 @@
    </NODE>
    <LINK srcnodeid="10" srcpinname="Y Output Value" dstnodeid="18" dstpinname="Input Value">
    </LINK>
-   <NODE nodename="S (Value)" id="19">
+   <NODE nodename="S (Value)" id="19" systemname="S (Value)">
    <BOUNDS type="Node" left="10155" top="1605" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - NoTile|">
@@ -196,7 +196,7 @@
    </NODE>
    <LINK srcnodeid="11" srcpinname="Y Output Value" dstnodeid="19" dstpinname="Input Value">
    </LINK>
-   <NODE nodename="S (Node)" id="20">
+   <NODE nodename="S (Node)" id="20" systemname="S (Node)">
    <BOUNDS type="Node" left="1980" top="4950" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - NormalMap|">
@@ -204,7 +204,7 @@
    <PIN pinname="Input Value" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <NODE nodename="S (Node)" id="21">
+   <NODE nodename="S (Node)" id="21" systemname="S (Node)">
    <BOUNDS type="Node" left="3180" top="4470" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - HeightMap|">
@@ -212,7 +212,7 @@
    <PIN pinname="Input Value" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <NODE nodename="S (Node)" id="22">
+   <NODE nodename="S (Node)" id="22" systemname="S (Node)">
    <BOUNDS type="Node" left="4425" top="4950" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - RougnessMap|">
@@ -220,7 +220,7 @@
    <PIN pinname="Input Value" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <NODE nodename="S (Node)" id="23">
+   <NODE nodename="S (Node)" id="23" systemname="S (Node)">
    <BOUNDS type="Node" left="5805" top="4470" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - MetallicMap|">
@@ -228,7 +228,7 @@
    <PIN pinname="Input Value" visible="1" slicecount="1" values="||">
    </PIN>
    </NODE>
-   <NODE nodename="S (Node)" id="24">
+   <NODE nodename="S (Node)" id="24" systemname="S (Node)">
    <BOUNDS type="Node" left="6930" top="4950" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - AOMap|">
@@ -287,7 +287,7 @@
    <NODE systemname="FileTexture (DX11 2d.Pooled)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d.Pooled)" componentmode="Hidden" id="42">
    <BOUNDS type="Node" left="690" top="2820" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="..\..\Assets\Materials\albedo\cratered-rock-albedo.png">
+   <PIN pinname="Filename" slicecount="1" values="..\..\girlpower\Assets\Materials\albedo\cratered-rock-albedo.png">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -297,7 +297,7 @@
    <NODE systemname="FileTexture (DX11 2d.Pooled)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d.Pooled)" componentmode="Hidden" id="39">
    <BOUNDS type="Node" left="1965" top="2820" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="..\..\Assets\Materials\normal\cratered-rock-normal.png">
+   <PIN pinname="Filename" slicecount="1" values="..\..\girlpower\Assets\Materials\normal\cratered-rock-normal.png">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -307,7 +307,7 @@
    <NODE systemname="FileTexture (DX11 2d.Pooled)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d.Pooled)" componentmode="Hidden" id="36">
    <BOUNDS type="Node" left="3180" top="2820" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="..\..\Assets\Materials\heightmap\cratered-rock-height.png">
+   <PIN pinname="Filename" slicecount="1" values="..\..\girlpower\Assets\Materials\heightmap\cratered-rock-height.png">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -317,7 +317,7 @@
    <NODE systemname="FileTexture (DX11 2d.Pooled)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d.Pooled)" componentmode="Hidden" id="33">
    <BOUNDS type="Node" left="4380" top="2820" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="..\..\Assets\Materials\roughness\cratered-rock-roughness.png">
+   <PIN pinname="Filename" slicecount="1" values="..\..\girlpower\Assets\Materials\roughness\cratered-rock-roughness.png">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -327,7 +327,7 @@
    <NODE systemname="FileTexture (DX11 2d.Pooled)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d.Pooled)" componentmode="Hidden" id="30">
    <BOUNDS type="Node" left="5790" top="2820" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="..\..\Assets\Materials\metallic\cratered-rock-metalness.png">
+   <PIN pinname="Filename" slicecount="1" values="..\..\girlpower\Assets\Materials\metallic\cratered-rock-metalness.png">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -337,7 +337,7 @@
    <NODE systemname="FileTexture (DX11 2d.Pooled)" filename="%VVVV%\packs\dx11\nodes\plugins\VVVV.DX11.Nodes.dll" nodename="FileTexture (DX11 2d.Pooled)" componentmode="Hidden" id="27">
    <BOUNDS type="Node" left="6900" top="2820" width="100" height="100">
    </BOUNDS>
-   <PIN pinname="Filename" slicecount="1" values="..\..\Assets\Materials\ao\cratered-rock-ao.png">
+   <PIN pinname="Filename" slicecount="1" values="..\..\girlpower\Assets\Materials\ao\cratered-rock-ao.png">
    </PIN>
    <PIN pinname="Texture Out" visible="1">
    </PIN>
@@ -408,7 +408,7 @@
    </LINK>
    <LINK srcnodeid="43" srcpinname="Output Node" dstnodeid="24" dstpinname="Input Value">
    </LINK>
-   <NODE nodename="IOBox (String)" componentmode="InABox" id="49">
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="49" systemname="IOBox (String)">
    <BOUNDS type="Node" left="10725" top="810" width="3240" height="270">
    </BOUNDS>
    <BOUNDS type="Box" left="10725" top="810" width="1470" height="705">
@@ -424,7 +424,7 @@
    </NODE>
    <LINK srcnodeid="42" srcpinname="Texture Out" dstnodeid="48" dstpinname="Input Node">
    </LINK>
-   <NODE nodename="IOBox (String)" componentmode="InABox" id="50">
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="50" systemname="IOBox (String)">
    <BOUNDS type="Node" left="375" top="1965" width="3345" height="270">
    </BOUNDS>
    <BOUNDS type="Box" left="375" top="1965" width="3345" height="270">
@@ -438,7 +438,7 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (String)" componentmode="InABox" id="51">
+   <NODE nodename="IOBox (String)" componentmode="InABox" id="51" systemname="IOBox (String)">
    <BOUNDS type="Node" left="5730" top="2145" width="960" height="270">
    </BOUNDS>
    <BOUNDS type="Box" left="5730" top="2145" width="960" height="270">
@@ -452,7 +452,7 @@
    <PIN pinname="String Type" slicecount="1" values="MultiLine">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="53">
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="53" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="15795" top="615" width="795" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="15795" top="615" width="0" height="0">
@@ -480,7 +480,7 @@
    <PIN pinname="Pin Visibility" slicecount="1" values="False">
    </PIN>
    </NODE>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="52">
+   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="52" systemname="IOBox (Value Advanced)">
    <BOUNDS type="Box" left="15795" top="1590" width="795" height="240">
    </BOUNDS>
    <BOUNDS type="Node" left="15795" top="1590" width="0" height="0">
@@ -504,7 +504,7 @@
    <PIN pinname="Pin Visibility" slicecount="1" values="False">
    </PIN>
    </NODE>
-   <NODE nodename="S (Value)" id="54">
+   <NODE nodename="S (Value)" id="54" systemname="S (Value)">
    <BOUNDS type="Node" left="15795" top="2085" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - fHeightMapScale|">
@@ -512,7 +512,7 @@
    </NODE>
    <LINK srcnodeid="52" srcpinname="Y Output Value" dstnodeid="54" dstpinname="Input Value">
    </LINK>
-   <NODE nodename="S (Value)" id="55">
+   <NODE nodename="S (Value)" id="55" systemname="S (Value)">
    <BOUNDS type="Node" left="15795" top="990" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - POMnumSamples|">
@@ -525,35 +525,13 @@
    </BOUNDS>
    <PIN pinname="Transform Out" visible="1">
    </PIN>
-   <PIN pinname="ScaleY" visible="1">
-   </PIN>
-   <PIN pinname="ScaleX" visible="1">
-   </PIN>
    </NODE>
-   <NODE nodename="S (Node)" id="57">
+   <NODE nodename="S (Node)" id="57" systemname="S (Node)">
    <BOUNDS type="Node" left="6720" top="1605" width="0" height="0">
    </BOUNDS>
    <PIN pinname="Send String" slicecount="1" values="|Material - TexTransform|">
    </PIN>
    </NODE>
    <LINK srcnodeid="56" srcpinname="Transform Out" dstnodeid="57" dstpinname="Input Value">
-   </LINK>
-   <NODE nodename="IOBox (Value Advanced)" componentmode="InABox" id="58">
-   <BOUNDS type="Box" left="7380" top="390" width="795" height="240">
-   </BOUNDS>
-   <BOUNDS type="Node" left="7380" top="390" width="0" height="0">
-   </BOUNDS>
-   <PIN pinname="Y Input Value" slicecount="1" visible="1" values="3">
-   </PIN>
-   <PIN pinname="Units" slicecount="1" values="||">
-   </PIN>
-   <PIN pinname="Precision" slicecount="1" values="4">
-   </PIN>
-   <PIN pinname="Y Output Value" visible="1">
-   </PIN>
-   </NODE>
-   <LINK srcnodeid="58" srcpinname="Y Output Value" dstnodeid="56" dstpinname="ScaleY">
-   </LINK>
-   <LINK srcnodeid="58" srcpinname="Y Output Value" dstnodeid="56" dstpinname="ScaleX">
    </LINK>
    </PATCH>
